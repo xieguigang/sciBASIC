@@ -12,7 +12,7 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 ' the hypothesis test module is named 't' and its alternative-hypothesis enum is named
 ' 'Hypothesis', so both are aliased to keep the call sites readable
-Imports TTest = Microsoft.VisualBasic.Math.Statistics.Hypothesis.t
+Imports T = Microsoft.VisualBasic.Math.Statistics.Hypothesis.t
 
 ''' <summary>
 ''' 描述统计与假设检验模块。
@@ -215,8 +215,8 @@ Public Module stats
     ''' <summary>
     ''' 双样本 t 检验（默认双侧、方差不齐）。
     ''' </summary>
-    Public Function t_test(x As IEnumerable(Of Double), y As IEnumerable(Of Double), Optional alpha As Double = 0.05) As TestResult
-        Dim result As TwoSampleResult = TTest.Test(x.ToNullArray, y.ToNullArray, alternative:=AltHypothesis.TwoSided, alpha:=alpha)
+    Public Function ttest(x As IEnumerable(Of Double), y As IEnumerable(Of Double), Optional alpha As Double = 0.05) As TestResult
+        Dim result As TwoSampleResult = T.Test(x.ToNullArray, y.ToNullArray, alternative:=AltHypothesis.TwoSided, alpha:=alpha)
 
         Return New TestResult With {
             .test = "two.sample",
@@ -231,8 +231,8 @@ Public Module stats
     End Function
 
     ''' <summary>单样本 t 检验（检验均值是否等于 <paramref name="mu"/>）。</summary>
-    Public Function t_test_one(x As IEnumerable(Of Double), Optional mu As Double = 0, Optional alpha As Double = 0.05) As TestResult
-        Dim result As TtestResult = TTest.Test(x.ToNullArray, alternative:=AltHypothesis.TwoSided, mu:=mu, alpha:=alpha)
+    Public Function ttest(x As IEnumerable(Of Double), Optional mu As Double = 0, Optional alpha As Double = 0.05) As TestResult
+        Dim result As TtestResult = T.Test(x.ToNullArray, alternative:=AltHypothesis.TwoSided, mu:=mu, alpha:=alpha)
 
         Return New TestResult With {
             .test = "one.sample",

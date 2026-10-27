@@ -1,3 +1,4 @@
+Imports System.Text.Json.Serialization
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.Driver
 
@@ -158,20 +159,35 @@ End Class
 Public Class TestResult
 
     ''' <summary>检验类型（``two.sample`` / ``one.sample``）。</summary>
+    ''' 
     Public Property test As String
     ''' <summary>检验统计量 t。</summary>
+    ''' 
+    <JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)>
     Public Property statistic As Double
     ''' <summary>p 值。</summary>
+    ''' 
+    <JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)>
     Public Property pvalue As Double
     ''' <summary>自由度。</summary>
+    ''' 
+    <JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)>
     Public Property df As Double
     ''' <summary>样本 x 的均值。</summary>
+    ''' 
+    <JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)>
     Public Property mean As Double
     ''' <summary>双样本检验中 x 的均值。</summary>
+    ''' 
+    <JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)>
     Public Property meanX As Double = Double.NaN
     ''' <summary>双样本检验中 y 的均值。</summary>
+    ''' 
+    <JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)>
     Public Property meanY As Double = Double.NaN
     ''' <summary>显著性水平。</summary>
+    ''' 
+    <JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)>
     Public Property alpha As Double = 0.05
 
     ''' <summary>在给定显著性水平下是否显著（p &lt; alpha）。</summary>

@@ -407,7 +407,8 @@ Namespace Serialization.JSON
                 .DefaultIgnoreCondition = JsonIgnoreCondition.Never,
                 .PropertyNamingPolicy = Nothing,
                 .DictionaryKeyPolicy = Nothing,
-                .WriteIndented = indent
+                .WriteIndented = indent,
+                .NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals
             }
 
             Dim resolver As New DefaultJsonTypeInfoResolver()
