@@ -172,13 +172,13 @@ Public Module stats
     Public Function describe(x As IEnumerable(Of Double)) As Dictionary(Of String, Double)
         Dim sample As New SampleDistribution(x)
         Dim d As New Dictionary(Of String, Double) From {
-            {"count", If(x Is Nothing, 0, x.Length)},
-            {"min", min(x)},
-            {"max", max(x)},
-            {"mean", mean(x)},
-            {"median", median(x)},
-            {"sd", sd(x)},
-            {"variance", variance(x)}
+            {"count", sample.size},
+            {"min", sample.min},
+            {"max", sample.max},
+            {"mean", sample.average},
+            {"median", sample.median},
+            {"sd", sample.stdErr},
+            {"variance", sample.variance}
         }
 
         Return d
@@ -211,8 +211,8 @@ Public Module stats
     ''' <summary>
     ''' 双样本 t 检验（默认双侧、方差不齐）。
     ''' </summary>
-    Public Function t_test(x As Double(), y As Double(), Optional alpha As Double = 0.05) As TestResult
-        Dim result As TwoSampleResult = TTest.Test(x, y, alternative:=AltHypothesis.TwoSided, alpha:=alpha)
+    Public Function t_test(x As IEnumerable(Of Double), y As IEnumerable(Of Double), Optional alpha As Double = 0.05) As TestResult
+        Dim result As TwoSampleResult = TTest.Test(x.ToNullArray, y.ToNullArray, alternative:=AltHypothesis.TwoSided, alpha:=alpha)
 
         Return New TestResult With {
             .test = "two.sample",
@@ -227,8 +227,8 @@ Public Module stats
     End Function
 
     ''' <summary>单样本 t 检验（检验均值是否等于 <paramref name="mu"/>）。</summary>
-    Public Function t_test_one(x As Double(), Optional mu As Double = 0, Optional alpha As Double = 0.05) As TestResult
-        Dim result As TtestResult = TTest.Test(x, alternative:=AltHypothesis.TwoSided, mu:=mu, alpha:=alpha)
+    Public Function t_test_one(x As IEnumerable(Of Double), Optional mu As Double = 0, Optional alpha As Double = 0.05) As TestResult
+        Dim result As TtestResult = TTest.Test(x.ToNullArray, alternative:=AltHypothesis.TwoSided, mu:=mu, alpha:=alpha)
 
         Return New TestResult With {
             .test = "one.sample",

@@ -65,6 +65,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
@@ -82,6 +83,11 @@ Namespace Distributions.Summary
         <XmlAttribute> Public Property max As Double
         <XmlAttribute> Public Property average As Double
         <XmlAttribute> Public Property sum As Double
+
+        ''' <summary>
+        ''' the element count of the raw sample data input collection
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property size As Long
 
         ''' <summary>
@@ -154,12 +160,12 @@ Namespace Distributions.Summary
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(data As IEnumerable(Of Double), Optional estimateQuantile As Boolean = True)
-            Call Me.New(data.SafeQuery.ToArray, estimateQuantile)
+            Call Me.New(data.ToNullArray, estimateQuantile)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(data As IEnumerable(Of Single), Optional estimateQuantile As Boolean = True)
-            Call Me.New(data.SafeQuery.Select(Function(f) CDbl(f)).ToArray, estimateQuantile)
+            Call Me.New(data.AsDouble, estimateQuantile)
         End Sub
 
         ''' <summary>
