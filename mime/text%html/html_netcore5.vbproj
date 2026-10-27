@@ -14,8 +14,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>10.7.9791.26955</Version>
-    <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
+    <Version>10.8.9796.18903</Version>
+    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
     <Title>HTML/CSS Parser, DOM and CSS Style Environment</Title>
     <Description>An HTML and CSS toolkit for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors, rule files and property values into typed models, resolves CSS lengths, fonts and strokes against a canvas style environment, and renders the DOM through a CSS box layout engine.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Html</AssemblyTitle>

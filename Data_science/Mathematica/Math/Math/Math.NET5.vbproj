@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.7.9791.26955</Version>
+		<Version>10.8.9796.18903</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -22,7 +22,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<AssemblyTitle>Microsoft.VisualBasic.Math</AssemblyTitle>
-		<AssemblyVersion>1.0.9791.26955</AssemblyVersion>
+		<AssemblyVersion>1.0.9796.18903</AssemblyVersion>
 		<Description>The core mathematics library for sciBASIC#: dense and sparse matrices with SVD, LU, QR and Cholesky decompositions, simplex and interior-point linear programming with MILP branch-and-bound, BigDecimal and half precision arithmetic with SIMD kernels, distributions and quantiles, Latin hypercube sampling with discrepancy metrics, splines, down-sampling and an expression scripting engine.</Description>
 		<PackageTags>scibasic;linear-algebra;matrix;milp;linear-programming;sparse-matrix;simd;half-precision;latin-hypercube</PackageTags>
     <PackageReleaseNotes>Adds an 8-lane half precision SIMD kernel set and a Latin hypercube sampling module with discrepancy metrics, optimizers and scaling, plus faster distribution quantile lookups.</PackageReleaseNotes>
