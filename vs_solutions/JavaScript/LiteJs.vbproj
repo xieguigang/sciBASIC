@@ -39,8 +39,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Runtime\Error\**" />
     <Compile Remove="test\**" />
+    <EmbeddedResource Remove="Runtime\Error\**" />
     <EmbeddedResource Remove="test\**" />
+    <None Remove="Runtime\Error\**" />
     <None Remove="test\**" />
     <Compile Remove="LiteJs.Runner\**" />
     <EmbeddedResource Remove="LiteJs.Runner\**" />
@@ -59,10 +62,6 @@
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\mime\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\dev\VisualStudio\VisualStudio.NET5.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Runtime\Error\" />
   </ItemGroup>
 
 </Project>

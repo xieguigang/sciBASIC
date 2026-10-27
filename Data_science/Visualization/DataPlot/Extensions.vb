@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::f2140ff56dff0845e9a816cd5383d8b4, Data_science\Visualization\DataPlot\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 101
-    '    Code Lines: 55 (54.46%)
-    ' Comment Lines: 36 (35.64%)
-    '    - Xml Docs: 86.11%
-    ' 
-    '   Blank Lines: 10 (9.90%)
-    '     File Size: 4.98 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: AsGraphicsData, DataSerials
-    ' 
-    '     Sub: Save, SaveChanges, SavePng
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 101
+'    Code Lines: 55 (54.46%)
+' Comment Lines: 36 (35.64%)
+'    - Xml Docs: 86.11%
+' 
+'   Blank Lines: 10 (9.90%)
+'     File Size: 4.98 KB
+
+
+' Module Extensions
+' 
+'     Function: AsGraphicsData, DataSerials
+' 
+'     Sub: Save, SaveChanges, SavePng
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Module Extensions
 
@@ -118,10 +119,7 @@ Public Module Extensions
         If Not raster Is Nothing Then
             ' GDI 栅格画布：直接包装位图，保持与旧版本一致的向后兼容行为
             ' （外部注入的 GDI 画布也可以在这里取出图形数据）
-            Return New ImageData(
-                raster.ImageResource,
-                New System.Drawing.Size(plot.CanvasWidth, plot.CanvasHeight),
-                Microsoft.VisualBasic.MIME.Html.CSS.Padding.Zero)
+            Return New ImageData(raster.ImageResource, New Size(plot.CanvasWidth, plot.CanvasHeight), Padding.Zero)
         Else
             ' 非 GDI 驱动（SVG / PostScript / PDF）：
             ' 通过驱动注册表按 g.Driver 反查对应的驱动实现，
