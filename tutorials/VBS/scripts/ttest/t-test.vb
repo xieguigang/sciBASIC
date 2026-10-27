@@ -3,7 +3,7 @@
 Imports stdlib
 
 Dim x = stats.runif(10,0.8,0.9)
-Dim y = stats.runif(10,0.5,0.85)
+Dim y = stats.runif(10,0,0.5)
 
 console.writeLine($"x: { x.json_str() }")
 console.writeLine($"y: {y.json_str()}")

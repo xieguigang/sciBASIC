@@ -9,8 +9,6 @@ import stdio from 'stdio.dll';
 //  standard library table and exported.
 // ============================================================================
 
-const join = (values, sep) => [...values].join(sep === undefined ? ',' : sep);
-
 // Deconstruct the pair [1, 2] into two variables in a single line.
 const [a, b] = [1, 2];
 
@@ -41,7 +39,7 @@ for (const [name, value] of tuples) {
 const dataset = stdlib.table.fromColumns(['value'], [values], rowNames);
 
 console.log(`table: ${dataset.nsamples} samples x ${dataset.nfeatures} feature, ` +
-            `names = ${join(stdlib.table.rowNames(dataset), ', ')}`);
+            `names = ${JSON.stringify(stdlib.table.rowNames(dataset))}`);
 console.log(`stats: sum = ${stdlib.stats.sum(values)}, mean = ${stdlib.stats.mean(values)}, ` +
             `median = ${stdlib.stats.median(values)}`);
 

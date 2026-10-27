@@ -1,7 +1,7 @@
 import stdlib from 'stdlib.dll';
 
 const x = stdlib.stats.runif(10,0.8,0.9);
-const y = stdlib.stats.runif(10,0.5,0.85);
+const y = stdlib.stats.runif(10,0,0.5);
 
 console.log(`x: ${ JSON.stringify(x) }`)
 console.log(`y: ${JSON.stringify(y)}`);
