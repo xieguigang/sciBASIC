@@ -190,6 +190,15 @@ Namespace Linq
             End If
         End Function
 
+        <Extension>
+        Public Function ToNullArray(Of T)(source As IEnumerable(Of T)) As T()
+            If source Is Nothing Then
+                Return Nothing
+            Else
+                Return source.ToArray
+            End If
+        End Function
+
         Public Delegate Sub DoWith(Of T)(obj As T)
 
         ''' <summary>

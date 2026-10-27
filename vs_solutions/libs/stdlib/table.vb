@@ -36,7 +36,7 @@ Public Module table
     End Function
 
     ''' <summary>由列向量集合构造表格（列主序输入，内部转换为行主序）。</summary>
-    Public Function fromColumns(featureNames As String(), columns As Double()(), Optional rowNames As String() = Nothing) As NumericTable
+    Public Function fromColumns(featureNames As IEnumerable(Of String), columns As Double()(), Optional rowNames As IEnumerable(Of String) = Nothing) As NumericTable
         If columns Is Nothing OrElse columns.Length = 0 Then
             Throw New ArgumentException("the column collection is empty", NameOf(columns))
         End If

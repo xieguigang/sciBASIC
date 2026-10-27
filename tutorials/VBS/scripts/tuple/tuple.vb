@@ -51,17 +51,15 @@ next
 ' From language values to a standard library table:
 '   row names = the tuple keys, one feature column = the tuple values
 ' ---------------------------------------------------------------------------
-dim row_names(tuples.length - 1) as string
-dim values(tuples.length - 1) as double
+dim row_names as new list(of string)(tuples.length - 1) 
+dim values as new list(of double)(tuples.length - 1) 
 
-for i = 0 to tuples.length - 1
-    dim item = tuples(i)
-
-    row_names(i) = item.Item1
-    values(i) = item.Item2
+for each (str as string, int) in tuples
+    row_names.add(str)
+    values.add(int) 
 next
 
-dim dataset = table.fromColumns(New String() {"value"}, New Double()() {values}, row_names)
+dim dataset = table.fromColumns(New String() {"value"}, New Double()() {values.toarray}, row_names)
 
 call console.WriteLine($"table: {dataset.nsamples} samples x {dataset.nfeatures} feature, names = {String.Join(", ", table.rowNames(dataset))}")
 call console.WriteLine($"stats: sum = {stats.sum(values)}, mean = {stats.mean(values)}, median = {stats.median(values)}")
