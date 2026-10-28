@@ -56,6 +56,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace KMeans
@@ -130,7 +131,7 @@ Namespace KMeans
             ' Dim resultClusterPoints As String() = New String(k - 1) {}
             Dim resultPoints As ClusterEntity() = New ClusterEntity(points.Length - 1) {}
             Dim stepmedoids As ClusterEntity() = New ClusterEntity(k - 1) {}
-            Dim medoidsIndexes As New List(Of Integer)()
+            Dim medoidsIndexes As New HashSet(Of Integer)()
             Dim randIndex As Integer = 0
 
             ' initilizing random different medoids
@@ -139,11 +140,16 @@ Namespace KMeans
 
                 If Not medoidsIndexes.Contains(randIndex) Then
                     stepmedoids(i) = points(randIndex)
-                    medoidsIndexes.Add(randIndex)
+                    Call medoidsIndexes.Add(randIndex)
                 Else
                     i -= 1
                 End If
             Next
+
+            ' 每步复用同一组缓冲：中心向量、中心平方范数、样本到 k 个中心的平方距离
+            Dim centers As Double()() = New Double(k - 1)() {}
+            Dim centerNorms As Double() = New Double(k - 1) {}
+            Dim distances As Double() = New Double(k - 1) {}
 
             Dim resultSumFunc As Double = Double.MaxValue
             Dim stepSumFunc As Double = 0
@@ -156,12 +162,24 @@ Namespace KMeans
                 Dim clusterSumFunc As Double() = New Double(k - 1) {}
                 ' Dim clusterPoints As String() = New String(k - 1) {}
 
+                ' 预取当前 medoid 的向量与范数：内层循环里 stepmedoids(c).entityVector 会被反复解引用
+                For c As Integer = 0 To k - 1
+                    centers(c) = stepmedoids(c).entityVector
+                    centerNorms(c) = SimdDistance.SquaredNorm(centers(c))
+                Next
+
                 For i As Integer = 0 To points.Length - 1
                     minDist = Double.MaxValue
                     dist = 0
 
+                    Dim row As Double() = points(i).entityVector
+                    Dim rowNorm As Double = SimdDistance.SquaredNorm(row)
+
+                    ' 一次算出到 k 个 medoid 的平方距离（旧实现是 k 次 Sqrt + 每次重建差值数组）
+                    Call SimdDistance.BatchDistanceSquared(rowNorm, row, centers, centerNorms, distances)
+
                     For c As Integer = 0 To k - 1
-                        dist = points(i).entityVector.EuclideanDistance(stepmedoids(c).entityVector)
+                        dist = distances(c)
 
                         If dist < minDist Then
                             points(i).cluster = c

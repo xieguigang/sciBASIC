@@ -68,6 +68,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
+Imports std = System.Math
 
 Namespace Clustering
 
@@ -90,20 +92,33 @@ Namespace Clustering
             End Sub
 
             Public Function QueryDensity(row As T, k As Integer) As NamedValue(Of Double) Implements IQueryDensity(Of T).QueryDensity
-                Dim d As Double() = raw _
-                    .Where(Function(di) Not di Is row) _
-                    .Select(Function(r)
-                                Return metric(r, row)
-                            End Function) _
-                    .OrderBy(Function(di) di) _
-                    .ToArray
-                Dim nearest As Double() = d.Take(k).ToArray
+                ' 旧实现：Where → Select → OrderBy（全排序 O(n log n)）→ Take(k)，
+                ' 每行都要物化一条 n 元素的排序序列。这里改成一趟扫描 + 有界堆取前 k 小（O(n log k)）。
+                Dim distances As Double() = New Double(raw.Length - 1) {}
+                Dim cursor As Integer = 0
+
+                For i As Integer = 0 To raw.Length - 1
+                    Dim other As T = raw(i)
+
+                    If other Is row Then
+                        Continue For
+                    End If
+
+                    distances(cursor) = metric(other, row)
+                    cursor += 1
+                Next
+
+                If cursor < distances.Length Then
+                    Array.Resize(distances, cursor)
+                End If
+
+                Dim nearest As Double() = SimdSelect.TopKValues(distances, std.Min(k, cursor))
                 Dim mean As Double
 
                 If nearest.Length = 0 Then
                     mean = 10000
                 Else
-                    mean = nearest.Average
+                    mean = SimdReduce.Sum(nearest) / nearest.Length
                 End If
 
                 Return New NamedValue(Of Double) With {

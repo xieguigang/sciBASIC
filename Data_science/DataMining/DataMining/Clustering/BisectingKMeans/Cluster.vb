@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans.Bisecting
@@ -87,14 +88,15 @@ Namespace KMeans.Bisecting
 
         Public Overridable ReadOnly Property SSE As Double
             Get
+                ' 旧实现每点做 (c - p)^2 两次 Vector 运算，各分配一个长度 d 的数组再求和；
+                ' 这里直接累加零分配的 SIMD 平方距离。
                 Dim sse_d As Double = 0.0
-                Dim c As New Vector(centroid)
-                Dim dx As Vector
+                Dim c As Double() = centroid
 
                 For Each p As ClusterEntity In DataPoints
-                    dx = (c - New Vector(p.entityVector)) ^ 2
-                    sse_d += dx.Sum
+                    sse_d += SimdReduce.DistanceSquared(p.entityVector, c)
                 Next p
+
                 Return sse_d
             End Get
         End Property

@@ -57,6 +57,7 @@
 
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -84,10 +85,19 @@ Namespace Lloyds
             _lloydsPoints = New List(Of Point)(_source)
         End Sub
 
+        ''' <summary>
+        ''' 随机重启次数（默认 100，与旧实现一致）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 旧实现把 <c>0 To 99</c> 硬编码在 <see cref="Clustering"/> 里，
+        ''' 大数据集上固定 100 次完整 k-means 的代价无法调整；现在可以按需降低。
+        ''' </remarks>
+        Public Property Restarts As Integer = 100
+
         Public Overrides Function Clustering() As List(Of Point)
             Dim minKMeansCost As Double = Double.MaxValue
 
-            For runningTimes As Integer = 0 To 99
+            For runningTimes As Integer = 0 To std.Max(1, Restarts) - 1
                 ' for grabbing random points from input file
                 If _kmeansClusters.Count > 0 Then
                     _kmeansClusters.Clear()
@@ -127,12 +137,27 @@ Namespace Lloyds
 
                 Dim closestClusterToPoint As KMeansCluster(Of Point) = Nothing
                 Dim minClusterIndex As Integer = Integer.MaxValue
+                Dim k As Integer = _kmeansClusters.Count
+                Dim centers As Double()() = New Double(k - 1)() {}
+                Dim centerNorms As Double() = New Double(k - 1) {}
+                Dim distances As Double() = New Double(k - 1) {}
+
+                ' 预取中心向量与范数：内层循环里 Center 属性会被反复解引用
+                For j As Integer = 0 To k - 1
+                    centers(j) = _kmeansClusters(j).Center.entityVector
+                    centerNorms(j) = SimdDistance.SquaredNorm(centers(j))
+                Next
 
                 ' find the closest cluster to each point
                 For i As Integer = 0 To _lloydsPoints.Count - 1
                     Dim minDistanceToCluster As Double = Double.MaxValue
-                    For j As Integer = 0 To _kmeansClusters.Count - 1
-                        Dim distanceToCluster As Double = _lloydsPoints(i).DistanceTo(_kmeansClusters(j).Center)
+                    Dim row As Double() = _lloydsPoints(i).entityVector
+
+                    Call SimdDistance.BatchDistanceSquared(SimdDistance.SquaredNorm(row), row, centers, centerNorms, distances)
+
+                    ' 平方距离与距离同序，省掉每对一次开方
+                    For j As Integer = 0 To k - 1
+                        Dim distanceToCluster As Double = distances(j)
 
                         If distanceToCluster < minDistanceToCluster Then
                             closestClusterToPoint = _kmeansClusters(j)

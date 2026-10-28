@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Namespace KMeans.Bisecting
 
@@ -122,13 +123,27 @@ Namespace KMeans.Bisecting
 
             For i As Integer = 0 To NUM_ITERATIONS_BISECTION - 1
                 Dim ac As Cluster() = kMeansClustering(worstCluster.DataPoints).ToArray
+
+                If ac.Length < 2 Then
+                    Continue For
+                End If
+
                 Dim sumSSE As Double = ac(0).SSE + ac(1).SSE
 
                 If sumSSE < minSSE Then
+                    ' 旧实现漏掉了 minSSE 的更新，导致永远取"最后一次"二分结果而不是 SSE 最小者
+                    minSSE = sumSSE
                     cluster1 = ac(0)
                     cluster2 = ac(1)
                 End If
             Next
+
+            If cluster1 Is Nothing OrElse cluster2 Is Nothing Then
+                ' 退化的二分（无法分成两簇）：把原簇放回去，避免后续 NRE
+                Call clusterList.Add(worstCluster)
+
+                Return
+            End If
 
             cluster1.Cluster = cluster1.GetHashCode
             cluster2.Cluster = cluster2.GetHashCode
@@ -178,17 +193,26 @@ Namespace KMeans.Bisecting
         ''' <param name="dataList"></param>
         ''' <returns></returns>
         Private Function calcCluster(dataList As IEnumerable(Of ClusterEntity)) As Cluster
-            Dim centroid As Vector = Nothing
+            ' 旧实现每加一个点就执行一次 Vector 加法（每次分配一个长度 d 的数组），
+            ' 并且结尾又用 dataList.Count 二次枚举整个集合；这里改成原地累加 + 计数。
+            Dim sum As Double() = Nothing
+            Dim count As Integer = 0
 
             For Each p As ClusterEntity In dataList
-                If centroid Is Nothing Then
-                    centroid = New Vector(p.entityVector)
-                Else
-                    centroid = centroid + New Vector(p.entityVector)
+                count += 1
+
+                If sum Is Nothing Then
+                    sum = p.entityVector.ToArray
+                ElseIf sum.Length = p.entityVector.Length Then
+                    Call SimdEngine.AddInPlace(sum, p.entityVector)
                 End If
             Next
 
-            centroid = centroid / dataList.Count
+            If sum Is Nothing Then
+                Return New Cluster(New Double() {}) With {.Cluster = Me.GetHashCode}
+            End If
+
+            Dim centroid As Vector = New Vector(SimdEngine.DivideScalar(sum, count))
 
             Return New Cluster(centroid) With {.Cluster = Me.GetHashCode}
         End Function

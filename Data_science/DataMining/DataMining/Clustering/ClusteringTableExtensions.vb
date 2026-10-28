@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Runner
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Bisecting = Microsoft.VisualBasic.DataMining.KMeans.Bisecting
 Imports LloydsNS = Microsoft.VisualBasic.DataMining.Lloyds
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
@@ -469,34 +470,64 @@ Namespace Clustering
                 Return 0
             End If
 
+            ' 一次性建立 "簇号 -> 成员下标" 映射。
+            ' 旧实现在每个样本上都重新分配一个 List + 一个 Dictionary（n 次），
+            ' 并且每个簇用 Average(委托) 求和（委托 + 枚举器开销）。
+            Dim groupIds As New Dictionary(Of Integer, Integer)
+            Dim groupList As New List(Of List(Of Integer))
+            Dim groupOf As Integer() = New Integer(n - 1) {}
+
+            For i As Integer = 0 To n - 1
+                Dim key As Integer = CInt(cluster(i))
+                Dim g As Integer = 0
+
+                If Not groupIds.TryGetValue(key, g) Then
+                    g = groupList.Count
+                    groupIds(key) = g
+                    Call groupList.Add(New List(Of Integer))
+                End If
+
+                Call groupList(g).Add(i)
+                groupOf(i) = g
+            Next
+
+            Dim groups As List(Of Integer)() = groupList.ToArray
             Dim sum As Double = 0
 
             For i As Integer = 0 To n - 1
-                Dim same As New List(Of Integer)
-                Dim others As New Dictionary(Of Integer, List(Of Integer))
+                Dim row As Double() = rows(i)
+                Dim same As List(Of Integer) = groups(groupOf(i))
+                Dim a As Double
 
-                For j As Integer = 0 To n - 1
-                    If j = i Then
-                        Continue For
-                    ElseIf cluster(j) = cluster(i) Then
-                        Call same.Add(j)
-                    Else
-                        Dim key As Integer = CInt(cluster(j))
+                If same.Count <= 1 Then
+                    a = 0.0
+                Else
+                    Dim total As Double = 0
 
-                        If Not others.ContainsKey(key) Then
-                            others(key) = New List(Of Integer)
+                    For Each m As Integer In same
+                        If m <> i Then
+                            total += SimdDistance.Euclidean(row, rows(m))
                         End If
+                    Next
 
-                        Call others(key).Add(j)
-                    End If
-                Next
+                    a = total / (same.Count - 1)
+                End If
 
-                Dim rowIndex As Integer = i
-                Dim a As Double = If(same.Count = 0, 0.0, same.Average(Function(m) DistanceMethods.EuclideanDistance(rows(rowIndex), rows(m))))
                 Dim b As Double = Double.MaxValue
 
-                For Each members As List(Of Integer) In others.Values
-                    Dim mean As Double = members.Average(Function(m) DistanceMethods.EuclideanDistance(rows(rowIndex), rows(m)))
+                For g As Integer = 0 To groups.Length - 1
+                    If g = groupOf(i) Then
+                        Continue For
+                    End If
+
+                    Dim members As List(Of Integer) = groups(g)
+                    Dim total As Double = 0
+
+                    For Each m As Integer In members
+                        total += SimdDistance.Euclidean(row, rows(m))
+                    Next
+
+                    Dim mean As Double = total / members.Count
 
                     If mean < b Then
                         b = mean
@@ -536,12 +567,18 @@ Namespace Clustering
             Dim maxIn As Double = Double.MinValue
             Dim minOut As Double = Double.MaxValue
 
-            For Each g In groups
-                Dim members = g.Select(Function(x) x.i).ToArray
+            ' 先物化每个簇的成员下标：旧实现把 g.Select(Function(x) x.i) 写在三层循环内部，
+            ' 每次内层迭代都会重新枚举并获得一个新数组（O(n³) 次临时分配）。
+            Dim members As Integer()() = groups _
+                .Select(Function(g) g.Select(Function(x) x.i).ToArray) _
+                .ToArray
 
-                For i As Integer = 0 To members.Length - 1
-                    For j As Integer = i + 1 To members.Length - 1
-                        Dim d As Double = DistanceMethods.EuclideanDistance(rows(members(i)), rows(members(j)))
+            For gi As Integer = 0 To members.Length - 1
+                Dim m As Integer() = members(gi)
+
+                For i As Integer = 0 To m.Length - 1
+                    For j As Integer = i + 1 To m.Length - 1
+                        Dim d As Double = SimdDistance.Euclidean(rows(m(i)), rows(m(j)))
 
                         If d > maxIn Then
                             maxIn = d
@@ -550,15 +587,20 @@ Namespace Clustering
                 Next
             Next
 
-            For Each g1 In groups
-                For Each g2 In groups
-                    If g1.Key = g2.Key Then
+            For gi As Integer = 0 To members.Length - 1
+                For gj As Integer = 0 To members.Length - 1
+                    If gi = gj Then
                         Continue For
                     End If
 
-                    For Each i As Integer In g1.Select(Function(x) x.i)
-                        For Each j As Integer In g2.Select(Function(x) x.i)
-                            Dim d As Double = DistanceMethods.EuclideanDistance(rows(i), rows(j))
+                    Dim a As Integer() = members(gi)
+                    Dim b As Integer() = members(gj)
+
+                    For i As Integer = 0 To a.Length - 1
+                        Dim rowA As Double() = rows(a(i))
+
+                        For j As Integer = 0 To b.Length - 1
+                            Dim d As Double = SimdDistance.Euclidean(rowA, rows(b(j)))
 
                             If d < minOut Then
                                 minOut = d

@@ -113,12 +113,32 @@ Namespace Hamming
                     End If
 
                     ' 按照到种子的距离升序逐个吸纳样本：只要固定下来的合取项仍然纯净就接受
-                    Dim candidates As Integer() = members _
-                        .Where(Function(j) j <> seedIndex AndAlso Not covered.Contains(j)) _
-                        .Where(Function(j) patterns(seedIndex).DistanceTo(patterns(j)) <= thetaValue) _
-                        .OrderBy(Function(j) patterns(seedIndex).DistanceTo(patterns(j))) _
-                        .ThenBy(Function(j) j) _
-                        .ToArray
+                    '
+                    ' 旧实现把 DistanceTo 写了两遍（Where 里过滤一次、OrderBy 里再算一次），
+                    ' 即每个候选都要算两次 popcount 距离；这里算一次后排序。
+                    Dim pool As New List(Of (j As Integer, d As Integer))()
+
+                    For Each j As Integer In members
+                        If j = seedIndex OrElse covered.Contains(j) Then
+                            Continue For
+                        End If
+
+                        Dim distance As Integer = patterns(seedIndex).DistanceTo(patterns(j))
+
+                        If distance <= thetaValue Then
+                            Call pool.Add((j, distance))
+                        End If
+                    Next
+
+                    Call pool.Sort(Function(a, b)
+                                       If a.d <> b.d Then
+                                           Return a.d.CompareTo(b.d)
+                                       Else
+                                           Return a.j.CompareTo(b.j)
+                                       End If
+                                   End Function)
+
+                    Dim candidates As Integer() = pool.Select(Function(x) x.j).ToArray
 
                     For Each j As Integer In candidates
                         Dim trial As New List(Of Integer)(cluster)

@@ -70,7 +70,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports std = System.Math
 
 Namespace Clustering
 
@@ -129,7 +131,7 @@ Namespace Clustering
             Do While pool.Count > 0
                 seedPoint = pool.Pop
 
-                Dim knn() = FindKNearestNeighbors(seedPoint).ToArray
+                Dim knn = FindKNearestNeighbors(seedPoint)
                 Dim cutoff As Double = If(knn.Length = 0, Double.MaxValue, knn.Select(Function(a) a.dist).Median)
                 Dim filter = (From a As (dist As Double, p As DbscanPoint(Of T))
                               In knn
@@ -150,14 +152,54 @@ Namespace Clustering
             Loop
         End Sub
 
-        Private Function FindKNearestNeighbors(targetPoint As DbscanPoint(Of T)) As IEnumerable(Of (dist As Double, p As DbscanPoint(Of T)))
-            Return From p As DbscanPoint(Of T)
-                   In points
-                   Where p IsNot targetPoint
-                   Let d As Double = distanceMap(targetPoint, p)
-                   Order By d
-                   Select (d, p)
-                   Take k
+        ''' <summary>
+        ''' 取 <paramref name="targetPoint"/> 的 k 个最近邻（按距离升序，等距按下标升序）。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 旧实现是 <c>Order By d ... Take k</c>：每次调用都要对 n 个候选做全排序
+        ''' （<c>O(n·log n)</c> + 比较器委托），而它在 <see cref="ExpandCluster"/> 的
+        ''' BFS 里被每个点调用一次，整体退化成 <c>O(n²·log n)</c>。
+        ''' </para>
+        ''' <para>
+        ''' 这里改为"一次线性扫描 + 大小为 k 的有界堆"（<see cref="SimdSelect.TopKIndices"/>），
+        ''' 单次 <c>O(n·log k)</c>，且不再分配 n 元素的 LINQ 中间序列。
+        ''' 距离本身仍由 <see cref="DistanceMap"/> 缓存（对称矩阵，只算一次）。
+        ''' </para>
+        ''' </remarks>
+        Private Function FindKNearestNeighbors(targetPoint As DbscanPoint(Of T)) As (dist As Double, p As DbscanPoint(Of T))()
+            Dim n As Integer = points.Length
+
+            If n <= 1 Then
+                Return Array.Empty(Of (Double, DbscanPoint(Of T)))()
+            End If
+
+            Dim selfIndex As Integer = targetPoint.Index
+            Dim distances As Double() = New Double(n - 2) {}
+            Dim cursor As Integer = 0
+
+            For i As Integer = 0 To n - 1
+                If i = selfIndex Then
+                    Continue For
+                End If
+
+                distances(cursor) = distanceMap(selfIndex, i)
+                cursor += 1
+            Next
+
+            Dim count As Integer = std.Min(k, distances.Length)
+            Dim top As Integer() = SimdSelect.TopKIndices(distances, count)
+            Dim result As (dist As Double, p As DbscanPoint(Of T))() = New (Double, DbscanPoint(Of T))(top.Length - 1) {}
+
+            For q As Integer = 0 To top.Length - 1
+                Dim compact As Integer = top(q)
+                ' 紧凑下标是跳过自身之后的相对位置，这里还原成点下标
+                Dim pointIndex As Integer = If(compact >= selfIndex, compact + 1, compact)
+
+                result(q) = (distances(compact), points(pointIndex))
+            Next
+
+            Return result
         End Function
     End Class
 

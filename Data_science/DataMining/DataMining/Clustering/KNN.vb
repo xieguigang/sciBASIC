@@ -59,7 +59,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Parallels = System.Threading.Tasks.Parallel
+Imports std = System.Math
 
 Namespace Clustering
 
@@ -120,48 +122,39 @@ Namespace Clustering
         End Sub
 
         Public Iterator Function Classify(testSet As NamedCollection(Of Double)(), K As Integer) As IEnumerable(Of NamedCollection(Of NamedValue(Of Integer)))
-            ' create an array where we store the distance from our test data and the training data -> [0]
-            ' plus the index of the training data element -> [1]
-            Dim distances = New Double(trainingSet.Length - 1)() {}
+            ' 两个平铺缓冲代替 Double(1)()（旧实现为每个训练样本分配一个小数组：
+            ' n 个 24 字节的数组头 + 间接寻址，在 10^5 级训练集上非常可观）。
+            Dim distances As Double() = New Double(trainingSet.Length - 1) {}
             Dim bar As Tqdm.ProgressBar = Nothing
-
-            For i As Integer = 0 To trainingSet.Length - 1
-                distances(i) = New Double(1) {}
-            Next
+            Dim [option] As New ParallelOptions With {.MaxDegreeOfParallelism = std.Max(1, Environment.ProcessorCount)}
 
             ' start computing
             For Each test As Integer In TqdmWrapper.Range(0, testSet.Length, bar:=bar, wrap_console:=App.EnableTqdm)
                 Dim test_vec As Double() = testSet(test).value
+                Dim tr As ClusterEntity() = trainingSet
 
                 Call bar.SetLabel(testSet(test).name)
                 Call Parallels.For(
                     fromInclusive:=0,
-                    toExclusive:=trainingSet.Length,
+                    toExclusive:=tr.Length,
+                    parallelOptions:=[option],
                     body:=Sub(index)
 #Disable Warning
-                              Dim tr = trainingSet(index)
-                              Dim dist = DistanceMethods.EuclideanDistance(
-                                  X:=test_vec,
-                                  Y:=tr.entityVector
-                              )
+                              ' 平方距离与距离同序，比较用平方可以省掉 n 次开方
+                              distances(index) = SimdReduce.DistanceSquared(test_vec, tr(index).entityVector)
 #Enable Warning
-                              distances(index)(0) = dist
-                              distances(index)(1) = tr.cluster
                           End Sub)
 
-                ' sort and select first K of them
-                Dim sortedDistances = distances _
-                    .AsParallel() _
-                    .OrderBy(Function(t) t(0)) _
-                    .Take(K)
-                Dim result As New List(Of NamedValue(Of Integer))
+                ' 取前 K 小（有界堆 O(n log K)），替代 AsParallel().OrderBy().Take() 的全排序
+                Dim top As Integer() = SimdSelect.TopKIndices(distances, std.Min(K, distances.Length))
+                Dim result As New List(Of NamedValue(Of Integer))(top.Length)
 
-                ' print and check the result
-                For Each d As Double() In sortedDistances
-                    Dim predictedClass = clusterNames(CInt(d(1)))
+                For Each index As Integer In top
+                    Dim d As Integer = tr(index).cluster
+                    Dim predictedClass = clusterNames(d)
                     Dim output As New NamedValue(Of Integer) With {
                         .Name = testSet(test).name,
-                        .Value = d(1),
+                        .Value = d,
                         .Description = predictedClass
                     }
 
