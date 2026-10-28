@@ -130,13 +130,17 @@ Namespace Math.SIMD
                 Throw New ArgumentException($"the center buffers are too small: {centerNorms.Length}/{dst.Length} < {k}!")
             End If
 
+            ' 维度校验先单独走一遍，避免在热循环里每次都比较长度（这条路径每轮被调用 n 次）
             For j As Integer = 0 To k - 1
                 Dim center As Double() = centers(j)
 
                 If center Is Nothing OrElse center.Length <> row.Length Then
                     Throw New ArgumentException($"the dimension of center[{j}] not agree with the sample!")
                 End If
+            Next
 
+            For j As Integer = 0 To k - 1
+                Dim center As Double() = centers(j)
                 Dim dot As Double = SIMDIntrinsics.DotFma(row, center)
                 Dim d As Double = rowNorm + centerNorms(j) - 2.0 * dot
 
