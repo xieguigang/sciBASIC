@@ -148,13 +148,14 @@ Namespace Clustering
 
         Public Shared Function TotalDistance(i As ClusterEntity, points As ClusterEntity()) As Double
             Dim sum_i As Double = 0
+            Dim xi As Double() = i.entityVector
 
             For Each j As ClusterEntity In points
                 If i Is j OrElse i.uid = j.uid Then
                     Continue For
                 End If
 
-                sum_i += SquareDist(i, j)
+                sum_i += SimdReduce.DistanceSquared(xi, j.entityVector)
             Next
 
             Return sum_i
@@ -180,7 +181,7 @@ Namespace Clustering
         ''' <param name="parts">sum(parts)</param>
         ''' <returns></returns>
         Public Shared Function AverageDistance(pointSize As Double, parts As Double()) As Double
-            Dim sum As Double = parts.Sum
+            Dim sum As Double = SimdReduce.Sum(parts)
             Dim distanceNumber As Double = pointSize * (pointSize + 1) / 2
             ' 平均距离的1/8
             Dim T2 As Double = sum / distanceNumber / 32
@@ -213,10 +214,8 @@ Namespace Clustering
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SquareDist(i As Double(), j As Double()) As Double
-            Return Exponent.f64_op_exponent_f64_scalar(
-                v1:=Subtract.f64_op_subtract_f64(i, j),
-                v2:=2
-            ).Sum
+            ' 单趟 SIMD：旧实现是 Subtract → Exponent → Sum，每对分配两个临时数组
+            Return SimdReduce.DistanceSquared(i, j)
         End Function
 
         Public Function KMeansSeeds() As CanopySeeds
@@ -240,9 +239,10 @@ Namespace Clustering
                 Call MeasureThreahold()
 
                 While points.Count > 0
-                    Dim poll = IterateSingle() _
-                        .OrderByDescending(Function(i) i) _
-                        .ToArray
+                    ' IterateSingle 返回的下标天然升序，旧实现的 OrderByDescending + RemoveAt(尾部)
+                    ' 只是为了在删除时不让后续下标失效；这里改成"一次掩码 + 一遍重建"，
+                    ' 把每轮 O(删除数 × n) 的 List.RemoveAt 压缩成 O(n)。
+                    Dim poll As Integer() = IterateSingle().ToArray
 
                     If poll.Length = 0 Then
                         Exit While
@@ -250,9 +250,22 @@ Namespace Clustering
                         Call VBDebugger.EchoLine($"removes {poll.Length} points, and get {canopies.Count} canopy candidates!")
                     End If
 
+                    Dim removed As Boolean() = New Boolean(points.Count - 1) {}
+
                     For Each i As Integer In poll
-                        Call points.RemoveAt(i)
+                        removed(i) = True
                     Next
+
+                    Dim kept As New List(Of ClusterEntity)(points.Count - poll.Length)
+
+                    For i As Integer = 0 To points.Count - 1
+                        If Not removed(i) Then
+                            Call kept.Add(points(i))
+                        End If
+                    Next
+
+                    Call points.Clear()
+                    Call points.AddRange(kept)
                 End While
             End If
 
@@ -285,7 +298,7 @@ Namespace Clustering
 
                 For Each canopy As Canopy In canopies
                     Dim center As Double() = canopy.centroid
-                    Dim d = SquareDist(current, center)
+                    Dim d = SimdReduce.DistanceSquared(current.entityVector, center)
 
                     ' 距离小于T1加入canopy，打上弱标记
                     If d < T1 Then

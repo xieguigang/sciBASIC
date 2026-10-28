@@ -59,8 +59,10 @@
 
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace Clustering
@@ -85,6 +87,15 @@ Namespace Clustering
         Private constant As Double
         Private order As Double
         Private assignments As Integer()
+
+        ''' <summary>
+        ''' 允许的最大样本数（<c>0</c> 表示不限制，默认 20000）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 谱聚类需要 <c>n×n</c> 核矩阵（8·n² 字节）与 <c>O(n³)</c> 特征分解；
+        ''' 超过该上限时 <see cref="cluster"/> 会抛出带说明的异常，而不是静默耗尽内存。
+        ''' </remarks>
+        Public Property MaxPoints As Integer = 20000
 
         Public Sub New(d As NumericMatrix)
             centers = 2
@@ -137,35 +148,66 @@ Namespace Clustering
         ''' Fill kernel matrix
         ''' </summary>
         Private Sub generate_kernel_matrix()
-            Dim x_rows = X.RowDimension
-            Dim vi As Double
+            Dim x_rows As Integer = X.RowDimension
 
-            K = New NumericMatrix(x_rows, x_rows)
-            For i = 0 To x_rows - 1
-                For j = i To x_rows - 1
-                    vi = kernel(X(i, byRow:=True), X(j, byRow:=True))
-                    K(j, i) = vi
-                    K(i, j) = vi
-                    'if(i == 0) cout << K(i,j) << " ";
-                Next
+            If MaxPoints > 0 AndAlso x_rows > MaxPoints Then
+                Throw New ArgumentOutOfRangeException(
+                    NameOf(X),
+                    $"spectral clustering builds an n×n kernel matrix and an O(n^3) eigendecomposition; " &
+                    $"{x_rows} samples exceed MaxPoints({MaxPoints}). Please subsample or increase MaxPoints explicitly.")
+            End If
+
+            ' 先把行向量抽取到 Double()()，避免每一对 (i,j) 都重新构造一个 Vector 对象
+            Dim rows As Double()() = New Double(x_rows - 1)() {}
+
+            For i As Integer = 0 To x_rows - 1
+                rows(i) = X(i, byRow:=True).ToArray
             Next
 
-            ' Normalise kernel matrix
+            K = New NumericMatrix(x_rows, x_rows)
+
+            Dim gammaValue As Double = gamma
+            Dim constantValue As Double = constant
+            Dim orderValue As Double = order
+            Dim polynomial As Boolean = kernel_type = 2
+
+            ' 核矩阵只算上三角并对称写回：外循环按行块并行，行内用 SIMD 点积/平方距离，
+            ' 不再经过 Vector.operator- 与 .Mod（每对都要分配多个临时数组）。
+            Call SimdParallel.ForRange(x_rows,
+                Sub(start, ends)
+                    For i As Integer = start To ends - 1
+                        Dim a As Double() = rows(i)
+
+                        For j As Integer = i To x_rows - 1
+                            Dim vi As Double
+
+                            If polynomial Then
+                                vi = (SimdReduce.Dot(a, rows(j)) + constantValue) ^ orderValue
+                            Else
+                                vi = std.Exp(-gammaValue * SimdReduce.DistanceSquared(a, rows(j)))
+                            End If
+
+                            K(j, i) = vi
+                            K(i, j) = vi
+                        Next
+                    Next
+                End Sub, 32)
+
+            ' Normalise kernel matrix: F·K·F，其中 F = diag(1/sqrt(rowsum))
+            '
+            ' 旧实现走 K.DotProduct(F)（n×n × n×n 稠密矩阵乘，O(n^3)），
+            ' 但 F 是对角阵，等价于逐元素缩放 K(i,j) * d(i) * d(j)，这里直接这么做。
             Dim d As Vector = K.RowWise().Sum()
 
             d = 1.0 / Vector.Sqrt(d)
 
+            For i As Integer = 0 To x_rows - 1
+                Dim di As Double = d(i)
 
-            Dim F = d.AsDiagonal()
-            Dim l = CType(K.DotProduct(F), NumericMatrix)
-            For i = 0 To l.RowDimension - 1
-                For j = 0 To l.ColumnDimension - 1
-                    l(i, j) = l(i, j) * d(i)
+                For j As Integer = 0 To x_rows - 1
+                    K(i, j) = K(i, j) * di * d(j)
                 Next
             Next
-
-            K = l
-
         End Sub
 
         Private Function kernel(a As Vector, b As Vector) As Double
