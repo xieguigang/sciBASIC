@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::3f64daf905340169fcf9b98acbcc01c8, Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 139
-    '    Code Lines: 64 (46.04%)
-    ' Comment Lines: 51 (36.69%)
-    '    - Xml Docs: 68.63%
-    ' 
-    '   Blank Lines: 24 (17.27%)
-    '     File Size: 5.45 KB
+' Summaries:
 
 
-    '     Class LinguisticVariable
-    ' 
-    '         Properties: InputValue, MembershipFunctionCollection, Name
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Fuzzify, MaxValue, MinValue, Range
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 139
+'    Code Lines: 64 (46.04%)
+' Comment Lines: 51 (36.69%)
+'    - Xml Docs: 68.63%
+' 
+'   Blank Lines: 24 (17.27%)
+'     File Size: 5.45 KB
+
+
+'     Class LinguisticVariable
+' 
+'         Properties: InputValue, MembershipFunctionCollection, Name
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Fuzzify, MaxValue, MinValue, Range
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -75,12 +75,9 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Language
 
-Namespace Logical.FuzzyLogic
+Namespace Mamdani
 
     ''' <summary>
     ''' Represents a linguistic variable.

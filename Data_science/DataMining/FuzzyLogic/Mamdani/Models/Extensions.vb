@@ -57,36 +57,36 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 
-Namespace Logical.FuzzyLogic.Models
+Namespace Mamdani.Models
 
     Module Extensions
 
         ReadOnly tokens As New Dictionary(Of String, Tokens) From {
- _
-            {"and", Models.Tokens.Operator},
-            {"or", Models.Tokens.Operator},
-            {"not", Models.Tokens.Operator},
-            {"xor", Models.Tokens.Operator},
-            {"nor", Models.Tokens.Operator},
-            {"nand", Models.Tokens.Operator},
-            {"is", Models.Tokens.Operator},
-            {"<<", Models.Tokens.Comparer},
-            {"<", Models.Tokens.Comparer},
-            {"<=", Models.Tokens.Comparer},
-            {">", Models.Tokens.Comparer},
-            {"=>", Models.Tokens.Comparer},
-            {">>", Models.Tokens.Comparer},
-            {"~=", Models.Tokens.Comparer},
-            {"=", Models.Tokens.Comparer},
-            {"<>", Models.Tokens.Comparer},
-            {vbTab, Models.Tokens.WhiteSpace},
-            {" ", Models.Tokens.WhiteSpace},
-            {"(", Models.Tokens.OpenStack},
-            {")", Models.Tokens.CloseStack},
-            {"[", Models.Tokens.OpenStack},
-            {"]", Models.Tokens.CloseStack},
-            {"{", Models.Tokens.OpenStack},
-            {"}", Models.Tokens.CloseStack}
+                                                                   _
+            {"and", Models.tokens.Operator},
+            {"or", Models.tokens.Operator},
+            {"not", Models.tokens.Operator},
+            {"xor", Models.tokens.Operator},
+            {"nor", Models.tokens.Operator},
+            {"nand", Models.tokens.Operator},
+            {"is", Models.tokens.Operator},
+            {"<<", Models.tokens.Comparer},
+            {"<", Models.tokens.Comparer},
+            {"<=", Models.tokens.Comparer},
+            {">", Models.tokens.Comparer},
+            {"=>", Models.tokens.Comparer},
+            {">>", Models.tokens.Comparer},
+            {"~=", Models.tokens.Comparer},
+            {"=", Models.tokens.Comparer},
+            {"<>", Models.tokens.Comparer},
+            {vbTab, Models.tokens.WhiteSpace},
+            {" ", Models.tokens.WhiteSpace},
+            {"(", Models.tokens.OpenStack},
+            {")", Models.tokens.CloseStack},
+            {"[", Models.tokens.OpenStack},
+            {"]", Models.tokens.CloseStack},
+            {"{", Models.tokens.OpenStack},
+            {"}", Models.tokens.CloseStack}
         }
 
         Const STACKS As String = "()[]{}"
@@ -98,7 +98,7 @@ Namespace Logical.FuzzyLogic.Models
             Dim tokens As New List(Of LogicalToken)
             Dim ch As Char
             Dim token As New List(Of Char)
-            Dim type As Tokens = Models.Tokens.UNDEFINE
+            Dim type As Tokens = Models.tokens.UNDEFINE
             Dim exitb As Boolean = False
 
             If Not str.MoveNext() Then  ' Empty expression
@@ -126,29 +126,29 @@ Namespace Logical.FuzzyLogic.Models
 
                 token += ch
 CONTINUTES:
-                If Operators.IndexOf(ch) > -1 Then
+                If OPERATORS.IndexOf(ch) > -1 Then
                     Call __parseOperator(str, ch, token)
-                    type = Models.Tokens.Operator
+                    type = Models.tokens.Operator
 
                 ElseIf COMPARERS.IndexOf(ch) > -1 Then
                     Call __parseComparer(str, ch, token)
-                    type = Models.Tokens.Comparer
+                    type = Models.tokens.Comparer
 
                 Else
                     exitb = str.__parseUNDEFINE(token)
-                    type = Models.Tokens.UNDEFINE
+                    type = Models.tokens.UNDEFINE
                     tokens += New LogicalToken(type, New String(token))
                 End If
 
-                If type <> Models.Tokens.UNDEFINE Then
+                If type <> Models.tokens.UNDEFINE Then
                     Dim st As String = New String(token).ToLower
 
                     If Extensions.tokens.ContainsKey(st) Then
                         type = Extensions.tokens(st)
 
-                        If ch.IsWhiteSpace AndAlso type = Models.Tokens.Operator Then
+                        If ch.IsWhiteSpace AndAlso type = Models.tokens.Operator Then
                             tokens += New LogicalToken(type, st)
-                        ElseIf type = Models.Tokens.Comparer Then
+                        ElseIf type = Models.tokens.Comparer Then
                             tokens += New LogicalToken(type, st)
                             Call token.Clear()
                             token += ch
@@ -165,7 +165,7 @@ UNDEFINE:               If Not ch.IsWhiteSpace Then
                             exitb = True
                         End If
 
-                        type = Models.Tokens.UNDEFINE
+                        type = Models.tokens.UNDEFINE
                         tokens += New LogicalToken(type, New String(token))
                     End If
                 End If
@@ -181,7 +181,7 @@ UNDEFINE:               If Not ch.IsWhiteSpace Then
         End Function
 
         <Extension> Public Function IsWhiteSpace(x As LogicalToken) As Boolean
-            Return x.name = Models.Tokens.WhiteSpace OrElse (x.name = Models.Tokens.UNDEFINE AndAlso String.IsNullOrWhiteSpace(x.text))
+            Return x.name = Models.tokens.WhiteSpace OrElse (x.name = Models.tokens.UNDEFINE AndAlso String.IsNullOrWhiteSpace(x.text))
         End Function
 
         <Extension> Public Function IsWhiteSpace(ch As Char) As Boolean
@@ -190,7 +190,7 @@ UNDEFINE:               If Not ch.IsWhiteSpace Then
             If Not tokens.ContainsKey(s) Then
                 Return False
             Else
-                Return tokens(s) = Models.Tokens.WhiteSpace
+                Return tokens(s) = Models.tokens.WhiteSpace
             End If
         End Function
 

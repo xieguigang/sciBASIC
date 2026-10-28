@@ -85,7 +85,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace Logical.FuzzyLogic
+Namespace Mamdani
 
     ''' <summary>
     ''' Represents the inferential engine.

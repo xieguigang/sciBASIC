@@ -76,9 +76,9 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.Logical.FuzzyLogic.Models
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.Mamdani.Models
 
-Namespace Logical.FuzzyLogic
+Namespace Mamdani
 
     ''' <summary>
     ''' Represents a rule.

@@ -60,7 +60,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text
 
-Namespace Logical.FuzzyLogic.Models
+Namespace Mamdani.Models
 
     Public Class FuzzyModel : Implements ISaveHandle
 

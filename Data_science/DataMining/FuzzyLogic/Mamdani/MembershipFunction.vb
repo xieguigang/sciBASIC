@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::3368ebe9b7c4bdcd8d69e3c4f3fd02ff, Data_science\Mathematica\Math\Math\FuzzyLogic\MembershipFunction.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 121
-    '    Code Lines: 44 (36.36%)
-    ' Comment Lines: 54 (44.63%)
-    '    - Xml Docs: 70.37%
-    ' 
-    '   Blank Lines: 23 (19.01%)
-    '     File Size: 3.82 KB
+' Summaries:
 
 
-    '     Class MembershipFunction
-    ' 
-    '         Properties: Name, Value, X0, X1, X2
-    '                     X3
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Area, Centorid
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 121
+'    Code Lines: 44 (36.36%)
+' Comment Lines: 54 (44.63%)
+'    - Xml Docs: 70.37%
+' 
+'   Blank Lines: 23 (19.01%)
+'     File Size: 3.82 KB
+
+
+'     Class MembershipFunction
+' 
+'         Properties: Name, Value, X0, X1, X2
+'                     X3
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Area, Centorid
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,11 +76,9 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 
-Namespace Logical.FuzzyLogic
+Namespace Mamdani
 
     ''' <summary>
     ''' Mamdani 模糊集合：梯形四点表示 <c>(X0, X1, X2, X3)</c>。
@@ -98,8 +96,7 @@ Namespace Logical.FuzzyLogic
     ''' 仍是重心法去模糊用的近似式。这两者都**不参与** TSK 推理。
     ''' </para>
     ''' </remarks>
-    Public Class MembershipFunction
-        Inherits TSK.TrapezoidalMembership
+    Public Class MembershipFunction : Inherits TrapezoidalMembership
 
 #Region "Constructors"
 

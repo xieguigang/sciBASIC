@@ -1,8 +1,3 @@
-Option Strict On
-Option Explicit On
-
-Imports System
-Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports std = System.Math

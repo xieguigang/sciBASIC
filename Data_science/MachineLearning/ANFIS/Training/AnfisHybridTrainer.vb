@@ -306,7 +306,7 @@ Public Class AnfisHybridTrainer
                 For k As Integer = 0 To theta.GetLength(1) - 1
                     Dim updated As Double = theta(i, k) - learningRate * thetaGradient(i, k) / rows
 
-                    If Not AnfisData.IsNotFinite(updated) Then
+                    If Not updated.IsNaNImaginary Then
                         theta(i, k) = updated
                     End If
                 Next
