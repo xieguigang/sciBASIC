@@ -5,8 +5,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.LNN</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>10.8.0.0</Version>
-    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release;Debug;Release</Configurations>
     <Title>Liquid Neural Networks with ODE Solvers for Time Series</Title>
     <Description>Continuous-time liquid neural networks for sciBASIC#, where neuron dynamics follow learnable ODEs solved by Euler, Heun, RK4 or adaptive RK45 steps; includes SGD/Adam training and time-series preprocessing utilities.</Description>

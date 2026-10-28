@@ -14,8 +14,8 @@
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <Version>10.8.0.0</Version>
-    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Description>Elastic net regression for sciBASIC#: a coordinate-descent solver that combines L1 and L2 penalties with an unpenalized intercept, warm-started regularization paths, cross validation over the l1Ratio and alpha grid, a polynomial view of the fitted model and NumericTable entry points for table based workflows.</Description>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>

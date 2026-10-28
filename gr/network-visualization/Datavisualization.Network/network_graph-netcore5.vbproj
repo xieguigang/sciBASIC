@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>10.8.0.0</Version>
-    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Title>Network Graph Data Model And Topology Analysis Library</Title>
     <Description>Defines the NetworkGraph node and edge model with dynamic graph tables, and supplies community detection, shortest paths, degree and betweenness centrality. The data layer of the sciBASIC# network visualization stack.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network</AssemblyTitle>

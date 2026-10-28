@@ -23,8 +23,8 @@
     <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <IncludeSymbols>True</IncludeSymbols>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Version>10.8.0.0</Version>
-    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.Data.GraphTheory</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
