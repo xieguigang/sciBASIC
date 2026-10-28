@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace HDBSCAN.Distance
@@ -61,6 +62,10 @@ Namespace HDBSCAN.Distance
     Public Class SupremumDistance
         Implements IDistanceCalculator(Of Double())
         Public Function ComputeDistance(indexOne As Integer, indexTwo As Integer, attributesOne As Double(), attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
+            If attributesOne.Length = attributesTwo.Length Then
+                Return SimdDistance.Supremum(attributesOne, attributesTwo)
+            End If
+
             Dim distance As Double = 0
             Dim i = 0
 

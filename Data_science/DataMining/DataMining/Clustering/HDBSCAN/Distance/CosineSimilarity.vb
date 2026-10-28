@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Collections.Concurrent
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace HDBSCAN.Distance
@@ -107,13 +108,21 @@ Namespace HDBSCAN.Distance
 
             If magnitudeOne = 0 AndAlso magnitudeTwo = 0 Then Return 1
 
-            Dim dotProduct As Double = 0
-            Dim i = 0
+            Dim dotProduct As Double
 
-            While i < attributesOne.Length AndAlso i < attributesTwo.Length
-                dotProduct += attributesOne(i) * attributesTwo(i)
-                i += 1
-            End While
+            If attributesOne.Length = attributesTwo.Length Then
+                ' 单趟 SIMD 点积（旧实现是逐元素标量循环）
+                dotProduct = SimdReduce.Dot(attributesOne, attributesTwo)
+            Else
+                Dim i = 0
+
+                dotProduct = 0
+
+                While i < attributesOne.Length AndAlso i < attributesTwo.Length
+                    dotProduct += attributesOne(i) * attributesTwo(i)
+                    i += 1
+                End While
+            End If
 
             Dim lComputeDistance = std.Max(0, 1 - dotProduct / std.Sqrt(magnitudeOne * magnitudeTwo))
             Return lComputeDistance
@@ -154,7 +163,8 @@ Namespace HDBSCAN.Distance
             hasValueValue = _tryGet(index)
             If hasValueValue.hasValue Then Return hasValueValue.value
 
-            Dim magnitude = attributes.Sum(Function(val) std.Pow(val, 2))
+            ' 平方范数：SIMD 单趟（旧实现是 LINQ Sum + Pow 委托，每次调用都要装箱/建枚举器）
+            Dim magnitude = SimdReduce.SumSquares(attributes)
             _tryAdd(index, magnitude)
             Return magnitude
         End Function
