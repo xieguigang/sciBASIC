@@ -37,12 +37,18 @@ Public Module Program
             Return ParityChecks.Run()
         End If
 
+        If args.Any(Function(a) a = "--diag") Then
+            Call Diag.Run()
+
+            Return 0
+        End If
+
         Dim quick As Boolean = args.Any(Function(a) a = "--quick")
         Dim full As Boolean = args.Any(Function(a) a = "--full")
         Dim savePath As String = GetOption(args, "--save")
 
-        ' 关掉进度条与调试输出，避免污染测量结果（Tqdm 直接写 Console.Out）
-        Call Microsoft.VisualBasic.ApplicationServices.App.SetVariable("tqdm", "FALSE")
+        ' 关掉调试输出，并把 Tqdm 进度条期间的 Console.Out 重定向到空写入器，
+        ' 否则进度条 I/O 会显著污染 DBSCAN 等用例的计时。
         Microsoft.VisualBasic.VBDebugger.Mute = True
 
         Call Console.WriteLine($"ClusteringBenchmark  |  mode={(If(quick, "quick", "default"))}  |  {SIMDEnvironment.Description}")
@@ -51,20 +57,30 @@ Public Module Program
         ' 预热：让两条路径的 JIT 成本尽量对称
         Call WarmUp()
 
+        Dim stdout As TextWriter = Console.Out
+
         SIMDEnvironment.config = SIMDConfiguration.auto
         SimdParallel.Enable = True
 
         Call Console.WriteLine()
         Call Console.WriteLine("running: SIMD + Parallel ...")
 
+        Console.SetOut(TextWriter.Null)
+
         Dim fast As BenchCases.CaseResult() = BenchCases.RunAll(quick, full)
+
+        Console.SetOut(stdout)
 
         SIMDEnvironment.config = SIMDConfiguration.disable
         SimdParallel.Enable = False
 
         Call Console.WriteLine("running: scalar + serial (baseline) ...")
 
+        Console.SetOut(TextWriter.Null)
+
         Dim baseline As BenchCases.CaseResult() = BenchCases.RunAll(quick, full)
+
+        Console.SetOut(stdout)
 
         SIMDEnvironment.config = SIMDConfiguration.auto
         SimdParallel.Enable = True
