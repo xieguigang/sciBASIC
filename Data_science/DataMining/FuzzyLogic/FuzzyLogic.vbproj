@@ -9,7 +9,16 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\DataMining\DataMining.NET5.vbproj" />
+  </ItemGroup>
+
+  <!-- 自检程序是独立工程，不能被编进库 -->
+  <ItemGroup>
+    <Compile Remove="_smoketest\**" />
+    <EmbeddedResource Remove="_smoketest\**" />
+    <None Remove="_smoketest\**" />
   </ItemGroup>
 
 </Project>

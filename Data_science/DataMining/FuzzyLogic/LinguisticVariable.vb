@@ -137,18 +137,16 @@ Namespace Logical.FuzzyLogic
         ''' </summary>
         ''' <param name="membershipFunctionName">The membership function for which fuzzify the variable.</param>
         ''' <returns>The degree of membership.</returns>
+        ''' <remarks>
+        ''' 求值委托给 <see cref="TSK.TrapezoidalMembership.Evaluate"/>（隶属函数只有一份实现），
+        ''' 数值行为与历史的分段 if/else 完全一致，包括两个退化肩点的单点取值：
+        ''' <c>X0 = X1</c> 时 <c>mu(X0) = 1</c>、<c>X2 = X3</c> 时 <c>mu(X2) = 1</c>。
+        ''' 该等价性由 <c>_smoketest</c> 的 Mamdani 一致性一节逐点守住。
+        ''' </remarks>
         Public Function Fuzzify(membershipFunctionName As String) As Double
             Dim membershipFunction As MembershipFunction = Me._MembershipFunctionCollection.Find(membershipFunctionName)
 
-            If (membershipFunction.X0 <= Me.InputValue) AndAlso (Me.InputValue < membershipFunction.X1) Then
-                Return (Me.InputValue - membershipFunction.X0) / (membershipFunction.X1 - membershipFunction.X0)
-            ElseIf (membershipFunction.X1 <= Me.InputValue) AndAlso (Me.InputValue <= membershipFunction.X2) Then
-                Return 1
-            ElseIf (membershipFunction.X2 < Me.InputValue) AndAlso (Me.InputValue <= membershipFunction.X3) Then
-                Return (membershipFunction.X3 - Me.InputValue) / (membershipFunction.X3 - membershipFunction.X2)
-            Else
-                Return 0
-            End If
+            Return membershipFunction.Evaluate(Me.InputValue)
         End Function
 
         ''' <summary>
