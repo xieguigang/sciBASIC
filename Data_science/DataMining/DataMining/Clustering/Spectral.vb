@@ -280,8 +280,8 @@ Namespace Clustering
 
             Dim cluster_id = 1
 
-            For Each c In clusters
-                For Each x As ClusterEntity In c
+            For Each cluster As KMeansCluster(Of ClusterEntity) In clusters
+                For Each x As ClusterEntity In cluster
                     assignments(Integer.Parse(x.uid) - 1) = cluster_id
                 Next
 
