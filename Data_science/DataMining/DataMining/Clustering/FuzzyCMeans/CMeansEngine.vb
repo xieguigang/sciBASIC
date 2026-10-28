@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -212,37 +213,52 @@ Namespace FuzzyCMeans
                                             width As Integer) As IEnumerable(Of Double())
 
             Dim nsamples As Integer = rows.Length
+            Dim weights As Double() = New Double(nsamples - 1) {}
 
             For i As Integer = 0 To classCount - 1
                 Dim center As Double() = New Double(width - 1) {}
 
-                For x As Integer = 0 To width - 1
-                    Dim numerator As Double = 0
-                    Dim denominator As Double = 0
+                ' 权重 w = u(j,i)^m 与维度无关：先在样本维上算一次，
+                ' 避免"簇 × 维度 × 样本"重复做 Pow（旧实现每个维度都重算一遍）。
+                For j As Integer = 0 To nsamples - 1
+                    Dim w As Double = u(j)(i) ^ m
 
-                    For j As Integer = 0 To nsamples - 1
-                        Dim w As Double = u(j)(i) ^ m
-
-                        If w.IsNaNImaginary Then
-                            w = 0
-                        End If
-
-                        Dim value As Double = If(rows(j) Is Nothing, 0, rows(j)(x))
-
-                        If value.IsNaNImaginary Then
-                            value = 0
-                        End If
-
-                        numerator += w * value
-                        denominator += w
-                    Next
-
-                    If denominator = 0.0 Then
-                        center(x) = 10000
-                    Else
-                        center(x) = numerator / denominator
+                    If w.IsNaNImaginary Then
+                        w = 0
                     End If
+
+                    weights(j) = w
                 Next
+
+                Dim denominator As Double = SimdReduce.Sum(weights)
+
+                If denominator = 0.0 Then
+                    For x As Integer = 0 To width - 1
+                        center(x) = 10000
+                    Next
+                Else
+                    For x As Integer = 0 To width - 1
+                        Dim numerator As Double = 0
+
+                        For j As Integer = 0 To nsamples - 1
+                            Dim row As Double() = rows(j)
+
+                            If row Is Nothing OrElse x >= row.Length Then
+                                Continue For
+                            End If
+
+                            Dim value As Double = row(x)
+
+                            If value.IsNaNImaginary Then
+                                value = 0
+                            End If
+
+                            numerator += weights(j) * value
+                        Next
+
+                        center(x) = numerator / denominator
+                    Next
+                End If
 
                 Yield center
             Next
@@ -287,13 +303,22 @@ Namespace FuzzyCMeans
 
         Private Shared Function scanRow(centers As Double()(), entity As Double(), classCount As Integer, m As Double) As Double()
             Dim ui As Double() = New Double(classCount - 1) {}
+            Dim squared As Double() = New Double(classCount - 1) {}
+            Dim exponent As Double = 2.0 / (m - 1.0)
+
+            ' 距离只算 c 次（旧实现在 i × k 双重循环里重复求值，共 c² 次）
+            For k As Integer = 0 To classCount - 1
+                squared(k) = SimdReduce.DistanceSquared(entity, centers(k))
+            Next
 
             For i As Integer = 0 To classCount - 1
+                Dim di As Double = std.Sqrt(squared(i))
                 Dim sumAll As Double = 0
 
                 For k As Integer = 0 To classCount - 1
-                    Dim a As Double = std.Sqrt(entity.SquareDistance(centers(i))) / std.Sqrt(entity.SquareDistance(centers(k)))
-                    sumAll += a ^ (2 / (m - 1))
+                    Dim a As Double = di / std.Sqrt(squared(k))
+
+                    sumAll += a ^ exponent
                 Next
 
                 ui(i) = 1 / sumAll

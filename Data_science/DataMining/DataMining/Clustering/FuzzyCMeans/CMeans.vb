@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -269,14 +270,26 @@ Namespace FuzzyCMeans
         <Extension>
         Private Function scanRow(centers As Double()(), entity As ClusterEntity, classCount As Integer, m As Double) As Double()
             Dim ui As Double() = New Double(classCount - 1) {}
+            Dim squared As Double() = New Double(classCount - 1) {}
+            Dim vector As Double() = entity.entityVector
+            Dim exponent As Double = 2.0 / (m - 1.0)
+
+            ' 先把"样本到各中心"的距离一次算完（c 次），
+            ' 旧实现把它写在内层聚合里，等于对每个 j 都重算 c 次，总代价 O(c²·d) 而非 O(c·d)。
+            For k As Integer = 0 To classCount - 1
+                squared(k) = SimdReduce.DistanceSquared(vector, centers(k))
+            Next
 
             For j As Integer = 0 To classCount - 1
-                Dim jIndex As Integer = j
-                Dim sumAll As Double = Aggregate x As Integer
-                                       In Enumerable.Range(0, classCount)
-                                       Let a As Double = std.Sqrt(entity.SquareDistance(centers(jIndex))) / std.Sqrt(entity.SquareDistance(centers(x)))
-                                       Let val As Double = a ^ (2 / (m - 1))
-                                       Into Sum(val)
+                Dim dj As Double = std.Sqrt(squared(j))
+                Dim sumAll As Double = 0
+
+                For x As Integer = 0 To classCount - 1
+                    Dim a As Double = dj / std.Sqrt(squared(x))
+
+                    sumAll += a ^ exponent
+                Next
+
                 ui(j) = 1 / sumAll
 
                 If Double.IsNaN(ui(j)) Then
@@ -289,25 +302,11 @@ Namespace FuzzyCMeans
 
         <Extension>
         Private Sub updateMembership(u As Double()(), entities As ClusterEntity(), centers As Double()(), classCount As Integer, m As Double)
-            Dim classIndex As Integer() = Enumerable.Range(0, classCount).ToArray
-
             For i As Integer = 0 To u.Length - 1
-                Dim index As Integer = i
+                Dim ui As Double() = scanRow(centers, entities(i), classCount, m)
 
-                For j As Integer = 0 To u(i).Length - 1
-                    Dim jIndex As Integer = j
-                    Dim sumAll As Double = Aggregate x As Integer
-                                           In classIndex
-                                           Let d1 As Double = std.Sqrt(entities(index).SquareDistance(centers(jIndex)))
-                                           Let d2 As Double = std.Sqrt(entities(index).SquareDistance(centers(x)))
-                                           Let a As Double = d1 / d2
-                                           Let val As Double = a ^ (2 / (m - 1))
-                                           Into Sum(val)
-                    u(i)(j) = 1 / sumAll
-
-                    If Double.IsNaN(u(i)(j)) Then
-                        u(i)(j) = 1
-                    End If
+                For j As Integer = 0 To classCount - 1
+                    u(i)(j) = ui(j)
                 Next
             Next
         End Sub
@@ -349,27 +348,59 @@ Namespace FuzzyCMeans
         End Function
 
         Public Iterator Function GetCenters(classCount As Integer, m As Double, u As Double()(), entities As ClusterEntity(), width As Integer) As IEnumerable(Of Double())
-            Dim entityIndex As Integer() = Enumerable.Range(0, entities.Length).ToArray
+            Dim nsamples As Integer = entities.Length
+            Dim weights As Double() = New Double(nsamples - 1) {}
 
-            For Each i As Integer In Enumerable.Range(0, classCount)
-                ' for each data dimension
-                Yield Enumerable.Range(0, width) _
-                    .Select(Function(x)
-                                Dim prow As Double() = (From j As Integer In entityIndex Let xi = u(j)(i) ^ m Select If(xi.IsNaNImaginary, 0, xi)).ToArray
-                                Dim v As Double() = (From j As Integer In entityIndex Let yi = entities(j)(x) Select If(yi.IsNaNImaginary, 0, yi)).ToArray
-                                Dim sumAll = Aggregate j As Integer
-                                             In entityIndex
-                                             Let val As Double = prow(j)
-                                             Into Sum(val * v(j))
-                                Dim bValue = prow.Sum
+            For i As Integer = 0 To classCount - 1
+                Dim center As Double() = New Double(width - 1) {}
 
-                                If bValue = 0.0 Then
-                                    Return 10000
-                                End If
+                ' 隶属度权重 w = u(j,i)^m 对"所有维度"都是同一个值，
+                ' 旧实现把权重数组与样本数组的构建放在"簇 × 维度"的 Select 里，
+                ' 每轮会分配 c·d 个长度 n 的临时数组；这里按 (簇, 样本) 只算一次。
+                For j As Integer = 0 To nsamples - 1
+                    Dim w As Double = u(j)(i) ^ m
 
-                                Return sumAll / bValue
-                            End Function) _
-                    .ToArray()
+                    If w.IsNaNImaginary Then
+                        w = 0
+                    End If
+
+                    weights(j) = w
+                Next
+
+                Dim denominator As Double = SimdReduce.Sum(weights)
+
+                If denominator = 0.0 Then
+                    For x As Integer = 0 To width - 1
+                        center(x) = 10000
+                    Next
+                Else
+                    For j As Integer = 0 To nsamples - 1
+                        Dim w As Double = weights(j)
+
+                        If w = 0.0 Then
+                            Continue For
+                        End If
+
+                        Dim entity As ClusterEntity = entities(j)
+                        Dim n As Integer = std.Min(width, entity.Length)
+
+                        For x As Integer = 0 To n - 1
+                            Dim value As Double = entity(x)
+
+                            If value.IsNaNImaginary Then
+                                value = 0
+                            End If
+
+                            center(x) += w * value
+                        Next
+                    Next
+
+                    For x As Integer = 0 To width - 1
+                        center(x) /= denominator
+                    Next
+                End If
+
+                Yield center
             Next
         End Function
 

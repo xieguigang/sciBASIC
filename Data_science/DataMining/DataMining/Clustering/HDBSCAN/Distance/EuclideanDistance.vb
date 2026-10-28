@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace HDBSCAN.Distance
@@ -61,6 +62,12 @@ Namespace HDBSCAN.Distance
     Public Class EuclideanDistance
         Implements IDistanceCalculator(Of Double())
         Public Function ComputeDistance(indexOne As Integer, indexTwo As Integer, attributesOne As Double(), attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
+            If attributesOne.Length = attributesTwo.Length Then
+                ' 单趟 4 路 SIMD、零分配（旧实现是逐元素标量累加）
+                Return SimdDistance.Euclidean(attributesOne, attributesTwo)
+            End If
+
+            ' 维度不一致时保持旧行为：只比较公共前缀
             Dim distance As Double = 0
             Dim i = 0
 

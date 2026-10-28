@@ -72,6 +72,11 @@ Namespace KMeans
         Implements IEnumerable(Of T)
 
         ''' <summary>
+        ''' ClusterMean 的惰性缓存（<see cref="Add"/> 时失效）
+        ''' </summary>
+        Private _mean As Double()
+
+        ''' <summary>
         ''' The sum of all the data in the cluster
         ''' </summary>
         Public ReadOnly Property ClusterSum() As Double()
@@ -86,12 +91,22 @@ Namespace KMeans
         ''' <summary>
         ''' The mean of all the data in the cluster
         ''' </summary>
+        ''' <remarks>
+        ''' 结果被缓存到 <c>_mean</c>：该属性在 KMeans 的内层循环里被反复读取，
+        ''' 而每次读取原本都会执行一次长度 d 的除法并新建数组。
+        ''' </remarks>
         Public ReadOnly Property ClusterMean() As Double()
             Get
                 Dim size As Integer = m_innerList.Count
-                Dim mean As Double() = Divide.f64_op_divide_f64_scalar(_ClusterSum, size)
 
-                Return mean
+                If size = 0 OrElse _ClusterSum Is Nothing Then
+                    Return Array.Empty(Of Double)()
+                End If
+                If _mean Is Nothing Then
+                    _mean = Divide.f64_op_divide_f64_scalar(_ClusterSum, size)
+                End If
+
+                Return _mean
             End Get
         End Property
 
@@ -109,11 +124,13 @@ Namespace KMeans
 
         Public Function CalculateKMeansCost() As Double
             Dim kMeansCost As Double = 0
-            Dim distanceBetweenPoints As Double = 0
+            Dim centerVector As Double() = Center.entityVector
+
+            ' 代价 = 平方距离之和：直接累加 SIMD 平方距离，省掉 Sqrt 与 Pow
             For pointIndex As Integer = 0 To m_innerList.Count - 1
-                distanceBetweenPoints = m_innerList(pointIndex).entityVector.EuclideanDistance(Center.entityVector)
-                kMeansCost += std.Pow(distanceBetweenPoints, 2)
+                kMeansCost += SimdReduce.DistanceSquared(m_innerList(pointIndex).entityVector, centerVector)
             Next
+
             Return kMeansCost
         End Function
 
@@ -124,6 +141,8 @@ Namespace KMeans
         ''' <param name="data">A 1-dimensional array containing data that will be added to the cluster</param>
         Public Overrides Sub Add(data As T)
             Call m_innerList.Add(data)
+
+            _mean = Nothing
 
             If m_innerList.Count = 1 Then
                 _ClusterSum = data.entityVector.ToArray

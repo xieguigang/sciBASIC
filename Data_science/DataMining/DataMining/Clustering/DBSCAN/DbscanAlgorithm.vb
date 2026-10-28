@@ -160,7 +160,8 @@ Namespace DBSCAN
             Dim seeds As New List(Of Integer)
             Dim size As Integer = session.allPoints.Length
 
-            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(0, size).ToArray, wrap_console:=App.EnableTqdm)
+            ' 直接用惰性序列 + 已知总数，避免为了进度条先物化一个 n 元素的数组
+            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(0, size), total:=size, wrap_console:=App.EnableTqdm)
                 Dim p As DbscanPoint(Of T) = session.allPoints(i)
 
                 If p.IsVisited AndAlso Not (p.ClusterId = ClusterIDs.Unclassified OrElse p.ClusterId = ClusterIDs.Noise) Then

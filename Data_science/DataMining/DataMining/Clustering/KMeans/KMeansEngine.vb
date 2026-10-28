@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Namespace KMeans
 
@@ -210,29 +211,43 @@ Namespace KMeans
                 Throw New SystemException(NoMember)
             End If
 
-            For count As Integer = 0 To clusters.NumOfCluster - 1
+            Dim k As Integer = clusters.NumOfCluster
+
+            For count As Integer = 0 To k - 1
                 Call newClusters.Add(New NumericKMeansCluster)
             Next
 
+            ' 每轮只取一次簇中心：ClusterMean 是计算属性（每次 get 都会新建数组），
+            ' 放在内层循环里就是 n·k 次数组分配；同时缓存每个中心的平方范数，
+            ' 使内层距离可以用范数展开（k 次点积替代 k 次完整差分）。
+            Dim centers As Double()() = New Double(k - 1)() {}
+            Dim centerNorms As Double() = New Double(k - 1) {}
+            Dim emptyCenter As Double() = New Double(width - 1) {}
+            Dim distances As Double() = New Double(k - 1) {}
+
+            For ci As Integer = 0 To k - 1
+                Dim mean As Double() = clusters(ci).ClusterMean
+
+                If mean Is Nothing OrElse mean.Length = 0 Then
+                    mean = emptyCenter
+                End If
+
+                centers(ci) = mean
+                centerNorms(ci) = SimdDistance.SquaredNorm(mean)
+            Next
+
             For i As Integer = 0 To rows.Length - 1
-                Dim minIndex As Integer = 0
-                Dim minDistance As Double = Double.MaxValue
                 Dim row As Double() = rows(i)
 
-                For ci As Integer = 0 To clusters.NumOfCluster - 1
-                    Dim mean As Double() = clusters(ci).ClusterMean
+                If row.Length <> width Then
+                    Throw New ArgumentException($"the dimension of row[{i}] not agree: {row.Length} vs {width}!")
+                End If
 
-                    If mean Is Nothing OrElse mean.Length = 0 Then
-                        mean = New Double(width - 1) {}
-                    End If
+                Dim rowNorm As Double = SimdDistance.SquaredNorm(row)
 
-                    Dim distance As Double = row.EuclideanDistance(mean)
+                Call SimdDistance.BatchDistanceSquared(rowNorm, row, centers, centerNorms, distances)
 
-                    If distance < minDistance Then
-                        minDistance = distance
-                        minIndex = ci
-                    End If
-                Next
+                Dim minIndex As Integer = SimdSelect.ArgMin(distances, 0, k)
 
                 Call newClusters(minIndex).Add(row, i, ids(i))
             Next

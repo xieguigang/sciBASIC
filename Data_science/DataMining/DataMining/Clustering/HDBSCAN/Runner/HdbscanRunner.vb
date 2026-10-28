@@ -56,6 +56,7 @@
 
 Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
 Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Hdbscanstar
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Parallel0 = System.Threading.Tasks.Parallel
 Imports std = System.Math
 
@@ -173,44 +174,50 @@ Namespace HDBSCAN.Runner
         End Function
 
         Private Shared Sub PrecomputeNormalMatrixDistancesIfApplicable(Of T)(parameters As HdbscanParameters(Of T), numPoints As Integer)
-            If parameters.Distances Is Nothing AndAlso parameters.CacheDistance AndAlso TypeOf parameters.DataSet Is Double()() Then
-                Dim distances = New Double(numPoints - 1)() {}
-                For i = 0 To distances.Length - 1
-                    distances(i) = New Double(numPoints - 1) {}
-                Next
+            If parameters.Distances IsNot Nothing OrElse parameters.DistanceCacheMode = DistanceCacheMode.None Then
+                Return
+            End If
+            If Not (TypeOf parameters.DataSet Is Double()()) Then
+                Return
+            End If
 
-                If parameters.MaxDegreeOfParallelism = 0 OrElse parameters.MaxDegreeOfParallelism > 1 Then
-                    Dim size = numPoints * numPoints
+            ' 大样本下 n×n 物化会直接 OOM（n=20000 → 3.2 GB），显式要求缓存也要受上限保护
+            If numPoints > parameters.MaxCachedPoints Then
+                Call Microsoft.VisualBasic.VBDebugger.EchoLine($"HDBSCAN: {numPoints} points exceeds MaxCachedPoints({parameters.MaxCachedPoints}), distance cache is disabled.")
 
-                    Dim maxDegreeOfParallelism = parameters.MaxDegreeOfParallelism
-                    If maxDegreeOfParallelism = 0 Then
-                        ' Not specified. Use all threads.
-                        maxDegreeOfParallelism = Environment.ProcessorCount
-                    End If
+                parameters.DistanceCacheMode = DistanceCacheMode.None
 
-                    Dim [option] = New ParallelOptions With {.MaxDegreeOfParallelism = std.Max(1, maxDegreeOfParallelism)}
+                Return
+            End If
 
-                    Parallel0.For(0, size, [option], Sub(index)
-                                                         Dim i = index Mod numPoints
-                                                         Dim j = index \ numPoints
-                                                         If i < j Then
-                                                             Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
-                                                             distances(i)(j) = distance
-                                                             distances(j)(i) = distance
-                                                         End If
-                                                     End Sub)
-                Else
-                    For i = 0 To numPoints - 1
-                        For j = 0 To i - 1
-                            Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
-                            distances(i)(j) = distance
-                            distances(j)(i) = distance
+            Dim rows As Double()() = DirectCast(CType(parameters.DataSet, Object), Double()())
+            Dim distances As Double()() = New Double(numPoints - 1)() {}
+
+            For i As Integer = 0 To distances.Length - 1
+                distances(i) = New Double(numPoints - 1) {}
+            Next
+
+            ' 按"行块"并行：每行只与 j > i 计算一次距离并对称写回，
+            ' 相比旧实现（Parallel.For 遍历 n² 个下标、用 index Mod n / index \ n 反解行号）
+            ' 少掉了整除运算与跨行随机写入，且距离计算量减半。
+            Dim distanceFunc = parameters.DistanceFunction
+
+            Call SimdParallel.ForRange(numPoints,
+                Sub(start, ends)
+                    For i As Integer = start To ends - 1
+                        Dim row As Double() = distances(i)
+                        Dim xi As Double() = rows(i)
+
+                        For j As Integer = i + 1 To numPoints - 1
+                            Dim d As Double = distanceFunc.ComputeDistance(i, j, xi, rows(j))
+
+                            row(j) = d
+                            distances(j)(i) = d
                         Next
                     Next
-                End If
+                End Sub, 8)
 
-                parameters.Distances = distances
-            End If
+            parameters.Distances = distances
         End Sub
     End Class
 End Namespace

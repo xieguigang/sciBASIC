@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Namespace HDBSCAN.Hdbscanstar
     Public Class HdbscanAlgorithm
@@ -77,33 +78,41 @@ Namespace HDBSCAN.Hdbscanstar
                 Return coreDistances
             End If
 
-            For point = 0 To numPoints - 1
-                Dim kNNDistances = New Double(numNeighbors - 1) {}   'Sorted nearest distances found so far
-                For i = 0 To numNeighbors - 1
-                    kNNDistances(i) = Double.MaxValue
-                Next
+            ' 每个点的工作量彼此独立（只写 coreDistances(point)），
+            ' 因此按行块并行：n 个点 × n 次距离查询是 HDBSCAN 的第一个 O(n²) 热点。
+            Call SimdParallel.ForRange(numPoints,
+                Sub(start, ends)
+                    Dim kNNDistances As Double() = New Double(numNeighbors - 1) {}   'Sorted nearest distances found so far
 
-                For neighbor = 0 To numPoints - 1
-                    If point = neighbor Then Continue For
-
-                    Dim distance = distances(point, neighbor)
-
-                    'Check at which position in the nearest distances the current distance would fit:
-                    Dim neighborIndex = numNeighbors
-                    While neighborIndex >= 1 AndAlso distance < kNNDistances(neighborIndex - 1)
-                        neighborIndex -= 1
-                    End While
-
-                    'Shift elements in the array to make room for the current distance:
-                    If neighborIndex < numNeighbors Then
-                        For shiftIndex = numNeighbors - 1 To neighborIndex + 1 Step -1
-                            kNNDistances(shiftIndex) = kNNDistances(shiftIndex - 1)
+                    For point As Integer = start To ends - 1
+                        For i As Integer = 0 To numNeighbors - 1
+                            kNNDistances(i) = Double.MaxValue
                         Next
-                        kNNDistances(neighborIndex) = distance
-                    End If
-                Next
-                coreDistances(point) = kNNDistances(numNeighbors - 1)
-            Next
+
+                        For neighbor As Integer = 0 To numPoints - 1
+                            If point = neighbor Then Continue For
+
+                            Dim distance = distances(point, neighbor)
+
+                            'Check at which position in the nearest distances the current distance would fit:
+                            Dim neighborIndex = numNeighbors
+                            While neighborIndex >= 1 AndAlso distance < kNNDistances(neighborIndex - 1)
+                                neighborIndex -= 1
+                            End While
+
+                            'Shift elements in the array to make room for the current distance:
+                            If neighborIndex < numNeighbors Then
+                                For shiftIndex = numNeighbors - 1 To neighborIndex + 1 Step -1
+                                    kNNDistances(shiftIndex) = kNNDistances(shiftIndex - 1)
+                                Next
+                                kNNDistances(neighborIndex) = distance
+                            End If
+                        Next
+
+                        coreDistances(point) = kNNDistances(numNeighbors - 1)
+                    Next
+                End Sub, 64)
+
             Return coreDistances
         End Function
 

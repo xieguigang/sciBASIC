@@ -55,13 +55,67 @@
 
 Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
 Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Hdbscanstar
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Namespace HDBSCAN.Runner
+
+    ''' <summary>
+    ''' 稠密距离矩阵的缓存策略。
+    ''' </summary>
+    ''' <remarks>
+    ''' HDBSCAN 的核心距离与 MST 只需要"按需"读取距离，
+    ''' 而完整缓存需要 <c>8·n²</c> 字节（n = 20000 时约 3.2 GB）。
+    ''' 因此默认 <see cref="None"/>：完全不物化矩阵，峰值内存退回 O(n)。
+    ''' </remarks>
+    Public Enum DistanceCacheMode
+        ''' <summary>
+        ''' 不缓存，每次按需计算（默认，峰值内存 O(n)）。
+        ''' </summary>
+        None
+        ''' <summary>
+        ''' 缓存完整 n×n 矩阵（仅适合小数据集；超过 <see cref="HdbscanParameters(Of T).MaxCachedPoints"/> 会自动降级）。
+        ''' </summary>
+        Full
+    End Enum
+
     Public Class HdbscanParameters(Of T)
-        Public Property CacheDistance As Boolean = True
+        ''' <summary>
+        ''' 距离缓存策略，默认不缓存。
+        ''' </summary>
+        Public Property DistanceCacheMode As DistanceCacheMode = DistanceCacheMode.None
+
+        ''' <summary>
+        ''' 允许物化距离矩阵的最大样本数（超过则自动降级为 <see cref="DistanceCacheMode.None"/>）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 默认 8000 对应约 <c>8000² × 8 B ≈ 512 MB</c>；
+        ''' 显式设置 <see cref="DistanceCacheMode"/> 时仍受此上限保护，避免 OOM。
+        ''' </remarks>
+        Public Property MaxCachedPoints As Integer = 8000
+
         Public Property MaxDegreeOfParallelism As Integer = 1
 
+        ''' <summary>
+        ''' 距离矩阵缓存（仅在 <see cref="DistanceCacheMode"/> 不为 <see cref="DistanceCacheMode.None"/> 时填充）。
+        ''' </summary>
         Public Property Distances As Double()()
+
+        ''' <summary>
+        ''' 【兼容保留】是否缓存距离矩阵。
+        ''' </summary>
+        ''' <remarks>
+        ''' 读写这个属性等价于读写 <see cref="DistanceCacheMode"/>（<c>True</c> → <see cref="DistanceCacheMode.Full"/>）。
+        ''' 默认值已由 <c>True</c> 改为 <c>False</c>：n×n 物化在大数据集上会直接 OOM。
+        ''' </remarks>
+        Public Property CacheDistance As Boolean
+            Get
+                Return DistanceCacheMode <> DistanceCacheMode.None
+            End Get
+            Set(value As Boolean)
+                DistanceCacheMode = If(value, DistanceCacheMode.Full, DistanceCacheMode.None)
+            End Set
+        End Property
+
         Public Property DataSet As T()
         Public Property DistanceFunction As IDistanceCalculator(Of T)
 

@@ -197,9 +197,21 @@ Namespace Math.SIMD
 
                 If heap.Count < k Then
                     heap.Enqueue(i, priority)
-                ElseIf priority < heap.PeekPriority() Then
-                    heap.Dequeue()
-                    heap.Enqueue(i, priority)
+                Else
+                    Dim topElement As Integer = 0
+                    Dim topPriority As (Double, Integer)
+
+                    Call heap.TryPeek(topElement, topPriority)
+
+                    ' VB 没有为 ValueTuple 定义 < 运算符，这里显式做字典序比较
+                    Dim better As Boolean =
+                        priority.Item1 < topPriority.Item1 OrElse
+                        (priority.Item1 = topPriority.Item1 AndAlso priority.Item2 < topPriority.Item2)
+
+                    If better Then
+                        heap.Dequeue()
+                        heap.Enqueue(i, priority)
+                    End If
                 End If
             Next
 

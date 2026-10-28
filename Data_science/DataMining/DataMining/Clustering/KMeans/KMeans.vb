@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace KMeans
@@ -276,26 +277,42 @@ Namespace KMeans
                 Throw New SystemException(NoMember)
             End If
 
-            If CheckParallel(ncols:=dataWidth, clusters.NumOfCluster) Then
-                Dim min As SeqValue(Of Double)()
-                Dim index As Integer
+            ' 每轮只解析一次簇中心与中心范数。
+            '
+            ' 旧实现的两个分支都有严重的间接开销：
+            '  * 并行分支为"每个样本"新开一个 PLINQ 查询（AsParallel + WithDegreeOfParallelism），
+            '    线程池调度成本远高于 k 次距离计算本身，随后还用 OrderBy().First() 做全排序取最小；
+            '  * 串行分支每样本每簇都调用一次 ClusterMean（计算属性，每次新建数组）。
+            ' 现在统一为"批量平方距离 + 单趟 ArgMin"，结果与原实现逐位等价
+            ' （平方距离与距离同序，等值时取较小下标，与原来的严格小于比较一致）。
+            Dim k As Integer = clusters.NumOfCluster
+            Dim centers As Double()() = New Double(k - 1)() {}
+            Dim centerNorms As Double() = New Double(k - 1) {}
+            Dim emptyCenter As Double() = New Double(dataWidth - 1) {}
+            Dim distances As Double() = New Double(k - 1) {}
 
-                ' Kmeans并行算法
-                For Each x As T In data
-                    min = ParallelEuclideanDistance(clusters, x).ToArray
-                    ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
-                    index = min _
-                        .OrderBy(Function(distance) distance.value) _
-                        .First.i
+            For ci As Integer = 0 To k - 1
+                Dim mean As Double() = means(clusters(ci), dataWidth)
 
-                    Call newClusters(index).Add(x)
-                Next
-            Else
-                '((20+30)/2), ((170+160)/2), ((80+120)/2)
-                For Each x As T In data
-                    Call newClusters(minIndex(clusters, x)).Add(x)
-                Next
-            End If
+                centers(ci) = mean
+                centerNorms(ci) = SimdDistance.SquaredNorm(mean)
+            Next
+
+            For Each x As T In data
+                Dim row As Double() = x.entityVector
+
+                If row.Length = 0 Then
+                    Call newClusters(0).Add(x)
+
+                    Continue For
+                End If
+
+                Dim rowNorm As Double = SimdDistance.SquaredNorm(row)
+
+                Call SimdDistance.BatchDistanceSquared(rowNorm, row, centers, centerNorms, distances)
+
+                Call newClusters(SimdSelect.ArgMin(distances, 0, k)).Add(x)
+            Next
 
             Return newClusters
         End Function
