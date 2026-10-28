@@ -2,6 +2,7 @@ Option Strict On
 Option Explicit On
 
 Imports System
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports std = System.Math
 
 ''' <summary>
@@ -29,12 +30,12 @@ Imports std = System.Math
 ''' </remarks>
 Public Class AnfisHybridTrainer
 
-    Private ReadOnly _net As AnfisNetwork
+    Private ReadOnly _net As TskNetwork
     Private ReadOnly _options As AnfisOptions
     Private ReadOnly _warnings As System.Collections.Generic.List(Of String)
 
     ''' <summary>绑定模型与配置（配置会先做一次 <see cref="AnfisOptions.Validate"/>）。</summary>
-    Public Sub New(network As AnfisNetwork, Optional options As AnfisOptions = Nothing)
+    Public Sub New(network As TskNetwork, Optional options As AnfisOptions = Nothing)
         If network Is Nothing Then
             Throw New ArgumentNullException(NameOf(network))
         End If
@@ -73,7 +74,7 @@ Public Class AnfisHybridTrainer
         Dim yVal As Double(,) = AnfisData.SelectRows(yAll, validationRows)
         Dim hasValidation As Boolean = validationRows.Length > 0
 
-        Dim layers As New AnfisLayers(_net)
+        Dim layers As New TskLayers(_net)
         Dim premise As Double() = _net.GetPremiseParameters()
         Dim optimizer As New AnfisOptimizer(premise.Length, _net.GetPremisePositiveMask(), options)
 
@@ -171,7 +172,7 @@ Public Class AnfisHybridTrainer
 
 #Region "结论参数求解"
 
-    Private Function SolveConsequent(layers As AnfisLayers, x As Double()(), y As Double(,)) As Boolean
+    Private Function SolveConsequent(layers As TskLayers, x As Double()(), y As Double(,)) As Boolean
         Dim options As AnfisOptions = _options
         Dim p As Integer = _net.ConsequentParameterCount
         Dim rows As Integer = x.Length
@@ -179,7 +180,7 @@ Public Class AnfisHybridTrainer
 
         For start As Integer = 0 To rows - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, rows - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size)
             Dim design As Double(,) = New Double(size - 1, p - 1) {}
 
             Call layers.BuildDesignMatrix(fwd, design)
@@ -203,13 +204,13 @@ Public Class AnfisHybridTrainer
         Return True
     End Function
 
-    Private Sub FeedRecursive(layers As AnfisLayers, rls As RecursiveLeastSquares, x As Double()(), y As Double(,))
+    Private Sub FeedRecursive(layers As TskLayers, rls As RecursiveLeastSquares, x As Double()(), y As Double(,))
         Dim options As AnfisOptions = _options
         Dim rows As Integer = x.Length
 
         For start As Integer = 0 To rows - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, rows - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size)
 
             For t As Integer = 0 To size - 1
                 Dim design As Double() = BuildDesignRow(fwd, t)
@@ -224,7 +225,7 @@ Public Class AnfisHybridTrainer
         Next
     End Sub
 
-    Private Function BuildDesignRow(fwd As AnfisForward, t As Integer) As Double()
+    Private Function BuildDesignRow(fwd As TskInferenceTrace, t As Integer) As Double()
         Dim n As Integer = fwd.InputCount
         Dim design(_net.ConsequentParameterCount - 1) As Double
 
@@ -251,7 +252,7 @@ Public Class AnfisHybridTrainer
 
 #Region "梯度"
 
-    Private Function GradientStep(layers As AnfisLayers,
+    Private Function GradientStep(layers As TskLayers,
                                   x As Double()(),
                                   y As Double(,),
                                   premise As Double(),
@@ -272,9 +273,9 @@ Public Class AnfisHybridTrainer
 
         For start As Integer = 0 To rows - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, rows - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size)
             Dim target As Double(,) = AnfisData.SliceRows(y, start, size)
-            Dim part As AnfisGradient = layers.Accumulate(fwd, target, updateTheta)
+            Dim part As TskGradient = layers.Accumulate(fwd, target, updateTheta)
 
             sse += part.SquaredError
 
@@ -319,7 +320,7 @@ Public Class AnfisHybridTrainer
 
 #Region "评估"
 
-    Private Function ComputeRmse(layers As AnfisLayers, x As Double()(), y As Double(,)) As Double
+    Private Function ComputeRmse(layers As TskLayers, x As Double()(), y As Double(,)) As Double
         If x.Length = 0 Then
             Return Double.NaN
         End If
@@ -329,7 +330,7 @@ Public Class AnfisHybridTrainer
 
         For start As Integer = 0 To x.Length - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, x.Length - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size)
 
             For t As Integer = 0 To size - 1
                 For k As Integer = 0 To _net.OutputCount - 1
@@ -342,13 +343,13 @@ Public Class AnfisHybridTrainer
         Return std.Sqrt(sse / (x.Length * _net.OutputCount))
     End Function
 
-    Private Function ComputeRuleActivations(layers As AnfisLayers, x As Double()()) As Double()
+    Private Function ComputeRuleActivations(layers As TskLayers, x As Double()()) As Double()
         Dim options As AnfisOptions = _options
         Dim result(_net.Rules.RuleCount - 1) As Double
 
         For start As Integer = 0 To x.Length - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, x.Length - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size)
 
             For t As Integer = 0 To size - 1
                 For r As Integer = 0 To _net.Rules.RuleCount - 1
@@ -381,7 +382,7 @@ Public Class AnfisHybridTrainer
 
     Private Function BuildResult(x As Double()(),
                                  y As Double(,),
-                                 layers As AnfisLayers,
+                                 layers As TskLayers,
                                  trainHistory As System.Collections.Generic.List(Of Double),
                                  validationHistory As System.Collections.Generic.List(Of Double),
                                  thetaHistory As System.Collections.Generic.List(Of Double),
