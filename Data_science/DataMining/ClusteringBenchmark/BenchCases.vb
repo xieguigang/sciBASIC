@@ -83,24 +83,43 @@ Public Module BenchCases
     Private Sub Silent(message As Object)
     End Sub
 
-    Private Function Measure(name As String, action As Action, Optional detail As String = "") As CaseResult
-        GC.Collect()
-        GC.WaitForPendingFinalizers()
-        GC.Collect()
-
-        Dim allocBefore As Long = GC.GetTotalAllocatedBytes(True)
-        Dim timer As Stopwatch = Stopwatch.StartNew()
-
+    ''' <summary>
+    ''' 测量单个用例：先空跑一次触发 JIT 分层编译提升，再计时 <paramref name="runs"/> 次取最小值。
+    ''' </summary>
+    ''' <remarks>
+    ''' .NET 的 Tiered JIT 会让"第一次执行"跑在未优化的 tier-0 代码上，
+    ''' 如果不同配置的用例按顺序各跑一次，先跑的那一组会系统性偏慢（实测可差 30 倍）。
+    ''' 因此这里固定"1 次预热 + N 次计时取最小"，让所有配置在同一热度下比较。
+    ''' </remarks>
+    Private Function Measure(name As String, action As Action, Optional detail As String = "", Optional runs As Integer = 2) As CaseResult
+        ' 预热（不计时）
         action()
 
-        timer.Stop()
+        Dim best As Double = Double.MaxValue
+        Dim allocated As Double = 0
+        Dim timer As Stopwatch = Stopwatch.StartNew()
 
-        Dim allocAfter As Long = GC.GetTotalAllocatedBytes(True)
+        For r As Integer = 1 To std.Max(1, runs)
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
+            GC.Collect()
+
+            Dim allocBefore As Long = GC.GetTotalAllocatedBytes(True)
+
+            timer.Restart()
+            action()
+            timer.Stop()
+
+            Dim allocAfter As Long = GC.GetTotalAllocatedBytes(True)
+
+            best = std.Min(best, timer.Elapsed.TotalMilliseconds)
+            allocated = (allocAfter - allocBefore) / 1048576.0
+        Next
 
         Return New CaseResult With {
             .Name = name,
-            .Milliseconds = timer.Elapsed.TotalMilliseconds,
-            .AllocatedMB = (allocAfter - allocBefore) / 1048576.0,
+            .Milliseconds = best,
+            .AllocatedMB = allocated,
             .Detail = detail
         }
     End Function

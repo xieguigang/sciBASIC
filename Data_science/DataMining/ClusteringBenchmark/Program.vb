@@ -41,6 +41,10 @@ Public Module Program
         Dim full As Boolean = args.Any(Function(a) a = "--full")
         Dim savePath As String = GetOption(args, "--save")
 
+        ' 关掉进度条与调试输出，避免污染测量结果（Tqdm 直接写 Console.Out）
+        Call Microsoft.VisualBasic.ApplicationServices.App.SetVariable("tqdm", "FALSE")
+        Microsoft.VisualBasic.VBDebugger.Mute = True
+
         Call Console.WriteLine($"ClusteringBenchmark  |  mode={(If(quick, "quick", "default"))}  |  {SIMDEnvironment.Description}")
         Call Console.WriteLine($"SIMD enabled: {SIMDEnvironment.IsEnabled}, parallel: {SimdParallel.Enable}, CPUs: {Environment.ProcessorCount}")
 
