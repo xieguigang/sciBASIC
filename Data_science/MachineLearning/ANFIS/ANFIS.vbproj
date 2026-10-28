@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.DeepLearning.ANFIS</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyTitle>Adaptive Network-based Fuzzy Inference System</AssemblyTitle>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Adaptive Network-based Fuzzy Inference System</Title>
+    <AssemblyName>Microsoft.VisualBasic.DeepLearning.ANFIS</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;MEMI-Desktop</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\DeepLearning\DeepLearning.NET6.vbproj" />
+    <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+  </ItemGroup>
+
+</Project>
