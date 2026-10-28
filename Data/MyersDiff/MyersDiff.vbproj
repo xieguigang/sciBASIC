@@ -5,8 +5,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.Data.MyersDiff</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>10.8.9796.18903</Version>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <Version>10.8.0.0</Version>
+    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
     <Configurations>nuget_release;Debug;Rsharp_app_release</Configurations>
     <Title>Myers O(ND) Diff Algorithm for Text Comparison</Title>
     <Description>A text differencing toolkit for sciBASIC#: implements the Myers O((N+M)D) shortest edit script algorithm to compare files, line sequences and character strings, producing structured diff blocks, unified and side-by-side output, and a sequence similarity score.</Description>

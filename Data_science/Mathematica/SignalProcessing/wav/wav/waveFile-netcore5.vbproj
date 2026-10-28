@@ -19,8 +19,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>10.8.9796.18903</Version>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <Version>10.8.0.0</Version>
+    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
     <Description>Parses and writes RIFF/WAVE audio files with FMT and data sub-chunk access, and extracts mel-filterbank voiceprint vectors with delta coefficients, CMVN and L2 normalisation. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Wave</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

@@ -18,6 +18,8 @@
     <OptionStrict>On</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
+    <Version>10.8.0.0</Version>
+    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

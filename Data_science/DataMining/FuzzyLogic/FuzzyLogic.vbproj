@@ -4,6 +4,8 @@
     <RootNamespace>Microsoft.VisualBasic.DataMining.FuzzyLogic</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.DataMining.FuzzyLogic</AssemblyName>
+    <Version>10.8.0.0</Version>
+    <AssemblyVersion>1.0.9797.36730</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
