@@ -163,11 +163,12 @@ Public Module ParityChecks
         Call Check("Pearson 绝对误差 <= 1e-9", maxPearsonErr <= 1.0E-9, $"max={maxPearsonErr:E3}")
 
         ' 长度不一致必须抛出，而不是静默截断
+        Dim longVec As Double() = New Double(dims - 1) {}
         Dim shortVec As Double() = New Double(3) {}
         Dim thrown As Boolean = False
 
         Try
-            Call SimdReduce.DistanceSquared(a, shortVec)
+            Call SimdReduce.DistanceSquared(longVec, shortVec)
         Catch ex As ArgumentException
             thrown = True
         End Try

@@ -175,6 +175,7 @@ Namespace Math.SIMD
 
             If k >= len Then
                 ' 全部都要：退化成一次全排序，但比较键是 (值, 下标) 的确定序
+                ' （Array.Sort(keys, items) 对相等的键不稳定，这里必须显式比较下标）
                 Dim all As Integer() = New Integer(len - 1) {}
                 Dim keys As Double() = New Double(len - 1) {}
 
@@ -183,13 +184,21 @@ Namespace Math.SIMD
                     keys(i) = Key(v(i))
                 Next
 
-                Array.Sort(keys, all)
+                Array.Sort(all,
+                    Function(x, y)
+                        Dim compare As Integer = keys(x).CompareTo(keys(y))
+
+                        If compare <> 0 Then Return compare
+
+                        Return x.CompareTo(y)
+                    End Function)
 
                 Return all
             End If
 
-            ' 优先级 ( -值, -下标 )：Dequeue 得到"当前已选元素里值最大的那个"，
-            ' 同值时下标更大的先出局 —— 最终保留的就是 (值,下标) 字典序最小的 k 个。
+            ' 优先级 ( -值, -下标 )：优先级最小 = 值最大；同值时下标更大。
+            ' 于是 "堆顶" 就是当前已选元素里最差的那个（应当被淘汰），
+            ' 最终保留的正是 (值, 下标) 字典序最小的 k 个。
             Dim heap As New PriorityQueue(Of Integer, (Double, Integer))(k)
 
             For i As Integer = 0 To len - 1
@@ -203,12 +212,13 @@ Namespace Math.SIMD
 
                     Call heap.TryPeek(topElement, topPriority)
 
-                    ' VB 没有为 ValueTuple 定义 < 运算符，这里显式做字典序比较
-                    Dim better As Boolean =
+                    ' VB 没有为 ValueTuple 定义比较运算符，这里显式做字典序比较。
+                    ' priority < topPriority 表示"更差"（值更大，或同值下标更大），此时不替换。
+                    Dim worse As Boolean =
                         priority.Item1 < topPriority.Item1 OrElse
                         (priority.Item1 = topPriority.Item1 AndAlso priority.Item2 < topPriority.Item2)
 
-                    If better Then
+                    If Not worse Then
                         heap.Dequeue()
                         heap.Enqueue(i, priority)
                     End If
