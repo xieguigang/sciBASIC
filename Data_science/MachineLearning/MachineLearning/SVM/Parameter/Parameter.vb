@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::73b51cedab0c6dd4a41622550af321fa, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 218
-    '    Code Lines: 98 (44.95%)
-    ' Comment Lines: 94 (43.12%)
-    '    - Xml Docs: 82.98%
-    ' 
-    '   Blank Lines: 26 (11.93%)
-    '     File Size: 7.90 KB
+' Summaries:
 
 
-    '     Class Parameter
-    ' 
-    '         Properties: c, cacheSize, coefficient0, degree, EPS
-    '                     gamma, kernelType, nu, P, probability
-    '                     shrinking, svmType, weights
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clone, Equals, GetHashCode, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 218
+'    Code Lines: 98 (44.95%)
+' Comment Lines: 94 (43.12%)
+'    - Xml Docs: 82.98%
+' 
+'   Blank Lines: 26 (11.93%)
+'     File Size: 7.90 KB
+
+
+'     Class Parameter
+' 
+'         Properties: c, cacheSize, coefficient0, degree, EPS
+'                     gamma, kernelType, nu, P, probability
+'                     shrinking, svmType, weights
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Clone, Equals, GetHashCode, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -74,7 +74,7 @@
 ' * You should have received a copy of the GNU General Public License
 ' * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SVM

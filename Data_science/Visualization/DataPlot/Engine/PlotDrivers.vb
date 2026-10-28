@@ -28,7 +28,7 @@ Public Module PlotDrivers
     ''' 所以这里走反射调用——运行在 Windows 上时宿主加载的是 imaging 的 net10.0-windows 版本，
     ''' 反射即可命中；跑在 Linux 上时该方法不存在，忽略即可（此时应由宿主注册 Skia 驱动）。
     ''' PostScript 由 <see cref="ImageDriver.RegisterPostScript"/> 注册（不受平台条件编译限制），
-    ''' PDF 由 DataPlot 自带的 <see cref="PdfInterop"/> 提供（栅格嵌入式实现）。
+    ''' PDF 由 DataPlot 自带的 "PdfInterop" 提供（栅格嵌入式实现）。
     ''' 某个驱动注册失败时不会抛异常，只会在真正用到该驱动时才报错，
     ''' 这样在缺少某个驱动的平台上其余格式仍然可用。
     ''' </remarks>

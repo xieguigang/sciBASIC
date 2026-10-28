@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::fbddcc382215cc496d17fca1972b7bb4, Data_science\Visualization\DataPlot\Plot3D\PieChart3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 123
-    '    Code Lines: 83 (67.48%)
-    ' Comment Lines: 25 (20.33%)
-    '    - Xml Docs: 60.00%
-    ' 
-    '   Blank Lines: 15 (12.20%)
-    '     File Size: 5.05 KB
+' Summaries:
 
 
-    '     Class PieSlice
-    ' 
-    '         Properties: Color, Name, Percentage, Value
-    ' 
-    '         Function: AsSlices, ToString
-    ' 
-    '     Module PieChart3D
-    ' 
-    '         Function: Plot3D
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 123
+'    Code Lines: 83 (67.48%)
+' Comment Lines: 25 (20.33%)
+'    - Xml Docs: 60.00%
+' 
+'   Blank Lines: 15 (12.20%)
+'     File Size: 5.05 KB
+
+
+'     Class PieSlice
+' 
+'         Properties: Color, Name, Percentage, Value
+' 
+'         Function: AsSlices, ToString
+' 
+'     Module PieChart3D
+' 
+'         Function: Plot3D
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -78,11 +78,12 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
@@ -222,7 +223,7 @@ Namespace Plot3D
             If slices.IsNullOrEmpty Then
                 ' 没有任何有效切片时也要给出一张带标题的空画布
                 Return g.GraphicsPlots(
-                    camera.screen, padding, bg,
+                    camera.Screen, padding, bg,
                     Sub(ByRef canvas As IGraphics, region As GraphicsRegion)
                         Call Plot3DCanvas.DrawTitles(canvas, region.PlotRegion(canvas.LoadEnvironment), theme)
                     End Sub,
@@ -230,7 +231,7 @@ Namespace Plot3D
             End If
 
             Dim view As Camera = WorkingCamera(camera)
-            Dim centra As New Point3D(view.screen.Width / 2, view.screen.Height / 2, 0)
+            Dim centra As New Point3D(view.Screen.Width / 2, view.Screen.Height / 2, 0)
             Dim pieChart As New List(Of Surface)
             Dim topFace As New List(Of Integer)
             Dim start As Double = 0
@@ -348,7 +349,7 @@ Namespace Plot3D
                 End Sub
 
             Return g.GraphicsPlots(
-                camera.screen,
+                camera.Screen,
                 padding,
                 bg$,
                 plot3DInternal,
@@ -441,14 +442,14 @@ Namespace Plot3D
             distance = std.Abs(distance)
 
             Dim view As New Camera(New Point3D(camera.AngleX, camera.AngleY, camera.AngleZ)) With {
-                .Screen = camera.screen,
+                .Screen = camera.Screen,
                 .Offset = camera.Offset,
                 .ViewDistance = distance,
                 .LightDirection = camera.LightDirection,
                 .AmbientStrength = camera.AmbientStrength,
                 .LightColor = camera.LightColor
             }
-            Dim radiusPx! = 0.32! * std.Min(view.screen.Width, view.screen.Height)
+            Dim radiusPx! = 0.32! * std.Min(view.Screen.Width, view.Screen.Height)
 
             ' factor = fov / (distance + z)，模型以质心为原点故 z≈0，半径取 1
             view.FieldOfView = CSng(radiusPx * distance)
@@ -530,7 +531,7 @@ Namespace Plot3D
                 Dim rel As Point3D = New Point3D(anchor.X - centroid.X, anchor.Y - centroid.Y, anchor.Z - centroid.Z)
                 Dim pt As PointF = view _
                     .Project(view.Rotate(rel)) _
-                    .PointXY(view.screen)
+                    .PointXY(view.Screen)
                 Dim text As String = $"{slices(i).Name} {slices(i).Percentage.ToString("F1")}%"
                 Dim size As SizeF = g.MeasureString(text, font)
                 Dim x! = pt.X - size.Width / 2

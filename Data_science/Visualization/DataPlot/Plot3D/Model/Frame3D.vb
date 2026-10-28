@@ -12,14 +12,10 @@
 ' ============================================================================
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -142,12 +138,7 @@ Namespace Plot3D.Model
         ''' <summary>
         ''' 沿三条主轴生成刻度短线与刻度值文本（不改变既有 <c>AxisDraw.Axis</c> 的行为，
         ''' 该函数只负责刻度，轴名与主轴线仍由 <c>AxisDraw.Axis</c> 绘制）
-        ''' </summary>
-        ''' <param name="css">画布 CSS 环境</param>
-        ''' <param name="xrange">X 轴范围</param>
-        ''' <param name="yrange">Y 轴范围</param>
-        ''' <param name="zrange">Z 轴范围</param>
-        ''' <summary>
+        ''' 
         ''' 三维坐标系的绘制锚点：相机自适应地取"屏幕上最靠下"的盒角作为原点，
         ''' 三条刻度轨从该角出发分别沿 X / Y / Z 方向延伸。
         ''' </summary>
