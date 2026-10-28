@@ -58,6 +58,8 @@
 
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Intrinsics
+Imports System.Runtime.Intrinsics.X86
 Imports std = System.Math
 
 Namespace Math.SIMD
@@ -455,6 +457,23 @@ Namespace Math.SIMD
         Private Const EXP_DEGREE As Integer = 13
 
         ''' <summary>
+        ''' 用于把浮点数舍入成整数的 magic number：<c>1.5 × 2^52</c>。
+        ''' </summary>
+        Private Const MagicRound As Double = 6755399441055744.0R
+        ''' <summary>
+        ''' <see cref="MagicRound"/> 的整数位模式。
+        ''' </summary>
+        Private Const MagicRoundBits As Long = &H4338000000000000L
+        ''' <summary>
+        ''' <c>2^52</c>，用于把整数位模式还原为浮点数（指数拆分）。
+        ''' </summary>
+        Private Const TwoPow52 As Double = 4503599627370496.0R
+        ''' <summary>
+        ''' <c>2^52</c> 的指数域位模式（<c>0x433</c> 指数）。
+        ''' </summary>
+        Private Const TwoPow52Bits As Long = &H4330000000000000L
+
+        ''' <summary>
         ''' 计算 <c>1 / n!</c>，用于展开 <c>exp(r)</c>。
         ''' </summary>
         Private Shared ReadOnly ExpCoefficients As Double() = makeExpCoefficients()
@@ -521,36 +540,14 @@ Namespace Math.SIMD
 
             Dim i As Integer = 0
 
-            If SIMDEnvironment.IsEnabled AndAlso allFinite(v, count) Then
-                Dim width As Integer = Vector(Of Double).Count
+            If SIMDEnvironment.IsEnabled AndAlso Avx2.IsSupported AndAlso Fma.IsSupported AndAlso allFinite(v, count) Then
+                Dim width As Integer = Vector256(Of Double).Count
                 Dim last As Integer = count - width
-                Dim vmax As New Vector(Of Double)(700.0R)
-                Dim vmin As New Vector(Of Double)(-700.0R)
-                Dim vln2 As New Vector(Of Double)(Ln2)
-                Dim vinv As New Vector(Of Double)(InvLn2)
-                Dim one As Vector(Of Double) = Vector(Of Double).One
 
                 Do While i <= last
-                    Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
-                    ' 溢出保护：与 SlopeProblem.clampExp 保持一致
-                    x = Vector.Min(Vector.Max(x, vmin), vmax)
+                    Dim x As Vector256(Of Double) = Vector256.LoadUnsafe(Of Double)(v(i))
 
-                    Dim k As Vector(Of Int64) = Vector.ConvertToInt64(Vector.Round(x * vinv))
-                    Dim r As Vector(Of Double) = x - Vector.ConvertToDouble(k) * vln2
-                    Dim p As Vector(Of Double) = New Vector(Of Double)(ExpCoefficients(EXP_DEGREE - 1))
-
-                    For n As Integer = EXP_DEGREE - 2 To 2 Step -1
-                        p = p * r + New Vector(Of Double)(ExpCoefficients(n))
-                    Next
-
-                    p = p * r + one
-                    p = p * r + one
-
-                    Dim scale As Vector(Of Double) = Vector.AsVectorDouble(Of Int64)(
-                        Vector.ShiftLeft(k + New Vector(Of Int64)(1023L), 52))
-                    Dim y As Vector(Of Double) = p * scale
-
-                    y.CopyTo(v, i)
+                    Vector256.StoreUnsafe(exp256(x), v(i))
                     i += width
                 Loop
             End If
@@ -597,42 +594,14 @@ Namespace Math.SIMD
                 End If
             Next
 
-            If SIMDEnvironment.IsEnabled AndAlso positive Then
-                Dim width As Integer = Vector(Of Double).Count
+            If SIMDEnvironment.IsEnabled AndAlso Avx2.IsSupported AndAlso Fma.IsSupported AndAlso positive Then
+                Dim width As Integer = Vector256(Of Double).Count
                 Dim last As Integer = count - width
-                Dim exponentMask As New Vector(Of Int64)(&HFFFFFFFFFFFFFL)
-                Dim oneExponent As New Vector(Of Int64)(1023L << 52)
-                Dim vln2 As New Vector(Of Double)(Ln2)
-                Dim vsqrt2 As New Vector(Of Double)(1.4142135623730951R)
-                Dim one As Vector(Of Double) = Vector(Of Double).One
 
                 Do While i <= last
-                    Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
-                    Dim bits As Vector(Of Int64) = Vector.AsVectorInt64(x)
-                    Dim exponent As Vector(Of Int64) = Vector.ShiftRightLogical(bits, 52) - New Vector(Of Int64)(1023L)
-                    Dim m As Vector(Of Double) = Vector.AsVectorDouble(Of Int64)(
-                        Vector.BitwiseOr(Vector.BitwiseAnd(bits, exponentMask), oneExponent))
-                    ' 把尾数规整到 [sqrt(0.5), sqrt(2))，让 atanh 级数收敛最快
-                    Dim hi As Vector(Of Double) = Vector.GreaterThan(m, vsqrt2)
-                    Dim adj As Vector(Of Double) = Vector.ConditionalSelect(hi, Vector(Of Double).One, Vector(Of Double).Zero)
+                    Dim x As Vector256(Of Double) = Vector256.LoadUnsafe(Of Double)(v(i))
 
-                    m = Vector.ConditionalSelect(hi, m * New Vector(Of Double)(0.5R), m)
-
-                    Dim e As Vector(Of Double) = Vector.ConvertToDouble(exponent) + adj
-
-                    Dim s As Vector(Of Double) = (m - one) / (m + one)
-                    Dim s2 As Vector(Of Double) = s * s
-                    Dim p As Vector(Of Double) = New Vector(Of Double)(1.0R / 13.0R)
-
-                    For n As Integer = 11 To 3 Step -2
-                        p = p * s2 + New Vector(Of Double)(1.0R / n)
-                    Next
-
-                    p = p * s2 + one
-
-                    Dim y As Vector(Of Double) = e * vln2 + New Vector(Of Double)(2.0R) * s * p
-
-                    y.CopyTo(v, i)
+                    Vector256.StoreUnsafe(log256(x), v(i))
                     i += width
                 Loop
             End If
@@ -642,6 +611,95 @@ Namespace Math.SIMD
             Next
 
             Return v
+        End Function
+
+        ''' <summary>
+        ''' 4 通道向量的 <c>exp</c>：区间约减 + FMA 霍纳多项式 + 位运算构造 <c>2^k</c>。
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 这里刻意使用 <c>Avx/Avx2/Fma</c> 而不是泛型 <c>Vector(Of T)</c>：
+        ''' 指数缩放需要 <c>double → int64</c> 的位运算，泛型 <see cref="Vector(Of T)"/>
+        ''' 对 64 位整数的移位/位运算在 .NET 上会退化为软件展开，
+        ''' 实测反而比标量 <see cref="System.Math.Exp(Double)"/> 慢 5 倍以上。
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function exp256(x As Vector256(Of Double)) As Vector256(Of Double)
+            ' 溢出保护（与 S-system 的 clampExp 一致）
+            x = Avx.Max(x, Vector256.Create(-700.0R))
+            x = Avx.Min(x, Vector256.Create(700.0R))
+
+            ' k = round(x / ln2)，用 magic number 舍入（不产生 double→int 的转换指令）
+            Dim t As Vector256(Of Double) = Fma.MultiplyAdd(x, Vector256.Create(InvLn2), Vector256.Create(MagicRound))
+            Dim kd As Vector256(Of Double) = Avx.Subtract(t, Vector256.Create(MagicRound))
+            Dim ki As Vector256(Of Int64) = Avx2.Subtract(Vector256.AsInt64(t), Vector256.Create(MagicRoundBits))
+            Dim r As Vector256(Of Double) = Fma.MultiplyAddNegated(kd, Vector256.Create(Ln2), x)
+
+            ' exp(r) = 1 + r + r^2/2! + ... + r^13/13!，|r| ≤ ln2/2
+            Dim p As Vector256(Of Double) = Vector256.Create(1.6059043836821613E-10R)
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(2.08767569878681E-9R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(2.505210838544172E-8R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(2.755731922398589E-7R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(2.7557319223985893E-6R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(2.48015873015873E-5R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(1.984126984126984E-4R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(1.388888888888889E-3R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(8.333333333333333E-3R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(4.1666666666666664E-2R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(1.6666666666666666E-1R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(0.5R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(1.0R))
+            p = Fma.MultiplyAdd(p, r, Vector256.Create(1.0R))
+
+            ' 2^k = bitcast((k + 1023) << 52)
+            Dim scale As Vector256(Of Double) = Vector256.AsDouble(
+                Avx2.ShiftLeftLogical(Avx2.Add(ki, Vector256.Create(1023L)), 52))
+
+            Return Avx.Multiply(p, scale)
+        End Function
+
+        ''' <summary>
+        ''' 4 通道向量的 <c>log</c>：尾数/指数拆分 + <c>atanh</c> 奇次多项式。
+        ''' </summary>
+        ''' <param name="x">必须为正数</param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function log256(x As Vector256(Of Double)) As Vector256(Of Double)
+            Dim one As Vector256(Of Double) = Vector256.Create(1.0R)
+            Dim bits As Vector256(Of Int64) = Vector256.AsInt64(x)
+            Dim eBits As Vector256(Of Int64) = Avx2.ShiftRightLogical(bits, 52)
+            Dim mant As Vector256(Of Int64) = Avx2.Or(
+                Avx2.And(bits, Vector256.Create(&HFFFFFFFFFFFFFL)),
+                Vector256.Create(1023L << 52))
+            Dim m As Vector256(Of Double) = Vector256.AsDouble(mant)
+
+            ' 把尾数规整到 [sqrt(0.5), sqrt(2))，让 atanh 级数收敛最快
+            Dim hi As Vector256(Of Double) = Avx.Compare(m, Vector256.Create(1.4142135623730951R),
+                                                         FloatComparisonMode.OrderedGreaterThanNonSignaling)
+            Dim adj As Vector256(Of Double) = Avx.BlendVariable(Vector256(Of Double).Zero, one, hi)
+
+            m = Avx.BlendVariable(m, Avx.Multiply(m, Vector256.Create(0.5R)), hi)
+
+            ' 指数（0..2047）→ double：塞进 2^52 的尾数再减回去
+            Dim eDbl As Vector256(Of Double) = Avx.Subtract(
+                Vector256.AsDouble(Avx2.Or(eBits, Vector256.Create(TwoPow52Bits))),
+                Vector256.Create(TwoPow52))
+            Dim e As Vector256(Of Double) = Avx.Add(Avx.Subtract(eDbl, Vector256.Create(1023.0R)), adj)
+
+            Dim s As Vector256(Of Double) = Avx.Divide(Avx.Subtract(m, one), Avx.Add(m, one))
+            Dim s2 As Vector256(Of Double) = Avx.Multiply(s, s)
+            Dim p As Vector256(Of Double) = Vector256.Create(1.0R / 13.0R)
+
+            p = Fma.MultiplyAdd(p, s2, Vector256.Create(1.0R / 11.0R))
+            p = Fma.MultiplyAdd(p, s2, Vector256.Create(1.0R / 9.0R))
+            p = Fma.MultiplyAdd(p, s2, Vector256.Create(1.0R / 7.0R))
+            p = Fma.MultiplyAdd(p, s2, Vector256.Create(1.0R / 5.0R))
+            p = Fma.MultiplyAdd(p, s2, Vector256.Create(1.0R / 3.0R))
+            p = Fma.MultiplyAdd(p, s2, one)
+
+            Return Avx.Add(Avx.Multiply(e, Vector256.Create(Ln2)),
+                           Avx.Multiply(Vector256.Create(2.0R), Avx.Multiply(s, p)))
         End Function
 
         ''' <summary>
