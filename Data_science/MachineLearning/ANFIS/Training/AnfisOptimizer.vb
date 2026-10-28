@@ -66,7 +66,7 @@ Public Class AnfisOptimizer
     End Sub
 
     ''' <summary>已经执行的更新步数。</summary>
-    Public ReadOnly Property Step As Integer
+    Public ReadOnly Property StepCount As Integer
         Get
             Return _step
         End Get

@@ -2,7 +2,7 @@ Option Strict On
 Option Explicit On
 
 Imports System
-Imports Tensor = Global.Microsoft.VisualBasic.MachineLearning.TensorFlow.Tensor
+Imports Tensor = Microsoft.VisualBasic.MachineLearning.TensorFlow.Tensor
 Imports std = System.Math
 
 ''' <summary>

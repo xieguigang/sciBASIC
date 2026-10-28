@@ -214,10 +214,10 @@ Public Class AnfisNetwork
         End If
 
         Dim layers As New AnfisLayers(Me)
-        Dim step As Integer = If(chunkRows > 0, chunkRows, x.Length)
+        Dim chunkSize As Integer = If(chunkRows > 0, chunkRows, x.Length)
 
-        For start As Integer = 0 To x.Length - 1 Step step
-            Dim rows As Integer = std.Min(step, x.Length - start)
+        For start As Integer = 0 To x.Length - 1 Step chunkSize
+            Dim rows As Integer = std.Min(chunkSize, x.Length - start)
             Dim fwd As AnfisForward = layers.Forward(x, start, rows)
 
             For t As Integer = 0 To rows - 1

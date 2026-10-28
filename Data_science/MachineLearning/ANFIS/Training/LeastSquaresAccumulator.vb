@@ -2,9 +2,9 @@ Option Strict On
 Option Explicit On
 
 Imports System
-Imports Global.Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Global.Microsoft.VisualBasic.Math.LinearAlgebra.Solvers
-Imports SIMDIntrinsics = Global.Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Solvers
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 Imports std = System.Math
 
 ''' <summary>
