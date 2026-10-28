@@ -74,6 +74,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
@@ -92,17 +93,6 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Text.Similarity
 Imports any = Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.ApplicationServices
-
-
-#If DEBUG Then
-Imports Microsoft.VisualBasic.Serialization.JSON
-#End If
-
-#Const FRAMEWORD_CORE = 1
-#Const Yes = 1
-
-#If FRAMEWORD_CORE = Yes Then
 
 ''' <summary>
 ''' Common extension methods library for convenient the programming job.
@@ -116,14 +106,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                     Url:="http://github.com/xieguigang/sciBASIC#")>
 <HideModuleName>
 <Extension> Public Module Extensions
-#Else
-
-''' <summary>
-''' Common extension methods library for convenient the programming job.
-''' </summary>
-''' <remarks></remarks>
-Public Module Extensions
-#End If
 
     ''' <summary>
     ''' check of the given object is nothing or value is empty?
