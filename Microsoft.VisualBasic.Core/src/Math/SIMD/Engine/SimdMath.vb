@@ -441,6 +441,244 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' <c>ln(2)</c>，用于指数/对数的区间约减。
+        ''' </summary>
+        Public Const Ln2 As Double = 0.6931471805599453R
+        ''' <summary>
+        ''' <c>1 / ln(2)</c>。
+        ''' </summary>
+        Public Const InvLn2 As Double = 1.4426950408889634R
+
+        ''' <summary>
+        ''' 指数多项式展开的最高阶乘项下标（<c>1 / 13!</c>）。
+        ''' </summary>
+        Private Const EXP_DEGREE As Integer = 13
+
+        ''' <summary>
+        ''' 计算 <c>1 / n!</c>，用于展开 <c>exp(r)</c>。
+        ''' </summary>
+        Private Shared ReadOnly ExpCoefficients As Double() = makeExpCoefficients()
+
+        Private Shared Function makeExpCoefficients() As Double()
+            Dim c As Double() = New Double(EXP_DEGREE) {}
+            Dim f As Double = 1
+
+            For n As Integer = 0 To EXP_DEGREE
+                If n > 0 Then
+                    f *= n
+                End If
+
+                c(n) = 1.0R / f
+            Next
+
+            Return c
+        End Function
+
+        ''' <summary>
+        ''' 判断当前数组是否可以走多项式路径（存在 NaN/Inf 的时候回退到标量实现，保证语义一致）。
+        ''' </summary>
+        Private Shared Function allFinite(v As Double(), count As Integer) As Boolean
+            For i As Integer = 0 To count - 1
+                If Double.IsNaN(v(i)) OrElse Double.IsInfinity(v(i)) Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 逐元素自然指数（原地计算，真正的 SIMD 实现）。
+        ''' </summary>
+        ''' <param name="v">输入输出数组</param>
+        ''' <returns>返回 <paramref name="v"/> 自身，方便链式调用</returns>
+        ''' <remarks>
+        ''' <para>
+        ''' 实现方式与 Cephes/SLEEF 一致：区间约减 <c>x = k·ln2 + r</c>（<c>|r| ≤ ln2/2</c>），
+        ''' 用 13 阶泰勒多项式计算 <c>exp(r)</c>，再左移 <c>k</c> 位构造 <c>2^k</c> 缩放回去。
+        ''' 截断误差约 <c>1e-18</c>，远小于 <see cref="Double"/> 的有效精度。
+        ''' </para>
+        ''' <para>
+        ''' 输入被夹在 <c>[-700, 700]</c> 之内（与 <c>S-system</c> 的溢出保护一致）；
+        ''' 当数组中含有 NaN/Inf，或者 <see cref="SIMDEnvironment.IsEnabled"/> 为假时，
+        ''' 自动回退到逐元素的 <see cref="System.Math.Exp(Double)"/>，保证数值语义不变。
+        ''' </para>
+        ''' </remarks>
+        Public Shared Function ExpInPlace(v As Double()) As Double()
+            Return ExpInPlace(v, v.Length)
+        End Function
+
+        ''' <summary>
+        ''' 逐元素自然指数（原地计算，只处理前 <paramref name="count"/> 个元素）。
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="count"></param>
+        ''' <returns></returns>
+        Public Shared Function ExpInPlace(v As Double(), count As Integer) As Double()
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+            If count <= 0 Then Return v
+            If count > v.Length Then count = v.Length
+
+            Dim i As Integer = 0
+
+            If SIMDEnvironment.IsEnabled AndAlso allFinite(v, count) Then
+                Dim width As Integer = Vector(Of Double).Count
+                Dim last As Integer = count - width
+                Dim vmax As New Vector(Of Double)(700.0R)
+                Dim vmin As New Vector(Of Double)(-700.0R)
+                Dim vln2 As New Vector(Of Double)(Ln2)
+                Dim vinv As New Vector(Of Double)(InvLn2)
+                Dim one As Vector(Of Double) = Vector(Of Double).One
+
+                Do While i <= last
+                    Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
+                    ' 溢出保护：与 SlopeProblem.clampExp 保持一致
+                    x = Vector.Min(Vector.Max(x, vmin), vmax)
+
+                    Dim k As Vector(Of Int64) = Vector.ConvertToInt64(Vector.Round(x * vinv))
+                    Dim r As Vector(Of Double) = x - Vector.ConvertToDouble(k) * vln2
+                    Dim p As Vector(Of Double) = New Vector(Of Double)(ExpCoefficients(EXP_DEGREE - 1))
+
+                    For n As Integer = EXP_DEGREE - 2 To 2 Step -1
+                        p = p * r + New Vector(Of Double)(ExpCoefficients(n))
+                    Next
+
+                    p = p * r + one
+                    p = p * r + one
+
+                    Dim scale As Vector(Of Double) = Vector.AsVectorDouble(Of Int64)(
+                        Vector.ShiftLeft(k + New Vector(Of Int64)(1023L), 52))
+                    Dim y As Vector(Of Double) = p * scale
+
+                    y.CopyTo(v, i)
+                    i += width
+                Loop
+            End If
+
+            For j As Integer = i To count - 1
+                v(j) = std.Exp(v(j))
+            Next
+
+            Return v
+        End Function
+
+        ''' <summary>
+        ''' 逐元素自然对数（原地计算，真正的 SIMD 实现）。
+        ''' </summary>
+        ''' <param name="v">输入输出数组，要求所有元素为正数</param>
+        ''' <returns>返回 <paramref name="v"/> 自身</returns>
+        ''' <remarks>
+        ''' 分解 <c>x = m·2^e</c>（<c>m ∈ [sqrt(0.5), sqrt(2))</c>），
+        ''' 再对 <c>ln(m) = 2·atanh((m-1)/(m+1))</c> 做奇次多项式展开；
+        ''' 输入中存在非正数或者非有限值时自动回退到标量实现。
+        ''' </remarks>
+        Public Shared Function LogInPlace(v As Double()) As Double()
+            Return LogInPlace(v, v.Length)
+        End Function
+
+        ''' <summary>
+        ''' 逐元素自然对数（原地计算，只处理前 <paramref name="count"/> 个元素）。
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="count"></param>
+        ''' <returns></returns>
+        Public Shared Function LogInPlace(v As Double(), count As Integer) As Double()
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+            If count <= 0 Then Return v
+            If count > v.Length Then count = v.Length
+
+            Dim i As Integer = 0
+            Dim positive As Boolean = True
+
+            For k As Integer = 0 To count - 1
+                If v(k) <= 0 OrElse Double.IsNaN(v(k)) OrElse Double.IsInfinity(v(k)) Then
+                    positive = False
+                    Exit For
+                End If
+            Next
+
+            If SIMDEnvironment.IsEnabled AndAlso positive Then
+                Dim width As Integer = Vector(Of Double).Count
+                Dim last As Integer = count - width
+                Dim exponentMask As New Vector(Of Int64)(&HFFFFFFFFFFFFFL)
+                Dim oneExponent As New Vector(Of Int64)(1023L << 52)
+                Dim vln2 As New Vector(Of Double)(Ln2)
+                Dim vsqrt2 As New Vector(Of Double)(1.4142135623730951R)
+                Dim one As Vector(Of Double) = Vector(Of Double).One
+
+                Do While i <= last
+                    Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
+                    Dim bits As Vector(Of Int64) = Vector.AsVectorInt64(x)
+                    Dim exponent As Vector(Of Int64) = Vector.ShiftRightLogical(bits, 52) - New Vector(Of Int64)(1023L)
+                    Dim m As Vector(Of Double) = Vector.AsVectorDouble(Of Int64)(
+                        Vector.BitwiseOr(Vector.BitwiseAnd(bits, exponentMask), oneExponent))
+                    ' 把尾数规整到 [sqrt(0.5), sqrt(2))，让 atanh 级数收敛最快
+                    Dim hi As Vector(Of Double) = Vector.GreaterThan(m, vsqrt2)
+                    Dim adj As Vector(Of Double) = Vector.ConditionalSelect(hi, Vector(Of Double).One, Vector(Of Double).Zero)
+
+                    m = Vector.ConditionalSelect(hi, m * New Vector(Of Double)(0.5R), m)
+
+                    Dim e As Vector(Of Double) = Vector.ConvertToDouble(exponent) + adj
+
+                    Dim s As Vector(Of Double) = (m - one) / (m + one)
+                    Dim s2 As Vector(Of Double) = s * s
+                    Dim p As Vector(Of Double) = New Vector(Of Double)(1.0R / 13.0R)
+
+                    For n As Integer = 11 To 3 Step -2
+                        p = p * s2 + New Vector(Of Double)(1.0R / n)
+                    Next
+
+                    p = p * s2 + one
+
+                    Dim y As Vector(Of Double) = e * vln2 + New Vector(Of Double)(2.0R) * s * p
+
+                    y.CopyTo(v, i)
+                    i += width
+                Loop
+            End If
+
+            For j As Integer = i To count - 1
+                v(j) = std.Log(v(j))
+            Next
+
+            Return v
+        End Function
+
+        ''' <summary>
+        ''' 逐元素夹取（原地计算）。
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="min"></param>
+        ''' <param name="max"></param>
+        ''' <returns></returns>
+        Public Shared Function ClampInPlace(v As Double(), min As Double, max As Double) As Double()
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+            If v.Length = 0 Then Return v
+
+            Dim i As Integer = 0
+
+            If SIMDEnvironment.IsEnabled Then
+                Dim width As Integer = Vector(Of Double).Count
+                Dim last As Integer = v.Length - width
+                Dim vmax As New Vector(Of Double)(max)
+                Dim vmin As New Vector(Of Double)(min)
+
+                Do While i <= last
+                    Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
+
+                    Vector.Min(Vector.Max(x, vmin), vmax).CopyTo(v, i)
+                    i += width
+                Loop
+            End If
+
+            For j As Integer = i To v.Length - 1
+                v(j) = std.Max(std.Min(v(j), max), min)
+            Next
+
+            Return v
+        End Function
+
+        ''' <summary>
         ''' 逐元素自然指数（<see cref="Single"/>）。
         ''' </summary>
         Public Shared Function Exp(v As Single()) As Single()

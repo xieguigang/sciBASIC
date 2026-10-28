@@ -558,6 +558,104 @@ Namespace Math.SIMD
             Return InPlaceScalar(Of T)(v, scalar, Function(a, b) Vector.Multiply(Of T)(a, b))
         End Function
 
+        ''' <summary>
+        ''' 融合的 AXPY 运算：<c>acc[i] += scalar * v[i]</c>（原地累加）。
+        ''' </summary>
+        ''' <param name="scalar">标量乘子</param>
+        ''' <param name="v">被乘向量</param>
+        ''' <param name="acc">累加目标向量</param>
+        ''' <returns>返回 <paramref name="acc"/> 自身</returns>
+        ''' <remarks>
+        ''' 这是 S-system 目标函数的主循环原语：对每个候选调控因子执行一次
+        ''' <c>eta[t] += g_c * lnX_c[t]</c>。两次连续内存访问 + 一次乘加，
+        ''' 正好是 SIMD 最能受益的形态；硬件支持 FMA 时直接走
+        ''' <see cref="SIMDIntrinsics.AxpyInPlace"/>（单指令完成乘加），
+        ''' 否则退化为 <see cref="Vector(Of T)"/> 的乘加两条指令路径。
+        ''' </remarks>
+        Public Shared Function AddScaledInPlace(scalar As Double, v As Double(), acc As Double()) As Double()
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+            If acc Is Nothing Then Throw New ArgumentNullException(NameOf(acc))
+
+            Dim len As Integer = acc.Length
+
+            If len = 0 Then Return acc
+            If v.Length <> len Then
+                Throw New ArgumentException($"vector size not agree: {v.Length} vs {len}!", NameOf(v))
+            End If
+
+            If SimdCapabilities.IsFma AndAlso SIMDEnvironment.IsEnabled Then
+                Call SIMDIntrinsics.AxpyInPlace(scalar, v, acc)
+
+                Return acc
+            End If
+
+            Dim i As Integer = 0
+            Dim width As Integer = Vector(Of Double).Count
+
+            If SIMDEnvironment.IsEnabled AndAlso len >= width Then
+                Dim last As Integer = len - width
+                Dim a As New Vector(Of Double)(scalar)
+
+                Do While i <= last
+                    Dim y As Vector(Of Double) = New Vector(Of Double)(acc, i)
+                    Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
+                    Dim sum As Vector(Of Double) = y + a * x
+
+                    sum.CopyTo(acc, i)
+                    i += width
+                Loop
+            End If
+
+            For j As Integer = i To len - 1
+                acc(j) += scalar * v(j)
+            Next
+
+            Return acc
+        End Function
+
+        ''' <summary>
+        ''' 逐元素乘加累加：<c>acc[i] += a[i] * b[i]</c>。
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="acc"></param>
+        ''' <returns></returns>
+        Public Shared Function MultiplyAddInPlace(a As Double(), b As Double(), acc As Double()) As Double()
+            If a Is Nothing Then Throw New ArgumentNullException(NameOf(a))
+            If b Is Nothing Then Throw New ArgumentNullException(NameOf(b))
+            If acc Is Nothing Then Throw New ArgumentNullException(NameOf(acc))
+
+            Dim len As Integer = acc.Length
+
+            If len = 0 Then Return acc
+            If a.Length <> len OrElse b.Length <> len Then
+                Throw New ArgumentException("vector size not agree!", NameOf(a))
+            End If
+
+            Dim i As Integer = 0
+            Dim width As Integer = Vector(Of Double).Count
+
+            If SIMDEnvironment.IsEnabled AndAlso len >= width Then
+                Dim last As Integer = len - width
+
+                Do While i <= last
+                    Dim y As Vector(Of Double) = New Vector(Of Double)(acc, i)
+                    Dim x1 As Vector(Of Double) = New Vector(Of Double)(a, i)
+                    Dim x2 As Vector(Of Double) = New Vector(Of Double)(b, i)
+                    Dim sum As Vector(Of Double) = y + x1 * x2
+
+                    sum.CopyTo(acc, i)
+                    i += width
+                Loop
+            End If
+
+            For j As Integer = i To len - 1
+                acc(j) += a(j) * b(j)
+            Next
+
+            Return acc
+        End Function
+
         Private Shared Function InPlace(Of T As Structure)(v As T(), operand As T(),
                                                            op As VectorBinaryOp(Of T)) As T()
 
