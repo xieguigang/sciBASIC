@@ -6,7 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.DataMining.FuzzyLogic</AssemblyName>
     <Version>10.8.9797.36764</Version>
     <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
-    <Configurations>Debug;Release;nuget_release</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;PlantMAT;nuget_release</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
