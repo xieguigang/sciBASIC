@@ -37,12 +37,6 @@ Public Module Program
             Return ParityChecks.Run()
         End If
 
-        If args.Any(Function(a) a = "--diag") Then
-            Call Diag.Run()
-
-            Return 0
-        End If
-
         Dim quick As Boolean = args.Any(Function(a) a = "--quick")
         Dim full As Boolean = args.Any(Function(a) a = "--full")
         Dim savePath As String = GetOption(args, "--save")

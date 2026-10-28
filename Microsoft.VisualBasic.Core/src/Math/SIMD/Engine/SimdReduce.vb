@@ -303,17 +303,11 @@ Namespace Math.SIMD
         ''' </para>
         ''' </remarks>
         Public Shared Function DistanceSquared(a As Double(), b As Double()) As Double
-            ' 参数校验直接内联：这是整个聚类路径上调用最频繁的内核，
-            ' 即使辅助方法带 AggressiveInlining，多一层带 Throw 的调用仍会让
-            ' 小维度（d≈10~100）场景下的固定开销占到 30% 以上（实测 50000 次调用差 4ms）。
-            If a Is Nothing Then Throw New ArgumentNullException(NameOf(a))
-            If b Is Nothing Then Throw New ArgumentNullException(NameOf(b))
+            CheckNull(a, NameOf(a))
+            CheckNull(b, NameOf(b))
+            CheckAgree(a.Length, b.Length)
 
             Dim len As Integer = a.Length
-
-            If len <> b.Length Then
-                Throw New ArgumentException($"the length of the two vectors not agree: {len} vs {b.Length}!")
-            End If
             If len = 0 Then Return 0.0
 
             Dim count As Integer = Vector(Of Double).Count
