@@ -4,6 +4,7 @@ Option Explicit On
 Imports System
 Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports std = System.Math
 
 ''' <summary>
@@ -11,8 +12,8 @@ Imports std = System.Math
 ''' </summary>
 Public Class AnfisFitResult
 
-    ''' <summary>训练好的模型。</summary>
-    Public Property Model As AnfisNetwork
+    ''' <summary>训练好的模型（推理内核定义在 <c>FuzzyLogic.TSK</c>）。</summary>
+    Public Property Model As TskNetwork
     ''' <summary>决定系数（在全部参与评估的样本上计算，多输出时按元素汇总）。</summary>
     Public Property R2 As Double
     ''' <summary>均方根误差（按元素，多输出时同尺度）。</summary>
@@ -126,7 +127,7 @@ Public Class AnfisCrossValidationResult
     ''' <summary>每一折的验证 R2。</summary>
     Public Property FoldR2 As Double()
     ''' <summary>每一折的模型（便于检查折间稳定性）。</summary>
-    Public Property Models As AnfisNetwork()
+    Public Property Models As TskNetwork()
 
     ''' <summary>折平均 RMSE。</summary>
     Public ReadOnly Property MeanRmse As Double
