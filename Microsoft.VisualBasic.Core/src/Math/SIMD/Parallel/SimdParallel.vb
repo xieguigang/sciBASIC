@@ -122,6 +122,73 @@ Namespace Math.SIMD
             Return std.Max(MinParallelLength, chunk)
         End Function
 
+        ''' <summary>
+        ''' 对外暴露的分块长度：块大小约为 <c>len / (8·CPU)</c>，且不小于
+        ''' <see cref="MinParallelLength"/>，用于调用方自行组织分块并行。
+        ''' </summary>
+        Public Shared Function ChunkLength(len As Integer) As Integer
+            Return ChunkSize(len)
+        End Function
+
+#Region "parallel driver"
+
+        ''' <summary>
+        ''' 按块并行执行 <paramref name="body"/>，回调参数是 <c>[start, ends)</c> 半开区间。
+        ''' </summary>
+        ''' <param name="len">待处理的数据长度（元素个数或行数）</param>
+        ''' <param name="body">块执行体，必须只写自己区间内的目标位置（无跨块共享写入）</param>
+        ''' <param name="minLength">
+        ''' 触发并行的最小规模：<c>len &lt; 2·minLength</c> 时直接在调用线程上串行执行，
+        ''' 避免"为几十行数据启动线程池"的负收益。默认 4096
+        ''' （比 <see cref="MinParallelLength"/> 小得多，因为聚类算法是按"样本行"分块的，
+        ''' 每行的实际工作量 = 维度 × 簇数，远大于 1 个元素）。
+        ''' </param>
+        ''' <remarks>
+        ''' 这是聚类算法统一使用的并行入口：<b>并行永远放在最外层</b>（样本块），
+        ''' 块内保持单线程向量化，从而避免嵌套并行与任务风暴。
+        ''' <see cref="Enable"/> 为 <c>False</c> 时退化为单块串行，供基准对照使用。
+        ''' </remarks>
+        Public Shared Sub ForRange(len As Integer, body As Action(Of Integer, Integer), Optional minLength As Integer = 4096)
+            If body Is Nothing Then Throw New ArgumentNullException(NameOf(body))
+
+            If len <= 0 Then Return
+
+            Dim threshold As Integer = std.Max(1, minLength)
+
+            If Not Enable OrElse len < threshold * 2 Then
+                body(0, len)
+
+                Return
+            End If
+
+            Dim chunk As Integer = std.Max(threshold, len \ std.Max(1, Environment.ProcessorCount * 4))
+            Dim nChunks As Integer = (len + chunk - 1) \ chunk
+
+            System.Threading.Tasks.Parallel.For(0, nChunks,
+                Sub(c)
+                    Dim start As Integer = c * chunk
+                    Dim ends As Integer = std.Min(start + chunk, len)
+
+                    body(start, ends)
+                End Sub)
+        End Sub
+
+        ''' <summary>
+        ''' 按行并行执行，回调参数是行号（适用于"每行独立、工作量不均"的场景）。
+        ''' </summary>
+        Public Shared Sub ForEachRow(rows As Integer, body As Action(Of Integer), Optional minLength As Integer = 4096)
+            If body Is Nothing Then Throw New ArgumentNullException(NameOf(body))
+
+            Call ForRange(rows,
+                Sub(start, ends)
+                    For i As Integer = start To ends - 1
+                        body(i)
+                    Next
+                End Sub, minLength)
+        End Sub
+
+#End Region
+
 #Region "range kernels"
 
         ''' <summary>
@@ -366,12 +433,13 @@ Namespace Math.SIMD
             Dim nChunks As Integer = (len + chunk - 1) \ chunk
             Dim partials As Double() = New Double(nChunks - 1) {}
 
-            For c As Integer = 0 To nChunks - 1
-                Dim start As Integer = c * chunk
-                Dim ends As Integer = std.Min(start + chunk, len)
+            System.Threading.Tasks.Parallel.For(0, nChunks,
+                Sub(c)
+                    Dim start As Integer = c * chunk
+                    Dim ends As Integer = std.Min(start + chunk, len)
 
-                partials(c) = SimdReduce.Min(v, start, ends)
-            Next
+                    partials(c) = SimdReduce.Min(v, start, ends)
+                End Sub)
 
             Return SimdReduce.Min(partials)
         End Function
@@ -390,12 +458,13 @@ Namespace Math.SIMD
             Dim nChunks As Integer = (len + chunk - 1) \ chunk
             Dim partials As Double() = New Double(nChunks - 1) {}
 
-            For c As Integer = 0 To nChunks - 1
-                Dim start As Integer = c * chunk
-                Dim ends As Integer = std.Min(start + chunk, len)
+            System.Threading.Tasks.Parallel.For(0, nChunks,
+                Sub(c)
+                    Dim start As Integer = c * chunk
+                    Dim ends As Integer = std.Min(start + chunk, len)
 
-                partials(c) = SimdReduce.Max(v, start, ends)
-            Next
+                    partials(c) = SimdReduce.Max(v, start, ends)
+                End Sub)
 
             Return SimdReduce.Max(partials)
         End Function
@@ -574,6 +643,89 @@ Namespace Math.SIMD
             Next
 
             Return t
+        End Function
+
+#End Region
+
+#Region "pairwise distance"
+
+        ''' <summary>
+        ''' 上三角平铺距离矩阵中 <c>(i, j)</c>（要求 <c>i &lt; j</c>）的位置：
+        ''' <c>i·n − i·(i+1)/2 + (j − i − 1)</c>。
+        ''' </summary>
+        Public Shared Function UpperTriangleIndex(n As Integer, i As Integer, j As Integer) As Integer
+            If i > j Then
+                Dim swap As Integer = i
+                i = j
+                j = swap
+            End If
+
+            Return i * n - (i * (i + 1)) \ 2 + (j - i - 1)
+        End Function
+
+        ''' <summary>
+        ''' 上三角平铺数组的元素个数：<c>n·(n−1)/2</c>。
+        ''' </summary>
+        Public Shared Function UpperTriangleLength(n As Integer) As Long
+            Return (CLng(n) * CLng(n - 1)) \ 2L
+        End Function
+
+        ''' <summary>
+        ''' 逐对距离矩阵。行方向分块并行、行内单线程 SIMD。
+        ''' </summary>
+        ''' <param name="rows">样本矩阵，第 i 行为第 i 个样本</param>
+        ''' <param name="upperTriangleOnly">
+        ''' <c>True</c>（默认）时返回长度为 <c>n(n-1)/2</c> 的平铺上三角，
+        ''' 用 <see cref="UpperTriangleIndex(Integer, Integer, Integer)"/> 取 <c>(i, j)</c>；
+        ''' <c>False</c> 时返回完整 <c>n×n</c> 锯齿矩阵（对称写入，仅算一次距离）。
+        ''' </param>
+        ''' <param name="metric">距离函数，默认欧氏距离的平方（聚类比较用平方即可，省掉 Sqrt）</param>
+        ''' <remarks>
+        ''' 单块内存（上三角）避免了 <c>Double()()</c> 的 n 次小对象分配与跨行跳转，
+        ''' 是 HDBSCAN / KNNCluster 构建距离矩阵的首选布局。
+        ''' </remarks>
+        Public Shared Function PairwiseDistance(rows As Double()(),
+                                                Optional upperTriangleOnly As Boolean = True,
+                                                Optional metric As Func(Of Double(), Double(), Double) = Nothing) As Double()
+            If rows Is Nothing Then Throw New ArgumentNullException(NameOf(rows))
+
+            Dim n As Integer = rows.Length
+            Dim dist As Func(Of Double(), Double(), Double) = If(metric, AddressOf SimdReduce.DistanceSquared)
+
+            If n = 0 Then Return Array.Empty(Of Double)()
+            If n = 1 AndAlso upperTriangleOnly Then Return Array.Empty(Of Double)()
+
+            Dim result As Double() = New Double(If(upperTriangleOnly, CInt(UpperTriangleLength(n)) - 1, n * n - 1)) {}
+
+            If upperTriangleOnly Then
+                Call ForRange(n - 1,
+                    Sub(start, ends)
+                        For i As Integer = start To ends - 1
+                            Dim row As Double() = rows(i)
+                            Dim offset As Integer = i * n - (i * (i + 1)) \ 2
+
+                            For j As Integer = i + 1 To n - 1
+                                result(offset + (j - i - 1)) = dist(row, rows(j))
+                            Next
+                        Next
+                    End Sub, 8)
+            Else
+                Call ForRange(n,
+                    Sub(start, ends)
+                        For i As Integer = start To ends - 1
+                            Dim row As Double() = rows(i)
+
+                            For j As Integer = i To n - 1
+                                Dim d As Double = If(i = j, 0.0, dist(row, rows(j)))
+
+                                result(i * n + j) = d
+                                result(j * n + i) = d
+                            Next
+                        Next
+                    End Sub, 8)
+            End If
+
+            Return result
         End Function
 
 #End Region

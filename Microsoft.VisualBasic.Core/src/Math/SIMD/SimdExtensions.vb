@@ -470,5 +470,49 @@ Namespace Math.SIMD
         End Function
 
 #End Region
+
+#Region "select and distance"
+
+        ''' <summary>
+        ''' 平方距离：<c>SUM((v1(i) - v2(i)) ^ 2)</c>，单趟零分配。
+        ''' </summary>
+        <Extension>
+        Public Function SimdDistanceSquared(v1 As Double(), v2 As Double()) As Double
+            Return SimdReduce.DistanceSquared(v1, v2)
+        End Function
+
+        ''' <summary>
+        ''' 最小值所在的下标（单趟扫描，数值相等取较小下标）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdArgMin(v As Double()) As Integer
+            Return SimdSelect.ArgMin(v)
+        End Function
+
+        ''' <summary>
+        ''' 最大值所在的下标（单趟扫描，数值相等取较小下标）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdArgMax(v As Double()) As Integer
+            Return SimdSelect.ArgMax(v)
+        End Function
+
+        ''' <summary>
+        ''' 最小的 <paramref name="k"/> 个元素的下标，按 (值升序, 下标升序) 排列。
+        ''' </summary>
+        <Extension>
+        Public Function SimdTopK(v As Double(), k As Integer) As Integer()
+            Return SimdSelect.TopKIndices(v, k)
+        End Function
+
+        ''' <summary>
+        ''' 平方范数：<c>SUM(v(i) ^ 2)</c>。
+        ''' </summary>
+        <Extension>
+        Public Function SimdSquaredNorm(v As Double()) As Double
+            Return SimdDistance.SquaredNorm(v)
+        End Function
+
+#End Region
     End Module
 End Namespace
