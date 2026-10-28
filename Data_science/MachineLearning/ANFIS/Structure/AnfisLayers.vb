@@ -27,10 +27,15 @@ Public Class AnfisForward
 
     ''' <summary>输入矩阵，形状 <c>[SampleCount, InputCount]</c>。</summary>
     Public Property X As Double(,)
-    ''' <summary>每个输入的隶属度，形状 <c>[SampleCount, m_i]</c>（第 1 层）。</summary>
-    Public Property Mu As Double()(,)
-    ''' <summary>每个输入的隶属度对数（乘积在对数域累加，避免下溢）。</summary>
-    Public Property LogMu As Double()(,)
+    ''' <summary>
+    ''' 第 1 层的隶属度，形状 <c>[SampleCount, sum(m_i)]</c>；
+    ''' 第 i 个输入的模糊集从 <c>MfOffsets(i)</c> 开始连续存放。
+    ''' </summary>
+    Public Property Mu As Double(,)
+    ''' <summary>隶属度的对数（乘积在对数域累加，避免下溢）。</summary>
+    Public Property LogMu As Double(,)
+    ''' <summary>每个输入的模糊集在 <see cref="Mu"/> 列方向上的起始下标。</summary>
+    Public Property MfOffsets As Integer()
     ''' <summary>规则触发强度 w，形状 <c>[SampleCount, RuleCount]</c>（第 2 层）。</summary>
     Public Property W As Double(,)
     ''' <summary>归一化触发强度 <c>w-bar</c>，形状 <c>[SampleCount, RuleCount]</c>（第 3 层）。</summary>
@@ -39,8 +44,10 @@ Public Class AnfisForward
     Public Property SumW As Double()
     ''' <summary>每行是否有效（S 未下溢到 0）。</summary>
     Public Property Valid As Boolean()
-    ''' <summary>每条规则的线性结论值 <c>f_r</c>，按输出各存一份，形状 <c>[SampleCount, RuleCount]</c>（第 4 层）。</summary>
-    Public Property F As Double()(,)
+    ''' <summary>
+    ''' 每条规则的线性结论值 <c>f_r</c>，形状 <c>[SampleCount, RuleCount, OutputCount]</c>（第 4 层）。
+    ''' </summary>
+    Public Property F As Double(,,)
     ''' <summary>网络输出，形状 <c>[SampleCount, OutputCount]</c>（第 5 层）。</summary>
     Public Property Z As Double(,)
 
@@ -136,48 +143,54 @@ Public Class AnfisLayers
         }
 
         ' ---- 输入拷贝（后续所有计算都在连续的行主序数组上进行）----
-        Dim X(rowCount - 1, n - 1) As Double
+        Dim xRows(rowCount - 1, n - 1) As Double
 
         For t As Integer = 0 To rowCount - 1
             Dim row As Double() = x(rowStart + t)
 
             If row Is Nothing OrElse row.Length <> n Then
-                Throw New ArgumentException($"the sample {rowStart + t} has {If(row Is Nothing, 0, row.Length)} features but the network expects {n}", NameOf(x))
+                Throw New ArgumentException(
+                    $"the sample {rowStart + t} has {If(row Is Nothing, 0, row.Length)} features but the network expects {n}", NameOf(x))
             End If
 
             For i As Integer = 0 To n - 1
-                X(t, i) = row(i)
+                xRows(t, i) = row(i)
             Next
         Next
 
-        fwd.X = X
+        fwd.X = xRows
 
-        ' ---- 第 1 层：模糊化 ----
-        Dim muAll(n - 1) As Double(,)
-        Dim logMuAll(n - 1) As Double(,)
+        ' ---- 第 1 层：模糊化（所有输入的隶属度拼在一张表里，列偏移由 MfOffsets 给出）----
+        Dim mfOffsets(n - 1) As Integer
+        Dim totalMf As Integer = 0
+
+        For i As Integer = 0 To n - 1
+            mfOffsets(i) = totalMf
+            totalMf += _net.Inputs(i).FunctionCount
+        Next
+
+        Dim mu(rowCount - 1, totalMf - 1) As Double
+        Dim logMu(rowCount - 1, totalMf - 1) As Double
 
         For i As Integer = 0 To n - 1
             Dim mfs As IMembershipFunction() = _net.Inputs(i).Functions
             Dim m As Integer = mfs.Length
-            Dim mu(rowCount - 1, m - 1) As Double
-            Dim logMu(rowCount - 1, m - 1) As Double
+            Dim offset As Integer = mfOffsets(i)
 
             For t As Integer = 0 To rowCount - 1
-                Dim xi As Double = X(t, i)
+                Dim xi As Double = xRows(t, i)
 
                 For k As Integer = 0 To m - 1
                     Dim v As Double = mfs(k).Evaluate(xi)
-                    mu(t, k) = v
-                    logMu(t, k) = If(v > 0.0, std.Log(v), Double.NegativeInfinity)
+                    mu(t, offset + k) = v
+                    logMu(t, offset + k) = If(v > 0.0, std.Log(v), Double.NegativeInfinity)
                 Next
             Next
-
-            muAll(i) = mu
-            logMuAll(i) = logMu
         Next
 
-        fwd.Mu = muAll
-        fwd.LogMu = logMuAll
+        fwd.Mu = mu
+        fwd.LogMu = logMu
+        fwd.MfOffsets = mfOffsets
 
         ' ---- 第 2、3 层：乘积 T-范数与归一化 ----
         Dim W(rowCount - 1, rCount - 1) As Double
@@ -192,7 +205,7 @@ Public Class AnfisLayers
                 Dim logW As Double = 0.0
 
                 For i As Integer = 0 To n - 1
-                    logW += logMuAll(i)(t, _net.Rules.Antecedent(r, i))
+                    logW += logMu(t, mfOffsets(i) + _net.Rules.Antecedent(r, i))
                 Next
 
                 Dim wv As Double
@@ -224,7 +237,7 @@ Public Class AnfisLayers
         fwd.Valid = valid
 
         ' ---- 第 4 层：一阶 Sugeno 结论 f_r = x.p_r + q_r ----
-        Dim F(oCount - 1) As Double(,)
+        Dim fValues(rowCount - 1, rCount - 1, oCount - 1) As Double
         Dim pt(n - 1, rCount - 1) As Double
         Dim theta As Double(,) = _net.Theta
 
@@ -238,18 +251,16 @@ Public Class AnfisLayers
             Next
 
             ' f = X * P' 走张量后端的矩阵乘（SIMD / 未来可切 CUDA）
-            Dim prod As Double(,) = AnfisMatrix.MatMul(X, pt)
+            Dim prod As Double(,) = AnfisMatrix.MatMul(xRows, pt)
 
             For t As Integer = 0 To rowCount - 1
                 For r As Integer = 0 To rCount - 1
-                    prod(t, r) += theta(r * (n + 1) + n, o)
+                    fValues(t, r, o) = prod(t, r) + theta(r * (n + 1) + n, o)
                 Next
             Next
-
-            F(o) = prod
         Next
 
-        fwd.F = F
+        fwd.F = fValues
 
         ' ---- 第 5 层：加权求和 ----
         Dim Z(rowCount - 1, oCount - 1) As Double
@@ -260,11 +271,10 @@ Public Class AnfisLayers
             End If
 
             For o As Integer = 0 To oCount - 1
-                Dim Fo As Double(,) = F(o)
                 Dim acc As Double = 0.0
 
                 For r As Integer = 0 To rCount - 1
-                    acc += wbar(t, r) * Fo(t, r)
+                    acc += wbar(t, r) * fValues(t, r, o)
                 Next
 
                 Z(t, o) = acc
@@ -341,7 +351,7 @@ Public Class AnfisLayers
         }
 
         Dim delta(sampleCount - 1, oCount - 1) As Double
-        Dim coef(sampleCount - 1, rCount - 1) As Double
+        Dim coefficient(sampleCount - 1, rCount - 1) As Double
         Dim sse As Double = 0.0
 
         For t As Integer = 0 To sampleCount - 1
@@ -367,10 +377,10 @@ Public Class AnfisLayers
                 Dim acc As Double = 0.0
 
                 For o As Integer = 0 To oCount - 1
-                    acc += delta(t, o) * (fwd.F(o)(t, r) - fwd.Z(t, o))
+                    acc += delta(t, o) * (fwd.F(t, r, o) - fwd.Z(t, o))
                 Next
 
-                coef(t, r) = wb * acc
+                coefficient(t, r) = wb * acc
             Next
         Next
 
@@ -413,8 +423,8 @@ Public Class AnfisLayers
 
             For t As Integer = 0 To sampleCount - 1
                 For r As Integer = 0 To rCount - 1
-                    If coef(t, r) <> 0.0 Then
-                        column(t, _net.Rules.Antecedent(r, i)) += coef(t, r)
+                    If coefficient(t, r) <> 0.0 Then
+                        column(t, _net.Rules.Antecedent(r, i)) += coefficient(t, r)
                     End If
                 Next
             Next

@@ -130,8 +130,6 @@ Public Class AnfisOptions
     Public Property ValidationRatio As Double = 0.2
     ''' <summary>数据划分与初始化的随机种子（固定种子 + 单线程 = 结果可复现）。</summary>
     Public Property RandomSeed As Integer = 0
-    ''' <summary>是否在每轮训练前打乱样本顺序。</summary>
-    Public Property Shuffle As Boolean = True
 
     ''' <summary>冻结前提参数（只做结论参数的 LSE）。</summary>
     Public Property FreezePremise As Boolean = False

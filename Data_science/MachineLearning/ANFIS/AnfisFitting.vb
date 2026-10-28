@@ -140,7 +140,7 @@ Public Module AnfisFitting
 
     ''' <summary>批量预测并只取第一个输出（单输出模型的便利重载）。</summary>
     Public Function PredictScalar(model As AnfisNetwork, x As Double()()) As Double()
-        Dim batch As Double()() = Predict(model, x, 1)
+        Dim batch As Double()() = Predict(model, x)
         Dim result(batch.Length - 1) As Double
 
         For i As Integer = 0 To batch.Length - 1

@@ -268,10 +268,15 @@ Public Class SigmoidMembership
     End Function
 
     ''' <summary>对数导数。</summary>
+    ''' <remarks>
+    ''' <c>ln(mu) = -ln(1 + exp(-a(x-c)))</c>，因此
+    ''' <c>d(ln mu)/da = (1-mu)(x-c)</c>、<c>d(ln mu)/dc = -(1-mu)a</c>。
+    ''' 注意第二项是**负**的：<c>z = a(x-c)</c> 对 <c>c</c> 的偏导是 <c>-a</c>。
+    ''' </remarks>
     Public Overrides Function LogGradient(x As Double) As Double()
         Dim mu As Double = Evaluate(x)
         Dim d As Double = 1.0 - mu
-        Return New Double() {(x - _c) * d, _a * d}
+        Return New Double() {(x - _c) * d, -_a * d}
     End Function
 
     ''' <summary>斜率必须为正。</summary>

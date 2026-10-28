@@ -269,11 +269,12 @@ Public Class AnfisNetwork
         Dim result(fwd.InputCount - 1)() As Double
 
         For i As Integer = 0 To fwd.InputCount - 1
-            Dim m As Integer = fwd.Mu(i).GetLength(1)
+            Dim m As Integer = Inputs(i).FunctionCount
+            Dim offset As Integer = fwd.MfOffsets(i)
             Dim row(m - 1) As Double
 
             For k As Integer = 0 To m - 1
-                row(k) = fwd.Mu(i)(0, k)
+                row(k) = fwd.Mu(0, offset + k)
             Next
 
             result(i) = row
@@ -386,7 +387,7 @@ Public Class AnfisNetwork
                     .parameters = mf.GetParameters()
                 }).ToArray
             }).ToArray,
-            .antecedent = Rules.ToAntecedentTable(),
+            .antecedent = ToJagged(Rules.ToAntecedentTable()),
             .theta = ToJagged(Theta)
         }
 
@@ -461,6 +462,24 @@ Public Class AnfisNetwork
 
         For i As Integer = 0 To rows - 1
             Dim row(cols - 1) As Double
+
+            For j As Integer = 0 To cols - 1
+                row(j) = values(i, j)
+            Next
+
+            result(i) = row
+        Next
+
+        Return result
+    End Function
+
+    Private Shared Function ToJagged(values As Integer(,)) As Integer()()
+        Dim rows As Integer = values.GetLength(0)
+        Dim cols As Integer = values.GetLength(1)
+        Dim result(rows - 1)() As Integer
+
+        For i As Integer = 0 To rows - 1
+            Dim row(cols - 1) As Integer
 
             For j As Integer = 0 To cols - 1
                 row(j) = values(i, j)
