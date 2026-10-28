@@ -1086,8 +1086,6 @@ Imports any = Microsoft.VisualBasic.Scripting
             Single.IsPositiveInfinity(n)
     End Function
 
-#If FRAMEWORD_CORE Then
-
     ''' <summary>
     ''' Fuzzy match two string, this is useful for the text query or searching.
     ''' (请注意，这个函数是不会自动转换大小写的，如果是需要字符大小写不敏感，
@@ -1111,7 +1109,6 @@ Imports any = Microsoft.VisualBasic.Scripting
             End If
         End If
     End Function
-#End If
 
     ''' <summary>
     ''' 函数只返回有重复的数据
@@ -1150,7 +1147,8 @@ Imports any = Microsoft.VisualBasic.Scripting
     ''' <param name="source"></param>
     ''' <param name="getKey">得到对象的标签</param>
     ''' <returns></returns>
-    <Extension> Public Function RemoveDuplicates(Of T, Tag)(source As IEnumerable(Of T), getKey As Func(Of T, Tag)) As T()
+    <Extension>
+    Public Function RemoveDuplicates(Of T, Tag)(source As IEnumerable(Of T), getKey As Func(Of T, Tag)) As T()
         Dim Groups = From obj As T
                      In source
                      Select obj
@@ -1158,8 +1156,6 @@ Imports any = Microsoft.VisualBasic.Scripting
         Dim LQuery = (From obj In Groups Select obj.Group.First).ToArray
         Return LQuery
     End Function
-
-#If FRAMEWORD_CORE Then
 
     ''' <summary>
     ''' Remove all of the null object in the target object collection.
@@ -1172,20 +1168,13 @@ Imports any = Microsoft.VisualBasic.Scripting
     '''
     <Extension>
     Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
-#Else
-    ''' <summary>
-    ''' Remove all of the null object in the target object collection
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
-#End If
         If source Is Nothing Then
             Return New T() {}
         Else
-            Return (From x In source Where Not x Is Nothing Select x).ToArray
+            Return (From x As T
+                    In source
+                    Where Not x Is Nothing
+                    Select x).ToArray
         End If
     End Function
 
@@ -1195,11 +1184,15 @@ Imports any = Microsoft.VisualBasic.Scripting
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function TrimNull(source As IEnumerable(Of String)) As String()
+    <Extension>
+    Public Function TrimNull(source As IEnumerable(Of String)) As String()
         If source Is Nothing Then
             Return New String() {}
         Else
-            Return (From x In source Where Not x.StringEmpty Select x).ToArray
+            Return (From x As String
+                    In source
+                    Where Not x.StringEmpty
+                    Select x).ToArray
         End If
     End Function
 
@@ -1348,7 +1341,6 @@ Imports any = Microsoft.VisualBasic.Scripting
         Call fs.WriteText(lines.JoinBy(vbLf), path:=file)
     End Sub
 
-#If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Gets the subscript index of a generic collection.(获取某一个集合的下标的集合)
     ''' </summary>
@@ -1362,17 +1354,6 @@ Imports any = Microsoft.VisualBasic.Scripting
                                         <Parameter("source", "")> source As IEnumerable(Of T),
                                         <Parameter("index.OffSet", "")> Optional offSet% = 0) _
                                      As <FunctionReturns("A integer array of subscript index of the target generic collection.")> IEnumerable(Of Integer)
-#Else
-    ''' <summary>
-    ''' 获取某一个集合的下标的集合
-    ''' </summary>
-    ''' <typeparam name="T">集合中的元素为任意类型的</typeparam>
-    ''' <param name="Collection">目标集合对象</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <Extension> Public Iterator Function Sequence(Of T)(source As IEnumerable(Of T), Optional offset As Integer = 0) As IEnumerable(Of Integer)
-#End If
         If source Is Nothing Then
             Return
         Else
