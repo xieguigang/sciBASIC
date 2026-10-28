@@ -43,6 +43,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TensorFlow", "TensorFlow\Te
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LNN", "LNN\LNN.vbproj", "{D83FD4C8-2F77-263A-8320-3FE7C8F91D86}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ANFIS", "ANFIS\ANFIS.vbproj", "{51B9A18C-E786-4838-9856-85C9481476FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -773,6 +775,50 @@ Global
 		{D83FD4C8-2F77-263A-8320-3FE7C8F91D86}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
 		{D83FD4C8-2F77-263A-8320-3FE7C8F91D86}.Rsharp_app_release|x64.ActiveCfg = Release|Any CPU
 		{D83FD4C8-2F77-263A-8320-3FE7C8F91D86}.Rsharp_app_release|x64.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Debug|x64.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Docker|Any CPU.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Docker|Any CPU.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Docker|x64.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Docker|x64.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.gcmodeller_desktop|Any CPU.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.gcmodeller_desktop|Any CPU.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.gcmodeller_desktop|x64.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.gcmodeller_desktop|x64.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.LipidSearch|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.LipidSearch|Any CPU.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.LipidSearch|x64.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.LipidSearch|x64.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit_win32|Any CPU.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit_win32|Any CPU.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit_win32|x64.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit_win32|x64.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit|Any CPU.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit|x64.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.mzkit|x64.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.NPSearch|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.NPSearch|Any CPU.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.NPSearch|x64.ActiveCfg = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.NPSearch|x64.Build.0 = Debug|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.nuget_release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.nuget_release|Any CPU.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.nuget_release|x64.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.nuget_release|x64.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.PlantMAT|Any CPU.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.PlantMAT|Any CPU.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.PlantMAT|x64.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.PlantMAT|x64.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Release|x64.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Release|x64.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Rsharp_app_release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Rsharp_app_release|x64.ActiveCfg = Release|Any CPU
+		{51B9A18C-E786-4838-9856-85C9481476FA}.Rsharp_app_release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
