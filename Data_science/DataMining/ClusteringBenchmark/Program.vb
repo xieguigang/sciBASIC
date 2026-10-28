@@ -1,3 +1,4 @@
+Imports System.Diagnostics
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.Math.SIMD
@@ -102,30 +103,41 @@ Public Module Program
         Return ""
     End Function
 
+    ''' <summary>
+    ''' 预热：持续约 1.5 秒的真实计算。
+    ''' </summary>
+    ''' <remarks>
+    ''' 除了 JIT 分层编译，Windows 的 CPU 频率调节也需要一段持续负载才会拉满；
+    ''' 如果基准进程刚启动就开始计时，第一组用例会系统性偏慢
+    ''' （实测同一段 TopK 代码在第 1 组比第 2 组慢 2 倍以上）。
+    ''' </remarks>
     Private Sub WarmUp()
-        Dim a As Double() = New Double(63) {}
-        Dim b As Double() = New Double(63) {}
+        Dim a As Double() = New Double(255) {}
+        Dim b As Double() = New Double(255) {}
 
         For i As Integer = 0 To a.Length - 1
             a(i) = i * 0.5
             b(i) = i * 0.25
         Next
 
-        Dim sink As Double = 0
-
-        For i As Integer = 0 To 20000
-            sink += SimdReduce.DistanceSquared(a, b)
-        Next
-
-        Dim values As Double() = New Double(999) {}
+        Dim values As Double() = New Double(9999) {}
 
         For i As Integer = 0 To values.Length - 1
             values(i) = (i * 37) Mod 101
         Next
 
-        For i As Integer = 0 To 200
-            Call SimdSelect.TopKIndices(values, 8)
-        Next
+        Dim timer As Stopwatch = Stopwatch.StartNew()
+        Dim sink As Double = 0
+
+        While timer.ElapsedMilliseconds < 1500
+            For i As Integer = 0 To 2000
+                sink += SimdReduce.DistanceSquared(a, b)
+            Next
+
+            For i As Integer = 0 To 20
+                sink += SimdSelect.TopKIndices(values, 8).Length
+            Next
+        End While
 
         If sink = Double.MinValue Then Console.WriteLine(sink)
     End Sub

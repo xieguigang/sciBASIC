@@ -91,9 +91,12 @@ Public Module BenchCases
     ''' 如果不同配置的用例按顺序各跑一次，先跑的那一组会系统性偏慢（实测可差 30 倍）。
     ''' 因此这里固定"1 次预热 + N 次计时取最小"，让所有配置在同一热度下比较。
     ''' </remarks>
-    Private Function Measure(name As String, action As Action, Optional detail As String = "", Optional runs As Integer = 2) As CaseResult
-        ' 预热（不计时）
-        action()
+    Private Function Measure(name As String, action As Action, Optional detail As String = "", Optional runs As Integer = 3) As CaseResult
+        ' 预热（不计时）：.NET 的分层编译需要若干次调用 + 后台重编译才会提升到 tier-1，
+        ' 只预热一次时第一次"计时"仍可能是 tier-0 代码（实测同一内核前后差 2 倍以上）
+        For w As Integer = 1 To 2
+            action()
+        Next
 
         Dim best As Double = Double.MaxValue
         Dim allocated As Double = 0
@@ -149,6 +152,21 @@ Public Module BenchCases
 
                 If sink = Double.MinValue Then Console.WriteLine(sink)
             End Sub, $"d={dims}"))
+
+        ' 大维度下向量化的收益才能显现（d=100 时调用开销与归约成本占比过高）
+        Dim wideProbe As Double()() = Synthetic(2, 1024, 1, 8)
+        Dim widePairs As Integer = If(quick, 5000, 20000)
+
+        Call results.Add(Measure("distance-squared(d=1024) x" & widePairs,
+            Sub()
+                Dim sink As Double = 0
+
+                For i As Integer = 0 To widePairs - 1
+                    sink += SimdReduce.DistanceSquared(wideProbe(0), wideProbe(1))
+                Next
+
+                If sink = Double.MinValue Then Console.WriteLine(sink)
+            End Sub))
 
         Call results.Add(Measure("square-distance(alloc path) x" & pairs,
             Sub()

@@ -107,8 +107,8 @@ Namespace HDBSCAN.Runner
                                                             Return If(sparseDistance.ContainsKey(b * numPoints + a), sparseDistance(b * numPoints + a), 1)
                                                         End Function
 
-            ' Normal matrix with caching.
-            If parameters.CacheDistance Then Return Function(a, b) parameters.Distances(a)(b)
+            ' Normal matrix with caching（要求矩阵确实已经物化，否则回退到按需计算）
+            If parameters.Distances IsNot Nothing Then Return Function(a, b) parameters.Distances(a)(b)
 
             ' No cache
             Return Function(a, b) parameters.DistanceFunction.ComputeDistance(a, b, parameters.DataSet(a), parameters.DataSet(b))
@@ -116,7 +116,10 @@ Namespace HDBSCAN.Runner
 
         Private Shared Function PrecomputeSparseMatrixDistancesIfApplicable(Of T)(parameters As HdbscanParameters(Of T), numPoints As Integer) As Dictionary(Of Integer, Double)
             Dim sparseDistance As Dictionary(Of Integer, Double) = Nothing
-            If parameters.Distances Is Nothing AndAlso parameters.CacheDistance AndAlso TypeOf parameters.DataSet Is Dictionary(Of Integer, Integer)() Then
+
+            ' 稀疏矩阵的缓存规模由"非默认值条目数"决定，而不是 n²，
+            ' 因此不受 MaxCachedPoints / DistanceCacheMode 的限制（默认仍然启用，保持既有行为）。
+            If parameters.Distances Is Nothing AndAlso TypeOf parameters.DataSet Is Dictionary(Of Integer, Integer)() Then
                 sparseDistance = New Dictionary(Of Integer, Double)()
                 If parameters.DistanceFunction.GetType() IsNot GetType(ISparseMatrixSupport) Then
                     Throw New NotSupportedException("The distance function used does not support sparse matrix.")
