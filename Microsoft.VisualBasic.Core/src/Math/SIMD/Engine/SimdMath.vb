@@ -455,6 +455,23 @@ Namespace Math.SIMD
         Private Const EXP_DEGREE As Integer = 13
 
         ''' <summary>
+        ''' 用于把浮点数舍入成整数的 magic number：<c>1.5 × 2^52</c>。
+        ''' </summary>
+        Private Const MagicRound As Double = 6755399441055744.0R
+        ''' <summary>
+        ''' <see cref="MagicRound"/> 的整数位模式。
+        ''' </summary>
+        Private Const MagicRoundBits As Long = &H4338000000000000L
+        ''' <summary>
+        ''' <c>2^52</c>，用于把整数位模式还原为浮点数（指数拆分）。
+        ''' </summary>
+        Private Const TwoPow52 As Double = 4503599627370496.0R
+        ''' <summary>
+        ''' <c>2^52</c> 的指数域位模式（<c>0x433</c> 指数）。
+        ''' </summary>
+        Private Const TwoPow52Bits As Long = &H4330000000000000L
+
+        ''' <summary>
         ''' 计算 <c>1 / n!</c>，用于展开 <c>exp(r)</c>。
         ''' </summary>
         Private Shared ReadOnly ExpCoefficients As Double() = makeExpCoefficients()
@@ -529,14 +546,20 @@ Namespace Math.SIMD
                 Dim vln2 As New Vector(Of Double)(Ln2)
                 Dim vinv As New Vector(Of Double)(InvLn2)
                 Dim one As Vector(Of Double) = Vector(Of Double).One
+                Dim magic As New Vector(Of Double)(MagicRound)
+                Dim magicBits As New Vector(Of Int64)(MagicRoundBits)
 
                 Do While i <= last
                     Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
                     ' 溢出保护：与 SlopeProblem.clampExp 保持一致
                     x = Vector.Min(Vector.Max(x, vmin), vmax)
 
-                    Dim k As Vector(Of Int64) = Vector.ConvertToInt64(Vector.Round(x * vinv))
-                    Dim r As Vector(Of Double) = x - Vector.ConvertToDouble(k) * vln2
+                    ' k = round(x / ln2)：用 magic number 把浮点舍入直接写进尾数，
+                    ' 避免 double→int64 的转换指令（AVX2 没有这条指令，会退化为极慢的标量展开）
+                    Dim t As Vector(Of Double) = x * vinv + magic
+                    Dim kd As Vector(Of Double) = t - magic
+                    Dim ki As Vector(Of Int64) = Vector.AsVectorInt64(t) - magicBits
+                    Dim r As Vector(Of Double) = x - kd * vln2
                     Dim p As Vector(Of Double) = New Vector(Of Double)(ExpCoefficients(EXP_DEGREE - 1))
 
                     For n As Integer = EXP_DEGREE - 2 To 2 Step -1
@@ -547,7 +570,7 @@ Namespace Math.SIMD
                     p = p * r + one
 
                     Dim scale As Vector(Of Double) = Vector.AsVectorDouble(Of Int64)(
-                        Vector.ShiftLeft(k + New Vector(Of Int64)(1023L), 52))
+                        Vector.ShiftLeft(ki + New Vector(Of Int64)(1023L), 52))
                     Dim y As Vector(Of Double) = p * scale
 
                     y.CopyTo(v, i)
@@ -609,7 +632,7 @@ Namespace Math.SIMD
                 Do While i <= last
                     Dim x As Vector(Of Double) = New Vector(Of Double)(v, i)
                     Dim bits As Vector(Of Int64) = Vector.AsVectorInt64(x)
-                    Dim exponent As Vector(Of Int64) = Vector.ShiftRightLogical(bits, 52) - New Vector(Of Int64)(1023L)
+                    Dim eBits As Vector(Of Int64) = Vector.ShiftRightLogical(bits, 52)
                     Dim m As Vector(Of Double) = Vector.AsVectorDouble(Of Int64)(
                         Vector.BitwiseOr(Vector.BitwiseAnd(bits, exponentMask), oneExponent))
                     ' 把尾数规整到 [sqrt(0.5), sqrt(2))，让 atanh 级数收敛最快
@@ -618,7 +641,11 @@ Namespace Math.SIMD
 
                     m = Vector.ConditionalSelect(hi, m * New Vector(Of Double)(0.5R), m)
 
-                    Dim e As Vector(Of Double) = Vector.ConvertToDouble(exponent) + adj
+                    ' 指数位（0..2047）→ double：把整数塞进 2^52 的尾数再减回去，
+                    ' 同样避免 int64→double 的转换指令
+                    Dim eBitsDbl As Vector(Of Double) = Vector.AsVectorDouble(Of Int64)(
+                        Vector.BitwiseOr(eBits, New Vector(Of Int64)(TwoPow52Bits))) - New Vector(Of Double)(TwoPow52)
+                    Dim e As Vector(Of Double) = eBitsDbl - New Vector(Of Double)(1023.0R) + adj
 
                     Dim s As Vector(Of Double) = (m - one) / (m + one)
                     Dim s2 As Vector(Of Double) = s * s
