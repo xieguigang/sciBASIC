@@ -178,6 +178,23 @@ Public Class LiteJsClrInteropTests
         Assert.Equal("child 5", OneLine("console.log(host.Child.Label, host.Child.Value);", ("host", Fixture())))
     End Sub
 
+    ''' <summary>
+    ''' A library api declared as <c>IEnumerable(Of T)</c> is callable from a script: the JS array
+    ''' is materialised into the sequence (regression: <c>stdlib.table.fromColumns</c> used to fail
+    ''' with "no overload of 'fromColumns' matches 3 argument(s)").
+    ''' </summary>
+    <Fact>
+    Public Sub Clr_EnumerableParametersAcceptScriptArrays()
+        Assert.Equal("6.5", OneLine("console.log(host.SumSequence([1, 2, 3.5]));", ("host", Fixture())))
+    End Sub
+
+    <Fact>
+    Public Sub Clr_EnumerableOfStringParameterAcceptsScriptArray()
+        Assert.Equal("a-b-c | a+b+c", OneLine(
+            "console.log(host.JoinSequence(['a', 'b', 'c']), '|', host.JoinSequence(['a', 'b', 'c'], '+'));",
+            ("host", Fixture())))
+    End Sub
+
     <Fact>
     Public Sub Clr_SpreadCopiesDataMembers()
         Assert.Equal("hello 1 undefined", OneLine(

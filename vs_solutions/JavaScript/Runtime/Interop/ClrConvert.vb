@@ -183,6 +183,23 @@ Namespace Runtime
                 Return list
             End If
 
+            ' an enumerable interface (IEnumerable(Of T) / IList(Of T) / IReadOnlyList(Of T) ...):
+            ' materialise the script array into a List(Of T) and hand it over. Library apis
+            ' routinely declare their input as IEnumerable(Of T); without this a script could
+            ' not call them at all ("no overload matches").
+            Dim sequenceElement = SequenceElementType(target)
+            If sequenceElement IsNot Nothing Then
+                Dim listType = GetType(List(Of )).MakeGenericType(sequenceElement)
+                Dim instance = Activator.CreateInstance(listType)
+                Dim add = listType.GetMethod("Add")
+
+                For Each item In EnumerableElements(value)
+                    add.Invoke(instance, New Object() {ToClr(item, sequenceElement)})
+                Next
+
+                Return instance
+            End If
+
             Dim vt = value.GetType()
             If target.IsAssignableFrom(vt) Then Return value
             Throw JsRuntimeException.TypeError(
@@ -277,7 +294,7 @@ Namespace Runtime
                 If IsNumericType(vt) OrElse vt Is GetType(Boolean) OrElse vt Is GetType(String) Then Return 1
                 Return -1
             End If
-            If target.IsArray OrElse IsGenericList(target) Then
+            If target.IsArray OrElse IsGenericList(target) OrElse SequenceElementType(target) IsNot Nothing Then
                 If TypeOf value Is List(Of Object) OrElse TypeOf value Is Array OrElse TypeOf value Is ClrObject Then
                     Return 1
                 End If
@@ -429,6 +446,32 @@ Namespace Runtime
 
         Friend Function IsGenericList(t As Type) As Boolean
             Return t.IsGenericType AndAlso t.GetGenericTypeDefinition().FullName = "System.Collections.Generic.List`1"
+        End Function
+
+        ''' <summary>
+        ''' The element type when <paramref name="t"/> is one of the generic sequence interfaces a
+        ''' <see cref="List(Of T)"/> satisfies (IEnumerable(Of T), ICollection(Of T), IList(Of T),
+        ''' IReadOnlyCollection(Of T), IReadOnlyList(Of T)); otherwise <c>Nothing</c>.
+        ''' <para>
+        ''' This is what lets a script pass a plain JS array to a library method declared as
+        ''' <c>x As IEnumerable(Of Double)</c>: the array is materialised into a List(Of T).
+        ''' </para>
+        ''' </summary>
+        Friend Function SequenceElementType(t As Type) As Type
+            If t Is Nothing OrElse Not t.IsGenericType Then Return Nothing
+
+            Dim definition = t.GetGenericTypeDefinition().FullName
+
+            Select Case definition
+                Case "System.Collections.Generic.IEnumerable`1",
+                     "System.Collections.Generic.ICollection`1",
+                     "System.Collections.Generic.IList`1",
+                     "System.Collections.Generic.IReadOnlyCollection`1",
+                     "System.Collections.Generic.IReadOnlyList`1"
+                    Return t.GetGenericArguments()(0)
+                Case Else
+                    Return Nothing
+            End Select
         End Function
 
         ''' <summary>Element-wise view of a script array or an enumerable CLR value.</summary>

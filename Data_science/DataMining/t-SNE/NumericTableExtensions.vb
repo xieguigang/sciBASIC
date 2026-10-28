@@ -79,13 +79,13 @@ Public Module NumericTableExtensions
     ''' <param name="nthreads">并行线程数，&lt;= 0 时取当前主机的 CPU 核心数</param>
     ''' <returns>以嵌入坐标（``dim_1..dim_n``）为特征的新二维表</returns>
     <Extension>
-    Public Function tsne(source As NumericTable,
-                         Optional perplexity As Double = 30,
-                         Optional dims As Integer = 2,
-                         Optional epsilon As Double = 200,
-                         Optional iterations As Integer = 1000,
-                         Optional useBarnesHut As Boolean = False,
-                         Optional nthreads As Integer = 0) As NumericTable
+    Public Function TSneFit(source As NumericTable,
+                            Optional perplexity As Double = 30,
+                            Optional dims As Integer = 2,
+                            Optional epsilon As Double = 200,
+                            Optional iterations As Integer = 1000,
+                            Optional useBarnesHut As Boolean = False,
+                            Optional nthreads As Integer = 0) As NumericTable
 
         If source Is Nothing Then
             Throw New ArgumentNullException(NameOf(source))

@@ -6,8 +6,8 @@
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.7.9791.26955</Version>    
-		<AssemblyVersion>5.33.9791.26955</AssemblyVersion>
+		<Version>10.8.9796.18903</Version>    
+		<AssemblyVersion>5.33.9796.18903</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
@@ -634,8 +634,8 @@
 
 	<ItemGroup>
 
-		<PackageReference Include="System.Composition" Version="10.0.13" />
-		<PackageReference Include="System.Resources.Extensions" Version="10.0.13" />
+		<PackageReference Include="System.Composition" Version="10.0.14" />
+		<PackageReference Include="System.Resources.Extensions" Version="10.0.14" />
 	</ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">

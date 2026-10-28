@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::3b0c78710627f3b908b99c2658088e36, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Dendrogram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 62
-    '    Code Lines: 56 (90.32%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 6 (9.68%)
-    '     File Size: 2.77 KB
+' Summaries:
 
 
-    ' Module Dendrogram
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 62
+'    Code Lines: 56 (90.32%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 6 (9.68%)
+'     File Size: 2.77 KB
+
+
+' Module Dendrogram
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
-Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -75,7 +75,9 @@ Public Module Dendrogram
                          Optional pointSize% = 5,
                          Optional linkStroke$ = Stroke.HighlightStroke,
                          Optional axisStroke As String = Stroke.AxisStroke,
-                         Optional layout As Layouts = Layouts.Vertical) As GraphicsData
+                         Optional layout As Layouts = Layouts.Vertical,
+                         Optional dpi As Integer = 300,
+                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
@@ -105,9 +107,9 @@ Public Module Dendrogram
         End If
 
         Select Case layout
-            Case Layouts.Vertical : Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size)
-            Case Layouts.Horizon : Return New Horizon(hist, theme, colors, classinfo).Plot(size)
-            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo, maxRadial:=std.PI).Plot(size)
+            Case Layouts.Vertical : Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size, ppi:=dpi, driver:=driver)
+            Case Layouts.Horizon : Return New Horizon(hist, theme, colors, classinfo).Plot(size, ppi:=dpi, driver:=driver)
+            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo, maxRadial:=std.PI).Plot(size, ppi:=dpi, driver:=driver)
             Case Else
                 Throw New NotImplementedException(layout.ToString)
         End Select

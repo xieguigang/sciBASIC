@@ -1,17 +1,16 @@
-Imports System.Diagnostics
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.MachineLearning.DataStorage
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
+Imports Microsoft.VisualBasic.MachineLearning.DataStorage
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
-Imports Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
-Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
+Imports Microsoft.VisualBasic.Math
 Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 

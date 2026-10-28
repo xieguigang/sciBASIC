@@ -61,16 +61,57 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace Quantile
 
-    Public Class LinearQuantile : Implements QuantileQuery
+    Public Class LinearQuantile : Implements QuantileQuery, Enumeration(Of Double)
 
         ReadOnly _sorted As Double()
 
+        ''' <summary>
+        ''' get element by index
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Default Public ReadOnly Property Item(index As Integer) As Double
+            Get
+                Return _sorted(index)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get element by index
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Default Public ReadOnly Property Item(index As Long) As Double
+            Get
+                Return _sorted(index)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' query element by percentile
+        ''' </summary>
+        ''' <param name="q"></param>
+        ''' <returns></returns>
+        Default Public ReadOnly Property Item(q As Double) As Double
+            Get
+                Return Query(q)
+            End Get
+        End Property
+
+        Public ReadOnly Property Mode As Double
+            Get
+                Return _sorted.EvaluateMode
+            End Get
+        End Property
+
         Sub New(x As Double())
+            ' 20261027 make array value copy at here and then make array sort
             Dim sorted(x.Length - 1) As Double
             Array.Copy(x, sorted, x.Length)
             Array.Sort(sorted)
@@ -85,6 +126,12 @@ Namespace Quantile
             If lower = upper Then Return _sorted(lower)
             Dim frac = pos - lower
             Return _sorted(lower) * (1 - frac) + _sorted(upper) * frac
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
+            For Each xi As Double In _sorted
+                Yield xi
+            Next
         End Function
     End Class
 

@@ -106,18 +106,6 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
-#If NET48 Then
-Imports Pen = System.Drawing.Pen
-Imports Pens = System.Drawing.Pens
-Imports Brush = System.Drawing.Brush
-Imports Font = System.Drawing.Font
-#Else
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports Pens = Microsoft.VisualBasic.Imaging.Pens
-Imports Brush = Microsoft.VisualBasic.Imaging.Brush
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-#End If
-
 Namespace Plot3D.Device
 
     ''' <summary>
@@ -187,6 +175,23 @@ Namespace Plot3D.Device
 
         Public Property bspline As Single = 2
 
+        ''' <summary>
+        ''' 保留 <see cref="bspline"/> 的变换：基类的变换会退化成一个普通多边形，
+        ''' 那样 <see cref="Draw"/> 里就不再对投影后的点做凸包排序，
+        ''' 直接按原始顺序填充会画出星形的自交图形。
+        ''' </summary>
+        ''' <param name="camera">相机</param>
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim path = Me.Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
+
+            Return New ConvexHullPolygon With {
+                .Brush = Brush,
+                .Location = path.Center,
+                .Path = path,
+                .bspline = bspline
+            }
+        End Function
+
         Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
             Dim screen As Size = rect.Size
             Dim shape As PointF() = Path _
@@ -218,6 +223,17 @@ Namespace Plot3D.Device
         Public Property FontCss As String
         Public Property Color As Brush
 
+        ''' <summary>
+        ''' 投影之后再叠加的屏幕像素偏移。
+        '''
+        ''' <para>
+        ''' 刻度值与轴名需要"贴着盒体外侧"偏移一段距离，但沿三维方向外推会把
+        ''' 缩放域撑大、进而把整个盒体缩小；改成投影后的像素偏移之后，
+        ''' 偏移量与视角无关、也不会影响其它图元的缩放。
+        ''' </para>
+        ''' </summary>
+        Public Property Offset As PointF = Nothing
+
         Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
             Return {Location}
         End Function
@@ -229,7 +245,7 @@ Namespace Plot3D.Device
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim font As Font = css.GetFont(CSSFont.TryParse(FontCss))
 
-            Call g.DrawString(Text, font, Color, pscale)
+            Call g.DrawString(Text, font, Color, pscale.X + Offset.X, pscale.Y + Offset.Y)
         End Sub
 
         Public Overrides Function Transform(camera As Camera) As Element3D
@@ -237,7 +253,8 @@ Namespace Plot3D.Device
                 .Color = Color,
                 .FontCss = FontCss,
                 .Location = camera.Project(camera.Rotate(Me.Location)),
-                .Text = Text
+                .Text = Text,
+                .Offset = Offset
             }
         End Function
     End Class

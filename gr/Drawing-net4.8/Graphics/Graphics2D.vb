@@ -296,7 +296,11 @@ Public Class Graphics2D : Inherits GDICanvas
             If angle > 0 Then
                 Call text.DrawString(s, sfont, sbrush, New Point(x, y), angle:=angle)
             Else
-                Call text.DrawString(s, sfont, sbrush, New Point(x, y + sz.Height * std.Sin(angle * 180 / std.PI)), angle:=angle)
+                ' 负角度时向下补偿一个文字高度；之前的换算写成了"度 -> 度"，
+                ' 正确写法是度 -> 弧度（Sin 需要弧度）
+                Call text.DrawString(s, sfont, sbrush,
+                                     New Point(x, y + sz.Height * std.Sin(angle * std.PI / 180)),
+                                     angle:=angle)
             End If
         Else
             Call Graphics.DrawString(s, sfont, sbrush, x, y)

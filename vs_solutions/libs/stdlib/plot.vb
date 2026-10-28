@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.Plots
-Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Scripting.Runtime
 ' the skia based raster/svg/pdf driver lives in a separate assembly; aliased because the
@@ -42,6 +42,10 @@ Public Module plot
 
         Using plt As New ScatterPlot(canvas.Width, canvas.Height, PlotThemeOf(theme))
             Call ApplyLabels(plt, title, subtitle, xLabel, yLabel)
+
+            For Each si In serials
+                si.LineStyle = DashStyle.Custom
+            Next
 
             Return New PlotImage(plt.Plot(serials, canvas, dpi))
         End Using
@@ -232,12 +236,12 @@ Public Module plot
             Case "inferno" : Return ScalerPalette.inferno
             Case "magma" : Return ScalerPalette.magma
             Case "turbo" : Return ScalerPalette.turbo
-            Case "jet" : Return ScalerPalette.jet
-            Case "rainbow" : Return ScalerPalette.rainbow
-            Case "seismic" : Return ScalerPalette.seismic
-            Case "gray", "grey" : Return ScalerPalette.gray
-            Case "hot" : Return ScalerPalette.hot
-            Case Else : Return ScalerPalette.Plasma
+            Case "jet" : Return ScalerPalette.Jet
+            Case "rainbow" : Return ScalerPalette.Rainbow
+            Case "seismic" : Return ScalerPalette.Seismic
+            Case "gray", "grey" : Return ScalerPalette.Gray
+            Case "hot" : Return ScalerPalette.Hot
+            Case Else : Return ScalerPalette.plasma
         End Select
     End Function
 

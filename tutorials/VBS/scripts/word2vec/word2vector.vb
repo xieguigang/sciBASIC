@@ -27,30 +27,24 @@ call console.WriteLine($"word vectors: {vectors.nsamples} tokens x {vectors.nfea
 ' ---------------------------------------------------------------------------
 ' 2. Use UMAP to reduce the word vectors to 9 dimensions
 ' ---------------------------------------------------------------------------
-dim manifold = dimreduce.umap(vectors, dims:=9, neighbors:=64)
+dim manifold = vectors.umap(dims:=9, neighbors:=64)
 
 call console.WriteLine($"umap embedding: {manifold.nsamples} samples x {manifold.nfeatures} dims")
 
 ' ---------------------------------------------------------------------------
 ' 3. Run KMeans clustering on the reduced table
 ' ---------------------------------------------------------------------------
-dim clusters = cluster.kmeans(manifold, 9)
-dim labels = table.classLabels(clusters, "cluster")
+dim clusters = manifold.kmeans(k:= 9)
+dim labels = clusters.classLabels( "cluster")
 
 call console.WriteLine($"kmeans cluster sizes: {String.Join(", ", cluster.clusterSizes(labels))}")
 
 ' ---------------------------------------------------------------------------
 ' 4. Scatter UMAP1 / UMAP2, coloured by the cluster id
 ' ---------------------------------------------------------------------------
-dim class_id(labels.length - 1) as string
-
-for i = 0 to labels.length - 1
-    class_id(i) = labels(i).ToString()
-next
-
 dim figure = plot.scatter(
     table.feature(manifold, "dim_1"), table.feature(manifold, "dim_2"),
-    classId:=class_id,
+    classId:=labels .as_string(),
     title:="UMAP group of Rapunzel",
     subtitle:="UMAP scatter of the Rapunzel word2vector embedding result",
     xLabel:="UMAP1", yLabel:="UMAP2", size:="1200,800")

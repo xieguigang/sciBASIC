@@ -1596,7 +1596,10 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '   T:System.ArgumentException:
     '     rects is a zero-length array.
     Public Overrides Sub DrawRectangles(pen As Pen, rects() As Rectangle)
+        ' 之前是空实现，导致 GDI 后端"传矩形数组"什么都不画（Skia 后端会画）
+        Dim spen As System.Drawing.Pen = pen.CTypePenObject
 
+        Call Graphics.DrawRectangles(spen, rects)
     End Sub
     '
     ' Summary:
@@ -1618,7 +1621,10 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '   T:System.ArgumentException:
     '     rects is a zero-length array.
     Public Overrides Sub DrawRectangles(pen As Pen, rects() As RectangleF)
+        ' 同上：补齐空实现（单精度矩形数组）
+        Dim spen As System.Drawing.Pen = pen.CTypePenObject
 
+        Call Graphics.DrawRectangles(spen, rects)
     End Sub
 
     ''' <summary>
@@ -2119,7 +2125,17 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '   T:System.ArgumentNullException:
     '     brush is null.
     Public Overrides Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
+        ' 这里以前是空实现，导致 g.FillRectangle(brush, x, y, w, h) 在 GDI 后端静默什么都不画，
+        ' 而 Skia 后端却会正常绘制。直接调用原生 GDI+ 的方法，避免再绕回被重写的重载
+        Dim sbrush As System.Drawing.Brush = Nothing
 
+#If NET8_0_OR_GREATER Then
+        sbrush = brush.CTypeBrushObject
+#Else
+        sbrush = brush
+#End If
+
+        Call Graphics.FillRectangle(sbrush, x, y, width, height)
     End Sub
     '
     ' Summary:
@@ -2146,7 +2162,16 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '   T:System.ArgumentNullException:
     '     brush is null.
     Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
+        ' 同上：补齐空实现（单精度重载）
+        Dim sbrush As System.Drawing.Brush = Nothing
 
+#If NET8_0_OR_GREATER Then
+        sbrush = brush.CTypeBrushObject
+#Else
+        sbrush = brush
+#End If
+
+        Call Graphics.FillRectangle(sbrush, x, y, width, height)
     End Sub
 
 

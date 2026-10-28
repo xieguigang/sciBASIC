@@ -1,5 +1,4 @@
 Imports System.Reflection
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 
 ' ============================================================================
@@ -53,12 +52,6 @@ Public Module PlotDrivers
         ' PostScript
         Try
             Call ImageDriver.RegisterPostScript()
-        Catch
-        End Try
-
-        ' PDF
-        Try
-            Call DriverLoad.Register(New PdfInterop, Drivers.PDF)
         Catch
         End Try
     End Sub

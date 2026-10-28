@@ -63,36 +63,18 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
-#If NET48 Then
-Imports Pen = System.Drawing.Pen
-Imports Pens = System.Drawing.Pens
-Imports Brush = System.Drawing.Brush
-Imports Font = System.Drawing.Font
-Imports Brushes = System.Drawing.Brushes
-Imports SolidBrush = System.Drawing.SolidBrush
-Imports DashStyle = System.Drawing.Drawing2D.DashStyle
-Imports Image = System.Drawing.Image
-Imports Bitmap = System.Drawing.Bitmap
-Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
-#Else
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports Pens = Microsoft.VisualBasic.Imaging.Pens
-Imports Brush = Microsoft.VisualBasic.Imaging.Brush
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports Image = Microsoft.VisualBasic.Imaging.Image
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
-#End If
-
 Namespace Plot3D.Device
 
     ''' <summary>
     ''' 将生成的绘图元素在这个引擎模块之中进行排序操作，然后进行图表的绘制
     ''' </summary>
     Public Module RenderEngine
+
+        ''' <summary>
+        ''' 调试开关：环境变量 <c>PLOT3D_DEBUG=1</c> 时输出每个文本图元的最终屏幕位置
+        ''' </summary>
+        Private ReadOnly DebugRender As Boolean =
+            String.Equals(Environment.GetEnvironmentVariable("PLOT3D_DEBUG"), "1", StringComparison.Ordinal)
 
         ''' <summary>
         ''' 
@@ -109,18 +91,32 @@ Namespace Plot3D.Device
                                    theme As Plot3DTheme)
 
             ' 首先对模型执行rotate和project，然后再进行Z排序
-            Dim models As Element3D() = elements.ToArray
-
-            For Each element As Element3D In models
-                Call element.Transform(camera)
-            Next
+            '
+            ' 注意：Transform 返回的是变换之后的"新"元素，必须把结果写回数组，
+            ' 否则后续的 Z 排序与 Draw 用的仍然是未旋转的原始坐标，
+            ' 整张图会退化成 (x, y) 的二维正交投影（旧版本的实际行为）。
+            Dim models As Element3D() = elements _
+                .Select(Function(e) e.Transform(camera)) _
+                .ToArray
 
             Dim css As CSSEnvirnment = canvas.LoadEnvironment
 
             ' 进行投影之后只需要直接取出XY即可得到二维的坐标
             ' 然后生成多边形，进行画布的居中处理
+            '
+            ' 注意：只使用"几何图元"（线、面、点）来解算缩放域，
+            ' 纯文本（刻度值、轴名）不参与。否则刻度值/轴名一旦落在盒体之外，
+            ' 就会把域撑大、导致盒体被整体缩小（轴名看起来像是画在了图里面）。
             Dim plotRect As Rectangle = region.PlotRegion(css)
-            Dim polygon As PointF() = models _
+            Dim geometry As Element3D() = models _
+                .Where(Function(element) Not (TypeOf element Is Label)) _
+                .ToArray
+
+            If geometry.Length = 0 Then
+                geometry = models
+            End If
+
+            Dim polygon As PointF() = geometry _
                 .Select(Function(element) element.EnumeratePath) _
                 .IteratesALL _
                 .Select(Function(pt) pt.PointXY(plotRect.Size)) _
@@ -139,6 +135,15 @@ Namespace Plot3D.Device
             For i As Integer = 0 To models.Length - 1
                 Dim index As Integer = orders(i)
                 Dim model As Element3D = models(index)
+
+                If DebugRender AndAlso TypeOf model Is Label Then
+                    With DirectCast(model, Label)
+                        Dim pos As PointF = .GetPosition(plotRect.Size)
+
+                        Call Console.WriteLine(
+                            $"[3d label] '{ .Text}' at {scaleX(pos.X) + .Offset.X},{scaleY(pos.Y) + .Offset.Y}")
+                    End With
+                End If
 
                 Call model.Draw(canvas, region, scaleX, scaleY)
 

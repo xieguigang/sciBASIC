@@ -1,0 +1,86 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="mzkit_win32" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="Release" />
+    <BuildType Name="Rsharp_app_release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../../../../../Microsoft.VisualBasic.Drawing/src/Microsoft.VisualBasic.Drawing/Microsoft.VisualBasic.Drawing.vbproj">
+      <BuildType Solution="gcmodeller_desktop|*" Project="CellaLAB-Desktop" />
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="CellaLAB-Desktop" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../Data/DataFrame/dataframework-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../gr/Drawing-net4.8/Drawing-net4.8.vbproj">
+      <BuildType Solution="gcmodeller_desktop|*" Project="CellaLAB-Desktop" />
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj">
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../mime/text%html/html_netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../DataMining/DataMining/DataMining.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj">
+      <BuildType Solution="gcmodeller_desktop|*" Project="CellaLAB-Desktop" />
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../DataMining/UMAP/UMAP.NET5.vbproj">
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Graph/graph-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Mathematica/Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Mathematica/Math/Randomizer/randomizer-netcore5.vbproj">
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="DataPlot/DataPlot.vbproj">
+    <BuildType Solution="gcmodeller_desktop|*" Project="nuget_release" />
+    <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+    <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Visualization/data_visualize-netcore5.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Visualization/test/test.vbproj" Id="caea0cd9-08f7-4220-ba1a-ae1f8c1e1303">
+    <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="mzkit_win32|*" Project="Release" />
+    <BuildType Solution="nuget_release|*" Project="Release" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

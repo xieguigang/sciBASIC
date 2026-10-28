@@ -77,7 +77,7 @@ Public Module NumericTableExtensions
     ''' <param name="spread">嵌入点的有效尺度</param>
     ''' <returns>以嵌入坐标（``dim_1..dim_n``）为特征的新二维表</returns>
     <Extension>
-    Public Function umap(source As NumericTable,
+    Public Function UMAPFit(source As NumericTable,
                          Optional dims As Integer = 2,
                          Optional neighbors As Integer = 15,
                          Optional epochs As Integer? = Nothing,

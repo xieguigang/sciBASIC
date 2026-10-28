@@ -60,34 +60,6 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-#If NET48 Then
-Imports Pen = System.Drawing.Pen
-Imports Pens = System.Drawing.Pens
-Imports Brush = System.Drawing.Brush
-Imports Font = System.Drawing.Font
-Imports Brushes = System.Drawing.Brushes
-Imports SolidBrush = System.Drawing.SolidBrush
-Imports DashStyle = System.Drawing.Drawing2D.DashStyle
-Imports Image = System.Drawing.Image
-Imports Bitmap = System.Drawing.Bitmap
-Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
-Imports FontStyle = System.Drawing.FontStyle
-Imports AdjustableArrowCap = System.Drawing.Drawing2D.AdjustableArrowCap
-#Else
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports Pens = Microsoft.VisualBasic.Imaging.Pens
-Imports Brush = Microsoft.VisualBasic.Imaging.Brush
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports Image = Microsoft.VisualBasic.Imaging.Image
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
-Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
-Imports AdjustableArrowCap = Microsoft.VisualBasic.Imaging.AdjustableArrowCap
-#End If
-
 Namespace Plot3D.Model
 
     ''' <summary>
@@ -130,10 +102,25 @@ Namespace Plot3D.Model
             Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
             Dim Zaxis As New Line(ZERO, Z) With {.Stroke = color}
             Dim labelColor As Brush = labelColorVal.GetBrush
-            Dim labX As New Label With {.Location = X, .FontCss = labelFontCss, .Color = labelColor, .Text = labels.X}
-            Dim labY As New Label With {.Location = Y, .FontCss = labelFontCss, .Color = labelColor, .Text = labels.Y}
+
+            ' 轴标题沿各自的轴向外再推出一段距离，避免与新增的刻度值文本相互叠压
+            Dim dx As Double = xrange.Length * 0.08
+            Dim dy As Double = yrange.Length * 0.08
+            Dim dz As Double = zrange.Length * 0.18
+            Dim labX As New Label With {
+                .Location = New Point3D(X.X - dx, X.Y, X.Z),
+                .FontCss = labelFontCss,
+                .Color = labelColor,
+                .Text = labels.X
+            }
+            Dim labY As New Label With {
+                .Location = New Point3D(Y.X, Y.Y + dy, Y.Z),
+                .FontCss = labelFontCss,
+                .Color = labelColor,
+                .Text = labels.Y
+            }
             Dim labZ As New Label With {
-                .Location = New Point3D(Z.X, Z.Y, Z.Z + zrange.Length / 20),
+                .Location = New Point3D(Z.X, Z.Y, Z.Z + dz),
                 .FontCss = labelFontCss,
                 .Color = labelColor,
                 .Text = labels.Z

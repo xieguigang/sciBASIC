@@ -77,7 +77,7 @@ Public Module NumericTableExtensions
     ''' <param name="init">嵌入坐标的初始化方式</param>
     ''' <returns>以嵌入坐标（``dim_1..dim_n``）为特征的新二维表</returns>
     <Extension>
-    Public Function pacmap(source As NumericTable,
+    Public Function PacMapFit(source As NumericTable,
                            Optional dims As Integer = 2,
                            Optional neighbors As Integer = 10,
                            Optional iterations As Integer = 450,

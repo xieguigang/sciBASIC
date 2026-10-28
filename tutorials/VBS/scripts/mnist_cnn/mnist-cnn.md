@@ -6,4 +6,4 @@
 
 # 2. CPU baseline
 
-loss = 2.252847359505498, accuracy = 60.00%, elapsed = 7.910s
+loss = 2.252847359505498, accuracy = 60.00%, elapsed = 7.777s

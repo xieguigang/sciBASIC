@@ -213,6 +213,25 @@ Public Class ClrHostFixture
         Return total
     End Function
 
+    ''' <summary>
+    ''' Enumerable parameter: a script array must be materialised into the sequence, because
+    ''' library apis routinely declare their input as <c>IEnumerable(Of T)</c>.
+    ''' </summary>
+    Public Function SumSequence(values As IEnumerable(Of Double)) As Double
+        Dim total As Double = 0
+
+        For Each v As Double In values
+            total += v
+        Next
+
+        Return total
+    End Function
+
+    ''' <summary>Enumerable of strings (the <c>table.fromColumns(names, ...)</c> shape).</summary>
+    Public Function JoinSequence(values As IEnumerable(Of String), Optional separator As String = "-") As String
+        Return String.Join(separator, values)
+    End Function
+
     ''' <summary>Optional parameter.</summary>
     Public Function Greet(Optional name As String = "world") As String
         Return "hi " & name

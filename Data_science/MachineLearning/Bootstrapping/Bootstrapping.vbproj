@@ -13,8 +13,8 @@
     <Title>Graph and Knowledge Graph Embedding Toolkit (node2vec, graph2vec, ComplEx)</Title>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
-    <Version>10.7.9791.26955</Version>
-    <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
+    <Version>10.8.9796.18903</Version>
+    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
     <Description>Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Bootstrapping</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

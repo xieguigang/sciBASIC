@@ -1,5 +1,5 @@
-import stdlib from '../../../../.nuget/net10.0/stdlib.dll';
-import stdio from '../../../../.nuget/net10.0/stdio.dll';
+import stdlib from 'stdlib.dll';
+import stdio from 'stdio.dll';
 
 // ---------------------------------------------------------------------------
 // Word2Vec + UMAP + KMeans demo — the njs twin of word2vector.vb
@@ -7,7 +7,7 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 
 const join = (values, sep) => [...values].join(sep === undefined ? ',' : sep);
 
-const textfile = path.join(__dirname, '../../data/Rapunzel.txt');
+const textfile = here('../../data/Rapunzel.txt');
 const text = stdio.read.text(textfile);
 
 // 1. train the word vectors and build them into a unified 2D table
@@ -27,12 +27,7 @@ const labels = stdlib.table.classLabels(clusters, 'cluster');
 console.log('kmeans cluster sizes: ' + join(stdlib.cluster.clusterSizes(labels), ', '));
 
 // 4. scatter UMAP1 / UMAP2, coloured by the cluster id
-const classId = [];
-
-for (let i = 0; i < labels.length; i++) {
-    classId.push(String(labels[i]));
-}
-
+const classId = stdlib.cast.as_string(labels);
 const figure = stdlib.plot.scatter(
     stdlib.table.feature(manifold, 'dim_1'), stdlib.table.feature(manifold, 'dim_2'),
     classId,

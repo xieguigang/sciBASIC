@@ -204,10 +204,10 @@ Namespace Data
         ''' <param name="features">行主序的特征矩阵</param>
         ''' <param name="rowNames">行名/样本 ID，可选</param>
         ''' <param name="featureNames">特征列名，可选</param>
-        Sub New(features As Double()(), Optional rowNames As String() = Nothing, Optional featureNames As String() = Nothing)
+        Sub New(features As Double()(), Optional rowNames As IEnumerable(Of String) = Nothing, Optional featureNames As IEnumerable(Of String) = Nothing)
             Me.features = features
-            Me.rowNames = rowNames
-            Me.featureNames = featureNames
+            Me.rowNames = rowNames.ToNullArray
+            Me.featureNames = featureNames.ToNullArray
         End Sub
 
         ''' <summary>
@@ -716,7 +716,7 @@ Namespace Data
         ''' 从行主序的特征矩阵构造二维表对象
         ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function FromRows(rowNames As String(), features As Double()(), Optional featureNames As String() = Nothing) As NumericTable
+        Public Shared Function FromRows(rowNames As IEnumerable(Of String), features As Double()(), Optional featureNames As IEnumerable(Of String) = Nothing) As NumericTable
             Return New NumericTable(features, rowNames, featureNames)
         End Function
 

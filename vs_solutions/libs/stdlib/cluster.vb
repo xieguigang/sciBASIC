@@ -1,6 +1,7 @@
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data
-Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
+Imports Microsoft.VisualBasic.DataMining.KMeans
 ' this module is itself named 'cluster', which would shadow the hierachical clustering tree
 ' type in a case insensitive language, so the tree type is aliased here
 Imports HCluster = Microsoft.VisualBasic.DataMining.HierarchicalClustering.Cluster
@@ -23,6 +24,8 @@ Public Module cluster
     ''' 初始中心的随机种子；大于等于 0 时先重置全局随机数种子，
     ''' 这样同一份数据在任何引擎、任何一次运行中都会得到相同的聚类编号
     ''' </param>
+    ''' 
+    <Extension>
     Public Function kmeans(source As NumericTable, k As Integer,
                            Optional threads As Integer = 0,
                            Optional seed As Integer = 13) As NumericTable
@@ -35,21 +38,29 @@ Public Module cluster
     End Function
 
     ''' <summary>由特征表生成 n×n 的对称欧氏距离矩阵（返回新表）。</summary>
+    ''' 
+    <Extension>
     Public Function distanceMatrix(source As NumericTable) As NumericTable
         Return source.distanceMatrix()
     End Function
 
     ''' <summary>对距离矩阵做层次聚类，返回树门面对象。</summary>
+    ''' 
+    <Extension>
     Public Function hca(dist As NumericTable) As ClusterTree
         Return New ClusterTree(dist.hca(Nothing, silent:=True))
     End Function
 
     ''' <summary>按聚类数量剪枝，聚类编号写入标签列 ``cluster``（从 1 开始），返回原表。</summary>
+    ''' 
+    <Extension>
     Public Function hcut(dist As NumericTable, k As Integer) As NumericTable
         Return dist.hcut(k, Nothing, silent:=True)
     End Function
 
     ''' <summary>按连接距离阈值剪枝（距离小于阈值的簇会被合并），返回原表。</summary>
+    ''' 
+    <Extension>
     Public Function hcutByDistance(dist As NumericTable, threshold As Double) As NumericTable
         Return dist.hcut(threshold, Nothing, silent:=True)
     End Function
@@ -57,21 +68,29 @@ Public Module cluster
     ' ======================================================== 树结构信息
 
     ''' <summary>叶节点数量。</summary>
+    ''' 
+    <Extension>
     Public Function leafCount(tree As ClusterTree) As Integer
         Return tree.leafCount()
     End Function
 
     ''' <summary>按树的顺序展开的叶节点名称。</summary>
+    ''' 
+    <Extension>
     Public Function leafs(tree As ClusterTree) As String()
         Return tree.leafs()
     End Function
 
     ''' <summary>子节点数量。</summary>
+    ''' 
+    <Extension>
     Public Function children(tree As ClusterTree) As Integer
         Return tree.children()
     End Function
 
     ''' <summary>树的总连接距离。</summary>
+    ''' 
+    <Extension>
     Public Function totalDistance(tree As ClusterTree) As Double
         Return tree.totalDistance()
     End Function

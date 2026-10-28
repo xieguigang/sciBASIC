@@ -1,13 +1,12 @@
 Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Hola
-Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 ' the HOLA layout module lives in a namespace of the same name (...Layouts.Hola.HOLA),
 ' so it is aliased to avoid the namespace/type ambiguity
 Imports HolaLayout = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Hola.HOLA
+Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 ''' <summary>
 ''' 网络图构建 / 布局 / 出图模块。

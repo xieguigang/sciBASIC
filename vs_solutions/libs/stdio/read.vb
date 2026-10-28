@@ -3,7 +3,6 @@ Imports System.Text.Json
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.MachineLearning.DataStorage
-Imports Microsoft.VisualBasic.Text
 Imports xlsxFile = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
 
 ''' <summary>

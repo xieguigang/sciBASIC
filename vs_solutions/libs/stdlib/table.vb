@@ -1,5 +1,5 @@
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data
-Imports Microsoft.VisualBasic.Data.Framework
 
 ''' <summary>
 ''' 统一二维表（<see cref="NumericTable"/>）的构造与访问模块。
@@ -36,7 +36,7 @@ Public Module table
     End Function
 
     ''' <summary>由列向量集合构造表格（列主序输入，内部转换为行主序）。</summary>
-    Public Function fromColumns(featureNames As String(), columns As Double()(), Optional rowNames As String() = Nothing) As NumericTable
+    Public Function fromColumns(featureNames As IEnumerable(Of String), columns As Double()(), Optional rowNames As IEnumerable(Of String) = Nothing) As NumericTable
         If columns Is Nothing OrElse columns.Length = 0 Then
             Throw New ArgumentException("the column collection is empty", NameOf(columns))
         End If
@@ -60,26 +60,36 @@ Public Module table
     ' ======================================================== 取值
 
     ''' <summary>取出完整的特征矩阵（行主序，不复制）。</summary>
+    ''' 
+    <Extension>
     Public Function matrix(source As NumericTable) As Double()()
         Return source.features
     End Function
 
     ''' <summary>取出一列特征数据，列不存在时抛出异常。</summary>
+    ''' 
+    <Extension>
     Public Function feature(source As NumericTable, name As String) As Double()
         Return source.Feature(name)
     End Function
 
     ''' <summary>判断表格中是否存在指定的特征列。</summary>
+    ''' 
+    <Extension>
     Public Function hasFeature(source As NumericTable, name As String) As Boolean
         Return source.HasFeature(name)
     End Function
 
     ''' <summary>判断表格中是否存在指定的标签列。</summary>
+    ''' 
+    <Extension>
     Public Function hasLabel(source As NumericTable, name As String) As Boolean
         Return source.HasLabel(name)
     End Function
 
     ''' <summary>按名称取出标签列。</summary>
+    ''' 
+    <Extension>
     Public Function label(source As NumericTable, name As String) As Double()
         Return source.GetLabel(name)
     End Function
@@ -90,36 +100,50 @@ Public Module table
     End Function
 
     ''' <summary>按序号取出标签列并转换为整数（用于分类/聚类结果）。</summary>
+    ''' 
+    <Extension>
     Public Function classLabelAt(source As NumericTable, index As Integer) As Integer()
         Return source.GetClassLabel(index)
     End Function
 
     ''' <summary>取出完整的标签矩阵。</summary>
+    ''' 
+    <Extension>
     Public Function labels(source As NumericTable) As Double()()
         Return source.labels
     End Function
 
     ''' <summary>标签列的名称列表。</summary>
+    ''' 
+    <Extension>
     Public Function labelNames(source As NumericTable) As String()
         Return source.labelNames
     End Function
 
     ''' <summary>特征列的名称列表。</summary>
+    ''' 
+    <Extension>
     Public Function featureNames(source As NumericTable) As String()
         Return source.featureNames
     End Function
 
     ''' <summary>行名列表。</summary>
+    ''' 
+    <Extension>
     Public Function rowNames(source As NumericTable) As String()
         Return source.rowNames
     End Function
 
     ''' <summary>样本数量。</summary>
+    ''' 
+    <Extension>
     Public Function nrows(source As NumericTable) As Integer
         Return source.nsamples
     End Function
 
     ''' <summary>特征列数量。</summary>
+    ''' 
+    <Extension>
     Public Function ncols(source As NumericTable) As Integer
         Return source.nfeatures
     End Function
@@ -127,21 +151,29 @@ Public Module table
     ' ======================================================== 修改
 
     ''' <summary>写入（或覆盖）一个数值标签列，返回原表。</summary>
+    ''' 
+    <Extension>
     Public Function setLabel(source As NumericTable, name As String, values As Double()) As NumericTable
         Return source.SetLabel(name, values)
     End Function
 
     ''' <summary>写入（或覆盖）一个整数标签列（分类编号 / 聚类编号），返回原表。</summary>
+    ''' 
+    <Extension>
     Public Function setClassLabel(source As NumericTable, name As String, values As Integer()) As NumericTable
         Return source.SetLabel(name, values)
     End Function
 
     ''' <summary>读取聚类结果标签列并转换为整数数组。</summary>
+    ''' 
+    <Extension>
     Public Function classLabels(source As NumericTable, Optional name As String = "cluster") As Integer()
         Return source.ClusterLabels(name)
     End Function
 
     ''' <summary>重写行名，返回原表。</summary>
+    ''' 
+    <Extension>
     Public Function setRowNames(source As NumericTable, names As String()) As NumericTable
         If names Is Nothing OrElse names.Length <> source.nsamples Then
             Throw New ArgumentException($"the row name count should equals the sample count ({source.nsamples})", NameOf(names))
