@@ -190,7 +190,7 @@ Namespace HDBSCAN.Runner
                 Return
             End If
 
-            Dim rows As Double()() = DirectCast(CType(parameters.DataSet, Object), Double()())
+            Dim dataSet As T() = parameters.DataSet
             Dim distances As Double()() = New Double(numPoints - 1)() {}
 
             For i As Integer = 0 To distances.Length - 1
@@ -206,10 +206,10 @@ Namespace HDBSCAN.Runner
                 Sub(start, ends)
                     For i As Integer = start To ends - 1
                         Dim row As Double() = distances(i)
-                        Dim xi As Double() = rows(i)
+                        Dim xi As T = dataSet(i)
 
                         For j As Integer = i + 1 To numPoints - 1
-                            Dim d As Double = distanceFunc.ComputeDistance(i, j, xi, rows(j))
+                            Dim d As Double = distanceFunc.ComputeDistance(i, j, xi, dataSet(j))
 
                             row(j) = d
                             distances(j)(i) = d

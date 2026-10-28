@@ -68,8 +68,8 @@ Namespace HDBSCAN.Distance
             If len = 0 Then Return 1
 
             ' 均值用 SIMD 归约（旧实现是标量累加）
-            Dim meanOne As Double = SimdReduce.Sum(attributesOne, 0, attributesOne.Length) / attributesOne.Length
-            Dim meanTwo As Double = SimdReduce.Sum(attributesTwo, 0, attributesTwo.Length) / attributesTwo.Length
+            Dim meanOne As Double = SimdReduce.Mean(attributesOne)
+            Dim meanTwo As Double = SimdReduce.Mean(attributesTwo)
             Dim covariance As Double = 0
             Dim standardDeviationOne As Double = 0
             Dim standardDeviationTwo As Double = 0
