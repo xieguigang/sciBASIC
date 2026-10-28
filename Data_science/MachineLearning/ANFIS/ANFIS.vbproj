@@ -9,6 +9,15 @@
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.ANFIS</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;MEMI-Desktop</Configurations>
+    <Description>Takagi-Sugeno ANFIS: five layer neuro-fuzzy network with hybrid least squares / back propagation learning, differentiable membership functions, rule pruning and JSON persistence.</Description>
+    <PackageTags>scibasic;anfis;neuro-fuzzy;fuzzy-logic;takagi-sugeno;machine-learning</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+
+    <!-- 数值代码全部走显示类型转换：Double/Single 混用与隐式窄化在本仓出过静默错误 -->
+    <OptionStrict>On</OptionStrict>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +25,20 @@
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\DeepLearning\DeepLearning.NET6.vbproj" />
     <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+  </ItemGroup>
+
+  <!-- 自检程序是独立工程，不能被编进库 -->
+  <ItemGroup>
+    <Compile Remove="_smoketest\**" />
+    <EmbeddedResource Remove="_smoketest\**" />
+    <None Remove="_smoketest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
