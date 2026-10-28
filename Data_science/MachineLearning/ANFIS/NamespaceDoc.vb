@@ -12,7 +12,7 @@ Option Explicit On
 ''' 把 Takagi-Sugeno 模糊推理展开成五层前馈网络（<c>R</c> 条规则、<c>n</c> 个输入）：
 ''' </para>
 ''' <list type="number">
-''' <item>**模糊化**：<c>mu[i,k] = exp(-(x_i - c_ik)^2 / (2*sigma_ik^2))</c>，见 <see cref="AnfisLayers"/>；</item>
+''' <item>**模糊化**：<c>mu[i,k] = exp(-(x_i - c_ik)^2 / (2*sigma_ik^2))</c>，见 <see cref="TskLayers"/>；</item>
 ''' <item>**规则激励**：<c>w_r = prod_i mu[i, m(i,r)]</c>（乘积 T-范数，对数域累加防下溢）；</item>
 ''' <item>**归一化**：<c>w-bar_r = w_r / sum_r w_r</c>；</item>
 ''' <item>**结论**：<c>f_r = x.p_r + q_r</c>（一阶 Sugeno，常数项 q 让每条规则自带截距）；</item>
@@ -34,7 +34,7 @@ Option Explicit On
 ''' <para>
 ''' 每轮先固定前提参数解 <c>theta</c>（<see cref="LeastSquaresAccumulator"/>），
 ''' 再固定 <c>theta</c> 用反向传播修正隶属函数的中心与宽度
-''' （<see cref="AnfisLayers.Accumulate"/> + <see cref="AnfisOptimizer"/>）。
+''' （<see cref="TskLayers.Accumulate"/> + <see cref="AnfisOptimizer"/>）。
 ''' 四种策略由 <see cref="AnfisLearningMode"/> 选择，训练调度见 <see cref="AnfisHybridTrainer"/>。
 ''' </para>
 ''' <para>

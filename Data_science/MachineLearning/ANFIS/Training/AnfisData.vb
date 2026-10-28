@@ -8,7 +8,7 @@ Imports std = System.Math
 ''' ANFIS 训练/评估共用的数据整形工具。
 ''' </summary>
 ''' <remarks>
-''' 输入统一用"行 = 样本"的锯齿数组（与 <see cref="AnfisNetwork.Predict"/> 一致），
+''' 输入统一用"行 = 样本"的锯齿数组（与 <see cref="TskNetwork.Predict"/> 一致），
 ''' 目标统一转成二维矩阵（分块时可以直接切行，不必反复构造锯齿数组）。
 ''' </remarks>
 Friend NotInheritable Class AnfisData
