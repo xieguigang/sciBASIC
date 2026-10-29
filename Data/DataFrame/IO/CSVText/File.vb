@@ -1074,6 +1074,10 @@ B21,B22,B23,...
             Return Save(path, encoding.CodePage)
         End Function
 
+        Public Function Save(path As String, encoding As Encodings, Optional silent As Boolean = False) As Boolean
+            Return Save(path, encoding, tsv:=False, silent:=silent)
+        End Function
+
         Public Sub Save(output As StreamWriter, Optional isTsv As Boolean = False)
             Dim delimiter As Char = ","c Or ASCII.TAB.When(isTsv)
 
