@@ -52,7 +52,9 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.Json
 Imports r = System.Text.RegularExpressions.Regex
@@ -98,6 +100,50 @@ Namespace Serialization.JSON.Formatter
         ''' <returns>A 'minified' version of the specified JSON string.</returns>
         Public Function Minify(json As String) As String
             Return r.Replace(json Or die("json should not be null."), "(""(?:[^""\\]|\\.)*"")|\s+", "$1")
+        End Function
+
+        ''' <summary>
+        ''' 将一段文本转义为JSON的字符串字面量(包含两端的双引号)
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function JsonText(text As String) As String
+            If text Is Nothing Then
+                Return "null"
+            End If
+
+            Dim sb As New StringBuilder(text.Length + 8)
+
+            For Each ch As Char In text
+                Select Case ch
+                    Case ChrW(34)    ' "
+                        Call sb.Append(ChrW(92)).Append(ChrW(34))
+                    Case ChrW(92)    ' back slash
+                        Call sb.Append(ChrW(92)).Append(ChrW(92))
+                    Case ChrW(8)     ' backspace
+                        Call sb.Append(ChrW(92)).Append("b")
+                    Case ChrW(12)    ' form feed
+                        Call sb.Append(ChrW(92)).Append("f")
+                    Case ChrW(10)    ' line feed
+                        Call sb.Append(ChrW(92)).Append("n")
+                    Case ChrW(13)    ' carriage return
+                        Call sb.Append(ChrW(92)).Append("r")
+                    Case ChrW(9)     ' tab
+                        Call sb.Append(ChrW(92)).Append("t")
+                    Case Else
+                        Dim code As Integer = AscW(ch)
+
+                        If code < 32 Then
+                            Call sb.Append(ChrW(92)).Append("u") _
+                                .Append(code.ToString("x4", CultureInfo.InvariantCulture))
+                        Else
+                            Call sb.Append(ch)
+                        End If
+                End Select
+            Next
+
+            Return ChrW(34) & sb.ToString() & ChrW(34)
         End Function
     End Module
 End Namespace
