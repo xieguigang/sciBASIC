@@ -526,7 +526,7 @@
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 		<DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
-		<Optimize>false</Optimize>
+		<Optimize>true</Optimize>
 		<BaseAddress>4194304</BaseAddress>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>portable</DebugType>

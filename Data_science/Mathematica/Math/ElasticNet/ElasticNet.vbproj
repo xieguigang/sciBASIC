@@ -34,6 +34,10 @@
     <OutputPath>../../../../.nuget/</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- 自检工程是独立的控制台程序，不能被主库的默认 glob 编译进来 -->
     <Compile Remove="_smoketest\**" />
