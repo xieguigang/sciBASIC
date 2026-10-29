@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::58f4ab51943fb0027d75627444edaecb, Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 252
-    '    Code Lines: 148 (58.73%)
-    ' Comment Lines: 64 (25.40%)
-    '    - Xml Docs: 87.50%
-    ' 
-    '   Blank Lines: 40 (15.87%)
-    '     File Size: 9.10 KB
+' Summaries:
 
 
-    '     Module MatrixExtensions
-    ' 
-    '         Function: DATA, DimensionSizeOf, GetCol, GetRow, GetSize
-    '                   (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol, SetRow
-    '                   ToFloatMatrix, ToMatrix, ToVectorList
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 252
+'    Code Lines: 148 (58.73%)
+' Comment Lines: 64 (25.40%)
+'    - Xml Docs: 87.50%
+' 
+'   Blank Lines: 40 (15.87%)
+'     File Size: 9.10 KB
+
+
+'     Module MatrixExtensions
+' 
+'         Function: DATA, DimensionSizeOf, GetCol, GetRow, GetSize
+'                   (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol, SetRow
+'                   ToFloatMatrix, ToMatrix, ToVectorList
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -137,12 +137,12 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="dataframe"></param>
-        ''' <param name="property$"></param>
+        ''' <param name="property">the property key name</param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function DATA(Of T)(dataframe As IEnumerable(Of DynamicPropertyBase(Of T)), property$) As T()
+        Public Function Data(Of T)(dataframe As IEnumerable(Of DynamicPropertyBase(Of T)), property$) As T()
             Return dataframe.Select(Function(d) d([property])).ToArray
         End Function
 
@@ -207,7 +207,8 @@ Namespace ComponentModel.Collection
         ''' <remarks></remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToVectorList(Of T)(MAT As T(,)) As List(Of T())
+        <Extension>
+        Public Function ToVectorList(Of T)(MAT As T(,)) As List(Of T())
             Return MAT.RowIterator.AsList
         End Function
 
@@ -218,7 +219,9 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="m"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' height is row(axis_dim=0), and width is column(axis_dim=1)
+        ''' </returns>
         <Extension>
         Public Function GetSize(Of T)(m As T(,)) As Size
             Dim w As Integer = m.GetLength(1)
@@ -234,22 +237,27 @@ Namespace ComponentModel.Collection
         ''' Iterates each row data in a matrix type array.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="MAT"></param>
+        ''' <param name="mat"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function RowIterator(Of T)(MAT As T(,)) As IEnumerable(Of T())
-            Dim size As Size = MAT.GetSize
+        Public Iterator Function RowIterator(Of T)(mat As T(,)) As IEnumerable(Of T())
+            Dim size As Size = mat.GetSize
             Dim temp As T()
 
             For i As Integer = 0 To size.Height - 1
                 temp = New T(size.Width - 1) {}
 
                 For j As Integer = 0 To size.Width - 1
-                    temp(j) = MAT(i, j)
+                    temp(j) = mat(i, j)
                 Next
 
                 Yield temp
             Next
+        End Function
+
+        <Extension>
+        Public Function ToJagged(Of T)(values As T(,)) As T()()
+            Return values.RowIterator.ToArray
         End Function
 
         <Extension>

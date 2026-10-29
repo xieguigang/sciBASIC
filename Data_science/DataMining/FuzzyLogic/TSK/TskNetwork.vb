@@ -5,6 +5,7 @@ Imports System
 Imports System.Linq
 Imports System.Text
 Imports System.Text.Json
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports std = System.Math
 
 Namespace TSK
@@ -380,17 +381,25 @@ Namespace TSK
                 .formatVersion = "1.0",
                 .featureNames = FeatureNames,
                 .outputNames = OutputNames,
-                .inputs = Inputs.Select(Function(v) New TskInputDto With {
-                    .name = v.Name,
-                    .minimum = v.Minimum,
-                    .maximum = v.Maximum,
-                    .functions = v.Functions.Select(Function(mf) New TskFunctionDto With {
-                        .kind = mf.Kind.ToString(),
-                        .parameters = mf.GetParameters()
-                    }).ToArray
-                }).ToArray,
-                .antecedent = ToJagged(Rules.ToAntecedentTable()),
-                .theta = ToJagged(Theta)
+                .inputs = Inputs _
+                    .Select(Function(v)
+                                Return New TskInputDto With {
+                                    .name = v.Name,
+                                    .minimum = v.Minimum,
+                                    .maximum = v.Maximum,
+                                    .functions = v.Functions _
+                                        .Select(Function(mf)
+                                                    Return New TskFunctionDto With {
+                                                        .kind = mf.Kind.ToString(),
+                                                        .parameters = mf.GetParameters()
+                                                    }
+                                                End Function) _
+                                        .ToArray
+                                }
+                            End Function) _
+                    .ToArray,
+                .antecedent = Rules.ToAntecedentTable().ToJagged,
+                .theta = Theta.ToJagged
             }
 
             Dim options As New JsonSerializerOptions With {.WriteIndented = indented}
@@ -455,42 +464,6 @@ Namespace TSK
             }
 
             Return copy
-        End Function
-
-        Private Shared Function ToJagged(values As Double(,)) As Double()()
-            Dim rows As Integer = values.GetLength(0)
-            Dim cols As Integer = values.GetLength(1)
-            Dim result(rows - 1)() As Double
-
-            For i As Integer = 0 To rows - 1
-                Dim row(cols - 1) As Double
-
-                For j As Integer = 0 To cols - 1
-                    row(j) = values(i, j)
-                Next
-
-                result(i) = row
-            Next
-
-            Return result
-        End Function
-
-        Private Shared Function ToJagged(values As Integer(,)) As Integer()()
-            Dim rows As Integer = values.GetLength(0)
-            Dim cols As Integer = values.GetLength(1)
-            Dim result(rows - 1)() As Integer
-
-            For i As Integer = 0 To rows - 1
-                Dim row(cols - 1) As Integer
-
-                For j As Integer = 0 To cols - 1
-                    row(j) = values(i, j)
-                Next
-
-                result(i) = row
-            Next
-
-            Return result
         End Function
 
         Private Shared Function FromJagged(values As Double()()) As Double(,)
