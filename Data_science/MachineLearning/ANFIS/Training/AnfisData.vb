@@ -92,6 +92,41 @@ Friend NotInheritable Class AnfisData
         Return result
     End Function
 
+    ''' <summary>
+    ''' 把 <paramref name="src"/> 的第 <c>[start, start+count)</c> 行拷进 <paramref name="dst"/> 的前 <paramref name="count"/> 行。
+    ''' </summary>
+    ''' <param name="dst">目标缓冲，形状 <c>[&gt;= count, cols]</c></param>
+    ''' <param name="src">源矩阵，形状 <c>[*, cols]</c></param>
+    ''' <param name="start">源起始行</param>
+    ''' <param name="count">行数</param>
+    ''' <remarks>
+    ''' 训练热路径上<b>不能</b>用 <see cref="SliceRows(Double(,), Integer, Integer)"/>：它每个行块都会分配一块新矩阵，
+    ''' 与"复用缓冲"的改造目的正好相反。
+    ''' </remarks>
+    Public Shared Sub CopyRowsInto(dst As Double(,), src As Double(,), start As Integer, count As Integer)
+        If dst Is Nothing Then
+            Throw New ArgumentNullException(NameOf(dst))
+        End If
+        If src Is Nothing Then
+            Throw New ArgumentNullException(NameOf(src))
+        End If
+
+        Dim cols As Integer = src.GetLength(1)
+
+        If dst.GetLength(0) < count OrElse dst.GetLength(1) < cols Then
+            Throw New ArgumentException($"the destination must be at least ({count}, {cols})", NameOf(dst))
+        End If
+        If start < 0 OrElse start + count > src.GetLength(0) Then
+            Throw New ArgumentOutOfRangeException(NameOf(start), $"the slice [{start}, {start + count}) exceeds {src.GetLength(0)} rows")
+        End If
+
+        For i As Integer = 0 To count - 1
+            For j As Integer = 0 To cols - 1
+                dst(i, j) = src(start + i, j)
+            Next
+        Next
+    End Sub
+
     ''' <summary>按行下标选集锯齿数组（行内容复制，避免与源数据共享）。</summary>
     Public Shared Function SelectRows(x As Double()(), indices As Integer()) As Double()()
         Dim result(indices.Length - 1)() As Double

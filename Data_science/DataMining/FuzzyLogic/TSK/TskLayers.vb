@@ -48,7 +48,49 @@ Namespace TSK
 #Region "前向"
 
         ''' <summary>对 <paramref name="x"/> 的第 <c>[rowStart, rowStart+rowCount)</c> 行执行五层前向。</summary>
+        ''' <remarks>
+        ''' 不带工作区的旧入口：内部临时创建一份工作区，调用方拿到的 trace 持有该工作区的数组
+        ''' （因此调用方可以继续使用返回值，但不能指望它与后续调用共享缓冲）。
+        ''' 热路径请改用 <see cref="Forward(Double()(), Integer, Integer, TskForwardWorkspace)"/>。
+        ''' </remarks>
         Public Function Forward(x As Double()(), rowStart As Integer, rowCount As Integer) As TskInferenceTrace
+            Dim workspace As New TskForwardWorkspace(rowCount, _net)
+
+            Return ForwardCore(x, rowStart, rowCount, workspace)
+        End Function
+
+        ''' <summary>
+        ''' 工作区版本的前向：结果写进 <paramref name="workspace"/>，不产生任何分配。
+        ''' </summary>
+        ''' <param name="x">输入样本（行 = 样本）</param>
+        ''' <param name="rowStart">起始行号</param>
+        ''' <param name="rowCount">行数（不得超过工作区容量）</param>
+        ''' <param name="workspace">调用方持有的工作区</param>
+        ''' <returns><c>workspace.Trace</c>（只更新了 <c>RowStart</c> / <c>SampleCount</c>）</returns>
+        ''' <remarks>
+        ''' **返回的 trace 会在下一次前向时被就地覆盖**，调用方不得跨调用持有它。
+        ''' </remarks>
+        Public Function Forward(x As Double()(),
+                                rowStart As Integer,
+                                rowCount As Integer,
+                                workspace As TskForwardWorkspace) As TskInferenceTrace
+
+            If workspace Is Nothing Then
+                Throw New ArgumentNullException(NameOf(workspace))
+            End If
+            If workspace.Capacity < rowCount Then
+                Throw New ArgumentException(
+                    $"the workspace capacity ({workspace.Capacity}) is smaller than the batch size ({rowCount})", NameOf(workspace))
+            End If
+
+            Return ForwardCore(x, rowStart, rowCount, workspace)
+        End Function
+
+        Private Function ForwardCore(x As Double()(),
+                                     rowStart As Integer,
+                                     rowCount As Integer,
+                                     workspace As TskForwardWorkspace) As TskInferenceTrace
+
             If x Is Nothing Then
                 Throw New ArgumentNullException(NameOf(x))
             End If
@@ -63,23 +105,24 @@ Namespace TSK
             Dim rCount As Integer = _net.Rules.RuleCount
             Dim oCount As Integer = _net.OutputCount
 
-            Dim fwd As New TskInferenceTrace With {
-                .RowStart = rowStart,
-                .SampleCount = rowCount,
-                .InputCount = n,
-                .RuleCount = rCount,
-                .OutputCount = oCount
-            }
+            Dim fwd As TskInferenceTrace = workspace.Trace
+
+            fwd.RowStart = rowStart
+            fwd.SampleCount = rowCount
+
+            ' 复用缓冲：失效行的 w/wbar/f/z 必须显式归零，否则会残留上一块的结果
+            Call workspace.ClearForwardState()
+
+            Dim xRows As Double(,) = workspace.X
 
             ' ---- 输入拷贝（后续所有计算都在连续的行主序数组上进行）----
-            Dim xRows(rowCount - 1, n - 1) As Double
-
             For t As Integer = 0 To rowCount - 1
                 Dim row As Double() = x(rowStart + t)
 
-                If row Is Nothing OrElse row.Length <> n Then
+                ' 允许行比输入维数更长（调用方复用一根定长 scratch 缓冲时常见），多余元素不参与计算
+                If row Is Nothing OrElse row.Length < n Then
                     Throw New ArgumentException(
-                        $"the sample {rowStart + t} has {If(row Is Nothing, 0, row.Length)} features but the network expects {n}", NameOf(x))
+                        $"the sample {rowStart + t} has {If(row Is Nothing, 0, row.Length)} features but the network expects at least {n}", NameOf(x))
                 End If
 
                 For i As Integer = 0 To n - 1
@@ -87,19 +130,10 @@ Namespace TSK
                 Next
             Next
 
-            fwd.X = xRows
-
             ' ---- 第 1 层：模糊化（所有输入的隶属度拼在一张表里，列偏移由 MfOffsets 给出）----
-            Dim mfOffsets(n - 1) As Integer
-            Dim totalMf As Integer = 0
-
-            For i As Integer = 0 To n - 1
-                mfOffsets(i) = totalMf
-                totalMf += _net.Inputs(i).FunctionCount
-            Next
-
-            Dim mu(rowCount - 1, totalMf - 1) As Double
-            Dim logMu(rowCount - 1, totalMf - 1) As Double
+            Dim mfOffsets As Integer() = workspace.MfOffsets
+            Dim mu As Double(,) = workspace.Mu
+            Dim logMu As Double(,) = workspace.LogMu
 
             For i As Integer = 0 To n - 1
                 Dim mfs As IMembershipFunction() = _net.Inputs(i).Functions
@@ -117,15 +151,11 @@ Namespace TSK
                 Next
             Next
 
-            fwd.Mu = mu
-            fwd.LogMu = logMu
-            fwd.MfOffsets = mfOffsets
-
             ' ---- 第 2、3 层：乘积 T-范数与归一化 ----
-            Dim W(rowCount - 1, rCount - 1) As Double
-            Dim wbar(rowCount - 1, rCount - 1) As Double
-            Dim sumW(rowCount - 1) As Double
-            Dim valid(rowCount - 1) As Boolean
+            Dim W As Double(,) = workspace.W
+            Dim wbar As Double(,) = workspace.Wbar
+            Dim sumW As Double() = workspace.SumW
+            Dim valid As Boolean() = workspace.Valid
 
             For t As Integer = 0 To rowCount - 1
                 Dim total As Double = 0.0
@@ -150,24 +180,19 @@ Namespace TSK
                 Next
 
                 sumW(t) = total
+                valid(t) = total > MinimumActivationSum
 
-                If total > MinimumActivationSum Then
-                    valid(t) = True
-
+                If valid(t) Then
                     For r As Integer = 0 To rCount - 1
                         wbar(t, r) = W(t, r) / total
                     Next
                 End If
             Next
 
-            fwd.W = W
-            fwd.Wbar = wbar
-            fwd.SumW = sumW
-            fwd.Valid = valid
-
             ' ---- 第 4 层：一阶 Sugeno 结论 f_r = x.p_r + q_r ----
-            Dim fValues(rowCount - 1, rCount - 1, oCount - 1) As Double
-            Dim pt(n - 1, rCount - 1) As Double
+            Dim fValues As Double(,,) = workspace.F
+            Dim pt As Double(,) = workspace.Pt
+            Dim prod As Double(,) = workspace.Prod
             Dim theta As Double(,) = _net.Theta
 
             For o As Integer = 0 To oCount - 1
@@ -179,8 +204,8 @@ Namespace TSK
                     Next
                 Next
 
-                ' f = X * P'，稠密矩阵乘交给 Math 工程的行主序 FMA 点积内核
-                Dim prod As Double(,) = MatrixOps.Multiply(xRows, pt)
+                ' f = X * P'：写入复用的 prod 缓冲（不产生 jagged 行数组）
+                Call MatrixOps.Multiply(xRows, pt, prod)
 
                 For t As Integer = 0 To rowCount - 1
                     For r As Integer = 0 To rCount - 1
@@ -189,10 +214,8 @@ Namespace TSK
                 Next
             Next
 
-            fwd.F = fValues
-
             ' ---- 第 5 层：加权求和 ----
-            Dim Z(rowCount - 1, oCount - 1) As Double
+            Dim Z As Double(,) = workspace.Z
 
             For t As Integer = 0 To rowCount - 1
                 If Not valid(t) Then
@@ -210,8 +233,6 @@ Namespace TSK
                 Next
             Next
 
-            fwd.Z = Z
-
             Return fwd
         End Function
 
@@ -228,11 +249,31 @@ Namespace TSK
         ''' <paramref name="a"/> 必须已经清零；第 0 行对应 <see cref="TskInferenceTrace.RowStart"/>。
         ''' </remarks>
         Public Sub BuildDesignMatrix(fwd As TskInferenceTrace, a As Double(,))
+            Call BuildDesignMatrix(fwd, a, False)
+        End Sub
+
+        ''' <summary>
+        ''' 把归一化触发强度展开成设计矩阵块，允许目标缓冲比本块更高（用于复用满容量缓冲）。
+        ''' </summary>
+        ''' <param name="fwd">前向结果</param>
+        ''' <param name="a">设计矩阵块，形状 <c>[&gt;= SampleCount, P]</c>；前 <c>SampleCount</c> 行必须已清零</param>
+        ''' <param name="allowPadded">
+        ''' 为 <c>True</c> 时只要求 <c>a</c> 的行数不少于 <see cref="TskInferenceTrace.SampleCount"/>
+        ''' （多出来的行不会被写、也不会被读）
+        ''' </param>
+        Public Sub BuildDesignMatrix(fwd As TskInferenceTrace, a As Double(,), allowPadded As Boolean)
             Dim n As Integer = fwd.InputCount
             Dim rCount As Integer = fwd.RuleCount
             Dim p As Integer = _net.ConsequentParameterCount
 
-            If a Is Nothing OrElse a.GetLength(0) <> fwd.SampleCount OrElse a.GetLength(1) <> p Then
+            If a Is Nothing OrElse a.GetLength(1) <> p Then
+                Throw New ArgumentException($"the design matrix must be (*, {p})", NameOf(a))
+            End If
+            If allowPadded Then
+                If a.GetLength(0) < fwd.SampleCount Then
+                    Throw New ArgumentException($"the design matrix must have at least {fwd.SampleCount} rows", NameOf(a))
+                End If
+            ElseIf a.GetLength(0) <> fwd.SampleCount Then
                 Throw New ArgumentException($"the design matrix must be ({fwd.SampleCount}, {p})", NameOf(a))
             End If
 
@@ -265,23 +306,58 @@ Namespace TSK
         ''' <param name="fwd">本次前向的中间量</param>
         ''' <param name="y">与 <paramref name="fwd"/> 行对齐的观测值，形状 <c>[SampleCount, OutputCount]</c></param>
         ''' <param name="computeThetaGradient">是否同时累加结论参数梯度（纯梯度下降模式需要）</param>
+        ''' <remarks>旧入口：内部临时创建一份只含反向缓冲的工作区。</remarks>
         Public Function Accumulate(fwd As TskInferenceTrace, y As Double(,), computeThetaGradient As Boolean) As TskGradient
+            Dim workspace As New TskForwardWorkspace(fwd.SampleCount, _net, includeForwardBuffers:=False)
+
+            Return Accumulate(fwd, y, computeThetaGradient, workspace)
+        End Function
+
+        ''' <summary>
+        ''' 工作区版本的梯度累加：复用 <c>delta / coefficient / column / logGrad</c> 与梯度对象。
+        ''' </summary>
+        ''' <param name="fwd">本次前向的中间量</param>
+        ''' <param name="y">与 <paramref name="fwd"/> 行对齐的观测值，形状 <c>[SampleCount, OutputCount]</c></param>
+        ''' <param name="computeThetaGradient">是否同时累加结论参数梯度</param>
+        ''' <param name="workspace">
+        ''' 调用方持有的工作区；返回的梯度就是 <c>workspace.Gradient</c>（下一次累加前会被清零）
+        ''' </param>
+        ''' <returns><c>workspace.Gradient</c></returns>
+        Public Function Accumulate(fwd As TskInferenceTrace,
+                                   y As Double(,),
+                                   computeThetaGradient As Boolean,
+                                   workspace As TskForwardWorkspace) As TskGradient
+
+            If workspace Is Nothing Then
+                Throw New ArgumentNullException(NameOf(workspace))
+            End If
+
             Dim sampleCount As Integer = fwd.SampleCount
             Dim n As Integer = fwd.InputCount
             Dim rCount As Integer = fwd.RuleCount
             Dim oCount As Integer = fwd.OutputCount
 
-            If y Is Nothing OrElse y.GetLength(0) <> sampleCount OrElse y.GetLength(1) <> oCount Then
-                Throw New ArgumentException($"the target must be ({sampleCount}, {oCount})", NameOf(y))
+            If workspace.Capacity < sampleCount Then
+                Throw New ArgumentException(
+                    $"the workspace capacity ({workspace.Capacity}) is smaller than the batch size ({sampleCount})", NameOf(workspace))
+            End If
+            ' 允许目标缓冲比本块更高（复用满容量缓冲时常见），只读前 sampleCount 行
+            If y Is Nothing OrElse y.GetLength(0) < sampleCount OrElse y.GetLength(1) <> oCount Then
+                Throw New ArgumentException($"the target must be at least ({sampleCount}, {oCount})", NameOf(y))
             End If
 
-            Dim g As New TskGradient(_net) With {
-                .SampleCount = sampleCount
-            }
+            Call workspace.ClearGradient()
 
-            Dim delta(sampleCount - 1, oCount - 1) As Double
-            Dim coefficient(sampleCount - 1, rCount - 1) As Double
+            Dim g As TskGradient = workspace.Gradient
+
+            g.SampleCount = sampleCount
+
+            Dim delta As Double(,) = workspace.Delta
+            Dim coefficient As Double(,) = workspace.Coefficient
             Dim sse As Double = 0.0
+
+            ' coefficient 只在与触发强度非零的位置写入，复用时必须先清零
+            Call Array.Clear(coefficient, 0, coefficient.Length)
 
             For t As Integer = 0 To sampleCount - 1
                 For o As Integer = 0 To oCount - 1
@@ -345,15 +421,20 @@ Namespace TSK
             End If
 
             ' ---- 前提参数：sum_r w-bar_r * delta * (f_r - z) * d(ln mu)/dp ----
+            Dim columnBuffer As Double(,) = workspace.Column
+            Dim logGradBuffer As Double(,) = workspace.LogGrad
+
             For i As Integer = 0 To n - 1
                 Dim mfs As IMembershipFunction() = _net.Inputs(i).Functions
                 Dim m As Integer = mfs.Length
-                Dim column(sampleCount - 1, m - 1) As Double
+
+                ' 换一个输入就要重新归零：复用缓冲里可能残留上一个输入的累加值
+                Call Array.Clear(columnBuffer, 0, columnBuffer.Length)
 
                 For t As Integer = 0 To sampleCount - 1
                     For r As Integer = 0 To rCount - 1
                         If coefficient(t, r) <> 0.0 Then
-                            column(t, _net.Rules.Antecedent(r, i)) += coefficient(t, r)
+                            columnBuffer(t, _net.Rules.Antecedent(r, i)) += coefficient(t, r)
                         End If
                     Next
                 Next
@@ -363,17 +444,16 @@ Namespace TSK
                 For k As Integer = 0 To m - 1
                     Dim mf As IMembershipFunction = mfs(k)
                     Dim pc As Integer = mf.ParameterCount
-                    Dim logGrad(sampleCount - 1, pc - 1) As Double
 
                     For t As Integer = 0 To sampleCount - 1
-                        If column(t, k) = 0.0 Then
+                        If columnBuffer(t, k) = 0.0 Then
                             Continue For
                         End If
 
                         Dim lg As Double() = mf.LogGradient(fwd.X(t, i))
 
                         For p As Integer = 0 To pc - 1
-                            logGrad(t, p) = lg(p)
+                            logGradBuffer(t, p) = lg(p)
                         Next
                     Next
 
@@ -381,7 +461,7 @@ Namespace TSK
                         Dim acc As Double = 0.0
 
                         For t As Integer = 0 To sampleCount - 1
-                            acc += column(t, k) * logGrad(t, p)
+                            acc += columnBuffer(t, k) * logGradBuffer(t, p)
                         Next
 
                         g.Premise(baseOffset + k * pc + p) += acc

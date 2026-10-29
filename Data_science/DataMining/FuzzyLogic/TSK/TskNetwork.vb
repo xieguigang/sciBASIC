@@ -5,6 +5,7 @@ Imports System
 Imports System.Linq
 Imports System.Text
 Imports System.Text.Json
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
@@ -35,6 +36,27 @@ Namespace TSK
 
         Private _theta As Double(,)
         Private ReadOnly _premiseOffsets As Integer()
+
+        ''' <summary>
+        ''' 前向层。无状态、只持有本网络的引用，可以安全复用——
+        ''' 原来每次推理都 <c>New TskLayers(Me)</c>，在逐基因稳态迭代里是纯浪费。
+        ''' </summary>
+        Private ReadOnly _layers As TskLayers
+
+        ''' <summary>
+        ''' 单样本推理（<see cref="PredictRow"/> 等）的**线程局部**工作区。
+        ''' </summary>
+        ''' <remarks>
+        ''' 逐基因稳态迭代里每步只前向 1 行，但原来每次调用都要新建一整套中间量
+        ''' （<c>X/Mu/LogMu/W/Wbar/F/Z/Prod</c> 等十几个数组）。几十万次调用下来，
+        ''' 分配与 GC 完全盖过计算本身。
+        ''' 用线程局部而不是实例字段，是因为同一个网络对象可能被不同线程并发推理。
+        ''' 延迟创建：绝大多数网络只在前向训练路径里用到，用不到就不分配。
+        ''' </remarks>
+        Private _rowWorkspace As ThreadLocal(Of TskForwardWorkspace)
+
+        ''' <summary>单样本推理用的 1 元素行批次容器（线程局部，避免每次调用新建数组）。</summary>
+        Private _rowBatch As ThreadLocal(Of Double()())
 
         ''' <summary>按结构创建模型（结论参数初始化为 0，即输出恒为 0）。</summary>
         ''' <param name="inputs">输入变量（顺序即特征列顺序）</param>
@@ -83,6 +105,7 @@ Namespace TSK
             PremiseParameterCount = offset
             ConsequentParameterCount = rules.RuleCount * (inputs.Length + 1)
             _theta = New Double(ConsequentParameterCount - 1, outputCount - 1) {}
+            _layers = New TskLayers(Me)
         End Sub
 
 #Region "结构"
@@ -206,6 +229,10 @@ Namespace TSK
         ''' <summary>批量预测。</summary>
         ''' <param name="x">样本矩阵（行 = 样本）</param>
         ''' <param name="chunkRows">每次前向的行数上限，控制临时内存</param>
+        ''' <remarks>
+        ''' 整批只分配一份工作区并在各分块之间复用；原来的实现每个分块都新建一整套
+        ''' 前向中间量（30 万行 × 1024 行分块 = 300 套），在评估/剪枝路径上占比很高。
+        ''' </remarks>
         Public Function Predict(x As Double()(), Optional chunkRows As Integer = 1024) As Double()()
             If x Is Nothing Then
                 Throw New ArgumentNullException(NameOf(x))
@@ -217,12 +244,12 @@ Namespace TSK
                 Return result
             End If
 
-            Dim layers As New TskLayers(Me)
             Dim chunkSize As Integer = If(chunkRows > 0, chunkRows, x.Length)
+            Dim workspace As New TskForwardWorkspace(std.Min(chunkSize, x.Length), Me)
 
             For start As Integer = 0 To x.Length - 1 Step chunkSize
                 Dim rows As Integer = std.Min(chunkSize, x.Length - start)
-                Dim fwd As TskInferenceTrace = layers.Forward(x, start, rows)
+                Dim fwd As TskInferenceTrace = _layers.Forward(x, start, rows, workspace)
 
                 For t As Integer = 0 To rows - 1
                     Dim z(OutputCount - 1) As Double
@@ -239,10 +266,40 @@ Namespace TSK
         End Function
 
         ''' <summary>单样本预测。</summary>
+        ''' <param name="x">一行特征（长度不得小于 <see cref="InputCount"/>，多余的列会被忽略）</param>
+        ''' <remarks>复用线程局部工作区，稳态迭代里可以放心逐样本调用。</remarks>
         Public Function PredictRow(x As Double()) As Double()
-            Dim batch As Double()() = New Double()() {x}
-            Dim z As Double()() = Predict(batch, 1)
-            Return z(0)
+            If x Is Nothing Then
+                Throw New ArgumentNullException(NameOf(x))
+            End If
+
+            Dim fwd As TskInferenceTrace = _layers.Forward(RowBatch(x), 0, 1, RowWorkspace())
+            Dim result(OutputCount - 1) As Double
+
+            For o As Integer = 0 To OutputCount - 1
+                result(o) = fwd.Z(0, o)
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 单样本、单输出的标量预测（**零分配**）。
+        ''' </summary>
+        ''' <param name="x">一行特征（长度不得小于 <see cref="InputCount"/>）</param>
+        ''' <returns>第一个输出的值</returns>
+        ''' <remarks>
+        ''' 逐基因稳态迭代（<c>FuzzyGeneNetwork.SteadyState</c>）是这条路径的重度使用者：
+        ''' 几万基因 × 上百步迭代，每次调用若还要分配结果数组就会产生 GB 级垃圾。
+        ''' </remarks>
+        Public Function PredictScalar(x As Double()) As Double
+            If x Is Nothing Then
+                Throw New ArgumentNullException(NameOf(x))
+            End If
+
+            Dim fwd As TskInferenceTrace = _layers.Forward(RowBatch(x), 0, 1, RowWorkspace())
+
+            Return fwd.Z(0, 0)
         End Function
 
         ''' <summary>
@@ -253,9 +310,7 @@ Namespace TSK
         ''' 可以直接画出来，也可以用于剪枝决策。
         ''' </remarks>
         Public Function GetRuleActivations(x As Double()) As Double()
-            Dim layers As New TskLayers(Me)
-            Dim batch As Double()() = New Double()() {x}
-            Dim fwd As TskInferenceTrace = layers.Forward(batch, 0, 1)
+            Dim fwd As TskInferenceTrace = _layers.Forward(RowBatch(x), 0, 1, RowWorkspace())
             Dim result(fwd.RuleCount - 1) As Double
 
             For r As Integer = 0 To fwd.RuleCount - 1
@@ -267,9 +322,7 @@ Namespace TSK
 
         ''' <summary>单样本的隶属度矩阵，形状 <c>[InputCount, m_i]</c>。</summary>
         Public Function GetMembershipDegrees(x As Double()) As Double()()
-            Dim layers As New TskLayers(Me)
-            Dim batch As Double()() = New Double()() {x}
-            Dim fwd As TskInferenceTrace = layers.Forward(batch, 0, 1)
+            Dim fwd As TskInferenceTrace = _layers.Forward(RowBatch(x), 0, 1, RowWorkspace())
             Dim result(fwd.InputCount - 1)() As Double
 
             For i As Integer = 0 To fwd.InputCount - 1
@@ -285,6 +338,37 @@ Namespace TSK
             Next
 
             Return result
+        End Function
+
+        ''' <summary>取当前线程的单样本工作区（延迟创建；每线程一份，避免并发推理时互相覆盖）。</summary>
+        Private Function RowWorkspace() As TskForwardWorkspace
+            If _rowWorkspace Is Nothing Then
+                SyncLock Me
+                    If _rowWorkspace Is Nothing Then
+                        _rowWorkspace = New ThreadLocal(Of TskForwardWorkspace)(
+                            Function() New TskForwardWorkspace(1, Me))
+                    End If
+                End SyncLock
+            End If
+
+            Return _rowWorkspace.Value
+        End Function
+
+        ''' <summary>把单行包装成 1 元素批次（线程局部容器，避免每次调用新建数组）。</summary>
+        Private Function RowBatch(row As Double()) As Double()()
+            If _rowBatch Is Nothing Then
+                SyncLock Me
+                    If _rowBatch Is Nothing Then
+                        _rowBatch = New ThreadLocal(Of Double()())(Function() New Double()() {Nothing})
+                    End If
+                End SyncLock
+            End If
+
+            Dim holder As Double()() = _rowBatch.Value
+
+            holder(0) = row
+
+            Return holder
         End Function
 
 #End Region

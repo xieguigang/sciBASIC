@@ -298,9 +298,16 @@ Public Module AnfisFitting
         Dim result(model.Rules.RuleCount - 1) As Double
         Dim chunk As Integer = 512
 
+        If x.Length = 0 Then
+            Return result
+        End If
+
+        ' 分块前向复用同一份工作区，避免每个行块重新分配整套中间量
+        Dim workspace As New TskForwardWorkspace(std.Min(chunk, x.Length), model)
+
         For start As Integer = 0 To x.Length - 1 Step chunk
             Dim size As Integer = std.Min(chunk, x.Length - start)
-            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size, workspace)
 
             For t As Integer = 0 To size - 1
                 For r As Integer = 0 To model.Rules.RuleCount - 1
