@@ -115,9 +115,25 @@ $ErrorActionPreference = 'Stop'
 # Built by concatenation so that PowerShell never tries to expand the $(...)
 # MSBuild placeholders.
 $TargetCondition = "'" + '$(Configuration)|$(Platform)' + "'=='" + $Configuration + '|' + $Platform + "'"
-$TargetValue     = if ($Optimize) { 'true' } else { 'false' }
 $PairToken       = ($Configuration + '|' + $Platform).ToLowerInvariant()
 $ConfigToken     = $Configuration.ToLowerInvariant()
+
+# `powershell -File` hands every argument over as a string, so the value is
+# normalised here instead of relying on the parameter binder.
+$optimizeFlag = $true
+
+if ($Optimize -is [bool]) {
+    $optimizeFlag = $Optimize
+}
+elseif ($null -ne $Optimize) {
+    switch -regex ("$Optimize".Trim().ToLowerInvariant()) {
+        '^(true|1|yes|on)$'  { $optimizeFlag = $true;  break }
+        '^(false|0|no|off)$' { $optimizeFlag = $false; break }
+        default { throw "Optimize must be a boolean value, got: '$Optimize'" }
+    }
+}
+
+$TargetValue = if ($optimizeFlag) { 'true' } else { 'false' }
 
 # ---------------------------------------------------------------------------
 # Generic XML helpers (kept in sync with Sync-NuGetSolution.ps1)
@@ -426,14 +442,14 @@ foreach ($item in $selected) {
         $conditionUsed = $group.GetAttribute('Condition')
     }
 
-    switch ($groupOp) {
-        'created' { $stats.added++ }
-        default {
-            if ($valueOp -eq 'added')   { $stats.added++ }
-            if ($valueOp -eq 'updated') { $stats.updated++ }
-        }
+    # Mutually exclusive buckets, so the summary adds up to the scanned count.
+    # A freshly created group is already counted above, it is not counted again
+    # as "Optimize added".
+    if ($groupOp -ne 'created') {
+        if ($valueOp -eq 'added')       { $stats.added++ }
+        elseif ($valueOp -eq 'updated') { $stats.updated++ }
+        else                            { $stats.unchanged++ }
     }
-    if ($groupOp -eq 'present' -and $valueOp -eq 'unchanged') { $stats.unchanged++ }
 
     $changed = ($groupOp -ne 'present') -or ($valueOp -ne 'unchanged')
     $written = $false
