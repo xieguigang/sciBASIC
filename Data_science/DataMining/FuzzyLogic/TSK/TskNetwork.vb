@@ -6,6 +6,7 @@ Imports System.Linq
 Imports System.Text
 Imports System.Text.Json
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace TSK
@@ -376,7 +377,7 @@ Namespace TSK
         End Function
 
         ''' <summary>序列化为 JSON。</summary>
-        Public Function ToJson(Optional indented As Boolean = True) As String
+        Public Function ToJsonDto() As TskModelDto
             Dim dto As New TskModelDto With {
                 .formatVersion = "1.0",
                 .featureNames = FeatureNames,
@@ -402,30 +403,36 @@ Namespace TSK
                 .theta = Theta.ToJagged
             }
 
-            Dim options As New JsonSerializerOptions With {.WriteIndented = indented}
-            Return JsonSerializer.Serialize(dto, options)
+            Return dto
         End Function
 
         ''' <summary>从 JSON 反序列化。</summary>
         Public Shared Function FromJson(json As String) As TskNetwork
             If String.IsNullOrEmpty(json) Then
                 Throw New ArgumentException("the json text is empty", NameOf(json))
+            Else
+                Return FromModelDto(json.LoadJSON(Of TskModelDto))
             End If
+        End Function
 
-            Dim dto As TskModelDto = JsonSerializer.Deserialize(Of TskModelDto)(json)
-
+        ''' <summary>从 JSON 反序列化。</summary>
+        Public Shared Function FromModelDto(dto As TskModelDto) As TskNetwork
             If dto Is Nothing OrElse dto.inputs Is Nothing OrElse dto.antecedent Is Nothing OrElse dto.theta Is Nothing Then
                 Throw New InvalidOperationException("the json text does not describe a TSK model")
             End If
 
-            Dim inputs As TskInputVariable() = dto.inputs.Select(Function(d)
-                Dim funcs As IMembershipFunction() = d.functions.Select(Function(mf)
-                    Dim kind As MembershipKind = CType([Enum].Parse(GetType(MembershipKind), mf.kind, ignoreCase:=True), MembershipKind)
-                    Return MembershipFactory.Create(kind, mf.parameters)
-                End Function).ToArray
+            Dim inputs As TskInputVariable() = dto.inputs _
+                .Select(Function(d)
+                            Dim funcs As IMembershipFunction() = d.functions _
+                                .Select(Function(mf)
+                                            Dim kind As MembershipKind = CType([Enum].Parse(GetType(MembershipKind), mf.kind, ignoreCase:=True), MembershipKind)
+                                            Return MembershipFactory.Create(kind, mf.parameters)
+                                        End Function) _
+                                .ToArray
 
-                Return New TskInputVariable(d.name, d.minimum, d.maximum, funcs)
-            End Function).ToArray
+                            Return New TskInputVariable(d.name, d.minimum, d.maximum, funcs)
+                        End Function) _
+                .ToArray
 
             Dim antecedent As Integer(,) = New Integer(dto.antecedent.Length - 1, inputs.Length - 1) {}
 
