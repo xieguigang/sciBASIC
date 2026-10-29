@@ -1,7 +1,3 @@
-Option Strict On
-Option Explicit On
-
-Imports System
 Imports std = System.Math
 
 Namespace TSK
