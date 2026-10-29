@@ -52,6 +52,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>../../../.nuget/</OutputPath>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <!-- 排除 test 子目录，避免冒烟测试代码被主库误编译 -->
