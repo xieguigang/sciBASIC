@@ -60,15 +60,12 @@ Public Class AnfisFitResult
 
         For r As Integer = 0 To Model.Rules.RuleCount - 1
             Dim sb As New StringBuilder()
-            Dim parts As String() = New String(n - 1) {}
 
-            For i As Integer = 0 To n - 1
-                parts(i) = $"{Model.Inputs(i).Name} IS {Model.Inputs(i).FunctionLabel(Model.Rules.Antecedent(r, i))}"
-            Next
-
+            ' 网格与散射两种划分统一由 FuzzyRuleBase.Describe 渲染（散射下会输出 N(c, σ) 并跳过 don't care 输入）
+            Dim antecedentText As String = Model.Rules.Describe(r, Model.Inputs)
             Dim activation As Double = If(RuleActivations IsNot Nothing AndAlso r < RuleActivations.Length, RuleActivations(r), 0.0)
 
-            Call sb.Append($"rule{r + 1} [{activation.ToString("P2")}] IF {String.Join(" AND ", parts)} THEN ")
+            Call sb.Append($"[{activation.ToString("P2")}] {antecedentText} THEN ")
 
             Dim outputParts As String() = New String(o - 1) {}
 
