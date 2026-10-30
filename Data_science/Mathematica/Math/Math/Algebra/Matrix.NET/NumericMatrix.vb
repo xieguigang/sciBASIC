@@ -470,6 +470,16 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
+        ''' <summary>
+        ''' 是否为方阵：行数与列数相等。
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsSquare As Boolean
+            Get
+                Return m = n
+            End Get
+        End Property
+
         Public ReadOnly Property DiagonalVector As Vector
             Get
                 Dim values As Double() = New Double(m - 1) {}
@@ -546,6 +556,93 @@ Namespace LinearAlgebra.Matrix
         Public Function Abs() As NumericMatrix
             Return New NumericMatrix(SimdMatrix.Abs(buffer), m, n)
         End Function
+
+#Region "In-place Bulk Assignment"
+
+        ''' <summary>
+        ''' 将矩阵的所有元素就地设置为指定的常量值。
+        ''' </summary>
+        ''' <param name="value">要填充的数值。</param>
+        ''' <remarks>
+        ''' 就地修改当前矩阵实例，不会创建新的矩阵对象。
+        ''' </remarks>
+        Public Sub SetConstant(value As Double)
+            For i As Integer = 0 To m - 1
+                Dim row As Double() = buffer(i)
+
+                Call System.Array.Fill(row, value, 0, n)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 设置矩阵主对角线上的所有元素。
+        ''' </summary>
+        ''' <param name="value">对角线元素的数值。</param>
+        ''' <remarks>
+        ''' 非方阵时取 ``min(m, n)`` 个元素进行赋值；就地修改当前矩阵实例。
+        ''' </remarks>
+        Public Sub SetDiagonal(value As Double)
+            Dim size As Integer = System.Math.Min(m, n)
+
+            For i As Integer = 0 To size - 1
+                buffer(i)(i) = value
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 将另一个矩阵的数据整块拷贝到当前矩阵中（就地修改）。
+        ''' </summary>
+        ''' <param name="source">源矩阵。</param>
+        ''' <remarks>
+        ''' 行列维度必须与当前矩阵一致；拷贝过程逐行调用块拷贝，
+        ''' 内部各行的数组引用保持不变。
+        ''' </remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="source"/> 为空引用。</exception>
+        ''' <exception cref="ArgumentException">两个矩阵的行列维度不一致。</exception>
+        Public Sub CopyFrom(source As GeneralMatrix)
+            If source Is Nothing Then
+                Throw New ArgumentNullException(NameOf(source))
+            End If
+            If source.RowDimension <> m OrElse source.ColumnDimension <> n Then
+                Throw New ArgumentException(
+                    $"矩阵维度不匹配: 当前为 [{m}x{n}]，源矩阵为 [{source.RowDimension}x{source.ColumnDimension}]")
+            End If
+
+            Dim data As Double()() = source.ArrayPack(deepcopy:=False)
+
+            For i As Integer = 0 To m - 1
+                Call System.Array.Copy(data(i), 0, buffer(i), 0, n)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 将矩形二维数组的数据整块拷贝到当前矩阵中（就地修改）。
+        ''' </summary>
+        ''' <param name="source">行主序的矩形二维数组。</param>
+        ''' <remarks>
+        ''' 行列维度必须与当前矩阵一致；内部各行的数组引用保持不变。
+        ''' </remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="source"/> 为空引用。</exception>
+        ''' <exception cref="ArgumentException">矩形数组的行列维度与当前矩阵不一致。</exception>
+        Public Sub CopyFrom(source As Double(,))
+            If source Is Nothing Then
+                Throw New ArgumentNullException(NameOf(source))
+            End If
+            If source.GetLength(0) <> m OrElse source.GetLength(1) <> n Then
+                Throw New ArgumentException(
+                    $"矩阵维度不匹配: 当前为 [{m}x{n}]，源数组为 [{source.GetLength(0)}x{source.GetLength(1)}]")
+            End If
+
+            For i As Integer = 0 To m - 1
+                Dim row As Double() = buffer(i)
+
+                For j As Integer = 0 To n - 1
+                    row(j) = source(i, j)
+                Next
+            Next
+        End Sub
+
+#End Region
 
         ''' <summary>
         ''' Make a deep copy of a matrix
@@ -1802,6 +1899,53 @@ Namespace LinearAlgebra.Matrix
                 Return makecopy
             End If
         End Function
+
+        ''' <summary>
+        ''' 导出为行主序的矩形二维数组。
+        ''' </summary>
+        ''' <returns>
+        ''' 与当前矩阵维度 ``[m x n]`` 一致的矩形二维数组；该数组为新创建的实例，
+        ''' 与矩阵内部的各个行数组不共享引用，因此写入结果不会自动同步回当前矩阵，
+        ''' 需要写回时请使用 <see cref="CopyFrom(Double(,))"/>。
+        ''' </returns>
+        Public Function ToRectangular() As Double(,)
+            If m = 0 OrElse n = 0 Then
+                Return New Double(,) {}
+            End If
+
+            Dim data As Double(,) = New Double(m - 1, n - 1) {}
+
+            Call ToRectangular(data)
+
+            Return data
+        End Function
+
+        ''' <summary>
+        ''' 将矩阵数据写入指定的矩形二维数组（该数组会被完整覆盖）。
+        ''' </summary>
+        ''' <param name="target">目标矩形二维数组，其行列维度必须与当前矩阵一致。</param>
+        ''' <remarks>
+        ''' 该重载用于复用调用方已有的缓冲，避免每次导出都申请新的托管数组。
+        ''' </remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="target"/> 为空引用。</exception>
+        ''' <exception cref="ArgumentException">目标数组的行列维度与当前矩阵不一致。</exception>
+        Public Sub ToRectangular(target As Double(,))
+            If target Is Nothing Then
+                Throw New ArgumentNullException(NameOf(target))
+            End If
+            If target.GetLength(0) <> m OrElse target.GetLength(1) <> n Then
+                Throw New ArgumentException(
+                    $"矩阵维度不匹配: 当前为 [{m}x{n}]，目标数组为 [{target.GetLength(0)}x{target.GetLength(1)}]")
+            End If
+
+            For i As Integer = 0 To m - 1
+                Dim row As Double() = buffer(i)
+
+                For j As Integer = 0 To n - 1
+                    target(i, j) = row(j)
+                Next
+            Next
+        End Sub
 
         ''' <summary>
         ''' fill numeric value 1 to matrix with dimension size [<paramref name="columnDimension"/> x <paramref name="rowDimension"/>]

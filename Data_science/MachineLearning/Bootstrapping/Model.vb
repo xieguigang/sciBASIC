@@ -33,7 +33,7 @@ Public MustInherit Class Model : Inherits ODEs
     ''' <param name="b%"></param>
     ''' <returns></returns>
     ''' <remarks>线程不安全的</remarks>
-    Public Function RunTest(estimates As Dictionary(Of String, Double), n%, a%, b%) As ODEsOut
+    Public Function RunTest(estimates As Dictionary(Of String, Double), n%, a%, b%) As ODESolution
         Dim model As Type = Me.GetType()
         'Dim parms$() = ODEs.GetParameters(model).ToArray
         'Dim vars$() = ODEs.GetVariables(model).ToArray
@@ -65,7 +65,7 @@ Public MustInherit Class Model : Inherits ODEs
                                    y0 As Dictionary(Of String, Double),
                                    estimates As Dictionary(Of String, Double),
                                    n%, a%, b%,
-                                   Optional ref As ODEsOut = Nothing) As ODEsOut
+                                   Optional ref As ODESolution = Nothing) As ODESolution
 
         Dim parms$() = ODEs.GetParameters(model).ToArray
         Dim vars$() = ODEs.GetVariables(model).ToArray
@@ -75,7 +75,7 @@ Public MustInherit Class Model : Inherits ODEs
 
         Try
             For Each var$ In vars    ' 设置初始值
-                x(var).value = y0(var)
+                x(var).Value = y0(var)
             Next
         Catch ex As Exception
             Dim msg$ = $"Model required a parameter which is named ``{var}``, but '{var}' is not exists in list: {y0.KeysJson}"
@@ -116,12 +116,12 @@ Public MustInherit Class Model : Inherits ODEs
                                    y0 As Dictionary(Of String, Double),
                                    estimates As var(),
                                    n%, a%, b%,
-                                   Optional ref As ODEsOut = Nothing) As ODEsOut
+                                   Optional ref As ODESolution = Nothing) As ODESolution
 
         Dim args As Dictionary(Of String, Double) =
             estimates _
             .ToDictionary(Function(x) x.Name,
-                          Function(x) x.value)
+                          Function(x) x.Value)
         Return RunTest(model, y0, args, n, a, b, ref)
     End Function
 
@@ -136,7 +136,7 @@ Public MustInherit Class Model : Inherits ODEs
     ''' <returns></returns>
     Public Function RunTest(estimates As Dictionary(Of String, Double)(),
                             n%, a%, b%,
-                            Optional modify As Dictionary(Of String, Double) = Nothing) As ODEsOut
+                            Optional modify As Dictionary(Of String, Double) = Nothing) As ODESolution
 
         Dim parms As New Dictionary(Of String, Double)
 
@@ -146,7 +146,7 @@ Public MustInherit Class Model : Inherits ODEs
                 LinqAPI.DefaultFirst(Of DoubleTagged(Of Integer)) <= From x As DoubleTagged(Of Integer)
                                                                      In dist.Values
                                                                      Select x
-                                                                     Order By x.value Descending
+                                                                     Order By x.Value Descending
             parms(var$) = most.Tag
         Next
 

@@ -6,17 +6,21 @@
 
 ## 实现的核心功能
 
-### 1. 向量操作类 (NVector.vb)
+### 1. 向量（复用核心数学库 `Vector`）
 - 向量创建、复制、索引访问
 - 向量算术运算：加法、减法、点乘、标量乘法
 - 范数计算：L1范数、L2范数、无穷范数、加权RMS范数
 - 原地操作：避免不必要的内存分配
 
-### 2. 稠密矩阵类 (DenseMatrix.vb)
+### 2. 稠密矩阵（复用核心数学库）
+- 矩阵类型统一使用 `Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix`
+  （程序集 `Microsoft.VisualBasic.Math.Core`，来自 `Math/Math.NET5.vbproj`），
+  本项目不再自带重复的稠密矩阵实现
 - 矩阵创建、复制、索引访问
 - 矩阵运算：加法、减法、乘法、转置
 - 矩阵-向量乘法
-- 范数计算：Frobenius范数、1-范数、无穷范数
+- 范数计算：Frobenius范数(`NormF`)、1-范数(`Norm1`)、无穷范数(`NormInf`)
+- 与矩形二维数组互转：`ToRectangular()` / `CopyFrom(Double(,))`
 
 ### 3. 线性求解器 (LinearSolver.vb)
 - **DenseLinearSolver**: 稠密矩阵LU分解（带部分主元选择）
@@ -46,15 +50,18 @@
 
 ```
 CVODE_Solver/
-├── NVector.vb              # 向量操作类 (~570行)
-├── DenseMatrix.vb          # 稠密矩阵类 (~470行)
-├── LinearSolver.vb         # 线性求解器 (~520行)
-├── CVODE.vb                # CVODE核心求解器 (~1075行)
-├── CVODEAdvanced.vb        # 高级功能扩展 (~460行)
-├── CVODEExample.vb         # 使用示例 (~380行)
+├── Func.vb                 # 委托类型（RHS / Jacobian / 根函数）
+├── CVODESolver.vb          # CVODE核心求解器
+├── CVODEAdvanced.vb        # 高级功能扩展
+├── LinearSolver/
+│   ├── DenseLinearSolver.vb  # 稠密LU线性求解器
+│   └── BandLinearSolver.vb   # 带状LU线性求解器
 ├── Sundials.CVODE.vbproj   # 项目文件
 └── PROJECT_SUMMARY.md      # 使用文档（同时作为 NuGet 包的 PackageReadmeFile）
 ```
+
+矩阵类型来自核心数学库 `Math/Math.NET5.vbproj`（`NumericMatrix`），本项目内部
+不再包含独立的稠密矩阵实现。
 
 ## 使用方法
 
@@ -64,7 +71,7 @@ CVODE_Solver/
 Imports Sundials.CVODE
 
 ' 1. 定义右端函数
-Dim rhsFunc As RHSFunction = Sub(t As Double, y As NVector, ydot As NVector)
+Dim rhsFunc As RHSFunction = Sub(t As Double, y As Vector, ydot As Vector)
                                  ydot(0) = y(1)          ' y1' = y2
                                  ydot(1) = -y(0)         ' y2' = -y1
                              End Sub
@@ -77,11 +84,11 @@ Dim options As New CVODEOptions() With {
 
 Using solver As New CVODESolver(CVODEMethod.Adams, rhsFunc, 2, options)
     ' 3. 初始化
-    Dim y0 As New NVector(New Double() {1.0, 0.0})
+    Dim y0 As New Vector(New Double() {1.0, 0.0})
     solver.Initialize(0.0, y0)
     
     ' 4. 积分
-    Dim y As New NVector(2)
+    Dim y As New Vector(2)
     solver.Integrate(1.0, y)
     
     Console.WriteLine($"y(1) = ({y(0)}, {y(1)})")
@@ -103,7 +110,7 @@ Dim solver As CVODESolver = New CVODEBuilder() _
 ### 提供Jacobian函数（提高刚性问题的求解效率）
 
 ```vb
-Dim jacFunc As JacobianFunction = Sub(t As Double, y As NVector, fy As NVector, J As DenseMatrix)
+Dim jacFunc As JacobianFunction = Sub(t As Double, y As Vector, fy As Vector, J As NumericMatrix)
                                       J(0, 0) = 0.0
                                       J(0, 1) = 1.0
                                       J(1, 0) = -1.0
@@ -216,7 +223,7 @@ GPL-3.0-or-later
 | `TargetFramework` | `net10.0`（`LangVersion=latest`、`OptionStrict=On`、`OptionExplicit=On`） |
 | `Configurations` | `nuget_release;Debug` |
 | `Platforms` | `AnyCPU;x64` |
-| `PackageReadmeFile` | `PROJECT_SUMMARY.md`（即本文档，通过 `<None Include="PROJECT_SUMMARY.md">` + `Pack=True` 打入包内） |
+| `PackageReadmeFile` | `PROJECT_SUMMARY.md`（即本文档，通过 `<None Update="PROJECT_SUMMARY.md">` + `Pack=True` 打入包内） |
 | `PackageTags` | `scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics` |
 | `PackageLicenseExpression` | `GPL-3.0-or-later` |
 | `PackageIcon` | `logo-knot.png` |
@@ -224,3 +231,58 @@ GPL-3.0-or-later
 | `IncludeSymbols` / `SymbolPackageFormat` | `true` / `snupkg` |
 
 在 sciBASIC# 生态中，本包是 `Microsoft.VisualBasic.Math.Calculus`（`ODESolver` / `ODE` 项目）的**刚性求解后端**：`ode` 提供通用的动力学模型与积分接口，而本包提供与之兼容的高阶、变步长变阶数实现。
+
+---
+
+## 注册到 ODEs 求解器框架（插件注入）
+
+`Microsoft.VisualBasic.Math.Calculus` 的 `ODEs.Solve` 支持外部求解器插件。本包通过
+`SolverExtensions.Register()` 把 Adams / BDF 两个实现注册进去，之后就可以和内建的
+RK4 / RK45 / BDF2 一样调用：
+
+```vbnet
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
+Imports Microsoft.VisualBasic.Math.Sundials.CVODE
+
+' 显式注册（可重复调用；未注册时调用 CVODE 方法会抛出带指引的异常）
+Call SolverExtensions.Register()
+
+' 枚举入口
+Dim r1 = model.Solve(1000, 0.0, 5.0, ODESolverMethod.CVODE_BDF)
+
+' 字符串入口（cvode / cvode.adams / cvode.bdf）
+Dim r2 = model.Solve(1000, 0.0, 5.0, "cvode.adams")
+
+' 插件专有配置通过 ProviderOptions 透传
+Dim r3 = model.Solve(1000, 0.0, 5.0, ODESolverMethod.CVODE_BDF,
+                     options:=New ODESolverOptions With {
+                         .ProviderOptions = New CVODEOptions With {.MaxOrder = 5, .RelativeTolerance = 1.0E-10}
+                     })
+```
+
+- RHS 通过 `ODEs.Derivatives` 桥接（直接使用 `Vector.Array` 的内部缓冲，零拷贝）；
+- 模型提供 `ODEs.Jacobian` 时会自动桥接成 `JacobianFunction`：由于外部回调使用矩形数组
+  `Double(,)`、而 `NumericMatrix` 内部是行数组（jagged），桥接层用一个复用的矩形缓冲
+  完成「读入 → 回调写入 → 写回」（`ToRectangular` / `CopyFrom`），否则使用 CVODE
+  内部的有限差分 Jacobian；
+- 通用的 `Atol` / `Rtol` / `InitialStep` / `MaxSteps` 会自动映射到 `CVODEOptions`；
+- `Unregister()` / `IsRegistered()` 用于测试与热切换。
+
+## 统一输出模型：ODEsOut
+
+本包不再使用自己的 `ODESolution`（已删除），所有积分结果统一输出为
+`Microsoft.VisualBasic.Math.Calculus.Dynamics.Data.ODEsOut`：
+
+```vbnet
+Dim result As ODEsOut = solver.Solve(0.0, 5.0, y0, 100)          ' 扩展方法
+' 或者一次性构建：
+Dim result2 = New CVODEBuilder().UseMethod(CVODEMethod.Adams).WithRHS(rhs, n).Solve(0.0, 5.0, y0, 100)
+
+Dim last As Double = result.GetComponent(0)(result.Count - 1)   ' 第 0 个分量的最后一个采样点
+Dim state As Vector = result(result.Count - 1)                   ' 最后一点的状态向量
+Dim csv As String = result.ToCSV()                               ' Time,y0,y1,... (G10)
+```
+
+`ODEsOut` 同时提供 `Count`、`Item(index)`、`GetComponent(i)`、`ToCSV()`、`AsTable()`、
+`HaveNaN`、`info`（steps / rhs_evaluations 等诊断信息），以及 `FromColumns` / `FromPoints`
+两个工厂方法，因此与内建求解器的结果可以采用完全一致的处理方式。

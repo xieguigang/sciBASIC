@@ -16,19 +16,21 @@
     <PackageId></PackageId>
     <Version>10.8.9797.36764</Version>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
-    <Description>A pure managed re-implementation of the CVODE ODE solver API for sciBASIC#, with no native P/Invoke: variable-step variable-order Adams and BDF integration, dense and banded LU linear solvers, event root finding and a fluent builder API.</Description>
+    <Description>A pure managed re-implementation of the CVODE ODE solver API for sciBASIC#, with no native P/Invoke: variable-step variable-order Adams and BDF integration, dense and banded LU linear solvers, event root finding and a fluent builder API.
+
+CVODE is a solver for stiff and nonstiff ordinary differential equation (ODE) systems (initial value problem) given in explicit form y' = f(t,y). The methods used in CVODE are variable-order, variable-step multistep methods. For nonstiff problems, CVODE includes the Adams-Moulton formulas, with the order varying between 1 and 12. For stiff problems, CVODE includes the Backward Differentiation Formulas (BDFs) in so-called fixed-leading coefficient form, with order varying between 1 and 5. For either choice of formula, the resulting nonlinear system is solved (approximately) at each integration step. For this, CVODE offers the choice of either functional iteration, suitable only for nonstiff systems, and various versions of Newton iteration. In the cases of a direct linear solver (dense or banded), the Newton iteration is a Modified Newton iteration, in that the Jacobian is fixed (and usually out of date). When using a Krylov method as the linear solver, the iteration is an Inexact Newton iteration, using the current Jacobian (through matrix-free products), in which the linear residual is nonzero but controlled. The implicit nonlinear systems within implicit integrators are solved approximately at each integration step using a modified Newton method, an Inexact Newton method, or fixed-point solver (functional iteration). For the Newton-based methods and the serial or threaded NVECTOR modules in SUNDIALS, CVODE provides both direct (dense, band, or sparse) and preconditioned Krylov iterative (GMRES, BiCGStab, TFQMR) linear solvers. When used with one of the distributed parallel NVECTOR modules, including PETSc and hypre vectors, or a user-provided vector data structure, only the Krylov solvers are available, although a user may supply their own linear solver for any data structures if desired. For the serial vector structure, there is a banded preconditioner module called CVBANDPRE for use with the Krylov solvers, while for the distributed memory parallel structure there is a preconditioner module called CVBBDPRE which provides a band-block-diagonal preconditioner.</Description>
     <PackageTags>scibasic;ode-solver;cvode;adams;bdf;stiff-equations;root-finding</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>PROJECT_SUMMARY.md</PackageReadmeFile>
-    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed the duplicated private dense matrix implementation: the solver now reuses NumericMatrix from the core math library (Microsoft.VisualBasic.Math.Core) for the Jacobian matrix, the linear system coefficient matrix and the LU working matrix. JacobianFunction now takes NumericMatrix instead of the removed DenseMatrix type. Numerical algorithms and solver results are unchanged.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Configurations>nuget_release;Debug;Release;Rsharp_app_release</Configurations>
-    <Title>Managed CVODE Variable-Step ODE Solver with Adams and BDF Methods</Title>
-    <AssemblyTitle>Microsoft.VisualBasic.Math.Sundials.CVODE</AssemblyTitle>
+    <Title>Managed SUNDIALS CVODE Variable-Step ODE Solver with Adams and BDF Methods</Title>
+    <AssemblyTitle>SUNDIALS: An open-source software library of time integrators and nonlinear solvers used in industry and research</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageIcon>logo-knot.png</PackageIcon>
@@ -60,15 +62,12 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="PROJECT_SUMMARY.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\ODE\odes-netcore5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

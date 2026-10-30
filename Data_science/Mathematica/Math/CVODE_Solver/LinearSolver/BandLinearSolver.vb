@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::8993562d4dc561362c08a030e17bfac2, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\BandLinearSolver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 199
-    '    Code Lines: 129 (64.82%)
-    ' Comment Lines: 40 (20.10%)
-    '    - Xml Docs: 62.50%
-    ' 
-    '   Blank Lines: 30 (15.08%)
-    '     File Size: 6.62 KB
+' Summaries:
 
 
-    ' Class BandLinearSolver
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: Factorize, GetElement, Solve
-    ' 
-    '     Sub: LoadFromDense, SetElement
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 199
+'    Code Lines: 129 (64.82%)
+' Comment Lines: 40 (20.10%)
+'    - Xml Docs: 62.50%
+' 
+'   Blank Lines: 30 (15.08%)
+'     File Size: 6.62 KB
+
+
+' Class BandLinearSolver
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: Factorize, GetElement, Solve
+' 
+'     Sub: LoadFromDense, SetElement
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports std = System.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports std = System.Math
 
 ' ============================================================================
 ' LinearSolver.vb - 线性求解器
@@ -136,8 +137,8 @@ Public Class BandLinearSolver
     ''' <summary>
     ''' 从稠密矩阵加载带状矩阵
     ''' </summary>
-    Public Sub LoadFromDense(A As DenseMatrix)
-        If A Is Nothing OrElse A.Rows <> _n OrElse A.Columns <> _n Then
+    Public Sub LoadFromDense(A As NumericMatrix)
+        If A Is Nothing OrElse A.RowDimension <> _n OrElse A.ColumnDimension <> _n Then
             Throw New ArgumentException("矩阵维度不匹配")
         End If
         Array.Clear(_bandMatrix, 0, _bandMatrix.Length)

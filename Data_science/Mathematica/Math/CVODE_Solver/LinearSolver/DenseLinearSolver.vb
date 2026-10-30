@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::7745e24c34d1d55314e5756f263ff12c, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\DenseLinearSolver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 276
-    '    Code Lines: 168 (60.87%)
-    ' Comment Lines: 64 (23.19%)
-    '    - Xml Docs: 70.31%
-    ' 
-    '   Blank Lines: 44 (15.94%)
-    '     File Size: 8.14 KB
+' Summaries:
 
 
-    ' Class DenseLinearSolver
-    ' 
-    '     Properties: ConditionNumber, Dimension, IsFactored
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: EstimateConditionNumber, Factorize, (+2 Overloads) Solve
-    ' 
-    '     Sub: MatrixVectorMultiply, Reset
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 276
+'    Code Lines: 168 (60.87%)
+' Comment Lines: 64 (23.19%)
+'    - Xml Docs: 70.31%
+' 
+'   Blank Lines: 44 (15.94%)
+'     File Size: 8.14 KB
+
+
+' Class DenseLinearSolver
+' 
+'     Properties: ConditionNumber, Dimension, IsFactored
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: EstimateConditionNumber, Factorize, (+2 Overloads) Solve
+' 
+'     Sub: MatrixVectorMultiply, Reset
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports std = System.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports std = System.Math
 
 ''' <summary>
 ''' 稠密线性求解器
@@ -67,7 +68,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Public Class DenseLinearSolver
 
     ' LU分解后的矩阵
-    Private _luMatrix As DenseMatrix
+    Private _luMatrix As NumericMatrix
     ' 主元置换数组
     Private _pivots As Integer()
     ' 矩阵维度
@@ -90,7 +91,7 @@ Public Class DenseLinearSolver
             Throw New ArgumentException("矩阵维度必须为正数", NameOf(n))
         End If
         _n = n
-        _luMatrix = New DenseMatrix(n, n)
+        _luMatrix = New NumericMatrix(n, n)
         _pivots = New Integer(n - 1) {}
         _isFactored = False
         _conditionNumber = 0.0
@@ -137,8 +138,8 @@ Public Class DenseLinearSolver
     ''' </summary>
     ''' <param name="A">待分解的矩阵（将被覆盖）</param>
     ''' <returns>分解结果状态</returns>
-    Public Function Factorize(A As DenseMatrix) As LinearSolverResult
-        If A Is Nothing OrElse A.Rows <> _n OrElse A.Columns <> _n Then
+    Public Function Factorize(A As NumericMatrix) As LinearSolverResult
+        If A Is Nothing OrElse A.RowDimension <> _n OrElse A.ColumnDimension <> _n Then
             Throw New ArgumentException("矩阵维度不匹配")
         End If
 
@@ -146,16 +147,18 @@ Public Class DenseLinearSolver
         _luMatrix.CopyFrom(A)
         _isFactored = False
 
-        Dim data As Double(,) = _luMatrix.Data
+        ' ArrayPack 返回的是内部行数组的引用，因此下面的写入会直接作用在 _luMatrix 上
+        Dim data As Double()() = _luMatrix.ArrayPack(deepcopy:=False)
 
         ' LU分解主循环
         For k As Integer = 0 To _n - 1
+            Dim rowK As Double() = data(k)
             ' 寻找主元
-            Dim maxVal As Double = std.Abs(data(k, k))
+            Dim maxVal As Double = std.Abs(rowK(k))
             Dim maxIdx As Integer = k
 
             For i As Integer = k + 1 To _n - 1
-                Dim absVal As Double = std.Abs(data(i, k))
+                Dim absVal As Double = std.Abs(data(i)(k))
                 If absVal > maxVal Then
                     maxVal = absVal
                     maxIdx = i
@@ -171,22 +174,23 @@ Public Class DenseLinearSolver
                 Return LinearSolverResult.SingularMatrix
             End If
 
-            ' 交换行
+            ' 交换行：data 就是 _luMatrix 的内部行数组容器，交换行引用即可
             If maxIdx <> k Then
-                For j As Integer = 0 To _n - 1
-                    Dim temp As Double = data(k, j)
-                    data(k, j) = data(maxIdx, j)
-                    data(maxIdx, j) = temp
-                Next
+                Dim tempRow As Double() = data(k)
+
+                data(k) = data(maxIdx)
+                data(maxIdx) = tempRow
+                rowK = data(k)
             End If
 
             ' 计算乘数并更新子矩阵
-            Dim pivot As Double = data(k, k)
+            Dim pivot As Double = rowK(k)
             For i As Integer = k + 1 To _n - 1
-                data(i, k) /= pivot
-                Dim factor As Double = data(i, k)
+                Dim rowI As Double() = data(i)
+                rowI(k) /= pivot
+                Dim factor As Double = rowI(k)
                 For j As Integer = k + 1 To _n - 1
-                    data(i, j) -= factor * data(k, j)
+                    rowI(j) -= factor * rowK(j)
                 Next
             Next
         Next
@@ -258,13 +262,15 @@ Public Class DenseLinearSolver
             End If
         Next
 
-        Dim data As Double(,) = _luMatrix.Data
+        Dim data As Double()() = _luMatrix.ArrayPack(deepcopy:=False)
 
         ' 前代（解 L*y = x）
         For i As Integer = 1 To _n - 1
             Dim sum As Double = x(i)
+            Dim row As Double() = data(i)
+
             For j As Integer = 0 To i - 1
-                sum -= data(i, j) * x(j)
+                sum -= row(j) * x(j)
             Next
             x(i) = sum
         Next
@@ -272,10 +278,12 @@ Public Class DenseLinearSolver
         ' 回代（解 U*x = y）
         For i As Integer = _n - 1 To 0 Step -1
             Dim sum As Double = x(i)
+            Dim row As Double() = data(i)
+
             For j As Integer = i + 1 To _n - 1
-                sum -= data(i, j) * x(j)
+                sum -= row(j) * x(j)
             Next
-            x(i) = sum / data(i, i)
+            x(i) = sum / row(i)
         Next
 
         Return LinearSolverResult.Success
@@ -303,14 +311,18 @@ Public Class DenseLinearSolver
     ''' 计算矩阵-向量乘法：y = A * x
     ''' 使用原始矩阵（分解前）
     ''' </summary>
-    Public Shared Sub MatrixVectorMultiply(A As DenseMatrix, x As Vector, y As Vector)
-        If A.Columns <> x.Length OrElse A.Rows <> y.Length Then
+    Public Shared Sub MatrixVectorMultiply(A As NumericMatrix, x As Vector, y As Vector)
+        If A.ColumnDimension <> x.Length OrElse A.RowDimension <> y.Length Then
             Throw New ArgumentException("维度不匹配")
         End If
-        For i As Integer = 0 To A.Rows - 1
+
+        Dim data As Double()() = A.ArrayPack(deepcopy:=False)
+
+        For i As Integer = 0 To A.RowDimension - 1
+            Dim row As Double() = data(i)
             Dim sum As Double = 0.0
-            For j As Integer = 0 To A.Columns - 1
-                sum += A(i, j) * x(j)
+            For j As Integer = 0 To A.ColumnDimension - 1
+                sum += row(j) * x(j)
             Next
             y(i) = sum
         Next

@@ -52,6 +52,9 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+
 ''' <summary>
 ''' CVODE求解器构建器
 ''' 提供流式API创建求解器
@@ -155,6 +158,23 @@ Public Class CVODEBuilder
         End If
 
         Return solver
+    End Function
+
+    ''' <summary>
+    ''' 构建求解器并直接运行一次积分，结果统一输出为 <see cref="ODESolution"/> 对象
+    ''' （求解器在内部自动释放）
+    ''' </summary>
+    ''' <param name="t0">积分下界</param>
+    ''' <param name="tEnd">积分上界</param>
+    ''' <param name="y0">初始状态</param>
+    ''' <param name="n">积分步数（输出 ``n + 1`` 个等距采样点）</param>
+    ''' <param name="names">结果列的名称，缺省为 ``y0``, ``y1``, ...</param>
+    ''' <returns></returns>
+    Public Function Solve(t0 As Double, tEnd As Double, y0 As Vector, n As Integer,
+                          Optional names As String() = Nothing) As ODESolution
+        Using solver As CVODESolver = Build()
+            Return solver.Solve(t0, tEnd, y0, n, names)
+        End Using
     End Function
 
 End Class

@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::fce134d18663fd7816960727279be7d3, Data_science\Mathematica\Math\CVODE_Solver\CVODESolver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 935
-    '    Code Lines: 713 (76.26%)
-    ' Comment Lines: 97 (10.37%)
-    '    - Xml Docs: 47.42%
-    ' 
-    '   Blank Lines: 125 (13.37%)
-    '     File Size: 32.14 KB
+' Summaries:
 
 
-    ' Class CVODESolver
-    ' 
-    '     Properties: CurrentOrder, CurrentState, CurrentStep, CurrentTime, LinearSolves
-    '                 NewtonIterations, RHSFunctionEvaluations, TotalSteps
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], AttemptStep, BuildAndFactorizeSystem, ComputeJacobian, EstimateAdamsError
-    '               EstimateBDFFrror, EstimateInitialStep, Factorial, Initialize, Integrate
-    '               IntegrateLagrangeBasis, LagrangeBasisDeriv, LagrangeBasisValue, PolyEval, PolyFromRoots
-    '               PolyIntegrate, PolyMul
-    ' 
-    '     Sub: AllocateResources, Commit, ComputeErrorWeights, ComputeNumericalJacobian, (+2 Overloads) Dispose
-    '          Predict, (+2 Overloads) SetAbsoluteTolerance, SetJacobianFunction, SetMaxStep, SetMinStep
-    '          SetRelativeTolerance
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 935
+'    Code Lines: 713 (76.26%)
+' Comment Lines: 97 (10.37%)
+'    - Xml Docs: 47.42%
+' 
+'   Blank Lines: 125 (13.37%)
+'     File Size: 32.14 KB
+
+
+' Class CVODESolver
+' 
+'     Properties: CurrentOrder, CurrentState, CurrentStep, CurrentTime, LinearSolves
+'                 NewtonIterations, RHSFunctionEvaluations, TotalSteps
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: [Step], AttemptStep, BuildAndFactorizeSystem, ComputeJacobian, EstimateAdamsError
+'               EstimateBDFFrror, EstimateInitialStep, Factorial, Initialize, Integrate
+'               IntegrateLagrangeBasis, LagrangeBasisDeriv, LagrangeBasisValue, PolyEval, PolyFromRoots
+'               PolyIntegrate, PolyMul
+' 
+'     Sub: AllocateResources, Commit, ComputeErrorWeights, ComputeNumericalJacobian, (+2 Overloads) Dispose
+'          Predict, (+2 Overloads) SetAbsoluteTolerance, SetJacobianFunction, SetMaxStep, SetMinStep
+'          SetRelativeTolerance
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,8 +71,9 @@
 ' 仅基于 .NET 基础数学函数库实现，不依赖第三方库。
 ' ============================================================================
 
-Imports std = System.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports std = System.Math
 
 ''' <summary>
 ''' CVODE常微分方程求解器（变阶变步长多步法）
@@ -130,8 +131,8 @@ Public Class CVODESolver : Implements IDisposable
 
     ' 线性求解器与矩阵 / 临时向量
     Private _linearSolver As DenseLinearSolver
-    Private _J As DenseMatrix
-    Private _A As DenseMatrix
+    Private _J As NumericMatrix
+    Private _A As NumericMatrix
     Private _tempV As Vector
     Private _tempV2 As Vector
     Private _tempV3 As Vector
@@ -191,8 +192,8 @@ Public Class CVODESolver : Implements IDisposable
         Next
 
         _linearSolver = New DenseLinearSolver(_n)
-        _J = New DenseMatrix(_n, _n)
-        _A = New DenseMatrix(_n, _n)
+        _J = New NumericMatrix(_n, _n)
+        _A = New NumericMatrix(_n, _n)
 
         _isInitialized = False
     End Sub

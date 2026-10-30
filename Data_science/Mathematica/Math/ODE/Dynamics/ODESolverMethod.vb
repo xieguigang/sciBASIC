@@ -76,6 +76,18 @@ Namespace Dynamics
         ''' The 4th order Yoshida composition of the Stormer-Verlet method.(四阶吉田分解)
         ''' </summary>
         Yoshida4
+        ''' <summary>
+        ''' The Adams (non-stiff) integrator of the managed ``Sundials.CVODE`` package, it is an
+        ''' external solver which should be registered by ``SolverExtensions.Register()`` first.
+        ''' (托管版 CVODE 的 Adams 方法，需要先调用 SolverExtensions.Register() 注册)
+        ''' </summary>
+        CVODE_Adams
+        ''' <summary>
+        ''' The BDF (stiff) integrator of the managed ``Sundials.CVODE`` package, it is an
+        ''' external solver which should be registered by ``SolverExtensions.Register()`` first.
+        ''' (托管版 CVODE 的 BDF 方法，需要先调用 SolverExtensions.Register() 注册)
+        ''' </summary>
+        CVODE_BDF
     End Enum
 
     ''' <summary>
@@ -163,6 +175,22 @@ Namespace Dynamics
         Public Property MomentumIndices As Integer()
 
         ''' <summary>
+        ''' The solver specific options which is passed to the external (plugin) solver as-is,
+        ''' for example the ``CVODEOptions`` instance of the ``Sundials.CVODE`` package.
+        ''' (透传给外部求解器的专有配置对象)
+        ''' </summary>
+        ''' <remarks>
+        ''' ```vbnet
+        ''' Dim options As New ODESolverOptions With {
+        '''     .Atol = 1.0E-10,
+        '''     .ProviderOptions = New CVODEOptions With {.MaxOrder = 5}
+        ''' }
+        ''' ```
+        ''' </remarks>
+        ''' <returns></returns>
+        Public Property ProviderOptions As Object
+
+        ''' <summary>
         ''' Create a copy of the current options.
         ''' </summary>
         ''' <returns></returns>
@@ -178,7 +206,8 @@ Namespace Dynamics
                 .MaxStepSubdivisions = MaxStepSubdivisions,
                 .Jacobian = Jacobian,
                 .PositionIndices = PositionIndices,
-                .MomentumIndices = MomentumIndices
+                .MomentumIndices = MomentumIndices,
+                .ProviderOptions = ProviderOptions
             }
         End Function
     End Class

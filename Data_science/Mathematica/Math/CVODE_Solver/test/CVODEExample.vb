@@ -57,8 +57,12 @@
 ' 包含多个常微分方程组的求解示例
 ' ============================================================================
 
+Imports System.Linq
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Math.Sundials.CVODE
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace CVODEExamples
 
@@ -69,8 +73,23 @@ Namespace CVODEExamples
 
         ''' <summary>
         ''' 主入口
+        ''' 
+        ''' ``--register``：只运行「CVODE 注册到 ODEs 求解框架」的集成自检，并以退出码返回结果；
+        ''' ``--matrix``：只运行 NumericMatrix 就地赋值/矩形数组互转的自检，并生成审计报告；
+        ''' 其余情况运行全部示例。
         ''' </summary>
-        Public Shared Sub Main()
+        Public Shared Sub Main(args As String())
+            If args IsNot Nothing AndAlso args.Any(Function(arg) String.Equals(arg, "--register", StringComparison.OrdinalIgnoreCase)) Then
+                Environment.ExitCode = SolverRegistrationTest.Run()
+                Return
+            End If
+
+            If args IsNot Nothing AndAlso args.Any(Function(arg) String.Equals(arg, "--matrix", StringComparison.OrdinalIgnoreCase)) Then
+                Environment.ExitCode = MatrixBridgeTest.Run(
+                    IO.Path.Combine(Environment.CurrentDirectory, "matrix_bridge_audit.json"))
+                Return
+            End If
+
             Console.WriteLine("="c, 60)
             Console.WriteLine("Sundials CVODE 求解器示例程序")
             Console.WriteLine("基于VB.NET实现，不依赖第三方库")
@@ -89,11 +108,41 @@ Namespace CVODEExamples
             ' 示例4：Van der Pol振子
             Example4_VanDerPolOscillator()
 
+            ' 示例5：统一输出模型 ODEsOut
+            Example5_UnifiedOutput()
+
             Console.WriteLine()
             Console.WriteLine("所有示例运行完成！")
             If Not Console.IsInputRedirected Then
                 Console.ReadKey()
             End If
+        End Sub
+
+        ''' <summary>
+        ''' 示例5：统一输出模型 —— 求解结果直接输出为 ODEsOut（原来的 ODESolution 已经删除）
+        ''' </summary>
+        Public Shared Sub Example5_UnifiedOutput()
+            Console.WriteLine("-"c, 60)
+            Console.WriteLine("示例5：统一输出模型 ODEsOut")
+            Console.WriteLine("方程：y' = -y, y(0) = 1, 解析解 y = exp(-t)")
+            Console.WriteLine("-"c, 60)
+
+            Dim rhsFunc As RHSFunction = Sub(t As Double, y As Vector, ydot As Vector)
+                                             ydot(0) = -y(0)
+                                         End Sub
+            Dim result As ODESolution = New CVODEBuilder() _
+                .UseMethod(CVODEMethod.Adams) _
+                .WithRHS(rhsFunc, 1) _
+                .WithRelativeTolerance(1.0E-8) _
+                .Solve(0.0, 5.0, New Vector(New Double() {1.0}), 10)
+
+            Console.WriteLine($"采样点个数: {result.Count}")
+            Console.WriteLine($"最后一点的数值解: {result.GetComponent(0)(result.Count - 1):E6}")
+            Console.WriteLine($"最后一点的解析解: {System.Math.Exp(-5.0):E6}")
+            Console.WriteLine()
+            Console.WriteLine("csv 预览:")
+            Console.WriteLine(result.ToCSV().Split({vbCrLf}, StringSplitOptions.RemoveEmptyEntries).Take(4).JoinBy(vbCrLf))
+            Console.WriteLine()
         End Sub
 
 #Region "示例1：简谐振子"
@@ -368,7 +417,7 @@ Namespace CVODEExamples
                                          End Sub
 
             ' 定义Jacobian函数（可选，提高效率）
-            Dim jacFunc As JacobianFunction = Sub(t As Double, y As Vector, fy As Vector, J As DenseMatrix)
+            Dim jacFunc As JacobianFunction = Sub(t As Double, y As Vector, fy As Vector, J As NumericMatrix)
                                                   J(0, 0) = 0.0
                                                   J(0, 1) = 1.0
                                                   J(1, 0) = -2.0 * mu * y(0) * y(1) - 1.0

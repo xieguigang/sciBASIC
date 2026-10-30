@@ -62,6 +62,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 ''' <summary>
 ''' 右端函数委托类型
@@ -79,8 +80,8 @@ Public Delegate Sub RHSFunction(t As Double, y As Vector, ydot As Vector)
 ''' <param name="t">当前时间</param>
 ''' <param name="y">当前状态向量</param>
 ''' <param name="fy">当前导数向量</param>
-''' <param name="J">Jacobian矩阵（输出）</param>
-Public Delegate Sub JacobianFunction(t As Double, y As Vector, fy As Vector, J As DenseMatrix)
+''' <param name="J">Jacobian矩阵（输出，就地填充）</param>
+Public Delegate Sub JacobianFunction(t As Double, y As Vector, fy As Vector, J As NumericMatrix)
 
 ''' <summary>
 ''' 根函数委托类型
