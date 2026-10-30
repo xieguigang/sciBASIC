@@ -425,10 +425,153 @@ Namespace Dynamics
                     points = solver.XValues
                     columns = solver.YValues
                 Case Else
-                    Throw New NotSupportedException($"Unsupported ODEs solver method: {method}")
+                    ' 外部(插件)求解器：CVODE_Adams / CVODE_BDF 以及将来新增的枚举值统一走注册表
+                    Return SolveByProvider(method, y0, n, a, b, options)
             End Select
 
             Return CreateOutput(Me, CreateY0Map(y0), points, columns)
+        End Function
+
+        ''' <summary>
+        ''' Solve the ODEs system by the external (plugin) solver which is registered with the
+        ''' given name, for example ``cvode.bdf``. The built-in methods can also be invoked by
+        ''' their enumeration name, e.g. ``"RK4"``.
+        ''' (使用以指定名称注册的外部求解器求解方程组；内建方法也可以用枚举名调用)
+        ''' </summary>
+        ''' <param name="n">The number of the integration steps.(积分步数)</param>
+        ''' <param name="a">The lower bound of the integration range.(积分下界)</param>
+        ''' <param name="b">The upper bound of the integration range.(积分上界)</param>
+        ''' <param name="methodName">The registration name of the solver.(求解器的注册名称)</param>
+        ''' <param name="incept">是否是为蒙特卡洛实验设计的？</param>
+        ''' <param name="options">The optional solver settings.(可选的求解器设置)</param>
+        ''' <returns></returns>
+        Public Function Solve(n As Integer, a As Double, b As Double, methodName As String,
+                              Optional incept As Boolean = False,
+                              Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            If String.IsNullOrWhiteSpace(methodName) Then
+                Throw New ArgumentNullException(NameOf(methodName), "The name of the ODEs solver can not be empty!")
+            End If
+
+            Dim name As String = methodName.Trim
+            Dim method As ODESolverMethod
+
+            ' 优先按枚举名解析：这样 "RK4" 这类内建方法的名称也可以直接使用
+            If [Enum].TryParse(name, True, method) Then
+                Return Solve(n, a, b, method, incept, options)
+            End If
+
+            Dim provider As IODEsolverProvider = Nothing
+
+            If Not ODESolverRegistry.TryGet(name, provider) Then
+                Throw New InvalidOperationException(NotRegisteredMessage(name))
+            End If
+
+            Return SolveByProvider(provider, GetY0(incept), n, a, b, options)
+        End Function
+
+        ''' <summary>
+        ''' Resolve the external solver provider from the given enumeration value and run it.
+        ''' </summary>
+        Private Function SolveByProvider(method As ODESolverMethod, y0 As Double(), n As Integer,
+                                         a As Double, b As Double, options As ODESolverOptions) As ODEsOut
+
+            Dim provider As IODEsolverProvider = Nothing
+
+            If Not ODESolverRegistry.TryGet(method, provider) Then
+                Throw New InvalidOperationException(NotRegisteredMessage(method.ToString()))
+            End If
+
+            Return SolveByProvider(provider, y0, n, a, b, options)
+        End Function
+
+        ''' <summary>
+        ''' Run the external solver provider and convert its result into the standard
+        ''' <see cref="ODEsOut"/> of the ODEs framework: the result shape, the values and the
+        ''' state variable synchronization are all validated here.
+        ''' (执行外部求解器，并把结果校验、状态同步之后转换为框架标准的结果对象)
+        ''' </summary>
+        Private Function SolveByProvider(provider As IODEsolverProvider, y0 As Double(), n As Integer,
+                                         a As Double, b As Double, options As ODESolverOptions) As ODEsOut
+
+            If n < 1 Then
+                Throw New ArgumentOutOfRangeException(NameOf(n), "The number of the integration steps must be positive!")
+            End If
+            If b <= a Then
+                Throw New ArgumentOutOfRangeException(NameOf(b), "The upper bound of the integration range must be greater than the lower bound!")
+            End If
+            If y0 Is Nothing OrElse y0.Length <> Size Then
+                Throw New ArgumentException(
+                    $"The dimension of the given y0 initial value ({If(y0 Is Nothing, "null", y0.Length.ToString)}) is not matched to the ODEs system ({Size})!",
+                    NameOf(y0))
+            End If
+
+            Dim solverName As String = If(String.IsNullOrEmpty(provider.Name), provider.GetType().Name, provider.Name)
+            Dim result As ODEsOut = provider.Solve(Me, y0, n, a, b, If(options, New ODESolverOptions()))
+
+            If result Is Nothing Then
+                Throw New InvalidOperationException($"The ODEs solver '{solverName}' returns no result!")
+            End If
+            If result.x Is Nothing OrElse result.x.Length <> n + 1 Then
+                Throw New InvalidOperationException(
+                    $"The ODEs solver '{solverName}' returns an invalid time grid: the sample count should be {n + 1}, but {If(result.x Is Nothing, "null", result.x.Length.ToString)} is found!")
+            End If
+            If result.y Is Nothing OrElse result.y.Count <> Size Then
+                Throw New InvalidOperationException(
+                    $"The ODEs solver '{solverName}' returns {If(result.y Is Nothing, 0, result.y.Count)} result columns, but the ODEs system contains {Size} state variables!")
+            End If
+
+            Dim columns As Double()() = New Double(Size - 1)() {}
+
+            For i As Integer = 0 To Size - 1
+                Dim column As Double() = result.GetComponent(i)
+
+                If column Is Nothing OrElse column.Length <> n + 1 Then
+                    Throw New InvalidOperationException(
+                        $"The ODEs solver '{solverName}' returns an invalid result column at index {i}: the sample count should be {n + 1}, but {If(column Is Nothing, "null", column.Length.ToString)} is found!")
+                End If
+
+                columns(i) = column
+            Next
+
+            Dim tolerance As Double = 1.0E-9 * System.Math.Max(1.0, System.Math.Abs(b - a))
+
+            If System.Math.Abs(result.x(0) - a) > tolerance OrElse System.Math.Abs(result.x(n) - b) > tolerance Then
+                Throw New InvalidOperationException(
+                    $"The ODEs solver '{solverName}' does not cover the integration range [{a}, {b}]: the result range is [{result.x(0)}, {result.x(n)}]!")
+            End If
+            If result.HaveNaN Then
+                Throw New InvalidOperationException(
+                    $"The ODEs solver '{solverName}' produces NaN/Inf values in the integration range [{a}, {b}]!")
+            End If
+
+            ' 同步最终状态，保持与内建求解器一致的外部可观察语义
+            Dim last As Double() = New Double(Size - 1) {}
+
+            For i As Integer = 0 To Size - 1
+                last(i) = columns(i)(n)
+            Next
+
+            Call SyncState(last)
+
+            CurrentStep = n
+
+            Return CreateOutput(Me, CreateY0Map(y0), result.x, columns)
+        End Function
+
+        ''' <summary>
+        ''' The error message of the unregistered ODEs solver.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Private Shared Function NotRegisteredMessage(name As String) As String
+            Dim registered As String() = ODESolverRegistry.RegisteredNames
+            Dim names As String = If(registered.Length = 0, "(no external solver is registered)", String.Join(", ", registered))
+
+            Return $"The ODEs solver '{name}' is not registered! The external solvers are provided as plugins: " &
+                   $"reference the 'Microsoft.VisualBasic.Math.Sundials.CVODE' assembly and invoke " &
+                   $"'Sundials.CVODE.SolverExtensions.Register()' before the integration. " &
+                   $"The registered external solvers are: {names}."
         End Function
 
         ''' <summary>
