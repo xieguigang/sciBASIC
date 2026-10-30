@@ -110,18 +110,6 @@ Namespace Math.SIMD
             Return Vector256.LoadUnsafe(Of Double)(v(offset))
         End Function
 
-        ''' <summary>
-        ''' 从矩形数组 <paramref name="v"/> 的第 <paramref name="row"/> 行
-        ''' <paramref name="offset"/> 处批量装载一个 256 位向量。
-        ''' </summary>
-        ''' <remarks>
-        ''' 矩形数组按行优先连续存放，因此同一行内相邻元素在内存中也是连续的，
-        ''' 可以直接用批量装载指令读取，不会跨越到下一行。
-        ''' </remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function Load4(v As Double(,), row As Integer, offset As Integer) As Vector256(Of Double)
-            Return Vector256.LoadUnsafe(Of Double)(v(row, offset))
-        End Function
 
         ''' <summary>
         ''' 从 <see cref="Single"/> 数组的 <paramref name="offset"/> 处批量装载一个 256 位向量。
@@ -262,6 +250,15 @@ Namespace Math.SIMD
         ''' —— 这与 <see cref="DotFma(Double(), Double())"/> 的差别仅在于装载来源。
         ''' </para>
         ''' <para>
+        ''' 注意这里的装载是**直接写在循环体内**的，而且固定用 <c>a(row, 0)</c> 作为基址，
+        ''' 行内偏移交给 <c>LoadUnsafe</c> 的 <c>elementOffset</c> 参数。原因在于
+        ''' 本项目所有配置都设置了 <c>Optimize=false</c>，程序集因此带有
+        ''' <c>DebuggableAttribute(IsJITOptimizerDisabled:=True)</c>，JIT 走 MinOpts：
+        ''' 私有装载包装函数不会被内联，逐次调用会把这里 4 路展开的收益全部吃掉
+        ''' （实测 1024 阶矩阵向量乘法：经包装 1.53ms，直接内联 1.11ms）；
+        ''' 固定的行基址也让行地址运算与行下标边界检查落到循环之外。
+        ''' </para>
+        ''' <para>
         ''' 与一维版本一样使用 4 路独立累加器打断 FMA 依赖链，归约顺序不同会带来
         ''' ULP 级差异。无 FMA 或全局禁用时会退回到标量循环。
         ''' </para>
@@ -300,17 +297,22 @@ Namespace Math.SIMD
                 Dim last4 As Integer = len - step4
 
                 Do While i <= last4
-                    acc0 = Fma.MultiplyAdd(Load4(a, row, i), Load4(v, i), acc0)
-                    acc1 = Fma.MultiplyAdd(Load4(a, row, i + count), Load4(v, i + count), acc1)
-                    acc2 = Fma.MultiplyAdd(Load4(a, row, i + count * 2), Load4(v, i + count * 2), acc2)
-                    acc3 = Fma.MultiplyAdd(Load4(a, row, i + count * 3), Load4(v, i + count * 3), acc3)
+                    acc0 = Fma.MultiplyAdd(Vector256.LoadUnsafe(Of Double)(a(row, 0), CUInt(i)),
+                                           Vector256.LoadUnsafe(Of Double)(v(i)), acc0)
+                    acc1 = Fma.MultiplyAdd(Vector256.LoadUnsafe(Of Double)(a(row, 0), CUInt(i + count)),
+                                           Vector256.LoadUnsafe(Of Double)(v(i + count)), acc1)
+                    acc2 = Fma.MultiplyAdd(Vector256.LoadUnsafe(Of Double)(a(row, 0), CUInt(i + count * 2)),
+                                           Vector256.LoadUnsafe(Of Double)(v(i + count * 2)), acc2)
+                    acc3 = Fma.MultiplyAdd(Vector256.LoadUnsafe(Of Double)(a(row, 0), CUInt(i + count * 3)),
+                                           Vector256.LoadUnsafe(Of Double)(v(i + count * 3)), acc3)
                     i += step4
                 Loop
             End If
 
             ' 不足 4 路的整块继续用单路累加
             Do While i <= len - count
-                acc0 = Fma.MultiplyAdd(Load4(a, row, i), Load4(v, i), acc0)
+                acc0 = Fma.MultiplyAdd(Vector256.LoadUnsafe(Of Double)(a(row, 0), CUInt(i)),
+                                       Vector256.LoadUnsafe(Of Double)(v(i)), acc0)
                 i += count
             Loop
 
