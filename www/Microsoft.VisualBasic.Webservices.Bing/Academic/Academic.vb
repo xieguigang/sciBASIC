@@ -45,7 +45,8 @@
 
     '     Module AcademicSearch
     ' 
-    '         Function: GetDetails, getInternal, Query, Search, StripListItem
+    '         Function: BuildUrl, DownloadPage, GetDetails, Query, Search
+    '                   SearchPage
     ' 
     ' 
     ' /********************************************************************************/
@@ -63,6 +64,11 @@ Namespace Bing.Academic
     ''' <summary>
     ''' Bing Academic web API for VisualBasic
     ''' </summary>
+    ''' <remarks>
+    ''' 页面的解析工作已经全部交给 <see cref="AcademicParser"/> 基于
+    ''' <c>Microsoft.VisualBasic.Data.NLP.Html</c> 所提供的通用 HTML DOM 来完成，
+    ''' 这里只负责网络请求、分页与结果的类型封装。
+    ''' </remarks>
     <Package("Bing.Academic",
          Url:="http://cn.bing.com/academic/?FORM=Z9LH2",
          Description:="",
@@ -75,82 +81,109 @@ Namespace Bing.Academic
         Const refer$ = "https://cn.bing.com/academic/?FORM=Z9LH2"
 
         ''' <summary>
+        ''' 生成必应学术的搜索地址
+        ''' </summary>
+        ''' <param name="term">检索关键词</param>
+        ''' <param name="first">分页的起始结果编号(从 1 开始)；小于等于 0 的时候不分页</param>
+        Public Function BuildUrl(term As String, Optional first As Integer = -1) As String
+            If first > 0 Then
+                Return $"https://cn.bing.com/academic/search?q={term.UrlEncode}&first={first}&go=Search&qs=ds&form=QBRE"
+            Else
+                Return $"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE"
+            End If
+        End Function
+
+        ''' <summary>
         ''' Run academic search from portal: https://cn.bing.com/academic/?FORM=HDRSC4
         ''' </summary>
-        ''' <param name="term"></param>
-        ''' <returns></returns>
-        Public Function Search(term As String) As NamedValue(Of String)()
-            Return getInternal($"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE")
+        ''' <param name="term">检索关键词</param>
+        ''' <returns>这一页搜索结果之上解析出来的所有条目</returns>
+        Public Function Search(term As String) As AcademicResult()
+            Return SearchPage(term).results
         End Function
 
-        Private Function getInternal(url As String) As NamedValue(Of String)()
+        ''' <summary>
+        ''' 执行搜索并且返回整个结果页面(包含结果总数信息)
+        ''' </summary>
+        ''' <param name="term">检索关键词</param>
+        ''' <param name="first">分页的起始结果编号，从 1 开始；小于等于 0 的时候取第一页</param>
+        Public Function SearchPage(term As String, Optional first As Integer = -1) As AcademicSearchPage
+            Return DownloadPage(BuildUrl(term, first), term)
+        End Function
+
+        ''' <summary>
+        ''' 下载并且解析一个必应学术的搜索结果页面
+        ''' </summary>
+        ''' <param name="url">搜索结果页面地址</param>
+        ''' <param name="term">检索关键词，仅用于结果的溯源标记</param>
+        Public Function DownloadPage(url As String, Optional term As String = Nothing) As AcademicSearchPage
             Dim html$ = url.GET(headers:=New Dictionary(Of String, String) From {{NameOf(refer), refer}})
 
-            html = html _
-                .RemovesJavaScript _
-                .RemovesCSSstyles _
-                .RemovesImageLinks _
-                .RemovesHtmlHead _
-                .RemovesFooter
-            html = Strings.Split(html, "<ol id=""b_results""").Last
-
-            Dim list As NamedValue(Of String)() = r _
-                .Matches(html, "<li class[=]""aca_algo"">.+?</li>", RegexICSng) _
-                .EachValue(AddressOf StripListItem) _
-                .ToArray
-
-            Return list
+            Return AcademicParser.ParsePage(html, url, term)
         End Function
 
-        Public Iterator Function Query(term$, Optional pages% = 10) As IEnumerable(Of (refer$, list As NamedValue(Of String)()))
-            Dim result As NamedValue(Of String)()
+        ''' <summary>
+        ''' 分页的遍历一个关键词的所有的搜索结果
+        ''' </summary>
+        ''' <param name="term">检索关键词</param>
+        ''' <param name="pages">需要遍历的页数</param>
+        ''' <returns>每一页的搜索地址以及这一页之上解析出来的结果列表</returns>
+        Public Iterator Function Query(term As String, Optional pages% = 10) As IEnumerable(Of (refer$, list As AcademicResult()))
+            Dim result As AcademicResult()
 
             For i As Integer = 0 To pages
-                Dim page$ = i * 10 + 1
-                Dim url$ = $"https://cn.bing.com/academic/search?q={term.UrlEncode}&first={page}&go=Search&qs=ds&form=QBRE"
+                Dim first As Integer = i * 10 + 1
+                Dim url$ = BuildUrl(term, first)
 
                 Try
-                    result = getInternal(url)
+                    result = DownloadPage(url, term).results
                 Catch ex As Exception
-                    result = {}
+                    result = New AcademicResult() {}
                     ex = New Exception(url, ex)
-                    App.LogException(ex)
+                    Call App.LogException(ex)
                 End Try
 
                 Yield (url, result)
             Next
         End Function
 
-        Private Function StripListItem(text As String) As NamedValue(Of String)
-            Dim title = text.GetBetween("<h2", "</h2>")
-            Dim ResultUrl = title.href
-            Dim description = text _
-                .GetBetween("<div class=""caption_abstract"">", "</div>") _
-                .GetBetween("<p>", "</p>") _
-                .StripHTMLTags
-
-            ResultUrl = "https://cn.bing.com/" & ResultUrl.Trim("/"c).Replace("&amp;", "&")
-            title = title _
-                .RemovesHtmlStrong _
-                .GetValue _
-                .StripHTMLTags
-
-            Return New NamedValue(Of String) With {
-                .Name = title,
-                .Value = ResultUrl,
-                .Description = description
-            }
-        End Function
-
         ''' <summary>
         ''' Aquire details information about an article result.
         ''' </summary>
-        ''' <param name="info"></param>
-        ''' <returns></returns>
+        ''' <param name="info">搜索结果条目</param>
+        ''' <param name="refer">引用页地址</param>
+        ''' <returns>
+        ''' 只有必应学术的文献型结果(即 <see cref="AcademicResult.isAcademic"/> 为 <c>True</c> 的条目)
+        ''' 才可以拉取到详情页，其他情况返回 <c>Nothing</c>。
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function GetDetails(info As NamedValue(Of String), Optional refer$ = Nothing) As ArticleProfile
-            Return ProfileResult.GetProfile(info.Value, refer)
+        Public Function GetDetails(info As AcademicResult, Optional refer$ = Nothing) As ArticleProfile
+            If info Is Nothing OrElse Not info.isAcademic OrElse String.IsNullOrEmpty(info.profileUrl) Then
+                Return Nothing
+            End If
+
+            Return ProfileResult.GetProfile(info.profileUrl, refer)
+        End Function
+
+        ''' <summary>
+        ''' 将结构化的搜索结果转换为 <see cref="NamedValue(Of String)"/> 形式，便于做向后兼容的处理
+        ''' </summary>
+        <Extension>
+        Public Function AsNamedValues(results As IEnumerable(Of AcademicResult)) As NamedValue(Of String)()
+            If results Is Nothing Then
+                Return New NamedValue(Of String)() {}
+            End If
+
+            Return results _
+                .Select(Function(r)
+                             Return New NamedValue(Of String) With {
+                                 .Name = r.title,
+                                 .Value = r.url,
+                                 .Description = r.abstract
+                             }
+                         End Function) _
+                .ToArray()
         End Function
     End Module
 End Namespace
