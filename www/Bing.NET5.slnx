@@ -36,4 +36,12 @@
   <Project Path="Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="Microsoft.VisualBasic.Webservices.Bing/test/test.vbproj">
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="mzkit|*" Project="Debug" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="nuget_release|*" Project="Release" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
 </Solution>
