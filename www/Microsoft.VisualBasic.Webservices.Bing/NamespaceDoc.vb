@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c32177ec0aad581b54733301e2060a9b, www\Microsoft.VisualBasic.Webservices.Bing\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2a7bb232673d60a20ccb6f0840a80f8c, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 2 (28.57%)
-    ' Comment Lines: 5 (71.43%)
+    '   Total Lines: 9
+    '    Code Lines: 4 (44.44%)
+    ' Comment Lines: 4 (44.44%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 0 (0.00%)
-    '     File Size: 274 B
+    '   Blank Lines: 1 (11.11%)
+    '     File Size: 256 B
 
 
-    ' Class NamespaceDoc
+    '     Module NamespaceDoc
+    ' 
     ' 
     ' 
     ' 
@@ -51,10 +52,12 @@
 
 #End Region
 
-''' <summary>
-''' Microsoft Bing web services client for knowledge base enrichment: web search result scraping
-''' with paging, academic article profile queries, word translation lookups and DOI handle
-''' resolution.
-''' </summary>
-Friend Class NamespaceDoc
-End Class
+Namespace Bing
+
+    ''' <summary>
+    ''' Microsoft Bing search client core: the web result models, the paging search engine
+    ''' provider and the Bing image search helpers.
+    ''' </summary>
+    Module NamespaceDoc
+    End Module
+End Namespace

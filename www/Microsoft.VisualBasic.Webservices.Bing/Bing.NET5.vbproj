@@ -147,10 +147,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="MicrosoftBing\BingImage.vb" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Import Include="System.Data" />
   </ItemGroup>
 
