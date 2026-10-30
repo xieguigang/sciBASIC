@@ -181,9 +181,10 @@ Namespace Dynamics
         Private Shared Function GetParameterFields(model As Type) As FieldInfo()
             Dim fields As FieldInfo() = CType(model, TypeInfo).DeclaredFields.ToArray
             Dim doubleFields = fields.Where(Function(f) f.FieldType.Equals(GetType(Double)))
-            Dim f64Fields = fields.Where(Function(f)
-                                             Return (Not f.FieldType.Equals(var.type)) AndAlso f.FieldType.Equals(GetType(f64))
-                                         End Function)
+            Dim f64Fields = fields _
+                .Where(Function(f)
+                           Return (Not f.FieldType.Equals(var.type)) AndAlso f.FieldType.Equals(GetType(f64))
+                       End Function)
 
             Return doubleFields.Concat(f64Fields).ToArray
         End Function

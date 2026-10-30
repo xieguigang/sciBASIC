@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::b2e188fe63f212f2823fc7d9529c50fb, Data_science\Mathematica\Math\CVODE_Solver\CVODEAdvanced.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 177
-    '    Code Lines: 99 (55.93%)
-    ' Comment Lines: 43 (24.29%)
-    '    - Xml Docs: 58.14%
-    ' 
-    '   Blank Lines: 35 (19.77%)
-    '     File Size: 5.72 KB
+' Summaries:
 
 
-    ' Class CVODESolverEx
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CheckRoot, IntegrateWithRootFinding, RefineRoot
-    ' 
-    '     Sub: SetRootFunction
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 177
+'    Code Lines: 99 (55.93%)
+' Comment Lines: 43 (24.29%)
+'    - Xml Docs: 58.14%
+' 
+'   Blank Lines: 35 (19.77%)
+'     File Size: 5.72 KB
+
+
+' Class CVODESolverEx
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CheckRoot, IntegrateWithRootFinding, RefineRoot
+' 
+'     Sub: SetRootFunction
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports std = System.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports std = System.Math
 
 ' ============================================================================
 ' CVODEAdvanced.vb - CVODE高级功能扩展
