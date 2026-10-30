@@ -142,7 +142,21 @@ Namespace Bing.Academic
         ''' </summary>
         Public Property refer As String
 
+        ''' <summary>
+        ''' 构造一个空的结果；所有的文本字段都被初始化为空字符串，
+        ''' 这样调用方在页面结构变化、某个字段解析不出来的时候也不会碰到空引用。
+        ''' </summary>
         Public Sub New()
+            term = ""
+            title = ""
+            url = ""
+            displayUrl = ""
+            abstract = ""
+            journal = ""
+            pdfUrl = ""
+            profileUrl = ""
+            profileID = ""
+            refer = ""
             authors = New String() {}
             keywords = New String() {}
         End Sub
@@ -178,6 +192,8 @@ Namespace Bing.Academic
         Public Property results As AcademicResult()
 
         Public Sub New()
+            term = ""
+            url = ""
             total = -1
             results = New AcademicResult() {}
         End Sub
