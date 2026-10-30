@@ -192,6 +192,50 @@ Dim yoshida4 = harmonic.SolveYoshida4(2000, 0.0, 200.0) ' 四阶，9 次求值/�
 `PositionIndices` / `MomentumIndices` 指定。`SymplecticODEs` 同时实现了通用的右端函数，
 因此同样可以用 RK4 / RK45 对它积分（便于对照）。
 
+### 外部求解器插件（注册 / 注入）
+
+`ODEs.Solve` 的分发体系是可扩展的：任何程序集都可以实现 `IODEsolverProvider` 并注册到
+`ODESolverRegistry`，之后就能像内建方法一样调用（托管版 CVODE 已经提供了现成的适配器）。
+
+```vbnet
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
+Imports Microsoft.VisualBasic.Math.Sundials.CVODE
+
+' 1) 程序启动的时候显式注册（Register 可以重复调用）
+Call SolverExtensions.Register()
+
+' 2) 枚举入口（类型安全，有 IntelliSense）
+Dim stiff = model.Solve(1000, 0.0, 5.0, ODESolverMethod.CVODE_BDF)
+
+' 3) 字符串入口（也可以调用内建方法，例如 "RK4"）
+Dim adams = model.Solve(1000, 0.0, 5.0, "cvode.adams")
+```
+
+- 自定义插件只需要实现 `Function Solve(model, y0, n, a, b, options) As ODEsOut`；
+- 结果形状（`n + 1` 个采样点、列数与状态变量一致、端点覆盖 `[a, b]`）、NaN/Inf 检查以及
+  `var` 状态变量的同步全部由框架统一完成，插件不需要（也无法）访问 `Size`/`SyncState`；
+- 未注册时抛出 `InvalidOperationException`，消息中包含方法名、已注册的求解器清单以及
+  「引用 `Microsoft.VisualBasic.Math.Sundials.CVODE` 并调用 `SolverExtensions.Register()`」的指引；
+- `ODESolverOptions.ProviderOptions` 用于把插件专有配置透传给适配器（例如 `CVODEOptions`），
+  通用的 `Atol` / `Rtol` / `InitialStep` / `MaxSteps` 会被自动映射。
+
+### 统一结果模型 ODEsOut
+
+所有求解器（13 种内建方法 + 外部插件）都输出同一个 `ODEsOut`：
+
+| 成员 | 说明 |
+|---|---|
+| `x` / `y` / `y0` / `params` | 原始数据：时间点、各变量序列、初值、参数 |
+| `columnNames` | 列顺序（`y` 是按键排序的字典，不能依赖它的枚举顺序） |
+| `Count` / `Item(index)` | 采样点个数 / 第 index 个采样点的状态向量 `Vector` |
+| `GetComponent(i)` / `dx` / `Resolution` | 第 i 个分量的时间序列 / 步长 / 分辨率 |
+| `ToCSV()` / `AsTable()` | 导出 CSV（`Time,y0,...`，`G10` 格式）/ 数值表 |
+| `HaveNaN` / `Join()` / `info` | 数值检查 / 参数与初值合并 / 求解器诊断信息 |
+| `FromColumns(...)` / `FromPoints(...)` | 供只知道状态向量的求解器构造结果 |
+
+> 原来 `Sundials.CVODE` 专用的 `ODESolution` 已经删除，请改用 `ODEsOut`
+> （其中的 `Count` / `Item` / `GetComponent` / `ToCSV` 与旧接口语义一致）。
+
 ## 实现要点
 
 - **采样网格**：所有求解器都返回 `n + 1` 个等距采样点，`x(0) = a`、`x(n) = b`，

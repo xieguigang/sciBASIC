@@ -556,7 +556,12 @@ Namespace Dynamics
 
             CurrentStep = n
 
-            Return CreateOutput(Me, CreateY0Map(y0), result.x, columns)
+            Dim output As ODEsOut = CreateOutput(Me, CreateY0Map(y0), result.x, columns)
+
+            ' 保留外部求解器的诊断信息（steps / rhs_evaluations / ...）
+            output.info = result.info
+
+            Return output
         End Function
 
         ''' <summary>
@@ -775,10 +780,13 @@ Namespace Dynamics
         Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As Double()()) As ODEsOut
             Dim symbols As var() = system.vars
             Dim out As New Dictionary(Of NamedCollection(Of Double))
+            ' 显式指定列顺序：结果字典是按键排序的，不能依赖它的枚举顺序来定位状态变量
+            Dim names As String() = New String(symbols.Length - 1) {}
 
             For i As Integer = 0 To symbols.Length - 1
                 Dim v As var = symbols(i)
 
+                names(v.Index) = v.Name
                 out(v.Name) = New NamedCollection(Of Double) With {
                     .name = v.Name,
                     .value = y(v.Index)
@@ -789,7 +797,8 @@ Namespace Dynamics
                 .x = x,
                 .y = out,
                 .y0 = y0,
-                .params = system.Parameters
+                .params = system.Parameters,
+                .columnNames = names
             }
         End Function
 

@@ -216,7 +216,7 @@ GPL-3.0-or-later
 | `TargetFramework` | `net10.0`（`LangVersion=latest`、`OptionStrict=On`、`OptionExplicit=On`） |
 | `Configurations` | `nuget_release;Debug` |
 | `Platforms` | `AnyCPU;x64` |
-| `PackageReadmeFile` | `PROJECT_SUMMARY.md`（即本文档，通过 `<None Include="PROJECT_SUMMARY.md">` + `Pack=True` 打入包内） |
+| `PackageReadmeFile` | `PROJECT_SUMMARY.md`（即本文档，通过 `<None Update="PROJECT_SUMMARY.md">` + `Pack=True` 打入包内） |
 | `PackageTags` | `scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics` |
 | `PackageLicenseExpression` | `GPL-3.0-or-later` |
 | `PackageIcon` | `logo-knot.png` |
@@ -224,3 +224,56 @@ GPL-3.0-or-later
 | `IncludeSymbols` / `SymbolPackageFormat` | `true` / `snupkg` |
 
 在 sciBASIC# 生态中，本包是 `Microsoft.VisualBasic.Math.Calculus`（`ODESolver` / `ODE` 项目）的**刚性求解后端**：`ode` 提供通用的动力学模型与积分接口，而本包提供与之兼容的高阶、变步长变阶数实现。
+
+---
+
+## 注册到 ODEs 求解器框架（插件注入）
+
+`Microsoft.VisualBasic.Math.Calculus` 的 `ODEs.Solve` 支持外部求解器插件。本包通过
+`SolverExtensions.Register()` 把 Adams / BDF 两个实现注册进去，之后就可以和内建的
+RK4 / RK45 / BDF2 一样调用：
+
+```vbnet
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
+Imports Microsoft.VisualBasic.Math.Sundials.CVODE
+
+' 显式注册（可重复调用；未注册时调用 CVODE 方法会抛出带指引的异常）
+Call SolverExtensions.Register()
+
+' 枚举入口
+Dim r1 = model.Solve(1000, 0.0, 5.0, ODESolverMethod.CVODE_BDF)
+
+' 字符串入口（cvode / cvode.adams / cvode.bdf）
+Dim r2 = model.Solve(1000, 0.0, 5.0, "cvode.adams")
+
+' 插件专有配置通过 ProviderOptions 透传
+Dim r3 = model.Solve(1000, 0.0, 5.0, ODESolverMethod.CVODE_BDF,
+                     options:=New ODESolverOptions With {
+                         .ProviderOptions = New CVODEOptions With {.MaxOrder = 5, .RelativeTolerance = 1.0E-10}
+                     })
+```
+
+- RHS 通过 `ODEs.Derivatives` 桥接（直接使用 `Vector.Array` 的内部缓冲，零拷贝）；
+- 模型提供 `ODEs.Jacobian` 时会自动桥接成 `JacobianFunction`（写入 `DenseMatrix.Data`），
+  否则使用 CVODE 内部的有限差分 Jacobian；
+- 通用的 `Atol` / `Rtol` / `InitialStep` / `MaxSteps` 会自动映射到 `CVODEOptions`；
+- `Unregister()` / `IsRegistered()` 用于测试与热切换。
+
+## 统一输出模型：ODEsOut
+
+本包不再使用自己的 `ODESolution`（已删除），所有积分结果统一输出为
+`Microsoft.VisualBasic.Math.Calculus.Dynamics.Data.ODEsOut`：
+
+```vbnet
+Dim result As ODEsOut = solver.Solve(0.0, 5.0, y0, 100)          ' 扩展方法
+' 或者一次性构建：
+Dim result2 = New CVODEBuilder().UseMethod(CVODEMethod.Adams).WithRHS(rhs, n).Solve(0.0, 5.0, y0, 100)
+
+Dim last As Double = result.GetComponent(0)(result.Count - 1)   ' 第 0 个分量的最后一个采样点
+Dim state As Vector = result(result.Count - 1)                   ' 最后一点的状态向量
+Dim csv As String = result.ToCSV()                               ' Time,y0,y1,... (G10)
+```
+
+`ODEsOut` 同时提供 `Count`、`Item(index)`、`GetComponent(i)`、`ToCSV()`、`AsTable()`、
+`HaveNaN`、`info`（steps / rhs_evaluations 等诊断信息），以及 `FromColumns` / `FromPoints`
+两个工厂方法，因此与内建求解器的结果可以采用完全一致的处理方式。
