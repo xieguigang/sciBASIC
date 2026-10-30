@@ -95,14 +95,20 @@ Namespace TSK
             End If
 
             _premiseOffsets = New Integer(inputs.Length - 1) {}
-            Dim offset As Integer = 0
 
-            For i As Integer = 0 To inputs.Length - 1
-                _premiseOffsets(i) = offset
-                offset += inputs(i).GetParameterCount()
-            Next
+            If rules.IsScatter Then
+                ' 散射划分：前提参数是「每规则 × 每输入」的 (中心, 宽度)，与共享模糊集无关
+                PremiseParameterCount = rules.RuleCount * inputs.Length * 2
+            Else
+                Dim offset As Integer = 0
 
-            PremiseParameterCount = offset
+                For i As Integer = 0 To inputs.Length - 1
+                    _premiseOffsets(i) = offset
+                    offset += inputs(i).GetParameterCount()
+                Next
+
+                PremiseParameterCount = offset
+            End If
             ConsequentParameterCount = rules.RuleCount * (inputs.Length + 1)
             _theta = New Double(ConsequentParameterCount - 1, outputCount - 1) {}
             _layers = New TskLayers(Me)
@@ -167,9 +173,32 @@ Namespace TSK
 
 #Region "前提参数"
 
-        ''' <summary>按输入顺序拼接的前提参数向量。</summary>
+        ''' <summary>散射划分下前提参数向量的下标（每规则 × 每输入一组 <c>(中心, 宽度)</c>）。</summary>
+        ''' <remarks>布局：<c>(r * n + i) * 2</c> 为中心、<c>+1</c> 为宽度。</remarks>
+        Private Shared Function ScatterPremiseOffset(rule As Integer, inputIndex As Integer, inputCount As Integer) As Integer
+            Return (rule * inputCount + inputIndex) * 2
+        End Function
+
+        ''' <summary>按输入顺序拼接的前提参数向量（散射划分下为每规则的高斯中心/宽度）。</summary>
         Public Function GetPremiseParameters() As Double()
             Dim values(PremiseParameterCount - 1) As Double
+
+            If Rules.IsScatter Then
+                Dim n As Integer = Inputs.Length
+                Dim centers As Double(,) = Rules.RuleCenters
+                Dim sigmas As Double(,) = Rules.RuleSigmas
+
+                For r As Integer = 0 To Rules.RuleCount - 1
+                    For i As Integer = 0 To n - 1
+                        Dim offset As Integer = ScatterPremiseOffset(r, i, n)
+
+                        values(offset) = centers(r, i)
+                        values(offset + 1) = sigmas(r, i)
+                    Next
+                Next
+
+                Return values
+            End If
 
             For i As Integer = 0 To Inputs.Length - 1
                 Dim part As Double() = Inputs(i).GetParameters()
@@ -179,10 +208,29 @@ Namespace TSK
             Return values
         End Function
 
-        ''' <summary>把扁平向量按输入切回各自隶属函数。</summary>
+        ''' <summary>把扁平向量写回前提参数（散射划分下写回每规则的高斯中心/宽度）。</summary>
         Public Sub SetPremiseParameters(values As Double())
             If values Is Nothing OrElse values.Length <> PremiseParameterCount Then
                 Throw New ArgumentException($"the premise vector must have {PremiseParameterCount} elements", NameOf(values))
+            End If
+
+            If Rules.IsScatter Then
+                Dim n As Integer = Inputs.Length
+                Dim centers(Rules.RuleCount - 1, n - 1) As Double
+                Dim sigmas(Rules.RuleCount - 1, n - 1) As Double
+
+                For r As Integer = 0 To Rules.RuleCount - 1
+                    For i As Integer = 0 To n - 1
+                        Dim offset As Integer = ScatterPremiseOffset(r, i, n)
+
+                        centers(r, i) = values(offset)
+                        sigmas(r, i) = values(offset + 1)
+                    Next
+                Next
+
+                Call Rules.UpdateScatterParameters(centers, sigmas)
+
+                Return
             End If
 
             For i As Integer = 0 To Inputs.Length - 1
@@ -198,6 +246,19 @@ Namespace TSK
         Public Function GetPremisePositiveMask() As Boolean()
             Dim mask(PremiseParameterCount - 1) As Boolean
 
+            If Rules.IsScatter Then
+                ' 中心可正可负；宽度必须为正
+                Dim n As Integer = Inputs.Length
+
+                For r As Integer = 0 To Rules.RuleCount - 1
+                    For i As Integer = 0 To n - 1
+                        mask(ScatterPremiseOffset(r, i, n) + 1) = True
+                    Next
+                Next
+
+                Return mask
+            End If
+
             For i As Integer = 0 To Inputs.Length - 1
                 Dim part As Boolean() = Inputs(i).GetPositiveMask()
                 Call Array.Copy(part, 0, mask, _premiseOffsets(i), part.Length)
@@ -209,6 +270,21 @@ Namespace TSK
         ''' <summary>与 <see cref="GetPremiseParameters"/> 一一对应的可读参数名。</summary>
         Public Function GetPremiseParameterNames() As String()
             Dim names(PremiseParameterCount - 1) As String
+
+            If Rules.IsScatter Then
+                Dim n As Integer = Inputs.Length
+
+                For r As Integer = 0 To Rules.RuleCount - 1
+                    For i As Integer = 0 To n - 1
+                        Dim offset As Integer = ScatterPremiseOffset(r, i, n)
+
+                        names(offset) = $"rule{r + 1}.{Inputs(i).Name}.center"
+                        names(offset + 1) = $"rule{r + 1}.{Inputs(i).Name}.sigma"
+                    Next
+                Next
+
+                Return names
+            End If
 
             For i As Integer = 0 To Inputs.Length - 1
                 Dim part As String() = Inputs(i).GetParameterNames()
@@ -321,7 +397,17 @@ Namespace TSK
         End Function
 
         ''' <summary>单样本的隶属度矩阵，形状 <c>[InputCount, m_i]</c>。</summary>
+        ''' <remarks>
+        ''' 只对网格划分有意义：散射划分下每条规则对每个输入都有自己的高斯，不存在「每输入一张隶属度表」。
+        ''' 散射模型请直接读 <see cref="TskLayers.Forward(Double()(), Integer, Integer, TskForwardWorkspace)"/> 的 <c>Wbar</c>。
+        ''' </remarks>
         Public Function GetMembershipDegrees(x As Double()) As Double()()
+            If Rules.IsScatter Then
+                Throw New NotSupportedException(
+                    "a scatter rule base has one Gaussian per rule and per input, so there is no per-input membership table; " &
+                    "read TskInferenceTrace.Wbar for the rule activations instead")
+            End If
+
             Dim fwd As TskInferenceTrace = _layers.Forward(RowBatch(x), 0, 1, RowWorkspace())
             Dim result(fwd.InputCount - 1)() As Double
 
@@ -434,7 +520,8 @@ Namespace TSK
                 Dim antecedents As String() = New String(n - 1) {}
 
                 For i As Integer = 0 To n - 1
-                    antecedents(i) = (Rules.Antecedent(r, i) + 1).ToString()
+                    ' 散射划分下 Antecedent 只表示「是否使用该输入」，不能当作模糊集编号导出
+                    antecedents(i) = If(Rules.IsScatter, "-1", (Rules.Antecedent(r, i) + 1).ToString())
                 Next
 
                 Call sb.AppendLine($"{String.Join(" ", antecedents)}, 1 ({1.0.ToString("G6")}) : 1")
@@ -484,6 +571,8 @@ Namespace TSK
                             End Function) _
                     .ToArray,
                 .antecedent = Rules.ToAntecedentTable().ToJagged,
+                .ruleCenters = If(Rules.IsScatter, Rules.ToCenterTable().ToJagged, Nothing),
+                .ruleSigmas = If(Rules.IsScatter, Rules.ToSigmaTable().ToJagged, Nothing),
                 .theta = Theta.ToJagged
             }
 
@@ -531,6 +620,23 @@ Namespace TSK
                 Next
             Next
 
+            Dim rules As FuzzyRuleBase
+
+            If dto.ruleCenters IsNot Nothing AndAlso dto.ruleSigmas IsNot Nothing Then
+                ' 散射划分：活跃掩码来自 antecedent（>= 0 表示该输入参与本条规则）
+                Dim active(dto.ruleCenters.Length - 1, inputs.Length - 1) As Boolean
+
+                For r As Integer = 0 To dto.ruleCenters.Length - 1
+                    For i As Integer = 0 To inputs.Length - 1
+                        active(r, i) = antecedent(r, i) >= 0
+                    Next
+                Next
+
+                rules = FuzzyRuleBase.CreateScatter(FromJagged(dto.ruleCenters), FromJagged(dto.ruleSigmas), active)
+            Else
+                rules = New FuzzyRuleBase(antecedent)
+            End If
+
             Dim outputCount As Integer = dto.theta(0).Length
             Dim outputNames As String() = dto.outputNames
 
@@ -538,7 +644,7 @@ Namespace TSK
                 outputNames = Enumerable.Range(1, outputCount).Select(Function(i) $"y{i}").ToArray
             End If
 
-            Dim network As New TskNetwork(inputs, New FuzzyRuleBase(antecedent), outputNames.Length, outputNames) With {
+            Dim network As New TskNetwork(inputs, rules, outputNames.Length, outputNames) With {
                 .FeatureNames = If(dto.featureNames, inputs.Select(Function(v) v.Name).ToArray),
                 .Theta = FromJagged(dto.theta)
             }
@@ -596,8 +702,16 @@ Namespace TSK
         Public Property outputNames As String()
         ''' <summary>输入变量定义。</summary>
         Public Property inputs As TskInputDto()
-        ''' <summary>规则表（行 = 规则，列 = 输入，值为模糊集下标）。</summary>
+        ''' <summary>规则表（行 = 规则，列 = 输入，值为模糊集下标；散射划分下 -1 表示 don't care）。</summary>
         Public Property antecedent As Integer()()
+        ''' <summary>
+        ''' 散射划分每规则的高斯中心（行 = 规则，列 = 输入）；网格划分为 <c>Nothing</c>。
+        ''' </summary>
+        Public Property ruleCenters As Double()()
+        ''' <summary>
+        ''' 散射划分每规则的高斯宽度（行 = 规则，列 = 输入）；网格划分为 <c>Nothing</c>。
+        ''' </summary>
+        Public Property ruleSigmas As Double()()
         ''' <summary>结论参数矩阵（行主序展平）。</summary>
         Public Property theta As Double()()
 

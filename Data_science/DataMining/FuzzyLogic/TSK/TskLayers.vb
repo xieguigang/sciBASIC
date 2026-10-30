@@ -130,64 +130,67 @@ Namespace TSK
                 Next
             Next
 
-            ' ---- 第 1 层：模糊化（所有输入的隶属度拼在一张表里，列偏移由 MfOffsets 给出）----
-            Dim mfOffsets As Integer() = workspace.MfOffsets
-            Dim mu As Double(,) = workspace.Mu
-            Dim logMu As Double(,) = workspace.LogMu
-
-            For i As Integer = 0 To n - 1
-                Dim mfs As IMembershipFunction() = _net.Inputs(i).Functions
-                Dim m As Integer = mfs.Length
-                Dim offset As Integer = mfOffsets(i)
-
-                For t As Integer = 0 To rowCount - 1
-                    Dim xi As Double = xRows(t, i)
-
-                    For k As Integer = 0 To m - 1
-                        Dim v As Double = mfs(k).Evaluate(xi)
-                        mu(t, offset + k) = v
-                        logMu(t, offset + k) = If(v > 0.0, std.Log(v), Double.NegativeInfinity)
-                    Next
-                Next
-            Next
-
-            ' ---- 第 2、3 层：乘积 T-范数与归一化 ----
+            ' ---- 第 1~3 层：模糊化 + 乘积 T-范数 + 归一化 ----
             Dim W As Double(,) = workspace.W
             Dim wbar As Double(,) = workspace.Wbar
             Dim sumW As Double() = workspace.SumW
             Dim valid As Boolean() = workspace.Valid
 
-            For t As Integer = 0 To rowCount - 1
-                Dim total As Double = 0.0
+            If _net.Rules.IsScatter Then
+                Call ForwardScatter(xRows, rowCount, W, wbar, sumW, valid)
+            Else
+                Dim mfOffsets As Integer() = workspace.MfOffsets
+                Dim mu As Double(,) = workspace.Mu
+                Dim logMu As Double(,) = workspace.LogMu
 
-                For r As Integer = 0 To rCount - 1
-                    Dim logW As Double = 0.0
+                For i As Integer = 0 To n - 1
+                    Dim mfs As IMembershipFunction() = _net.Inputs(i).Functions
+                    Dim m As Integer = mfs.Length
+                    Dim offset As Integer = mfOffsets(i)
 
-                    For i As Integer = 0 To n - 1
-                        logW += logMu(t, mfOffsets(i) + _net.Rules.Antecedent(r, i))
+                    For t As Integer = 0 To rowCount - 1
+                        Dim xi As Double = xRows(t, i)
+
+                        For k As Integer = 0 To m - 1
+                            Dim v As Double = mfs(k).Evaluate(xi)
+                            mu(t, offset + k) = v
+                            logMu(t, offset + k) = If(v > 0.0, std.Log(v), Double.NegativeInfinity)
+                        Next
                     Next
-
-                    Dim wv As Double
-
-                    If Double.IsNegativeInfinity(logW) OrElse logW < LogUnderflow Then
-                        wv = 0.0
-                    Else
-                        wv = std.Exp(logW)
-                    End If
-
-                    W(t, r) = wv
-                    total += wv
                 Next
 
-                sumW(t) = total
-                valid(t) = total > MinimumActivationSum
+                For t As Integer = 0 To rowCount - 1
+                    Dim total As Double = 0.0
 
-                If valid(t) Then
                     For r As Integer = 0 To rCount - 1
-                        wbar(t, r) = W(t, r) / total
+                        Dim logW As Double = 0.0
+
+                        For i As Integer = 0 To n - 1
+                            logW += logMu(t, mfOffsets(i) + _net.Rules.Antecedent(r, i))
+                        Next
+
+                        Dim wv As Double
+
+                        If Double.IsNegativeInfinity(logW) OrElse logW < LogUnderflow Then
+                            wv = 0.0
+                        Else
+                            wv = std.Exp(logW)
+                        End If
+
+                        W(t, r) = wv
+                        total += wv
                     Next
-                End If
-            Next
+
+                    sumW(t) = total
+                    valid(t) = total > MinimumActivationSum
+
+                    If valid(t) Then
+                        For r As Integer = 0 To rCount - 1
+                            wbar(t, r) = W(t, r) / total
+                        Next
+                    End If
+                Next
+            End If
 
             ' ---- 第 4 层：一阶 Sugeno 结论 f_r = x.p_r + q_r ----
             Dim fValues As Double(,,) = workspace.F
@@ -421,6 +424,12 @@ Namespace TSK
             End If
 
             ' ---- 前提参数：sum_r w-bar_r * delta * (f_r - z) * d(ln mu)/dp ----
+            If _net.Rules.IsScatter Then
+                Call AccumulateScatterPremise(fwd, coefficient, sampleCount, g)
+
+                Return g
+            End If
+
             Dim columnBuffer As Double(,) = workspace.Column
             Dim logGradBuffer As Double(,) = workspace.LogGrad
 
@@ -471,6 +480,130 @@ Namespace TSK
 
             Return g
         End Function
+
+        ''' <summary>
+        ''' 散射划分的规则触发强度：每条规则用自己的高斯中心/宽度，在 log 域逐项累加。
+        ''' </summary>
+        ''' <param name="xRows">本块的输入行（<c>[rowCount, n]</c>）</param>
+        ''' <param name="rowCount">行数</param>
+        ''' <param name="W">规则触发强度输出 <c>[cap, R]</c></param>
+        ''' <param name="wbar">归一化触发强度输出 <c>[cap, R]</c></param>
+        ''' <param name="sumW">每行触发强度之和</param>
+        ''' <param name="valid">每行是否有效</param>
+        ''' <remarks>
+        ''' <para>
+        ''' 不物化 <c>[行, 规则, 输入]</c> 的隶属度表：C=48、K=18、512 行时那张表要 4.7 MB，
+        ''' 而这里只需要 <c>行 × R × q</c>（q ≤ 8）的循环，反向按同一公式重算导数即可。
+        ''' </para>
+        ''' <para>
+        ''' 高斯取 <c>mu = exp(-0.5·((x-c)/σ)²)</c>（与 <see cref="GaussianMembership"/> 一致，
+        ''' 不带 1/σ 归一化因子），因此 <c>log μ = -0.5·z²</c>，与网格路径的语义完全对齐。
+        ''' </para>
+        ''' </remarks>
+        Private Sub ForwardScatter(xRows As Double(,),
+                                   rowCount As Integer,
+                                   W As Double(,),
+                                   wbar As Double(,),
+                                   sumW As Double(),
+                                   valid As Boolean())
+
+            Dim rules As FuzzyRuleBase = _net.Rules
+            Dim rCount As Integer = rules.RuleCount
+            Dim active As Integer()() = rules.ActiveInputTable()
+            Dim centers As Double(,) = rules.RuleCenters
+            Dim sigmas As Double(,) = rules.RuleSigmas
+
+            For t As Integer = 0 To rowCount - 1
+                Dim total As Double = 0.0
+
+                For r As Integer = 0 To rCount - 1
+                    Dim indices As Integer() = active(r)
+                    Dim logW As Double = 0.0
+
+                    For k As Integer = 0 To indices.Length - 1
+                        Dim i As Integer = indices(k)
+                        Dim sigma As Double = sigmas(r, i)
+                        Dim z As Double = (xRows(t, i) - centers(r, i)) / sigma
+
+                        logW += -0.5 * z * z
+                    Next
+
+                    Dim wv As Double
+
+                    If logW < LogUnderflow Then
+                        wv = 0.0
+                    Else
+                        wv = std.Exp(logW)
+                    End If
+
+                    W(t, r) = wv
+                    total += wv
+                Next
+
+                sumW(t) = total
+                valid(t) = total > MinimumActivationSum
+
+                If valid(t) Then
+                    For r As Integer = 0 To rCount - 1
+                        wbar(t, r) = W(t, r) / total
+                    Next
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 散射划分的前提参数梯度：对每条规则、每个参与输入，累加 <c>d ln μ / d(center)</c> 与 <c>d ln μ / d(σ)</c>。
+        ''' </summary>
+        ''' <param name="fwd">本次前向的中间量</param>
+        ''' <param name="coefficient">每 (样本, 规则) 的 <c>w-bar·Σ_o delta·(f-z)</c></param>
+        ''' <param name="sampleCount">本块行数</param>
+        ''' <param name="g">梯度对象（前提参数按 <c>(r*n+i)*2</c> 布局写入）</param>
+        ''' <remarks>
+        ''' 与网格路径同一个恒等式：<c>dE/dp = Σ_t coefficient(t,r) · d ln μ_ri / dp</c>
+        ''' （乘积 T-范数下 <c>d ln w_r / d ln μ_ri = 1</c>）。
+        ''' 高斯：<c>d ln μ/dc = (x-c)/σ²</c>、<c>d ln μ/dσ = (x-c)²/σ³</c>。
+        ''' </remarks>
+        Private Sub AccumulateScatterPremise(fwd As TskInferenceTrace,
+                                             coefficient As Double(,),
+                                             sampleCount As Integer,
+                                             g As TskGradient)
+
+            Dim rules As FuzzyRuleBase = _net.Rules
+            Dim n As Integer = fwd.InputCount
+            Dim active As Integer()() = rules.ActiveInputTable()
+            Dim centers As Double(,) = rules.RuleCenters
+            Dim sigmas As Double(,) = rules.RuleSigmas
+
+            For r As Integer = 0 To rules.RuleCount - 1
+                Dim indices As Integer() = active(r)
+
+                For k As Integer = 0 To indices.Length - 1
+                    Dim i As Integer = indices(k)
+                    Dim sigma As Double = sigmas(r, i)
+                    Dim variance As Double = sigma * sigma
+                    Dim offset As Integer = (r * n + i) * 2
+                    Dim center As Double = centers(r, i)
+                    Dim gradCenter As Double = 0.0
+                    Dim gradSigma As Double = 0.0
+
+                    For t As Integer = 0 To sampleCount - 1
+                        Dim c As Double = coefficient(t, r)
+
+                        If c = 0.0 Then
+                            Continue For
+                        End If
+
+                        Dim dx As Double = fwd.X(t, i) - center
+
+                        gradCenter += c * (dx / variance)
+                        gradSigma += c * (dx * dx / (variance * sigma))
+                    Next
+
+                    g.Premise(offset) += gradCenter
+                    g.Premise(offset + 1) += gradSigma
+                Next
+            Next
+        End Sub
 
 #End Region
 
