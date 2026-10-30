@@ -111,6 +111,19 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' 从矩形数组 <paramref name="v"/> 的第 <paramref name="row"/> 行
+        ''' <paramref name="offset"/> 处批量装载一个 256 位向量。
+        ''' </summary>
+        ''' <remarks>
+        ''' 矩形数组按行优先连续存放，因此同一行内相邻元素在内存中也是连续的，
+        ''' 可以直接用批量装载指令读取，不会跨越到下一行。
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function Load4(v As Double(,), row As Integer, offset As Integer) As Vector256(Of Double)
+            Return Vector256.LoadUnsafe(Of Double)(v(row, offset))
+        End Function
+
+        ''' <summary>
         ''' 从 <see cref="Single"/> 数组的 <paramref name="offset"/> 处批量装载一个 256 位向量。
         ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -228,6 +241,84 @@ Namespace Math.SIMD
 
             Do While i < len
                 sum += v1(i) * v2(i)
+                i += 1
+            Loop
+
+            Return sum
+        End Function
+
+        ''' <summary>
+        ''' 点积（<see cref="Double"/>）：矩形数组 <paramref name="a"/> 的第
+        ''' <paramref name="row"/> 行与 <paramref name="v"/> 的点积，使用 FMA 融合乘加。
+        ''' </summary>
+        ''' <param name="a">按行优先存放的矩形数组（<c>Double(,)</c>）</param>
+        ''' <param name="row">行下标</param>
+        ''' <param name="v">参与点积的向量，长度必须等于 <c>a.GetLength(1)</c></param>
+        ''' <returns><c>SUM(a(row, i) * v(i))</c></returns>
+        ''' <remarks>
+        ''' <para>
+        ''' 矩形数组在内存中按行优先连续存放，第 <paramref name="row"/> 行的元素本身就是
+        ''' 一段连续内存，因此可以直接批量装载成向量，**不需要**先把这一行复制到临时数组
+        ''' —— 这与 <see cref="DotFma(Double(), Double())"/> 的差别仅在于装载来源。
+        ''' </para>
+        ''' <para>
+        ''' 与一维版本一样使用 4 路独立累加器打断 FMA 依赖链，归约顺序不同会带来
+        ''' ULP 级差异。无 FMA 或全局禁用时会退回到标量循环。
+        ''' </para>
+        ''' </remarks>
+        Public Shared Function DotFmaRow(a As Double(,), row As Integer, v As Double()) As Double
+            If a Is Nothing Then Throw New ArgumentNullException(NameOf(a))
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+            If row < 0 OrElse row >= a.GetLength(0) Then
+                Throw New ArgumentOutOfRangeException(NameOf(row), $"row index {row} is out of range [0, {a.GetLength(0)})!")
+            End If
+
+            Dim len As Integer = a.GetLength(1)
+            If v.Length <> len Then
+                Throw New ArgumentException($"vector size not agree: {v.Length} vs {len}!")
+            End If
+            If len = 0 Then Return 0.0
+            If Not SimdCapabilities.IsFma OrElse Not SIMDEnvironment.IsEnabled Then
+                Dim scalar As Double = 0
+
+                For k As Integer = 0 To len - 1
+                    scalar += a(row, k) * v(k)
+                Next
+
+                Return scalar
+            End If
+
+            Dim count As Integer = Vector256(Of Double).Count
+            Dim step4 As Integer = count * 4
+            Dim acc0 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc1 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc2 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc3 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim i As Integer = 0
+
+            If len >= step4 Then
+                Dim last4 As Integer = len - step4
+
+                Do While i <= last4
+                    acc0 = Fma.MultiplyAdd(Load4(a, row, i), Load4(v, i), acc0)
+                    acc1 = Fma.MultiplyAdd(Load4(a, row, i + count), Load4(v, i + count), acc1)
+                    acc2 = Fma.MultiplyAdd(Load4(a, row, i + count * 2), Load4(v, i + count * 2), acc2)
+                    acc3 = Fma.MultiplyAdd(Load4(a, row, i + count * 3), Load4(v, i + count * 3), acc3)
+                    i += step4
+                Loop
+            End If
+
+            ' 不足 4 路的整块继续用单路累加
+            Do While i <= len - count
+                acc0 = Fma.MultiplyAdd(Load4(a, row, i), Load4(v, i), acc0)
+                i += count
+            Loop
+
+            Dim sum As Double = HorizontalSum4(
+                Vector256.Add(Vector256.Add(acc0, acc1), Vector256.Add(acc2, acc3)))
+
+            Do While i < len
+                sum += a(row, i) * v(i)
                 i += 1
             Loop
 
