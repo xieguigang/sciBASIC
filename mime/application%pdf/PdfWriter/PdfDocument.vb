@@ -84,7 +84,6 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.ApplicationServices.Report
-Imports Microsoft.VisualBasic.MIME.Office.WordDocument
 
 ''' <summary>
 ''' PDF 文档生成器。实现 <see cref="IDocumentWriter"/>，对外提供与

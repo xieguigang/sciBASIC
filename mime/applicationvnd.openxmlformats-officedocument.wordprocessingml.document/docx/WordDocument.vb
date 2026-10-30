@@ -125,6 +125,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Report
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.application.xml.MathML
 Imports std = System.Math
 

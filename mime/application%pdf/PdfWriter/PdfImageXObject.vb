@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::f1858e072713e5fce68f135ffe1acab6, mime\application%pdf\PdfWriter\PdfImageXObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 300
-    '    Code Lines: 235 (78.33%)
-    ' Comment Lines: 40 (13.33%)
-    '    - Xml Docs: 55.00%
-    ' 
-    '   Blank Lines: 25 (8.33%)
-    '     File Size: 12.15 KB
+' Summaries:
 
 
-    ' Class PdfImageObject
-    ' 
-    ' 
-    ' 
-    ' Class PdfImageXObject
-    ' 
-    '     Function: BE32, EncodeJpeg, EncodePng, GetOrCreate, Paeth
-    '               Unfilter, ZlibCompress
-    ' 
-    '     Sub: Warn
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 300
+'    Code Lines: 235 (78.33%)
+' Comment Lines: 40 (13.33%)
+'    - Xml Docs: 55.00%
+' 
+'   Blank Lines: 25 (8.33%)
+'     File Size: 12.15 KB
+
+
+' Class PdfImageObject
+' 
+' 
+' 
+' Class PdfImageXObject
+' 
+'     Function: BE32, EncodeJpeg, EncodePng, GetOrCreate, Paeth
+'               Unfilter, ZlibCompress
+' 
+'     Sub: Warn
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,7 @@
 
 Imports System.IO
 Imports System.IO.Compression
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports std = System.Math
 
 ''' <summary>
@@ -151,7 +152,7 @@ Public Class PdfImageXObject
 
     ''' <summary>封装 JPEG：直接以 /DCTDecode 原样嵌入。</summary>
     Private Shared Function EncodeJpeg(filePath As String, data As Byte()) As PdfImageObject
-        Dim dims = Microsoft.VisualBasic.MIME.Office.WordDocument.ImageHelper.ReadImageDimensions(filePath)
+        Dim dims = ImageHelper.ReadImageDimensions(filePath)
         Dim w = If(dims.IsEmpty, 0, dims.Width)
         Dim h = If(dims.IsEmpty, 0, dims.Height)
         Return New PdfImageObject() With {

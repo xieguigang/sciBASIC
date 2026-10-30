@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::4aba1b50969991ee96747de3ea8c55db, mime\application%rtf\Writer\RtfBlock.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 104
-    '    Code Lines: 37 (35.58%)
-    ' Comment Lines: 44 (42.31%)
-    '    - Xml Docs: 84.09%
-    ' 
-    '   Blank Lines: 23 (22.12%)
-    '     File Size: 3.63 KB
+' Summaries:
 
 
-    ' Enum RtfBlockType
-    ' 
-    '     Code, DefList, Heading, Hr, Image
-    '     List, PageBreak, Paragraph, Quote, Table
-    '     TaskList, Title, Toc
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Class RtfBlock
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 104
+'    Code Lines: 37 (35.58%)
+' Comment Lines: 44 (42.31%)
+'    - Xml Docs: 84.09%
+' 
+'   Blank Lines: 23 (22.12%)
+'     File Size: 3.63 KB
+
+
+' Enum RtfBlockType
+' 
+'     Code, DefList, Heading, Hr, Image
+'     List, PageBreak, Paragraph, Quote, Table
+'     TaskList, Title, Toc
+' 
+'  
+' 
+' 
+' 
+' Class RtfBlock
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,7 +69,7 @@
 ' 样式必须在入队时 Clone 快照，避免后续 XxxStyle() 调用回溯影响已写入内容。
 ' ============================================================================
 
-Imports Microsoft.VisualBasic.MIME.Office.WordDocument
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 
 ''' <summary>RTF 文档内容块类型。</summary>
 Public Enum RtfBlockType

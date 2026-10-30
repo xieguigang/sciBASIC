@@ -1,79 +1,79 @@
 ﻿#Region "Microsoft.VisualBasic::5deae7a2a6a69445d62f3cd0bf5af4a5, mime\application%rtf\Writer\RtfDocument.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 735
-    '    Code Lines: 503 (68.44%)
-    ' Comment Lines: 113 (15.37%)
-    '    - Xml Docs: 61.95%
-    ' 
-    '   Blank Lines: 119 (16.19%)
-    '     File Size: 34.69 KB
+' Summaries:
 
 
-    ' Class RtfDocument
-    ' 
-    '     Properties: ApplicationName, Author, Description, Subject, Tags
-    '                 Title
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: AddBlock, AddTableBlock, Blockquote, BlockquoteStyle, CloneRow
-    '               CloneRows, CodeBlock, CodeStyle, DefaultStyle, DefinitionList
-    '               DocTitle, H1, H2, H3, H4
-    '               H5, H6, Heading, HeadingStyle, Hr
-    '               IDW_Blockquote, IDW_BlockquoteStyle, IDW_CodeBlock, IDW_CodeStyle, IDW_DefaultStyle
-    '               IDW_DefinitionList, IDW_DocTitle, IDW_H1, IDW_H2, IDW_H3
-    '               IDW_H4, IDW_H5, IDW_H6, IDW_Heading, IDW_HeadingStyle
-    '               IDW_Hr, IDW_Image, IDW_List, IDW_PageBreak, IDW_PageSetup
-    '               IDW_PageSetupA4, IDW_PageSetupLetter, IDW_Paragraph1, IDW_Paragraph2, IDW_ParagraphStyle
-    '               IDW_Table1, IDW_Table2, IDW_Table3, IDW_TableAutoFitContents1, IDW_TableAutoFitContents2
-    '               IDW_TableAutoFitWindow1, IDW_TableAutoFitWindow2, IDW_TableStyle, IDW_TaskList, IDW_TitleStyle
-    '               IDW_Toc, IDW_WriteBlocks, Image, List, PageBreak
-    '               PageSetup, PageSetupA4, PageSetupLetter, (+2 Overloads) Paragraph, ParagraphStyle
-    '               (+3 Overloads) Table, (+2 Overloads) TableAutoFitContents, (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList
-    '               TitleStyle, Toc, ToJaggedHeaders, ToJaggedRows, WriteBlocks
-    ' 
-    '     Sub: Save, WriteBlock
-    ' 
-    ' Class RtfWriteMeta
-    ' 
-    '     Properties: Author, Creator, Description, Keywords, Subject
-    '                 Title
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 735
+'    Code Lines: 503 (68.44%)
+' Comment Lines: 113 (15.37%)
+'    - Xml Docs: 61.95%
+' 
+'   Blank Lines: 119 (16.19%)
+'     File Size: 34.69 KB
+
+
+' Class RtfDocument
+' 
+'     Properties: ApplicationName, Author, Description, Subject, Tags
+'                 Title
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: AddBlock, AddTableBlock, Blockquote, BlockquoteStyle, CloneRow
+'               CloneRows, CodeBlock, CodeStyle, DefaultStyle, DefinitionList
+'               DocTitle, H1, H2, H3, H4
+'               H5, H6, Heading, HeadingStyle, Hr
+'               IDW_Blockquote, IDW_BlockquoteStyle, IDW_CodeBlock, IDW_CodeStyle, IDW_DefaultStyle
+'               IDW_DefinitionList, IDW_DocTitle, IDW_H1, IDW_H2, IDW_H3
+'               IDW_H4, IDW_H5, IDW_H6, IDW_Heading, IDW_HeadingStyle
+'               IDW_Hr, IDW_Image, IDW_List, IDW_PageBreak, IDW_PageSetup
+'               IDW_PageSetupA4, IDW_PageSetupLetter, IDW_Paragraph1, IDW_Paragraph2, IDW_ParagraphStyle
+'               IDW_Table1, IDW_Table2, IDW_Table3, IDW_TableAutoFitContents1, IDW_TableAutoFitContents2
+'               IDW_TableAutoFitWindow1, IDW_TableAutoFitWindow2, IDW_TableStyle, IDW_TaskList, IDW_TitleStyle
+'               IDW_Toc, IDW_WriteBlocks, Image, List, PageBreak
+'               PageSetup, PageSetupA4, PageSetupLetter, (+2 Overloads) Paragraph, ParagraphStyle
+'               (+3 Overloads) Table, (+2 Overloads) TableAutoFitContents, (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList
+'               TitleStyle, Toc, ToJaggedHeaders, ToJaggedRows, WriteBlocks
+' 
+'     Sub: Save, WriteBlock
+' 
+' Class RtfWriteMeta
+' 
+'     Properties: Author, Creator, Description, Keywords, Subject
+'                 Title
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -92,7 +92,7 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.ApplicationServices.Report
-Imports Microsoft.VisualBasic.MIME.Office.WordDocument
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 ''' <summary>
 ''' RTF 文档生成器。实现 <see cref="IDocumentWriter"/>，对外提供与
