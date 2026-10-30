@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17cab2187f0c0f641c8e26270e567dbf, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRuleCollection.vb"
+﻿#Region "Microsoft.VisualBasic::910649a9a40176fe21c4ef193910066b, Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariableCollection.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 13 (35.14%)
-    ' Comment Lines: 19 (51.35%)
-    '    - Xml Docs: 15.79%
+    '   Total Lines: 51
+    '    Code Lines: 19 (37.25%)
+    ' Comment Lines: 24 (47.06%)
+    '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 5 (13.51%)
-    '     File Size: 1.13 KB
+    '   Blank Lines: 8 (15.69%)
+    '     File Size: 1.77 KB
 
 
-    '     Class FuzzyRuleCollection
+    '     Class LinguisticVariableCollection
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: Find
     ' 
     ' 
     ' /********************************************************************************/
@@ -72,20 +73,34 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Collections.ObjectModel
-Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-Namespace Logical.FuzzyLogic
+Namespace Mamdani
 
     ''' <summary>
     ''' Represents a collection of rules.
     ''' </summary>
-    Public Class FuzzyRuleCollection
-        Inherits List(Of FuzzyRule)
+    Public Class LinguisticVariableCollection : Inherits Dictionary(Of LinguisticVariable)
 
         Sub New()
             Call MyBase.New
         End Sub
+
+#Region "Public Methods"
+
+        ''' <summary>
+        ''' Finds a linguistic variable in a collection.
+        ''' </summary>
+        ''' <param name="linguisticVariableName">Linguistic variable name.</param>
+        ''' <returns>The linguistic variable, if founded.</returns>
+        Public Overloads Function Find(linguisticVariableName As String) As LinguisticVariable
+            If Me.ContainsKey(linguisticVariableName) Then
+                Return Me(linguisticVariableName)
+            Else
+                Throw New Exception("LinguisticVariable not found: " & linguisticVariableName)
+            End If
+        End Function
+
+#End Region
     End Class
 End Namespace

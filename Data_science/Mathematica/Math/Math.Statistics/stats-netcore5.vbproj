@@ -12,8 +12,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.8.9796.18903</Version>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Title>Statistics Toolkit: Distributions, Hypothesis Tests and SHAP</Title>
     <Description>A statistics toolkit for sciBASIC#: probability distributions with method-of-moments and L-moment estimation, t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I hypothesis tests, plus FastICA, RANSAC and Shapley/TreeSHAP feature attribution.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics</AssemblyTitle>
@@ -65,7 +65,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>

@@ -18,8 +18,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>10.8.9796.18903</Version>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Title>Binary Data Stream Reader, Writer and Compression Codec Toolkit</Title>
     <Description>A low-level binary data toolkit for sciBASIC#: endianness-aware BinaryReader and BinaryWriter extensions, a Java-style ByteBuffer, BZip2, LZW, LZ4 and LZMA compression codecs, XDR encoding and a Python pickle codec for parsing custom binary file formats.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.IO</AssemblyTitle>
@@ -156,7 +156,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>

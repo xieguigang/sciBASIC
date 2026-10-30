@@ -1,3 +1,27 @@
+## 工程结构（2026-10 重构后）
+
+模糊推理的数学对象已经抽提到公共程序集 `Microsoft.VisualBasic.DataMining.FuzzyLogic` 的 `TSK` 命名空间，
+本工程只保留训练与评估，依赖关系为 `ANFIS → FuzzyLogic → (Core + Math)`：
+
+| 层 | 所在程序集 | 内容 |
+|---|---|---|
+| 可微推理内核 | `Microsoft.VisualBasic.DataMining.FuzzyLogic`（`TSK`） | `TskNetwork`、`TskInputVariable`、`FuzzyRuleBase`、`TskLayers`、`TskInferenceTrace`、`TskGradient`、`MembershipKind`、`IMembershipFunction`、五种隶属函数、`TskStructureOptions`、`TskNetworkBuilder` |
+| 训练与评估 | 本工程 | `AnfisHybridTrainer`、`AnfisOptions`、`LeastSquaresAccumulator`、`RecursiveLeastSquares`、`AnfisOptimizer`、`AnfisData`、`AnfisFitting`、`AnfisFitResult` |
+
+迁移提示（旧的 `Anfis*` 推理类型已删除，行为不变，只是换了名字与命名空间）：
+`AnfisNetwork → TskNetwork`、`AnfisInputVariable → TskInputVariable`、`RuleBase → FuzzyRuleBase`、
+`AnfisLayers → TskLayers`、`AnfisForward → TskInferenceTrace`、`AnfisGradient → TskGradient`。
+需要引用语句 `Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK`。
+
+```vb
+Imports Microsoft.VisualBasic.DeepLearning.ANFIS
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
+
+Dim result = AnfisFitting.Fit(x, y)              ' 训练（LSE + BP）
+Dim yhat = AnfisFitting.Predict(result.Model, xTest)
+Dim json = result.Model.ToJson()                 ' 模型可以脱离 ANFIS 单独持久化与推理
+```
+
 **神经模糊系统是一种将模糊逻辑的知识表达能力与神经网络的自学习能力融合在一起的混合智能算法**——其典型代表 ANFIS（Adaptive Network-based Fuzzy Inference System，自适应神经模糊推理系统）由 J.-S. R. Jang 提出，用神经网络的结构来实现 Takagi–Sugeno 型模糊推理系统，使隶属度函数参数与模糊规则能够从数据中自动学习获得，而无需完全依赖专家经验。
 ## 一、融合动机：两种范式为何要结合
 模糊逻辑和神经网络各有先天短板：**模糊推理系统擅长表达"如果…则…"式的经验知识，但缺乏有效的学习机制**——隶属度函数形状、规则数量都得靠人工设定；**神经网络具备强大的自学习和并行计算能力，但其内部是一个"黑箱"，无法直观表达人类推理过程**。神经模糊系统正是把两者放进同一框架，用公式可概括为：

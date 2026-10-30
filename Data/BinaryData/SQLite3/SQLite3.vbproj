@@ -14,8 +14,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.8.9796.18903</Version>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Title>Managed SQLite3 Database File Reader and Writer</Title>
     <Description>A pure managed SQLite3 file toolkit for sciBASIC#: decodes database headers, B-tree pages and the master table, parses CREATE TABLE schema SQL, exposes tables and rows, plus a commit-time writer that rebuilds whole database files without the native engine.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.IO.ManagedSqlite</AssemblyTitle>
@@ -36,6 +36,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <OutputPath>../../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

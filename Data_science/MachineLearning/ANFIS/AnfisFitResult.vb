@@ -1,9 +1,5 @@
-Option Strict On
-Option Explicit On
-
-Imports System
-Imports System.Linq
 Imports System.Text
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports std = System.Math
 
 ''' <summary>
@@ -11,8 +7,8 @@ Imports std = System.Math
 ''' </summary>
 Public Class AnfisFitResult
 
-    ''' <summary>训练好的模型。</summary>
-    Public Property Model As AnfisNetwork
+    ''' <summary>训练好的模型（推理内核定义在 <c>FuzzyLogic.TSK</c>）。</summary>
+    Public Property Model As TskNetwork
     ''' <summary>决定系数（在全部参与评估的样本上计算，多输出时按元素汇总）。</summary>
     Public Property R2 As Double
     ''' <summary>均方根误差（按元素，多输出时同尺度）。</summary>
@@ -64,15 +60,12 @@ Public Class AnfisFitResult
 
         For r As Integer = 0 To Model.Rules.RuleCount - 1
             Dim sb As New StringBuilder()
-            Dim parts As String() = New String(n - 1) {}
 
-            For i As Integer = 0 To n - 1
-                parts(i) = $"{Model.Inputs(i).Name} IS {Model.Inputs(i).FunctionLabel(Model.Rules.Antecedent(r, i))}"
-            Next
-
+            ' 网格与散射两种划分统一由 FuzzyRuleBase.Describe 渲染（散射下会输出 N(c, σ) 并跳过 don't care 输入）
+            Dim antecedentText As String = Model.Rules.Describe(r, Model.Inputs)
             Dim activation As Double = If(RuleActivations IsNot Nothing AndAlso r < RuleActivations.Length, RuleActivations(r), 0.0)
 
-            Call sb.Append($"rule{r + 1} [{activation.ToString("P2")}] IF {String.Join(" AND ", parts)} THEN ")
+            Call sb.Append($"[{activation.ToString("P2")}] {antecedentText} THEN ")
 
             Dim outputParts As String() = New String(o - 1) {}
 
@@ -126,7 +119,7 @@ Public Class AnfisCrossValidationResult
     ''' <summary>每一折的验证 R2。</summary>
     Public Property FoldR2 As Double()
     ''' <summary>每一折的模型（便于检查折间稳定性）。</summary>
-    Public Property Models As AnfisNetwork()
+    Public Property Models As TskNetwork()
 
     ''' <summary>折平均 RMSE。</summary>
     Public ReadOnly Property MeanRmse As Double

@@ -2,6 +2,7 @@ Option Strict On
 Option Explicit On
 
 Imports System
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 
 ''' <summary>
 ''' ANFIS 的参数更新策略（对应 readme 中列出的四种混合方案）。
@@ -48,34 +49,22 @@ Public Enum AnfisOptimizerKind As Integer
 End Enum
 
 ''' <summary>
-''' ANFIS 的训练与结构配置。
+''' ANFIS 的训练配置。
 ''' </summary>
 ''' <remarks>
+''' <para>
+''' 网络**结构**参数（隶属函数类型与个数、规则启用掩膜、规模上限、分块行数）继承自
+''' <see cref="TskStructureOptions"/>，与推理内核共享同一份定义；
+''' 这里只保留"如何训练"的参数。
+''' </para>
+''' <para>
 ''' 这里的每一项都直接参与"非凸优化 + 线性最小二乘"的取舍：
 ''' <see cref="Ridge"/> 决定结论参数的数值稳定性，
-''' <see cref="LearningRate"/> / <see cref="LearningRateDecay"/> 决定前提参数的步长，
-''' <see cref="MaxRules"/> 决定结构是否还落在可计算范围内。
+''' <see cref="LearningRate"/> / <see cref="LearningRateDecay"/> 决定前提参数的步长。
+''' </para>
 ''' </remarks>
 Public Class AnfisOptions
-
-    ''' <summary>特征列名称；为空时自动生成 <c>x1..xn</c>。</summary>
-    Public Property FeatureNames As String() = Nothing
-    ''' <summary>输出名称；为空时自动生成 <c>y1..yK</c>。</summary>
-    Public Property OutputNames As String() = Nothing
-
-    ''' <summary>隶属函数类型（默认高斯）。</summary>
-    Public Property MfKind As MembershipKind = MembershipKind.Gaussian
-    ''' <summary>每个输入的隶属函数个数（默认 3）。</summary>
-    Public Property MfCount As Integer = 3
-    ''' <summary>
-    ''' 逐输入的隶属函数个数；给定时覆盖 <see cref="MfCount"/>（长度必须等于输入维数）。
-    ''' </summary>
-    Public Property MfCounts As Integer() = Nothing
-    ''' <summary>
-    ''' 规则启用掩膜（长度 = <c>prod(m_i)</c>，编号顺序即全网格枚举顺序）。
-    ''' 给定时只保留为 <c>True</c> 的规则，可用于注入专家规则或跳过不可能的规则组合。
-    ''' </summary>
-    Public Property RuleEnableMask As Boolean() = Nothing
+    Inherits TskStructureOptions
 
     ''' <summary>参数更新策略。</summary>
     Public Property LearningMode As AnfisLearningMode = AnfisLearningMode.Hybrid
@@ -117,9 +106,6 @@ Public Class AnfisOptions
     ''' </remarks>
     Public Property Ridge As Double = 0.000001
 
-    ''' <summary>分块处理的每块行数（控制临时内存与缓存命中率）。</summary>
-    Public Property ChunkRows As Integer = 512
-
     ''' <summary>最大训练轮数。</summary>
     Public Property MaxEpoch As Integer = 100
     ''' <summary>早停耐心：验证误差连续多少轮没有改善就停止。</summary>
@@ -136,32 +122,15 @@ Public Class AnfisOptions
     ''' <summary>冻结结论参数（只做前提参数的梯度下降）。</summary>
     Public Property FreezeConsequent As Boolean = False
 
-    ''' <summary>规则数上限，超过直接报错（默认 1024，对应 n=6、m=4 的量级）。</summary>
-    Public Property MaxRules As Integer = 1024
-    ''' <summary>结论参数总数上限 <c>R*(n+1)</c>，超过直接报错（默认 4096）。</summary>
-    ''' <remarks>
-    ''' 主要约束来自 <c>A'A</c> 的 <c>P^2</c> 内存：P=4096 时约 134 MB，
-    ''' 再往上就应该改用递推最小二乘或先做规则剪枝。
-    ''' </remarks>
-    Public Property MaxConsequentParams As Integer = 4096
-
     ''' <summary>RLS 的遗忘因子（1 表示不遗忘，等价于累积最小二乘）。</summary>
     Public Property RlsForgetting As Double = 1.0
     ''' <summary>RLS 初始协方差矩阵的对角初值。</summary>
     Public Property RlsInitialCovariance As Double = 1000.0
 
-    ''' <summary>逐属性校验并返回自身。</summary>
+    ''' <summary>逐属性校验并返回自身（先校验继承来的结构字段）。</summary>
     Public Function Validate() As AnfisOptions
-        If MfCount <= 0 Then
-            Throw New ArgumentOutOfRangeException(NameOf(MfCount), MfCount, "the membership function count must be positive")
-        End If
-        If MfCounts IsNot Nothing Then
-            For i As Integer = 0 To MfCounts.Length - 1
-                If MfCounts(i) <= 0 Then
-                    Throw New ArgumentOutOfRangeException(NameOf(MfCounts), $"input [{i}] has no membership function")
-                End If
-            Next
-        End If
+        Call ValidateStructure()
+
         If LearningRate <= 0.0 Then
             Throw New ArgumentOutOfRangeException(NameOf(LearningRate), LearningRate, "the learning rate must be positive")
         End If
@@ -170,9 +139,6 @@ Public Class AnfisOptions
         End If
         If Ridge < 0.0 Then
             Throw New ArgumentOutOfRangeException(NameOf(Ridge), Ridge, "the ridge factor must not be negative")
-        End If
-        If ChunkRows <= 0 Then
-            Throw New ArgumentOutOfRangeException(NameOf(ChunkRows), ChunkRows, "the chunk size must be positive")
         End If
         If MaxEpoch <= 0 Then
             Throw New ArgumentOutOfRangeException(NameOf(MaxEpoch), MaxEpoch, "the epoch count must be positive")
@@ -187,34 +153,17 @@ Public Class AnfisOptions
             Throw New ArgumentOutOfRangeException(NameOf(Beta1), "the Adam decay rates must be in (0, 1)")
         End If
         If RlsForgetting <= 0.0 OrElse RlsForgetting > 1.0 Then
-            Throw New ArgumentOutOfRangeException(NameOf(RlsForgetting), RlsForgetting, "the forgetting factor must be in (0, 1]")
-        End If
-        If MaxRules <= 0 Then
-            Throw New ArgumentOutOfRangeException(NameOf(MaxRules), MaxRules, "the rule limit must be positive")
-        End If
-        If MaxConsequentParams <= 0 Then
-            Throw New ArgumentOutOfRangeException(NameOf(MaxConsequentParams), MaxConsequentParams, "the consequent parameter limit must be positive")
+            Throw New ArgumentOutOfRangeException(NameOf(RlsForgetting), "the forgetting factor must be in (0, 1]")
         End If
 
         Return Me
     End Function
 
-    ''' <summary>浅拷贝（数组字段单独复制）。</summary>
+    ''' <summary>浅拷贝（数组字段单独复制，含继承自结构配置的数组）。</summary>
     Public Function Clone() As AnfisOptions
         Dim copy As AnfisOptions = DirectCast(Me.MemberwiseClone(), AnfisOptions)
 
-        If MfCounts IsNot Nothing Then
-            copy.MfCounts = CType(MfCounts.Clone(), Integer())
-        End If
-        If RuleEnableMask IsNot Nothing Then
-            copy.RuleEnableMask = CType(RuleEnableMask.Clone(), Boolean())
-        End If
-        If FeatureNames IsNot Nothing Then
-            copy.FeatureNames = CType(FeatureNames.Clone(), String())
-        End If
-        If OutputNames IsNot Nothing Then
-            copy.OutputNames = CType(OutputNames.Clone(), String())
-        End If
+        Call CopyStructureArraysTo(copy)
 
         Return copy
     End Function

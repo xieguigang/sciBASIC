@@ -14,8 +14,8 @@
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.text.yaml</AssemblyTitle>
-    <Version>10.8.9796.18903</Version>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Title>YAML to JSON Object Model Parser and Front Matter Reader</Title>
     <Description>Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader.</Description>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
@@ -36,6 +36,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <OutputPath>../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="test\**" />

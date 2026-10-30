@@ -14,7 +14,7 @@
       
     <!-- 包信息 -->
     <PackageId></PackageId>
-    <Version>10.8.9796.18903</Version>
+    <Version>10.8.9797.36764</Version>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Description>A pure managed re-implementation of the CVODE ODE solver API for sciBASIC#, with no native P/Invoke: variable-step variable-order Adams and BDF integration, dense and banded LU linear solvers, event root finding and a fluent builder API.
 
@@ -27,7 +27,7 @@ CVODE is a solver for stiff and nonstiff ordinary differential equation (ODE) sy
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <Platforms>AnyCPU;x64</Platforms>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Configurations>nuget_release;Debug;Release;Rsharp_app_release</Configurations>
     <Title>Managed SUNDIALS CVODE Variable-Step ODE Solver with Adams and BDF Methods</Title>
     <AssemblyTitle>SUNDIALS: An open-source software library of time integrators and nonlinear solvers used in industry and research</AssemblyTitle>
@@ -48,6 +48,7 @@ CVODE is a solver for stiff and nonstiff ordinary differential equation (ODE) sy
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>../../../../.nuget/</OutputPath>
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

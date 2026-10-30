@@ -1,8 +1,4 @@
-Option Strict On
-Option Explicit On
-
-Imports System
-Imports System.Linq
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports std = System.Math
 
 ''' <summary>
@@ -17,9 +13,11 @@ Imports std = System.Math
 ''' </code>
 ''' </para>
 ''' <para>
+''' 网络结构（隶属函数、规则表、前向推理）来自 <c>Microsoft.VisualBasic.DataMining.FuzzyLogic</c>
+''' 的 <c>TSK</c> 命名空间，本工程只提供训练、评估与剪枝。
 ''' 结构初始化用的是**网格划分**：每个输入等距放 m 个隶属函数，规则数 <c>m^n</c>。
 ''' 网格划分的优点是规则可解释、前向完全向量化；缺点是规则数随维数指数增长，
-''' 因此 <see cref="AnfisOptions.MaxRules"/> 与 <see cref="AnfisOptions.MaxConsequentParams"/>
+''' 因此 <see cref="TskStructureOptions.MaxRules"/> 与 <see cref="TskStructureOptions.MaxConsequentParams"/>
 ''' 会在超限时直接报错并给出可操作的提示。
 ''' </para>
 ''' </remarks>
@@ -44,7 +42,7 @@ Public Module AnfisFitting
     Public Function Fit(x As Double()(), y As Double()(), Optional options As AnfisOptions = Nothing) As AnfisFitResult
         Call AnfisData.Validate(x, y)
 
-        Dim network As AnfisNetwork = CreateModel(x, y, options)
+        Dim network As TskNetwork = CreateModel(x, y, options)
         Dim trainer As New AnfisHybridTrainer(network, options)
 
         Return trainer.Train(x, y)
@@ -56,81 +54,16 @@ Public Module AnfisFitting
     ''' <remarks>
     ''' 定义域统计**只使用传入的数据**。做交叉验证时请对训练折调用本方法，
     ''' 不要用全量数据建模再把同一结构套到每一折上（那会泄漏验证折的分布信息）。
+    ''' 具体实现下沉在 <see cref="TskNetworkBuilder.Create"/>：它按
+    ''' <see cref="TskStructureOptions.RulePartition"/> 决定用网格划分还是散射划分
+    ''' （<c>Auto</c> 时网格装不下就自动切散射，因此 18 个输入这类配置也能落地）。
     ''' </remarks>
-    Public Function CreateModel(x As Double()(), y As Double()(), Optional options As AnfisOptions = Nothing) As AnfisNetwork
-        If x Is Nothing OrElse x.Length = 0 Then
-            Throw New ArgumentException("the feature matrix is empty", NameOf(x))
-        End If
-        If y Is Nothing OrElse y.Length <> x.Length Then
-            Throw New ArgumentException("the target does not match the feature matrix", NameOf(y))
-        End If
-
-        Dim config As AnfisOptions = If(options, New AnfisOptions()).Validate()
-        Dim n As Integer = x(0).Length
-        Dim outputCount As Integer = y(0).Length
-
-        Dim mfCounts(n - 1) As Integer
-
-        If config.MfCounts IsNot Nothing Then
-            If config.MfCounts.Length <> n Then
-                Throw New ArgumentException($"MfCounts has {config.MfCounts.Length} entries but there are {n} inputs", NameOf(options))
-            End If
-
-            Call Array.Copy(config.MfCounts, mfCounts, n)
-        Else
-            For i As Integer = 0 To n - 1
-                mfCounts(i) = config.MfCount
-            Next
-        End If
-
-        Dim names As String() = config.FeatureNames
-
-        If names Is Nothing OrElse names.Length <> n Then
-            names = Enumerable.Range(1, n).Select(Function(i) $"x{i}").ToArray
-        End If
-
-        Dim inputs(n - 1) As AnfisInputVariable
-
-        For i As Integer = 0 To n - 1
-            Dim minimum As Double = Double.MaxValue
-            Dim maximum As Double = Double.MinValue
-
-            For r As Integer = 0 To x.Length - 1
-                Dim v As Double = x(r)(i)
-
-                If v < minimum Then
-                    minimum = v
-                End If
-                If v > maximum Then
-                    maximum = v
-                End If
-            Next
-
-            inputs(i) = AnfisInputVariable.CreateGrid(names(i), minimum, maximum, mfCounts(i), config.MfKind)
-        Next
-
-        Dim rules As RuleBase = RuleBase.CreateFullGrid(mfCounts, config.RuleEnableMask, config.MaxRules)
-        Dim consequentCount As Integer = rules.RuleCount * (n + 1)
-
-        If consequentCount > config.MaxConsequentParams Then
-            Throw New InvalidOperationException(
-                $"{rules.RuleCount} rules over {n} inputs need {consequentCount} consequent parameters, " &
-                $"which exceeds MaxConsequentParams = {config.MaxConsequentParams}. " &
-                $"The least squares normal equations would need {consequentCount}^2 doubles of memory; " &
-                $"reduce MfCount, prune rules, or switch to AnfisLearningMode.SequentialLse.")
-        End If
-
-        Dim outputNames As String() = config.OutputNames
-
-        If outputNames Is Nothing OrElse outputNames.Length <> outputCount Then
-            outputNames = Nothing
-        End If
-
-        Return New AnfisNetwork(inputs, rules, outputCount, outputNames)
+    Public Function CreateModel(x As Double()(), y As Double()(), Optional options As AnfisOptions = Nothing) As TskNetwork
+        Return TskNetworkBuilder.Create(x, y, options)
     End Function
 
     ''' <summary>批量预测。</summary>
-    Public Function Predict(model As AnfisNetwork, x As Double()(), Optional chunkRows As Integer = 1024) As Double()()
+    Public Function Predict(model As TskNetwork, x As Double()(), Optional chunkRows As Integer = 1024) As Double()()
         If model Is Nothing Then
             Throw New ArgumentNullException(NameOf(model))
         End If
@@ -139,7 +72,7 @@ Public Module AnfisFitting
     End Function
 
     ''' <summary>批量预测并只取第一个输出（单输出模型的便利重载）。</summary>
-    Public Function PredictScalar(model As AnfisNetwork, x As Double()()) As Double()
+    Public Function PredictScalar(model As TskNetwork, x As Double()()) As Double()
         Dim batch As Double()() = Predict(model, x)
         Dim result(batch.Length - 1) As Double
 
@@ -151,7 +84,7 @@ Public Module AnfisFitting
     End Function
 
     ''' <summary>在给定数据上评估模型（不做任何训练）。</summary>
-    Public Function Evaluate(model As AnfisNetwork, x As Double()(), y As Double()()) As AnfisFitResult
+    Public Function Evaluate(model As TskNetwork, x As Double()(), y As Double()()) As AnfisFitResult
         If model Is Nothing Then
             Throw New ArgumentNullException(NameOf(model))
         End If
@@ -232,7 +165,7 @@ Public Module AnfisFitting
     ''' 前提参数在剪枝中保持不变（隶属函数的位置与形状与规则无关），
     ''' 只有结论参数需要重解。
     ''' </remarks>
-    Public Function PruneRules(model As AnfisNetwork,
+    Public Function PruneRules(model As TskNetwork,
                                x As Double()(),
                                y As Double()(),
                                threshold As Double,
@@ -276,13 +209,18 @@ Public Module AnfisFitting
         config.FreezePremise = True
         config.LearningMode = AnfisLearningMode.GradientPlusOneShotLse
 
-        Dim inputs As AnfisInputVariable() = model.Inputs.Select(Function(v) v.Clone()).ToArray
-        Dim rules As RuleBase = model.Rules.SelectRules(keep.ToArray)
-        Dim trimmed As New AnfisNetwork(inputs, rules, model.OutputCount, CType(model.OutputNames.Clone(), String())) With {
+        Dim inputs As TskInputVariable() = model.Inputs.Select(Function(v) v.Clone()).ToArray
+        Dim rules As FuzzyRuleBase = model.Rules.SelectRules(keep.ToArray)
+        Dim trimmed As New TskNetwork(inputs, rules, model.OutputCount, CType(model.OutputNames.Clone(), String())) With {
             .FeatureNames = CType(model.FeatureNames.Clone(), String())
         }
 
-        Call trimmed.SetPremiseParameters(model.GetPremiseParameters())
+        ' 散射划分的前提参数是「每规则 × 每输入」的高斯参数，条数随规则数变化：
+        ' SelectRules 已经把保留下来的规则中心/宽度一起搬过去了，这里再按旧模型的
+        ' 扁平向量整体覆盖会因为长度不等而抛异常。
+        If Not rules.IsScatter Then
+            Call trimmed.SetPremiseParameters(model.GetPremiseParameters())
+        End If
 
         Dim trainer As New AnfisHybridTrainer(trimmed, config)
         Dim result As AnfisFitResult = trainer.Train(x, y)
@@ -314,7 +252,7 @@ Public Module AnfisFitting
         Dim target As Double(,) = AnfisData.ToMatrix(y)
         Dim foldRmse(folds - 1) As Double
         Dim foldR2(folds - 1) As Double
-        Dim models(folds - 1) As AnfisNetwork
+        Dim models(folds - 1) As TskNetwork
 
         For fold As Integer = 0 To folds - 1
             Dim trainIndex As New System.Collections.Generic.List(Of Integer)
@@ -343,7 +281,7 @@ Public Module AnfisFitting
             Dim foldOptions As AnfisOptions = config.Clone()
             foldOptions.ValidationRatio = 0.0
 
-            Dim network As AnfisNetwork = CreateModel(xTrain, ToJagged(yTrain), foldOptions)
+            Dim network As TskNetwork = CreateModel(xTrain, ToJagged(yTrain), foldOptions)
             Dim trainer As New AnfisHybridTrainer(network, foldOptions)
 
             Call trainer.Train(xTrain, ToJagged(yTrain))
@@ -362,14 +300,21 @@ Public Module AnfisFitting
         }
     End Function
 
-    Private Function ComputeRuleActivations(model As AnfisNetwork, x As Double()()) As Double()
-        Dim layers As New AnfisLayers(model)
+    Private Function ComputeRuleActivations(model As TskNetwork, x As Double()()) As Double()
+        Dim layers As New TskLayers(model)
         Dim result(model.Rules.RuleCount - 1) As Double
         Dim chunk As Integer = 512
 
+        If x.Length = 0 Then
+            Return result
+        End If
+
+        ' 分块前向复用同一份工作区，避免每个行块重新分配整套中间量
+        Dim workspace As New TskForwardWorkspace(std.Min(chunk, x.Length), model)
+
         For start As Integer = 0 To x.Length - 1 Step chunk
             Dim size As Integer = std.Min(chunk, x.Length - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size, workspace)
 
             For t As Integer = 0 To size - 1
                 For r As Integer = 0 To model.Rules.RuleCount - 1

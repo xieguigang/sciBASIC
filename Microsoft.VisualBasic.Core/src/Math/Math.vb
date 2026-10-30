@@ -712,9 +712,10 @@ Namespace Math
             If bc Is Nothing Then
                 Return 0
             Else
-                Return bc _
-                    .Select(Function(b) If(True = b, 1.0R, 0R)) _
-                    .Sum
+                Return Aggregate b As Boolean
+                       In bc
+                       Where b
+                       Into Count
             End If
         End Function
 

@@ -721,6 +721,38 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' 矩阵向量乘积：<c>out(i) = SUM(a(i, j) * x(j))</c>，使用 FMA 点积。
+        ''' </summary>
+        ''' <param name="a">按行优先存放的矩形数组（<c>Double(,)</c>）</param>
+        ''' <param name="x">长度等于 <c>a.GetLength(1)</c> 的向量</param>
+        ''' <remarks>
+        ''' 与 <see cref="MatrixVector(Double()(), Double())"/> 等价，区别是数据源为矩形数组：
+        ''' 每一行在内存中天然连续，因此逐行调用
+        ''' <see cref="SIMDIntrinsics.DotFmaRow(Double(,), Integer, Double())"/> 即可，
+        ''' 既不需要把矩阵转换成“行数组的数组”，也不需要为每一行分配临时缓冲。
+        ''' </remarks>
+        Public Shared Function MatrixVector(a As Double(,), x As Double()) As Double()
+            If a Is Nothing Then Throw New ArgumentNullException(NameOf(a), "the input matrix can not be NULL!")
+            If x Is Nothing Then Throw New ArgumentNullException(NameOf(x))
+
+            Dim rows As Integer = a.GetLength(0)
+            If rows = 0 Then Return Array.Empty(Of Double)()
+
+            Dim cols As Integer = a.GetLength(1)
+            If x.Length <> cols Then
+                Throw New ArgumentException($"the size of the vector({x.Length}) should be equals to the column dimension({cols})!")
+            End If
+
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(rows)
+
+            For i As Integer = 0 To rows - 1
+                out(i) = SIMDIntrinsics.DotFmaRow(a, i, x)
+            Next
+
+            Return out
+        End Function
+
+        ''' <summary>
         ''' 秩一更新：<c>a(i)(j) += alpha * x(i) * y(j)</c>，使用 FMA/AXPY 就地更新。
         ''' </summary>
         ''' <param name="a">目标矩阵，形状 <c>m x n</c></param>

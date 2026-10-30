@@ -110,6 +110,58 @@ Namespace LinearAlgebra.Matrix
             Return result
         End Function
 
+        ''' <summary>
+        ''' 矩阵乘法 <c>C = A × B</c>，结果写进调用方提供的缓冲（不再产生任何分配）。
+        ''' </summary>
+        ''' <param name="a">左矩阵 A，形状 <c>[rows, K]</c></param>
+        ''' <param name="b">右矩阵 B，形状 <c>[K, cols]</c></param>
+        ''' <param name="dest">目标缓冲，形状 <c>[rows, cols]</c>；内部会先清零</param>
+        ''' <remarks>
+        ''' <para>
+        ''' 训练热路径（ANFIS 每个行块都要算一次 <c>f = X·P'</c>）需要反复调用乘法，
+        ''' 而 <see cref="Multiply(Double(,), Double(,))"/> 每次都要把 A、B 各压平成 jagged
+        ''' （A 有 rows 个行数组），在 512 行 × 3 万基因的规模下这是海量小对象分配。
+        ''' </para>
+        ''' <para>
+        ''' 这里用 <c>k</c> 在最外层的行主序三重循环：内层对 <c>dest</c> 的写是连续的，
+        ''' 且 <c>a(i,k)</c> 与 <c>b(k,j)</c> 都能被寄存器/预取友好地访问。
+        ''' 累加顺序与 SIMD 的 FMA 点积不同，末位可能相差 1 ULP —— 调用方（ANFIS 训练）
+        ''' 已确认可以接受。
+        ''' </para>
+        ''' </remarks>
+        Public Sub Multiply(a As Double(,), b As Double(,), dest As Double(,))
+            If a Is Nothing OrElse b Is Nothing OrElse dest Is Nothing Then
+                Throw New ArgumentNullException(NameOf(a))
+            End If
+
+            Dim rows As Integer = a.GetLength(0)
+            Dim kCount As Integer = a.GetLength(1)
+            Dim cols As Integer = b.GetLength(1)
+
+            If b.GetLength(0) <> kCount Then
+                Throw New ArgumentException($"the inner dimensions do not match: {rows}x{kCount} * {b.GetLength(0)}x{cols}", NameOf(b))
+            End If
+            If dest.GetLength(0) <> rows OrElse dest.GetLength(1) <> cols Then
+                Throw New ArgumentException($"the destination must be {rows}x{cols}", NameOf(dest))
+            End If
+
+            Call Array.Clear(dest, 0, dest.Length)
+
+            For i As Integer = 0 To rows - 1
+                For k As Integer = 0 To kCount - 1
+                    Dim aik As Double = a(i, k)
+
+                    If aik = 0.0 Then
+                        Continue For
+                    End If
+
+                    For j As Integer = 0 To cols - 1
+                        dest(i, j) += aik * b(k, j)
+                    Next
+                Next
+            Next
+        End Sub
+
         ''' <summary>矩形数组压平为 jagged 连续行（SIMD 内核的必要前提）</summary>
         Private Function RectToJagged(a As Double(,)) As Double()()
             Dim rows = a.GetLength(0)

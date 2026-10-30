@@ -12,7 +12,7 @@ Option Explicit On
 ''' 把 Takagi-Sugeno 模糊推理展开成五层前馈网络（<c>R</c> 条规则、<c>n</c> 个输入）：
 ''' </para>
 ''' <list type="number">
-''' <item>**模糊化**：<c>mu[i,k] = exp(-(x_i - c_ik)^2 / (2*sigma_ik^2))</c>，见 <see cref="AnfisLayers"/>；</item>
+''' <item>**模糊化**：<c>mu[i,k] = exp(-(x_i - c_ik)^2 / (2*sigma_ik^2))</c>，见 <see cref="TskLayers"/>；</item>
 ''' <item>**规则激励**：<c>w_r = prod_i mu[i, m(i,r)]</c>（乘积 T-范数，对数域累加防下溢）；</item>
 ''' <item>**归一化**：<c>w-bar_r = w_r / sum_r w_r</c>；</item>
 ''' <item>**结论**：<c>f_r = x.p_r + q_r</c>（一阶 Sugeno，常数项 q 让每条规则自带截距）；</item>
@@ -34,24 +34,30 @@ Option Explicit On
 ''' <para>
 ''' 每轮先固定前提参数解 <c>theta</c>（<see cref="LeastSquaresAccumulator"/>），
 ''' 再固定 <c>theta</c> 用反向传播修正隶属函数的中心与宽度
-''' （<see cref="AnfisLayers.Accumulate"/> + <see cref="AnfisOptimizer"/>）。
+''' （<see cref="TskLayers.Accumulate"/> + <see cref="AnfisOptimizer"/>）。
 ''' 四种策略由 <see cref="AnfisLearningMode"/> 选择，训练调度见 <see cref="AnfisHybridTrainer"/>。
 ''' </para>
 ''' <para>
-''' ### 四、与既有组件的关系（重要）
+''' ### 四、与推理内核的分层（重要）
+''' </para>
+''' <para>
+''' 模糊推理的**数学对象**（隶属函数、规则表、五层前向、解析反向梯度、网络与持久化）
+''' 已经抽提到公共程序集 <c>Microsoft.VisualBasic.DataMining.FuzzyLogic</c> 的
+''' <c>TSK</c> 命名空间，本工程只保留训练与评估：
 ''' </para>
 ''' <list type="bullet">
-''' <item>`TensorFlow`：只用它的 <c>MatMul</c>（"输入 × 结论系数"这一步）。张量库
-''' **没有自动微分**（<c>Tensor.Gradient</c> 只是一个字段，没有计算图），
-''' 因此梯度全部是解析推导的，并用中心差分做门禁校验。
-''' 注意 <c>Tensor</c> 的 <c>*</c> 运算符是**矩阵乘**，逐元素乘必须用
-''' <c>ElementwiseMultiply</c>——本模块内部只用前者，不会踩这个坑。</item>
+''' <item>推理内核（依赖 FuzzyLogic）：<c>TskNetwork</c>、<c>TskInputVariable</c>、
+''' <c>FuzzyRuleBase</c>、<c>TskLayers</c>、<c>TskInferenceTrace</c>、<c>TskGradient</c>、
+''' <c>MembershipKind</c>、<c>IMembershipFunction</c> 与五种隶属函数、<c>TskStructureOptions</c>。</item>
+''' <item>训练层（本程序集）：<see cref="AnfisHybridTrainer"/>、<see cref="AnfisOptions"/>、
+''' <see cref="LeastSquaresAccumulator"/>、<see cref="RecursiveLeastSquares"/>、
+''' <see cref="AnfisOptimizer"/>、<see cref="AnfisData"/>、<see cref="AnfisFitting"/>、
+''' <see cref="AnfisFitResult"/>。</item>
+''' <item>矩阵乘不再依赖 <c>TensorFlow</c>：结论层的 "输入 × 结论系数" 走 Math 工程的
+''' <c>MatrixOps.Multiply</c>（行主序 FMA 点积），因此本工程只依赖
+''' <c>Core</c> + <c>Math</c> + <c>FuzzyLogic</c>。</item>
 ''' <item>`Math`：最小二乘用 <c>SIMDIntrinsics.DotFma</c> 累加正规方程，
 ''' 求解用 <c>NumericMatrix.chol()</c>（失败降级到 <c>OLS.Solve</c>）。</item>
-''' <item>`Math.Logical.FuzzyLogic`（DotFuzzy）：**没有复用**。那是梯形隶属函数 +
-''' Mamdani min/max 合成 + 重心法去模糊的模糊控制器，既没有可微的隶属函数参数化，
-''' 也没有 Sugeno 结论，与 ANFIS 的数学对象不重合。这里另建了
-''' <see cref="IMembershipFunction"/> 体系（纯函数 + 解析对数导数）。</item>
 ''' <item>`DeepLearning`：没有复用其 <c>TrainerAlgorithm</c>（它对所有参数块统一更新、
 ''' 按 batch 归一化梯度、默认带 L1/L2 衰减，与"轮级 LSE + 批级 BP"冲突），
 ''' 仅沿用其"每层 forward/backward 各自缓存中间量"的代码组织方式。</item>
@@ -68,8 +74,9 @@ Option Explicit On
 ''' <item>正规方程只累加上三角再镜像，满足 Cholesky 的精确对称判据。</item>
 ''' </list>
 ''' <para>
-''' 所有类型都位于工程的根命名空间 <c>Microsoft.VisualBasic.DeepLearning.ANFIS</c> 下，
-''' 目录（<c>Fuzzy</c> / <c>Structure</c> / <c>Training</c>）只用于组织文件。
+''' 本工程的类型都位于根命名空间 <c>Microsoft.VisualBasic.DeepLearning.ANFIS</c> 下，
+''' 目录（<c>Training</c>）只用于组织文件；推理相关类型请见
+''' <c>Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK</c>。
 ''' </para>
 ''' </remarks>
 Public Class NamespaceDoc

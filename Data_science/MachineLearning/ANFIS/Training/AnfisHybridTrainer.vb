@@ -2,6 +2,7 @@ Option Strict On
 Option Explicit On
 
 Imports System
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports std = System.Math
 
 ''' <summary>
@@ -29,12 +30,22 @@ Imports std = System.Math
 ''' </remarks>
 Public Class AnfisHybridTrainer
 
-    Private ReadOnly _net As AnfisNetwork
+    Private ReadOnly _net As TskNetwork
     Private ReadOnly _options As AnfisOptions
     Private ReadOnly _warnings As System.Collections.Generic.List(Of String)
 
+    ' ---- 复用缓冲 ----
+    ' 每个基因训练独占一个 trainer 实例，因此这些字段天然就是"每线程一份"，
+    ' 不需要额外的池化或锁。原来的实现每个 epoch / 每个行块都会重新分配
+    ' 设计矩阵（512×P）与整套前向缓冲，3 万样本 × 1.8 万基因时会产生 TB 级垃圾。
+    Private _workspace As TskForwardWorkspace
+    Private _design As Double(,)
+    Private _yChunk As Double(,)
+    Private _thetaGradient As Double(,)
+    Private _acc As LeastSquaresAccumulator
+
     ''' <summary>绑定模型与配置（配置会先做一次 <see cref="AnfisOptions.Validate"/>）。</summary>
-    Public Sub New(network As AnfisNetwork, Optional options As AnfisOptions = Nothing)
+    Public Sub New(network As TskNetwork, Optional options As AnfisOptions = Nothing)
         If network Is Nothing Then
             Throw New ArgumentNullException(NameOf(network))
         End If
@@ -73,8 +84,10 @@ Public Class AnfisHybridTrainer
         Dim yVal As Double(,) = AnfisData.SelectRows(yAll, validationRows)
         Dim hasValidation As Boolean = validationRows.Length > 0
 
-        Dim layers As New AnfisLayers(_net)
+        Dim layers As New TskLayers(_net)
         Dim premise As Double() = _net.GetPremiseParameters()
+
+        Call EnsureBuffers(sampleCount)
         Dim optimizer As New AnfisOptimizer(premise.Length, _net.GetPremisePositiveMask(), options)
 
         Dim rls As RecursiveLeastSquares = Nothing
@@ -169,21 +182,53 @@ Public Class AnfisHybridTrainer
         Return BuildResult(x, yAll, layers, trainHistory, validationHistory, thetaHistory, epoch, bestEpoch, converged)
     End Function
 
+#Region "复用缓冲"
+
+    ''' <summary>
+    ''' 按训练行数一次性准备好本轮训练要复用的全部缓冲。
+    ''' </summary>
+    ''' <param name="rows">训练行数（决定工作区容量）</param>
+    ''' <remarks>
+    ''' 工作区容量取 <c>min(ChunkRows, rows)</c>：validation 集一定不大于训练集，
+    ''' 因此同一个工作区足以覆盖验证集的分块前向。
+    ''' </remarks>
+    Private Sub EnsureBuffers(rows As Integer)
+        Dim capacity As Integer = std.Min(_options.ChunkRows, std.Max(rows, 1))
+
+        If _workspace IsNot Nothing AndAlso _workspace.Capacity >= capacity Then
+            Return
+        End If
+
+        _workspace = New TskForwardWorkspace(capacity, _net)
+        _design = New Double(capacity - 1, _net.ConsequentParameterCount - 1) {}
+        _yChunk = New Double(capacity - 1, _net.OutputCount - 1) {}
+        _thetaGradient = New Double(_net.ConsequentParameterCount - 1, _net.OutputCount - 1) {}
+        _acc = New LeastSquaresAccumulator(_net.ConsequentParameterCount, _net.OutputCount, _options.Ridge)
+    End Sub
+
+#End Region
+
 #Region "结论参数求解"
 
-    Private Function SolveConsequent(layers As AnfisLayers, x As Double()(), y As Double(,)) As Boolean
+    Private Function SolveConsequent(layers As TskLayers, x As Double()(), y As Double(,)) As Boolean
         Dim options As AnfisOptions = _options
-        Dim p As Integer = _net.ConsequentParameterCount
         Dim rows As Integer = x.Length
-        Dim acc As New LeastSquaresAccumulator(p, _net.OutputCount, options.Ridge)
+        Dim acc As LeastSquaresAccumulator = _acc
+        Dim design As Double(,) = _design
+
+        ' 累加器与设计矩阵都复用：每轮只做一次清零
+        Call acc.Reset()
 
         For start As Integer = 0 To rows - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, rows - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
-            Dim design As Double(,) = New Double(size - 1, p - 1) {}
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size, _workspace)
 
-            Call layers.BuildDesignMatrix(fwd, design)
-            Call acc.AddChunk(design, AnfisData.SliceRows(y, start, size))
+            ' BuildDesignMatrix 只写有效行，所以整块必须先归零
+            Call Array.Clear(design, 0, design.Length)
+            Call AnfisData.CopyRowsInto(_yChunk, y, start, size)
+
+            Call layers.BuildDesignMatrix(fwd, design, True)
+            Call acc.AddChunk(design, _yChunk, size)
         Next
 
         Dim message As String = ""
@@ -203,13 +248,13 @@ Public Class AnfisHybridTrainer
         Return True
     End Function
 
-    Private Sub FeedRecursive(layers As AnfisLayers, rls As RecursiveLeastSquares, x As Double()(), y As Double(,))
+    Private Sub FeedRecursive(layers As TskLayers, rls As RecursiveLeastSquares, x As Double()(), y As Double(,))
         Dim options As AnfisOptions = _options
         Dim rows As Integer = x.Length
 
         For start As Integer = 0 To rows - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, rows - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size, _workspace)
 
             For t As Integer = 0 To size - 1
                 Dim design As Double() = BuildDesignRow(fwd, t)
@@ -224,7 +269,7 @@ Public Class AnfisHybridTrainer
         Next
     End Sub
 
-    Private Function BuildDesignRow(fwd As AnfisForward, t As Integer) As Double()
+    Private Function BuildDesignRow(fwd As TskInferenceTrace, t As Integer) As Double()
         Dim n As Integer = fwd.InputCount
         Dim design(_net.ConsequentParameterCount - 1) As Double
 
@@ -251,7 +296,7 @@ Public Class AnfisHybridTrainer
 
 #Region "梯度"
 
-    Private Function GradientStep(layers As AnfisLayers,
+    Private Function GradientStep(layers As TskLayers,
                                   x As Double()(),
                                   y As Double(,),
                                   premise As Double(),
@@ -265,16 +310,19 @@ Public Class AnfisHybridTrainer
         Dim thetaGradient As Double(,) = Nothing
 
         If updateTheta Then
-            thetaGradient = New Double(_net.ConsequentParameterCount - 1, _net.OutputCount - 1) {}
+            thetaGradient = _thetaGradient
+            Call Array.Clear(thetaGradient, 0, thetaGradient.Length)
         End If
 
         Dim sse As Double = 0.0
 
         For start As Integer = 0 To rows - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, rows - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
-            Dim target As Double(,) = AnfisData.SliceRows(y, start, size)
-            Dim part As AnfisGradient = layers.Accumulate(fwd, target, updateTheta)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size, _workspace)
+
+            Call AnfisData.CopyRowsInto(_yChunk, y, start, size)
+
+            Dim part As TskGradient = layers.Accumulate(fwd, _yChunk, updateTheta, _workspace)
 
             sse += part.SquaredError
 
@@ -305,7 +353,7 @@ Public Class AnfisHybridTrainer
                 For k As Integer = 0 To theta.GetLength(1) - 1
                     Dim updated As Double = theta(i, k) - learningRate * thetaGradient(i, k) / rows
 
-                    If Not AnfisData.IsNotFinite(updated) Then
+                    If Not updated.IsNaNImaginary Then
                         theta(i, k) = updated
                     End If
                 Next
@@ -319,7 +367,7 @@ Public Class AnfisHybridTrainer
 
 #Region "评估"
 
-    Private Function ComputeRmse(layers As AnfisLayers, x As Double()(), y As Double(,)) As Double
+    Private Function ComputeRmse(layers As TskLayers, x As Double()(), y As Double(,)) As Double
         If x.Length = 0 Then
             Return Double.NaN
         End If
@@ -329,7 +377,7 @@ Public Class AnfisHybridTrainer
 
         For start As Integer = 0 To x.Length - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, x.Length - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size, _workspace)
 
             For t As Integer = 0 To size - 1
                 For k As Integer = 0 To _net.OutputCount - 1
@@ -342,13 +390,13 @@ Public Class AnfisHybridTrainer
         Return std.Sqrt(sse / (x.Length * _net.OutputCount))
     End Function
 
-    Private Function ComputeRuleActivations(layers As AnfisLayers, x As Double()()) As Double()
+    Private Function ComputeRuleActivations(layers As TskLayers, x As Double()()) As Double()
         Dim options As AnfisOptions = _options
         Dim result(_net.Rules.RuleCount - 1) As Double
 
         For start As Integer = 0 To x.Length - 1 Step options.ChunkRows
             Dim size As Integer = std.Min(options.ChunkRows, x.Length - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size, _workspace)
 
             For t As Integer = 0 To size - 1
                 For r As Integer = 0 To _net.Rules.RuleCount - 1
@@ -381,7 +429,7 @@ Public Class AnfisHybridTrainer
 
     Private Function BuildResult(x As Double()(),
                                  y As Double(,),
-                                 layers As AnfisLayers,
+                                 layers As TskLayers,
                                  trainHistory As System.Collections.Generic.List(Of Double),
                                  validationHistory As System.Collections.Generic.List(Of Double),
                                  thetaHistory As System.Collections.Generic.List(Of Double),

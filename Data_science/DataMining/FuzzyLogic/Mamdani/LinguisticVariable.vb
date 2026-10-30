@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::3f64daf905340169fcf9b98acbcc01c8, Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 139
-    '    Code Lines: 64 (46.04%)
-    ' Comment Lines: 51 (36.69%)
-    '    - Xml Docs: 68.63%
-    ' 
-    '   Blank Lines: 24 (17.27%)
-    '     File Size: 5.45 KB
+' Summaries:
 
 
-    '     Class LinguisticVariable
-    ' 
-    '         Properties: InputValue, MembershipFunctionCollection, Name
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Fuzzify, MaxValue, MinValue, Range
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 139
+'    Code Lines: 64 (46.04%)
+' Comment Lines: 51 (36.69%)
+'    - Xml Docs: 68.63%
+' 
+'   Blank Lines: 24 (17.27%)
+'     File Size: 5.45 KB
+
+
+'     Class LinguisticVariable
+' 
+'         Properties: InputValue, MembershipFunctionCollection, Name
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Fuzzify, MaxValue, MinValue, Range
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -75,12 +75,9 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Language
 
-Namespace Logical.FuzzyLogic
+Namespace Mamdani
 
     ''' <summary>
     ''' Represents a linguistic variable.
@@ -137,18 +134,16 @@ Namespace Logical.FuzzyLogic
         ''' </summary>
         ''' <param name="membershipFunctionName">The membership function for which fuzzify the variable.</param>
         ''' <returns>The degree of membership.</returns>
+        ''' <remarks>
+        ''' 求值委托给 <see cref="TSK.TrapezoidalMembership.Evaluate"/>（隶属函数只有一份实现），
+        ''' 数值行为与历史的分段 if/else 完全一致，包括两个退化肩点的单点取值：
+        ''' <c>X0 = X1</c> 时 <c>mu(X0) = 1</c>、<c>X2 = X3</c> 时 <c>mu(X2) = 1</c>。
+        ''' 该等价性由 <c>_smoketest</c> 的 Mamdani 一致性一节逐点守住。
+        ''' </remarks>
         Public Function Fuzzify(membershipFunctionName As String) As Double
             Dim membershipFunction As MembershipFunction = Me._MembershipFunctionCollection.Find(membershipFunctionName)
 
-            If (membershipFunction.X0 <= Me.InputValue) AndAlso (Me.InputValue < membershipFunction.X1) Then
-                Return (Me.InputValue - membershipFunction.X0) / (membershipFunction.X1 - membershipFunction.X0)
-            ElseIf (membershipFunction.X1 <= Me.InputValue) AndAlso (Me.InputValue <= membershipFunction.X2) Then
-                Return 1
-            ElseIf (membershipFunction.X2 < Me.InputValue) AndAlso (Me.InputValue <= membershipFunction.X3) Then
-                Return (membershipFunction.X3 - Me.InputValue) / (membershipFunction.X3 - membershipFunction.X2)
-            Else
-                Return 0
-            End If
+            Return membershipFunction.Evaluate(Me.InputValue)
         End Function
 
         ''' <summary>

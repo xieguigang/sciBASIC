@@ -4,6 +4,7 @@ Option Explicit On
 Imports System
 Imports System.Linq
 Imports Microsoft.VisualBasic.DeepLearning.ANFIS
+Imports Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Solvers
 Imports std = System.Math
 
@@ -37,7 +38,7 @@ Module Program
         Call TestLeastSquaresAgainstOls()
 
         Call Section("5. 规则库枚举")
-        Call TestRuleBaseEnumeration()
+        Call TestFuzzyRuleBaseEnumeration()
 
         Call Section("6. 一维函数逼近 y = sin(x)")
         Call TestOneDimensional()
@@ -95,20 +96,20 @@ Module Program
     End Function
 
     ''' <summary>构造一个 2 输入、每输入 m 个模糊集的小网络，并随机填充结论参数。</summary>
-    Private Function CreateTinyNetwork(m As Integer, seed As Integer) As AnfisNetwork
-        Dim inputs As AnfisInputVariable() = {
-            AnfisInputVariable.CreateGrid("x1", -1.0, 1.0, m, MembershipKind.Gaussian),
-            AnfisInputVariable.CreateGrid("x2", -1.0, 1.0, m, MembershipKind.Gaussian)
+    Private Function CreateTinyNetwork(m As Integer, seed As Integer) As TskNetwork
+        Dim inputs As TskInputVariable() = {
+            TskInputVariable.CreateGrid("x1", -1.0, 1.0, m, MembershipKind.Gaussian),
+            TskInputVariable.CreateGrid("x2", -1.0, 1.0, m, MembershipKind.Gaussian)
         }
-        Dim rules As RuleBase = RuleBase.CreateFullGrid({m, m})
-        Dim net As New AnfisNetwork(inputs, rules, 1)
+        Dim rules As FuzzyRuleBase = FuzzyRuleBase.CreateFullGrid({m, m})
+        Dim net As New TskNetwork(inputs, rules, 1)
 
         Call SetRandomConsequent(net, seed)
 
         Return net
     End Function
 
-    Private Sub SetRandomConsequent(net As AnfisNetwork, seed As Integer)
+    Private Sub SetRandomConsequent(net As TskNetwork, seed As Integer)
         Dim rng As New Random(seed)
         Dim theta(net.ConsequentParameterCount - 1, net.OutputCount - 1) As Double
 
@@ -140,9 +141,9 @@ Module Program
     End Function
 
     ''' <summary>E = 0.5 * sum((z - y)^2)，与解析梯度使用的目标函数一致。</summary>
-    Private Function HalfSse(net As AnfisNetwork, x As Double()(), y As Double(,)) As Double
-        Dim layers As New AnfisLayers(net)
-        Dim fwd As AnfisForward = layers.Forward(x, 0, x.Length)
+    Private Function HalfSse(net As TskNetwork, x As Double()(), y As Double(,)) As Double
+        Dim layers As New TskLayers(net)
+        Dim fwd As TskInferenceTrace = layers.Forward(x, 0, x.Length)
         Dim sse As Double = 0.0
 
         For t As Integer = 0 To x.Length - 1
@@ -221,10 +222,10 @@ Module Program
     End Sub
 
     Private Sub TestForwardAgainstScalar()
-        Dim net As AnfisNetwork = CreateTinyNetwork(2, 7)
+        Dim net As TskNetwork = CreateTinyNetwork(2, 7)
         Dim x As Double()() = SampleGrid(50, -1.0, 1.0, 11, 2)
-        Dim layers As New AnfisLayers(net)
-        Dim fwd As AnfisForward = layers.Forward(x, 0, x.Length)
+        Dim layers As New TskLayers(net)
+        Dim fwd As TskInferenceTrace = layers.Forward(x, 0, x.Length)
 
         Dim n As Integer = net.InputCount
         Dim worst As Double = 0.0
@@ -283,7 +284,7 @@ Module Program
     End Sub
 
     Private Sub TestPremiseGradient()
-        Dim net As AnfisNetwork = CreateTinyNetwork(2, 13)
+        Dim net As TskNetwork = CreateTinyNetwork(2, 13)
         Dim x As Double()() = SampleGrid(40, -1.0, 1.0, 17, 2)
         Dim y As Double(,) = New Double(x.Length - 1, 0) {}
 
@@ -293,9 +294,9 @@ Module Program
             y(i, 0) = std.Sin(2.0 * x(i)(0)) + 0.5 * x(i)(1) * x(i)(1) + 0.05 * rng.NextDouble()
         Next
 
-        Dim layers As New AnfisLayers(net)
-        Dim fwd As AnfisForward = layers.Forward(x, 0, x.Length)
-        Dim gradient As AnfisGradient = layers.Accumulate(fwd, y, computeThetaGradient:=False)
+        Dim layers As New TskLayers(net)
+        Dim fwd As TskInferenceTrace = layers.Forward(x, 0, x.Length)
+        Dim gradient As TskGradient = layers.Accumulate(fwd, y, computeThetaGradient:=False)
         Dim baseParameters As Double() = net.GetPremiseParameters()
         Dim h As Double = 0.000001
         Dim worst As Double = 0.0
@@ -324,7 +325,7 @@ Module Program
         Call Check($"前提参数解析梯度（{baseParameters.Length} 个）", worst < 0.000001, $"worst relative error = {worst:E2}")
 
         ' 结论参数梯度同样对拍（纯梯度下降模式依赖它）
-        Dim thetaGradient As AnfisGradient = layers.Accumulate(fwd, y, computeThetaGradient:=True)
+        Dim thetaGradient As TskGradient = layers.Accumulate(fwd, y, computeThetaGradient:=True)
         Dim baseTheta As Double(,) = CType(net.Theta.Clone(), Double(,))
         Dim worstTheta As Double = 0.0
 
@@ -353,7 +354,7 @@ Module Program
     End Sub
 
     Private Sub TestLeastSquaresAgainstOls()
-        Dim net As AnfisNetwork = CreateTinyNetwork(3, 23)
+        Dim net As TskNetwork = CreateTinyNetwork(3, 23)
         Dim x As Double()() = SampleGrid(200, -1.0, 1.0, 29, 2)
         Dim y As Double(,) = New Double(x.Length - 1, 0) {}
 
@@ -361,7 +362,7 @@ Module Program
             y(i, 0) = std.Sin(1.5 * x(i)(0)) + 0.3 * x(i)(1)
         Next
 
-        Dim layers As New AnfisLayers(net)
+        Dim layers As New TskLayers(net)
         Dim p As Integer = net.ConsequentParameterCount
         Dim accumulator As New LeastSquaresAccumulator(p, 1, 0.0)
         Dim full As Double(,) = New Double(x.Length - 1, p - 1) {}
@@ -370,7 +371,7 @@ Module Program
 
         While start < x.Length
             Dim size As Integer = std.Min(64, x.Length - start)
-            Dim fwd As AnfisForward = layers.Forward(x, start, size)
+            Dim fwd As TskInferenceTrace = layers.Forward(x, start, size)
             Dim chunk As Double(,) = New Double(size - 1, p - 1) {}
 
             Call layers.BuildDesignMatrix(fwd, chunk)
@@ -398,8 +399,8 @@ Module Program
         Call Check("LSE 未触发降级", String.IsNullOrEmpty(warning), warning)
     End Sub
 
-    Private Sub TestRuleBaseEnumeration()
-        Dim rules As RuleBase = RuleBase.CreateFullGrid({3, 2, 4})
+    Private Sub TestFuzzyRuleBaseEnumeration()
+        Dim rules As FuzzyRuleBase = FuzzyRuleBase.CreateFullGrid({3, 2, 4})
         Call Check("m^n 规则数", rules.RuleCount = 24, $"got {rules.RuleCount}")
 
         Dim table As Integer(,) = rules.ToAntecedentTable()
@@ -420,10 +421,10 @@ Module Program
             mask(i) = True
         Next
 
-        Dim subset As RuleBase = RuleBase.CreateFullGrid({3, 2, 4}, mask)
+        Dim subset As FuzzyRuleBase = FuzzyRuleBase.CreateFullGrid({3, 2, 4}, mask)
         Call Check("启用掩膜生效", subset.RuleCount = 6, $"got {subset.RuleCount}")
 
-        Dim pruned As RuleBase = subset.SelectRules({5, 0})
+        Dim pruned As FuzzyRuleBase = subset.SelectRules({5, 0})
         Call Check("规则选集", pruned.RuleCount = 2, $"got {pruned.RuleCount}")
     End Sub
 
@@ -632,7 +633,7 @@ Module Program
 
         Dim fit As AnfisFitResult = AnfisFitting.Fit(x, y, options)
         Dim json As String = fit.Model.ToJson()
-        Dim restored As AnfisNetwork = AnfisNetwork.FromJson(json)
+        Dim restored As TskNetwork = TskNetwork.FromJson(json)
 
         Dim original As Double()() = AnfisFitting.Predict(fit.Model, x)
         Dim reloaded As Double()() = AnfisFitting.Predict(restored, x)

@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Data.visualize</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.8.9796.18903</Version>
+		<Version>10.8.9797.36764</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -17,7 +17,7 @@
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+		<AssemblyVersion>1.0.9797.36764</AssemblyVersion>
 		<Title>Network, Cluster and Embedding Visualization Layer</Title>
 		<Description>A visualization layer for sciBASIC#: correlation and K-means cluster network graph construction, binary tree partition layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus CSV bar chart and scatter rendering helpers for tabular data.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.Data.visualize</AssemblyTitle>
@@ -86,7 +86,7 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-	  <Optimize>false</Optimize>
+	  <Optimize>true</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>

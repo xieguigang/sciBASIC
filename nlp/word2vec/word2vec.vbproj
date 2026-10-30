@@ -6,9 +6,9 @@
 
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.8.9796.18903</Version>
+		<Version>10.8.9797.36764</Version>
 
-		<AssemblyVersion>5.33.9796.18903</AssemblyVersion>
+		<AssemblyVersion>5.33.9797.36764</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
@@ -46,6 +46,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <OutputPath>../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="test\**" />

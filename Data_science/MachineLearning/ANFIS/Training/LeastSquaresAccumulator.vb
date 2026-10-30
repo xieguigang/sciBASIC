@@ -1,8 +1,3 @@
-Option Strict On
-Option Explicit On
-
-Imports System
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Solvers
 Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
@@ -81,6 +76,16 @@ Public Class LeastSquaresAccumulator
     ''' <param name="a">设计矩阵块，形状 <c>[rows, P]</c></param>
     ''' <param name="y">观测值块，形状 <c>[rows, OutputCount]</c></param>
     Public Sub AddChunk(a As Double(,), y As Double(,))
+        Call AddChunk(a, y, If(a Is Nothing, 0, a.GetLength(0)))
+    End Sub
+
+    ''' <summary>
+    ''' 累加一个数据块，只使用前 <paramref name="rows"/> 行（用于复用满容量的设计矩阵缓冲）。
+    ''' </summary>
+    ''' <param name="a">设计矩阵块，形状 <c>[&gt;= rows, P]</c>；超出 <paramref name="rows"/> 的行不会被读</param>
+    ''' <param name="y">观测值块，形状 <c>[&gt;= rows, OutputCount]</c>；同样只读前 <paramref name="rows"/> 行</param>
+    ''' <param name="rows">本块的有效行数</param>
+    Public Sub AddChunk(a As Double(,), y As Double(,), rows As Integer)
         If a Is Nothing Then
             Throw New ArgumentNullException(NameOf(a))
         End If
@@ -88,14 +93,13 @@ Public Class LeastSquaresAccumulator
             Throw New ArgumentNullException(NameOf(y))
         End If
 
-        Dim rows As Integer = a.GetLength(0)
         Dim p As Integer = _parameterCount
         Dim o As Integer = _outputCount
 
         If a.GetLength(1) <> p Then
             Throw New ArgumentException($"the design matrix must have {p} columns", NameOf(a))
         End If
-        If y.GetLength(0) <> rows OrElse y.GetLength(1) <> o Then
+        If rows < 0 OrElse rows > a.GetLength(0) OrElse rows > y.GetLength(0) OrElse y.GetLength(1) <> o Then
             Throw New ArgumentException($"the target must be ({rows}, {o})", NameOf(y))
         End If
         If rows = 0 Then
@@ -138,7 +142,16 @@ Public Class LeastSquaresAccumulator
     End Sub
 
     Private Sub EnsureColumnBuffer(rows As Integer)
-        If _columnBuffer IsNot Nothing AndAlso _columnBufferRows = rows Then
+        If _columnBuffer IsNot Nothing AndAlso _columnBufferRows >= rows Then
+            ' 复用更大容量的缓冲：把超出本块的部分清零。
+            ' 下面的 A'A 是对**整个缓冲长度**做点积（DotFma 不带长度参数），
+            ' 残留的旧值会污染结果。
+            If _columnBufferRows > rows Then
+                For c As Integer = 0 To _columnBuffer.Length - 1
+                    Call Array.Clear(_columnBuffer(c), rows, _columnBufferRows - rows)
+                Next
+            End If
+
             Return
         End If
 

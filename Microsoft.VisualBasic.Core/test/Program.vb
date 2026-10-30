@@ -77,6 +77,13 @@ Module Program
             Return
         End If
 
+        ' runs the runtime debug audit module (DebugAudit) regression checks only:
+        '   test.exe --debugaudit
+        If args.Length > 0 AndAlso args(0) = "--debugaudit" Then
+            Call DebugAuditSelfTest.Run()
+            Return
+        End If
+
         ' runs the SIMD math module correctness regression and benchmark only:
         '   test.exe --simd
         If args.Length > 0 AndAlso args(0) = "--simd" Then

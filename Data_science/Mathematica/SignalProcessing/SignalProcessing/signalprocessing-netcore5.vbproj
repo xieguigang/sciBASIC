@@ -14,8 +14,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.8.9796.18903</Version>
-    <AssemblyVersion>1.0.9796.18903</AssemblyVersion>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
     <Title>Signal Processing: FFT, Wavelets, Filters and Peak Detection</Title>
     <Description>Algorithms for one-dimensional signals in sciBASIC#: radix-2 FFT and spectrum analysis, wavelet transforms, Savitzky-Golay and DC shift filtering, peak detection, baseline removal, resampling, DTW and COW alignment, Kalman filtering, plus a wave analysis suite covering cell demodulation, scan-line sync, fold and payload analysis, period estimation and channel correlation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.SignalProcessing</AssemblyTitle>
@@ -72,7 +72,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
