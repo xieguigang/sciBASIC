@@ -62,47 +62,120 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace Bing.Academic
 
     Public Module Extensions
 
-        Public Sub Build_KB(term$, out$, Optional pages% = 10, Optional flat As Boolean = True, Optional sleepInterval% = 5000)
-            For Each entry As (refer$, list As NamedValue(Of String)()) In AcademicSearch.Query(term, pages)
-                For Each url As NamedValue(Of String) In entry.list
+        ''' <summary>
+        ''' 遍历一个关键词的所有的学术搜索结果，将结果保存到本地，用于知识库的构建
+        ''' </summary>
+        ''' <param name="term">检索关键词</param>
+        ''' <param name="out">结果的输出文件夹</param>
+        ''' <param name="pages">需要遍历的页数</param>
+        ''' <param name="flat">为<c>True</c>的时候所有的结果都平铺在输出文件夹之下</param>
+        ''' <param name="sleepInterval">每一次请求之间的间隔毫秒数，用于避免对必应的高频请求</param>
+        ''' <param name="details">
+        ''' 是否额外的拉取必应学术的详情页；只有学术文献型的结果才有详情页，
+        ''' 网页型的结果会被跳过。
+        ''' </param>
+        Public Sub Build_KB(term$, out$, Optional pages% = 10,
+                            Optional flat As Boolean = True,
+                            Optional sleepInterval% = 5000,
+                            Optional details As Boolean = False)
+
+            For Each entry As (refer$, list As AcademicResult()) In AcademicSearch.Query(term, pages)
+                For Each item As AcademicResult In entry.list
                     Try
-                        With url.GetDetails(refer:=entry.refer)
-                            Dim path$
-                            Dim id$ = .GetProfileID
+                        Dim id$ = FileName(item)
+                        Dim path$
 
-                            If flat Then
-                                path = $"{out}/{id}.xml"
-                            Else
-                                path = $"{out}/{Mid(id, 1, 3)}/{id}.xml"
+                        If flat Then
+                            path = $"{out}/{id}.json"
+                        Else
+                            path = $"{out}/{Mid(id, 1, 3)}/{id}.json"
+                        End If
+
+                        Call item _
+                            .GetJson(indent:=True) _
+                            .SaveTo(path, TextEncodings.UTF8WithoutBOM)
+
+                        If details AndAlso item.isAcademic Then
+                            Dim profile As ArticleProfile = item.GetDetails(refer:=entry.refer)
+
+                            If profile IsNot Nothing Then
+                                Call profile _
+                                    .GetXml _
+                                    .SaveTo($"{out}/{id}.xml", TextEncodings.UTF8WithoutBOM)
                             End If
-
-                            Call .GetXml _
-                                 .SaveTo(path, TextEncodings.UTF8WithoutBOM)
-                        End With
+                        End If
                     Catch ex As Exception
-                        ex = New Exception(url.Value, ex)
-                        App.LogException(ex)
+                        ex = New Exception(item.url, ex)
+                        Call App.LogException(ex)
                     Finally
-                        Thread.Sleep(sleepInterval)
+                        Call Thread.Sleep(sleepInterval)
                     End Try
                 Next
             Next
         End Sub
 
+        ''' <summary>
+        ''' 由一个搜索结果条目生成一个在文件系统之中安全的文件名
+        ''' </summary>
+        Private Function FileName(item As AcademicResult) As String
+            If Not String.IsNullOrEmpty(item.profileID) Then
+                Return item.profileID
+            End If
+
+            Dim id As String = If(item.url, "")
+
+            For Each ch As Char In Path.GetInvalidFileNameChars()
+                id = id.Replace(ch, "_"c)
+            Next
+
+            id = id _
+                .Replace("://", "_") _
+                .Replace("/"c, "_"c) _
+                .Replace("?"c, "_"c) _
+                .Replace("="c, "_"c) _
+                .Replace("&"c, "_"c) _
+                .Replace(":"c, "_"c)
+
+            If id.Length > 96 Then
+                id = id.Substring(0, 96)
+            End If
+            If id.Length = 0 Then
+                id = "result_" & item.rank
+            End If
+
+            Return id
+        End Function
+
+        ''' <summary>
+        ''' 将搜索结果转换为文献的概要信息
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Summary(articles As IEnumerable(Of ArticleProfile)) As Summary()
             Return articles _
                 .Select(Function(a) New Summary(a)) _
+                .ToArray
+        End Function
+
+        ''' <summary>
+        ''' 将搜索结果页面之上解析出来的条目转换为文献的概要信息
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Summary(results As IEnumerable(Of AcademicResult)) As Summary()
+            Return results _
+                .Select(Function(r) New Summary(r)) _
                 .ToArray
         End Function
     End Module
@@ -116,6 +189,10 @@ Namespace Bing.Academic
         Public Property doi As String
         Public Property cites As Integer
         Public Property pubmed As String
+        ''' <summary>
+        ''' 这个概要所对应的原始链接地址
+        ''' </summary>
+        Public Property url As String
 
         Sub New()
         End Sub
@@ -137,6 +214,23 @@ Namespace Bing.Academic
                        End Function) _
                 .FirstOrDefault _
                 .href
+            url = article.URL
+        End Sub
+
+        ''' <summary>
+        ''' 由搜索结果页面之上解析出来的条目构造概要信息
+        ''' </summary>
+        ''' <remarks>
+        ''' 搜索结果页面之上没有 DOI 与 PubMed 的信息，这两个字段会被留空，
+        ''' 需要通过 <see cref="AcademicSearch.GetDetails"/> 拉取详情页之后才可以补齐。
+        ''' </remarks>
+        Sub New(result As AcademicResult)
+            title = result.title
+            authors = result.authors
+            year = If(result.year > 0, result.year.ToString(), "")
+            journal = result.journal
+            cites = result.cites
+            url = result.url
         End Sub
 
         Public Overrides Function ToString() As String
