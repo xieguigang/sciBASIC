@@ -6,10 +6,10 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
 
 ''' <summary>
-''' 把 CVODE 求解器的积分结果统一输出为 <see cref="ODEsOut"/> 的扩展方法。
+''' 把 CVODE 求解器的积分结果统一输出为 <see cref="ODESolution"/> 的扩展方法。
 ''' </summary>
 ''' <remarks>
-''' <see cref="ODEsOut"/> 是 ODE 求解器框架的统一结果模型（原来 CVODE 专用的 ``ODESolution``
+''' <see cref="ODESolution"/> 是 ODE 求解器框架的统一结果模型（原来 CVODE 专用的 ``ODESolution``
 ''' 已经删除），它同时提供 ``x`` / ``y`` / ``y0`` / ``params`` 的原始数据与 ``Count`` /
 ''' ``Item(index)`` / ``GetComponent(i)`` / ``ToCSV()`` 这类通用访问接口，因此 CVODE 的调用方
 ''' 可以与内建求解器的结果采用完全一致的处理方式。
@@ -32,7 +32,7 @@ Public Module CVODESolverExtensions
     ''' <returns></returns>
     <Extension>
     Public Function Solve(solver As CVODESolver, t0 As Double, tEnd As Double, y0 As Vector,
-                          n As Integer, Optional names As String() = Nothing) As ODEsOut
+                          n As Integer, Optional names As String() = Nothing) As ODESolution
 
         If solver Is Nothing Then
             Throw New ArgumentNullException(NameOf(solver))
@@ -76,7 +76,7 @@ Public Module CVODESolverExtensions
             Next
         Next
 
-        Dim result As ODEsOut = ODEsOut.FromColumns(grid, columns, names)
+        Dim result As ODESolution = ODESolution.FromColumns(grid, columns, names)
 
         result.info = New Dictionary(Of String, String) From {
             {"solver", NameOf(CVODESolver)},
@@ -92,7 +92,7 @@ Public Module CVODESolverExtensions
 
     ''' <summary>
     ''' Create a CVODE solver for a single integration run and output the result as
-    ''' <see cref="ODEsOut"/>, the solver will be disposed automatically.
+    ''' <see cref="ODESolution"/>, the solver will be disposed automatically.
     ''' (一次性创建求解器并输出统一结果，求解器会自动释放)
     ''' </summary>
     ''' <param name="method"></param>
@@ -106,7 +106,7 @@ Public Module CVODESolverExtensions
     ''' <returns></returns>
     Public Function Solve(method As CVODEMethod, rhs As RHSFunction, t0 As Double, tEnd As Double,
                           y0 As Vector, n As Integer, Optional names As String() = Nothing,
-                          Optional options As CVODEOptions = Nothing) As ODEsOut
+                          Optional options As CVODEOptions = Nothing) As ODESolution
 
         If rhs Is Nothing Then
             Throw New ArgumentNullException(NameOf(rhs))

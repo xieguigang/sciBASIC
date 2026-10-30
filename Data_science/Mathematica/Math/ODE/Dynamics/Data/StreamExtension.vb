@@ -72,12 +72,12 @@ Namespace Dynamics.Data
         ''' <param name="method">Default is <see cref="Enumerable.Average"/>.(默认是平均值)</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Merge(source As IEnumerable(Of ODEsOut), Optional method As Func(Of IEnumerable(Of Double), Double) = Nothing) As ODEsOut
+        Public Function Merge(source As IEnumerable(Of ODESolution), Optional method As Func(Of IEnumerable(Of Double), Double) = Nothing) As ODESolution
             Return source.ToArray.merge(method Or average)
         End Function
 
         <Extension>
-        Private Function mergeParameters(data As ODEsOut(), aggregate As Func(Of IEnumerable(Of Double), Double)) As Dictionary(Of String, Double)
+        Private Function mergeParameters(data As ODESolution(), aggregate As Func(Of IEnumerable(Of Double), Double)) As Dictionary(Of String, Double)
             Dim params As New Dictionary(Of String, Double)
             Dim value As Double
 
@@ -94,7 +94,7 @@ Namespace Dynamics.Data
         End Function
 
         <Extension>
-        Private Function mergeY0(data As ODEsOut(), aggregate As Func(Of IEnumerable(Of Double), Double)) As Dictionary(Of String, Double)
+        Private Function mergeY0(data As ODESolution(), aggregate As Func(Of IEnumerable(Of Double), Double)) As Dictionary(Of String, Double)
             Dim y0 As New Dictionary(Of String, Double)
             Dim value As Double
 
@@ -111,7 +111,7 @@ Namespace Dynamics.Data
         End Function
 
         <Extension>
-        Private Function merge(data As ODEsOut(), aggregate As Func(Of IEnumerable(Of Double), Double)) As ODEsOut
+        Private Function merge(data As ODESolution(), aggregate As Func(Of IEnumerable(Of Double), Double)) As ODESolution
             Dim minLen% = data.Min(Function(x) x.x.Length)
             Dim vars As String() = data.First.y.Keys.ToArray
             Dim y As New Dictionary(Of NamedCollection(Of Double))
@@ -138,7 +138,7 @@ Namespace Dynamics.Data
                 Next
             Next
 
-            Return New ODEsOut With {
+            Return New ODESolution With {
                 .y = y,
                 .params = params,
                 .x = data(0).x,

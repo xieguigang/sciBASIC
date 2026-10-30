@@ -122,7 +122,7 @@ Namespace CVODEExamples
             Dim rhsFunc As RHSFunction = Sub(t As Double, y As Vector, ydot As Vector)
                                              ydot(0) = -y(0)
                                          End Sub
-            Dim result As ODEsOut = New CVODEBuilder() _
+            Dim result As ODESolution = New CVODEBuilder() _
                 .UseMethod(CVODEMethod.Adams) _
                 .WithRHS(rhsFunc, 1) _
                 .WithRelativeTolerance(1.0E-8) _

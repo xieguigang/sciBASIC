@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace Dynamics.Data
 
     ''' <summary>
-    ''' ODEs output, this object can populates the <see cref="ODEsOut.y"/> 
+    ''' ODEs output, this object can populates the <see cref="ODESolution.y"/> 
     ''' variables values through its enumerator interface.
     ''' (常微分方程求解结果，同时也是所有求解器 —— 内建求解器与外部插件求解器 —— 的统一输出模型)
     ''' </summary>
@@ -23,7 +23,7 @@ Namespace Dynamics.Data
     ''' 注意：<see cref="y"/> 是按键排序的字典（``SortedDictionary(Of String, T)``），
     ''' 所以列顺序必须通过 <see cref="columnNames"/> 显式指定，不能依赖 <see cref="y"/> 的枚举顺序。
     ''' </remarks>
-    Public Class ODEsOut : Implements Enumeration(Of NamedCollection(Of Double))
+    Public Class ODESolution : Implements Enumeration(Of NamedCollection(Of Double))
 
         Private _y As Dictionary(Of NamedCollection(Of Double))
         Private _columnNames As String()
@@ -277,7 +277,7 @@ Namespace Dynamics.Data
         ''' <summary>
         ''' Merge <see cref="y0"/> into <see cref="params"/>
         ''' </summary>
-        Public Function Join() As ODEsOut
+        Public Function Join() As ODESolution
             Dim params As New Dictionary(Of String, Double)(If(Me.params, New Dictionary(Of String, Double)()))
 
             If Not y0 Is Nothing Then
@@ -286,7 +286,7 @@ Namespace Dynamics.Data
                 Next
             End If
 
-            Return New ODEsOut With {
+            Return New ODESolution With {
                 .params = params,
                 .x = x,
                 .y = y,
@@ -328,7 +328,7 @@ Namespace Dynamics.Data
         ''' ``y0``, ``y1``, ...
         ''' </param>
         ''' <returns></returns>
-        Public Shared Function FromColumns(times As Double(), columns As Double()(), Optional names As String() = Nothing) As ODEsOut
+        Public Shared Function FromColumns(times As Double(), columns As Double()(), Optional names As String() = Nothing) As ODESolution
             If times Is Nothing Then
                 Throw New ArgumentNullException(NameOf(times))
             End If
@@ -357,7 +357,7 @@ Namespace Dynamics.Data
                 y0(resolved(i)) = column(0)
             Next
 
-            Return New ODEsOut With {
+            Return New ODESolution With {
                 .x = times,
                 .y = y,
                 .y0 = y0,
@@ -375,7 +375,7 @@ Namespace Dynamics.Data
         ''' <param name="names"></param>
         ''' <returns></returns>
         Public Shared Function FromPoints(times As IEnumerable(Of Double), states As IEnumerable(Of Vector),
-                                          Optional names As String() = Nothing) As ODEsOut
+                                          Optional names As String() = Nothing) As ODESolution
 
             Dim timePoints As Double() = times.ToArray
             Dim stateValues As Vector() = states.ToArray

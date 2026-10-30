@@ -259,7 +259,7 @@ Namespace Dynamics
         End Function
 
         ''' <summary>
-        ''' Populates the data of <see cref="ODEsOut.x"/>
+        ''' Populates the data of <see cref="ODESolution.x"/>
         ''' </summary>
         ''' <param name="n%"></param>
         ''' <param name="a#"></param>
@@ -283,7 +283,7 @@ Namespace Dynamics
         ''' <param name="b"></param>
         ''' <param name="incept"></param>
         ''' <returns></returns>
-        Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+        Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODESolution
             Dim y0 As Double() = GetY0(incept)
             Dim solver As New RungeKutta4(Me)
 
@@ -310,7 +310,7 @@ Namespace Dynamics
                                       Optional rtol As Double = 1.0E-7,
                                       Optional initialStep As Double = 0.0,
                                       Optional incept As Boolean = False,
-                                      Optional maxSteps As Integer = 10000000) As ODEsOut
+                                      Optional maxSteps As Integer = 10000000) As ODESolution
 
             Dim y0 As Double() = GetY0(incept)
             Dim solver As New RungeKutta45(Me)
@@ -337,7 +337,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function Solve(n As Integer, a As Double, b As Double, method As ODESolverMethod,
                               Optional incept As Boolean = False,
-                              Optional options As ODESolverOptions = Nothing) As ODEsOut
+                              Optional options As ODESolverOptions = Nothing) As ODESolution
 
             Dim y0 As Double() = GetY0(incept)
             Dim points As Double()
@@ -447,7 +447,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function Solve(n As Integer, a As Double, b As Double, methodName As String,
                               Optional incept As Boolean = False,
-                              Optional options As ODESolverOptions = Nothing) As ODEsOut
+                              Optional options As ODESolverOptions = Nothing) As ODESolution
 
             If String.IsNullOrWhiteSpace(methodName) Then
                 Throw New ArgumentNullException(NameOf(methodName), "The name of the ODEs solver can not be empty!")
@@ -474,7 +474,7 @@ Namespace Dynamics
         ''' Resolve the external solver provider from the given enumeration value and run it.
         ''' </summary>
         Private Function SolveByProvider(method As ODESolverMethod, y0 As Double(), n As Integer,
-                                         a As Double, b As Double, options As ODESolverOptions) As ODEsOut
+                                         a As Double, b As Double, options As ODESolverOptions) As ODESolution
 
             Dim provider As IODEsolverProvider = Nothing
 
@@ -487,12 +487,12 @@ Namespace Dynamics
 
         ''' <summary>
         ''' Run the external solver provider and convert its result into the standard
-        ''' <see cref="ODEsOut"/> of the ODEs framework: the result shape, the values and the
+        ''' <see cref="ODESolution"/> of the ODEs framework: the result shape, the values and the
         ''' state variable synchronization are all validated here.
         ''' (执行外部求解器，并把结果校验、状态同步之后转换为框架标准的结果对象)
         ''' </summary>
         Private Function SolveByProvider(provider As IODEsolverProvider, y0 As Double(), n As Integer,
-                                         a As Double, b As Double, options As ODESolverOptions) As ODEsOut
+                                         a As Double, b As Double, options As ODESolverOptions) As ODESolution
 
             If n < 1 Then
                 Throw New ArgumentOutOfRangeException(NameOf(n), "The number of the integration steps must be positive!")
@@ -507,7 +507,7 @@ Namespace Dynamics
             End If
 
             Dim solverName As String = If(String.IsNullOrEmpty(provider.Name), provider.GetType().Name, provider.Name)
-            Dim result As ODEsOut = provider.Solve(Me, y0, n, a, b, If(options, New ODESolverOptions()))
+            Dim result As ODESolution = provider.Solve(Me, y0, n, a, b, If(options, New ODESolverOptions()))
 
             If result Is Nothing Then
                 Throw New InvalidOperationException($"The ODEs solver '{solverName}' returns no result!")
@@ -556,7 +556,7 @@ Namespace Dynamics
 
             CurrentStep = n
 
-            Dim output As ODEsOut = CreateOutput(Me, CreateY0Map(y0), result.x, columns)
+            Dim output As ODESolution = CreateOutput(Me, CreateY0Map(y0), result.x, columns)
 
             ' 保留外部求解器的诊断信息（steps / rhs_evaluations / ...）
             output.info = result.info
@@ -587,7 +587,7 @@ Namespace Dynamics
         ''' <param name="b"></param>
         ''' <param name="incept"></param>
         ''' <returns></returns>
-        Public Function SolveEuler(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+        Public Function SolveEuler(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODESolution
             Return Solve(n, a, b, ODESolverMethod.Euler, incept)
         End Function
 
@@ -599,7 +599,7 @@ Namespace Dynamics
         ''' <param name="b"></param>
         ''' <param name="incept"></param>
         ''' <returns></returns>
-        Public Function SolveRK2(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+        Public Function SolveRK2(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODESolution
             Return Solve(n, a, b, ODESolverMethod.RK2, incept)
         End Function
 
@@ -611,7 +611,7 @@ Namespace Dynamics
         ''' <param name="b"></param>
         ''' <param name="incept"></param>
         ''' <returns></returns>
-        Public Function SolveGill(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+        Public Function SolveGill(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODESolution
             Return Solve(n, a, b, ODESolverMethod.Gill, incept)
         End Function
 
@@ -623,7 +623,7 @@ Namespace Dynamics
         ''' <param name="b"></param>
         ''' <param name="incept"></param>
         ''' <returns></returns>
-        Public Function SolveABM4(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+        Public Function SolveABM4(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODESolution
             Return Solve(n, a, b, ODESolverMethod.ABM4, incept)
         End Function
 
@@ -638,7 +638,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function SolveBackwardEuler(n As Integer, a As Double, b As Double,
                                            Optional incept As Boolean = False,
-                                           Optional options As ODESolverOptions = Nothing) As ODEsOut
+                                           Optional options As ODESolverOptions = Nothing) As ODESolution
 
             Return Solve(n, a, b, ODESolverMethod.BackwardEuler, incept, options)
         End Function
@@ -654,7 +654,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function SolveTrapezoidal(n As Integer, a As Double, b As Double,
                                          Optional incept As Boolean = False,
-                                         Optional options As ODESolverOptions = Nothing) As ODEsOut
+                                         Optional options As ODESolverOptions = Nothing) As ODESolution
 
             Return Solve(n, a, b, ODESolverMethod.Trapezoidal, incept, options)
         End Function
@@ -670,7 +670,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function SolveBDF2(n As Integer, a As Double, b As Double,
                                   Optional incept As Boolean = False,
-                                  Optional options As ODESolverOptions = Nothing) As ODEsOut
+                                  Optional options As ODESolverOptions = Nothing) As ODESolution
 
             Return Solve(n, a, b, ODESolverMethod.BDF2, incept, options)
         End Function
@@ -686,7 +686,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function SolveRosenbrockROS2(n As Integer, a As Double, b As Double,
                                             Optional incept As Boolean = False,
-                                            Optional options As ODESolverOptions = Nothing) As ODEsOut
+                                            Optional options As ODESolverOptions = Nothing) As ODESolution
 
             Return Solve(n, a, b, ODESolverMethod.RosenbrockROS2, incept, options)
         End Function
@@ -702,7 +702,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function SolveRK23(n As Integer, a As Double, b As Double,
                                   Optional incept As Boolean = False,
-                                  Optional options As ODESolverOptions = Nothing) As ODEsOut
+                                  Optional options As ODESolverOptions = Nothing) As ODESolution
 
             Return Solve(n, a, b, ODESolverMethod.RK23, incept, options)
         End Function
@@ -718,7 +718,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Function SolveRK45(n As Integer, a As Double, b As Double,
                                   Optional incept As Boolean = False,
-                                  Optional options As ODESolverOptions = Nothing) As ODEsOut
+                                  Optional options As ODESolverOptions = Nothing) As ODESolution
 
             Return Solve(n, a, b, ODESolverMethod.RK45, incept, options)
         End Function
@@ -731,7 +731,7 @@ Namespace Dynamics
         ''' <param name="b"></param>
         ''' <param name="incept"></param>
         ''' <returns></returns>
-        Public Function SolveVerlet(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+        Public Function SolveVerlet(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODESolution
             Return Solve(n, a, b, ODESolverMethod.Verlet, incept)
         End Function
 
@@ -744,7 +744,7 @@ Namespace Dynamics
         ''' <param name="b"></param>
         ''' <param name="incept"></param>
         ''' <returns></returns>
-        Public Function SolveYoshida4(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+        Public Function SolveYoshida4(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODESolution
             Return Solve(n, a, b, ODESolverMethod.Yoshida4, incept)
         End Function
 
@@ -777,7 +777,7 @@ Namespace Dynamics
         ''' <param name="x"></param>
         ''' <param name="y">The result columns of each state variable.</param>
         ''' <returns></returns>
-        Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As Double()()) As ODEsOut
+        Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As Double()()) As ODESolution
             Dim symbols As var() = system.vars
             Dim out As New Dictionary(Of NamedCollection(Of Double))
             ' 显式指定列顺序：结果字典是按键排序的，不能依赖它的枚举顺序来定位状态变量
@@ -793,7 +793,7 @@ Namespace Dynamics
                 }
             Next
 
-            Return New ODEsOut With {
+            Return New ODESolution With {
                 .x = x,
                 .y = out,
                 .y0 = y0,
@@ -811,7 +811,7 @@ Namespace Dynamics
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As List(Of Double)()) As ODEsOut
+        Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As List(Of Double)()) As ODESolution
             Dim symbols As var() = system.vars
             Dim out As New Dictionary(Of NamedCollection(Of Double))
 
@@ -824,7 +824,7 @@ Namespace Dynamics
                 }
             Next
 
-            Return New ODEsOut With {
+            Return New ODESolution With {
                 .x = x,
                 .y = out,
                 .y0 = y0,

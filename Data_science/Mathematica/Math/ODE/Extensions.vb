@@ -112,7 +112,7 @@ Public Module Extensions
     ''' <param name="system"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Solve(system As IEnumerable(Of NonlinearVar), dt As (from#, to#, step#)) As ODEsOut
+    Public Function Solve(system As IEnumerable(Of NonlinearVar), dt As (from#, to#, step#)) As ODESolution
         Dim vector As NonlinearVar() = system.ToArray
         Dim df = Sub(dx#, ByRef dy As Vector)
                      For Each x As NonlinearVar In vector
@@ -122,7 +122,7 @@ Public Module Extensions
         Dim ODEs As New GenericODEs(vector, df)
 
         With dt
-            Dim result As ODEsOut = ODEs.Solve(CInt((.to - .from) / .step), .from, .to)
+            Dim result As ODESolution = ODEs.Solve(CInt((.to - .from) / .step), .from, .to)
             Return result
         End With
     End Function

@@ -15,7 +15,7 @@ Namespace Dynamics
     ''' <remarks>
     ''' 插件只需要实现「给定时间区间与输出网格，返回积分结果」这一件事，而且：
     ''' 
-    ''' 1. 结果统一使用 <see cref="ODEsOut"/> 输出（``x`` 为 ``n + 1`` 个采样点，列顺序与状态变量序号一致）；
+    ''' 1. 结果统一使用 <see cref="ODESolution"/> 输出（``x`` 为 ``n + 1`` 个采样点，列顺序与状态变量序号一致）；
     ''' 2. 结果形状、数值有限性以及状态变量同步都由 ODE 框架统一校验与处理，插件不需要
     '''    （也无法）访问 ``Size`` / ``SyncState`` 这些内部成员。
     ''' </remarks>
@@ -49,7 +49,7 @@ Namespace Dynamics
         ''' boundaries, and the result columns are ordered by the state variable index.
         ''' </returns>
         Function Solve(model As ODEs, y0 As Double(), n As Integer, a As Double, b As Double,
-                       options As ODESolverOptions) As ODEsOut
+                       options As ODESolverOptions) As ODESolution
     End Interface
 
     ''' <summary>

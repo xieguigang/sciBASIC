@@ -16,7 +16,7 @@ Imports std = System.Math
 '''    （直接写入 <see cref="DenseMatrix.Data"/>）；
 ''' 3. 把通用的 <see cref="ODESolverOptions"/> 与专有的 <see cref="CVODEOptions"/> 合并；
 ''' 4. 调用 <see cref="CVODESolverExtensions.Solve(CVODESolver, Double, Double, Vector, Integer, String())"/>
-'''    输出统一的 <see cref="ODEsOut"/>。
+'''    输出统一的 <see cref="ODESolution"/>。
 ''' </remarks>
 Public Class CvodeSolverProvider : Implements IODEsolverProvider
 
@@ -63,7 +63,7 @@ Public Class CvodeSolverProvider : Implements IODEsolverProvider
     ''' <param name="options"></param>
     ''' <returns></returns>
     Public Function Solve(model As ODEs, y0 As Double(), n As Integer, a As Double, b As Double,
-                          options As ODESolverOptions) As ODEsOut Implements IODEsolverProvider.Solve
+                          options As ODESolverOptions) As ODESolution Implements IODEsolverProvider.Solve
 
         If model Is Nothing Then
             Throw New ArgumentNullException(NameOf(model))
@@ -77,7 +77,7 @@ Public Class CvodeSolverProvider : Implements IODEsolverProvider
         Dim state As New Vector(y0)
         Dim rhs As RHSFunction = Sub(t, y, ydot) Call model.Derivatives(t, y.Array, ydot.Array)
         Dim names As String() = ResolveNames(model, size)
-        Dim result As ODEsOut
+        Dim result As ODESolution
 
         Using solver As New CVODESolver(Me.Method, rhs, size, cvodeOptions)
             Dim analytic As Action(Of Double, Double(), Double(,)) = model.Jacobian

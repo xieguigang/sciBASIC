@@ -161,7 +161,7 @@ Public Class CVODEBuilder
     End Function
 
     ''' <summary>
-    ''' 构建求解器并直接运行一次积分，结果统一输出为 <see cref="ODEsOut"/> 对象
+    ''' 构建求解器并直接运行一次积分，结果统一输出为 <see cref="ODESolution"/> 对象
     ''' （求解器在内部自动释放）
     ''' </summary>
     ''' <param name="t0">积分下界</param>
@@ -171,7 +171,7 @@ Public Class CVODEBuilder
     ''' <param name="names">结果列的名称，缺省为 ``y0``, ``y1``, ...</param>
     ''' <returns></returns>
     Public Function Solve(t0 As Double, tEnd As Double, y0 As Vector, n As Integer,
-                          Optional names As String() = Nothing) As ODEsOut
+                          Optional names As String() = Nothing) As ODESolution
         Using solver As CVODESolver = Build()
             Return solver.Solve(t0, tEnd, y0, n, names)
         End Using

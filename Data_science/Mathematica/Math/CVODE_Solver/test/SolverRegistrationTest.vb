@@ -268,7 +268,7 @@ Public Module SolverRegistrationTest
         Dim rhs As RHSFunction = Sub(t, y, ydot)
                                      ydot(0) = -y(0)
                                  End Sub
-        Dim result As ODEsOut = New CVODEBuilder() _
+        Dim result As ODESolution = New CVODEBuilder() _
             .UseMethod(CVODEMethod.Adams) _
             .WithRHS(rhs, 1) _
             .WithRelativeTolerance(1.0E-6) _
