@@ -677,6 +677,129 @@ Namespace Compute
 
 #End Region
 
+#Region "批量图卷积（向量化）"
+
+        ''' <summary>
+        ''' 图卷积批量层（SIMD + 行并行实现）。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 标量实现是「对每个输出维度 j，再遍历输入维度 k」的三重循环，权重按列跨步读取，
+        ''' 完全无法向量化。这里把求和方向反过来：固定输入维度 k，沿输出维度 outF 做一条
+        ''' AXPY（权重行 <c>W[k, :]</c> 在内存中连续），由 SIMD 一次处理 4/8 个通道。
+        ''' </para>
+        ''' <para>
+        ''' 行与行之间互不依赖（每条边的源行由 CSR 的列索引唯一确定），因此可以按行并行，
+        ''' 线程私有累加缓冲由 <see cref="tpl.Parallel"/> 的 localInit 分配。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function GraphLayerBatch(x As Tensor, wSelf As Tensor, wRel As Tensor,
+                                                  selfW As Tensor, bias As Tensor, edges As SparseCsr,
+                                                  output As Tensor, activation As Integer) As Boolean
+
+            If x Is Nothing OrElse wSelf Is Nothing OrElse output Is Nothing OrElse
+               x.Rank <> 2 OrElse output.Shape(0) <> x.Shape(0) Then
+
+                Return MyBase.GraphLayerBatch(x, wSelf, wRel, selfW, bias, edges, output, activation)
+            End If
+
+            Dim rows As Integer = x.Shape(0)
+            Dim inF As Integer = x.Shape(1)
+            Dim outF As Integer = output.Shape(1)
+            Dim xd As Double() = x.Data
+            Dim ws As Double() = wSelf.Data
+            Dim wr As Double() = If(wRel Is Nothing, Nothing, wRel.Data)
+            Dim sw As Double() = If(selfW Is Nothing, Nothing, selfW.Data)
+            Dim bd As Double() = If(bias Is Nothing, Nothing, bias.Data)
+            Dim od As Double() = output.Data
+            Dim rp As Integer() = If(edges Is Nothing, Nothing, edges.RowPointers)
+            Dim ci As Integer() = If(edges Is Nothing, Nothing, edges.ColumnIndices)
+            Dim vv As Double() = If(edges Is Nothing, Nothing, edges.Values)
+
+            Dim nodes As Integer = rows
+
+            If edges IsNot Nothing Then
+                nodes = edges.Rows
+            ElseIf sw IsNot Nothing Then
+                nodes = sw.Length
+            End If
+
+            If nodes <= 0 Then
+                nodes = rows
+            End If
+
+            Dim body As Func(Of Integer, System.Threading.Tasks.ParallelLoopState, Double(), Double()) =
+                Function(row As Integer, loopState As System.Threading.Tasks.ParallelLoopState, acc As Double()) As Double()
+                    Dim nodeIdx As Integer = row Mod nodes
+                    Dim baseRow As Integer = row - nodeIdx
+
+                    If bd Is Nothing Then
+                        Call Array.Clear(acc, 0, outF)
+                    Else
+                        Call Array.Copy(bd, 0, acc, 0, outF)
+                    End If
+
+                    Dim scale As Double = If(sw Is Nothing, 1.0, sw(nodeIdx))
+                    Dim rowOff As Integer = row * inF
+
+                    For k As Integer = 0 To inF - 1
+                        Dim v As Double = xd(rowOff + k) * scale
+
+                        If v <> 0.0 Then
+                            Call Axpy(v, ws, k * outF, acc, 0, outF)
+                        End If
+                    Next
+
+                    If rp IsNot Nothing AndAlso wr IsNot Nothing Then
+                        For e As Integer = rp(nodeIdx) To rp(nodeIdx + 1) - 1
+                            Dim c As Double = vv(e)
+
+                            If c = 0.0 Then
+                                Continue For
+                            End If
+
+                            Dim srcOff As Integer = (baseRow + ci(e)) * inF
+
+                            For k As Integer = 0 To inF - 1
+                                Dim v As Double = xd(srcOff + k) * c
+
+                                If v <> 0.0 Then
+                                    Call Axpy(v, wr, k * outF, acc, 0, outF)
+                                End If
+                            Next
+                        Next
+                    End If
+
+                    Dim outOff As Integer = row * outF
+
+                    For j As Integer = 0 To outF - 1
+                        od(outOff + j) = CellActivation.Apply(acc(j), activation)
+                    Next
+
+                    Return acc
+                End Function
+
+            If rows >= 4 Then
+                Call tpl.Parallel.For(0, rows,
+                    Function() New Double(outF - 1) {},
+                    body,
+                    Sub(acc)
+                    End Sub)
+            Else
+                Dim acc As Double() = New Double(outF - 1) {}
+
+                For row As Integer = 0 To rows - 1
+                    Call body(row, Nothing, acc)
+                Next
+            End If
+
+            Call output.MarkHostModified()
+
+            Return True
+        End Function
+
+#End Region
+
 #Region "批量液态单元内核（向量化）"
 
         ''' <summary>
