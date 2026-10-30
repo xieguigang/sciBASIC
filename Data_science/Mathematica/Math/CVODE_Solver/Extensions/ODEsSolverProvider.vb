@@ -30,13 +30,13 @@ Public Class CvodeSolverProvider : Implements IODEsolverProvider
     ''' The registration name of this provider.(注册名称)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Name As String
+    Public ReadOnly Property Name As String Implements IODEsolverProvider.Name
 
     ''' <summary>
     ''' The description which is used in the log and the exception message.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Description As String
+    Public ReadOnly Property Description As String Implements IODEsolverProvider.Description
 
     ''' <summary>
     ''' Create the provider of the given CVODE method.
@@ -140,10 +140,10 @@ Public Class CvodeSolverProvider : Implements IODEsolverProvider
             End If
         End If
 
-        ' 每一个输出采样点至少需要推进一个内部步，故 MaxSteps 必须覆盖整个输出网格，
+        ' 每一个输出采样点至少需要推进一个内部步，故 MaxSteps 至少要覆盖整个输出网格，
         ' 否则 CVODE 会在最后一个采样点之前返回 TooManySteps
-        If cvode.MaxSteps < n + 1000 Then
-            cvode.MaxSteps = n + 1000
+        If cvode.MaxSteps < n Then
+            cvode.MaxSteps = n
         End If
 
         Return cvode
