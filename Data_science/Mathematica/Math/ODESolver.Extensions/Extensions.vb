@@ -88,7 +88,7 @@ Imports std = System.Math
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function DataFrame(df As ODEsOut, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
+    Public Function DataFrame(df As ODESolution, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
         Dim ly = df.y.Values.ToArray
         Dim file As New IO.File
         Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.name))
@@ -107,7 +107,7 @@ Imports std = System.Math
         Call Console.WriteLine()
 
         For Each y As NamedCollection(Of Double) In df.y.Values
-            Call $"len(y={y.Name}) = {y.Value.Length}".debug
+            Call $"len(y={y.name}) = {y.value.Length}".debug
         Next
 #End If
 
@@ -134,7 +134,7 @@ Imports std = System.Math
     ''' <param name="csv$"></param>
     ''' <param name="noVars">ODEs Parameter value is not exists in the data file?</param>
     ''' <returns></returns>
-    Public Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODEsOut
+    Public Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODESolution
         Dim df As File = File.Load(csv)
         Dim cols = df.Columns().ToArray
         Dim X = cols(Scan0)
@@ -154,7 +154,7 @@ Imports std = System.Math
                                                                        .name = name,
                                                                        .value = values
                                                                    }
-        Return New ODEsOut With {
+        Return New ODESolution With {
             .params = args,
             .x = X.Skip(1).Select(AddressOf Val).ToArray,
             .y = yData.ToDictionary
@@ -182,12 +182,12 @@ Imports std = System.Math
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Pcc(df As ODEsOut) As IEnumerable(Of DataSet)
+    <Extension> Public Function Pcc(df As ODESolution) As IEnumerable(Of DataSet)
         Return df.correlationImpl(AddressOf Correlations.GetPearson)
     End Function
 
     <Extension>
-    Private Iterator Function correlationImpl(df As ODEsOut, correlation As Correlations.ICorrelation) As IEnumerable(Of DataSet)
+    Private Iterator Function correlationImpl(df As ODESolution, correlation As Correlations.ICorrelation) As IEnumerable(Of DataSet)
         Dim vars$() = df.y.Keys.ToArray
 
         For Each var As NamedCollection(Of Double) In df.AsEnumerable
@@ -211,7 +211,8 @@ Imports std = System.Math
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function SPcc(df As ODEsOut) As IEnumerable(Of DataSet)
+    <Extension>
+    Public Function SPcc(df As ODESolution) As IEnumerable(Of DataSet)
         Return df.correlationImpl(AddressOf Correlations.Spearman)
     End Function
 End Module
