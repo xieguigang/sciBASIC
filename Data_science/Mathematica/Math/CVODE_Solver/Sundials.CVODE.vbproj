@@ -22,7 +22,7 @@ CVODE is a solver for stiff and nonstiff ordinary differential equation (ODE) sy
     <PackageTags>scibasic;ode-solver;cvode;adams;bdf;stiff-equations;root-finding</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>PROJECT_SUMMARY.md</PackageReadmeFile>
-    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed the duplicated private dense matrix implementation: the solver now reuses NumericMatrix from the core math library (Microsoft.VisualBasic.Math.Core) for the Jacobian matrix, the linear system coefficient matrix and the LU working matrix. JacobianFunction now takes NumericMatrix instead of the removed DenseMatrix type. Numerical algorithms and solver results are unchanged.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>

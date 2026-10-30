@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Math.Sundials.CVODE
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace CVODEExamples
 
@@ -74,11 +75,18 @@ Namespace CVODEExamples
         ''' 主入口
         ''' 
         ''' ``--register``：只运行「CVODE 注册到 ODEs 求解框架」的集成自检，并以退出码返回结果；
+        ''' ``--matrix``：只运行 NumericMatrix 就地赋值/矩形数组互转的自检，并生成审计报告；
         ''' 其余情况运行全部示例。
         ''' </summary>
         Public Shared Sub Main(args As String())
             If args IsNot Nothing AndAlso args.Any(Function(arg) String.Equals(arg, "--register", StringComparison.OrdinalIgnoreCase)) Then
                 Environment.ExitCode = SolverRegistrationTest.Run()
+                Return
+            End If
+
+            If args IsNot Nothing AndAlso args.Any(Function(arg) String.Equals(arg, "--matrix", StringComparison.OrdinalIgnoreCase)) Then
+                Environment.ExitCode = MatrixBridgeTest.Run(
+                    IO.Path.Combine(Environment.CurrentDirectory, "matrix_bridge_audit.json"))
                 Return
             End If
 
@@ -409,7 +417,7 @@ Namespace CVODEExamples
                                          End Sub
 
             ' 定义Jacobian函数（可选，提高效率）
-            Dim jacFunc As JacobianFunction = Sub(t As Double, y As Vector, fy As Vector, J As DenseMatrix)
+            Dim jacFunc As JacobianFunction = Sub(t As Double, y As Vector, fy As Vector, J As NumericMatrix)
                                                   J(0, 0) = 0.0
                                                   J(0, 1) = 1.0
                                                   J(1, 0) = -2.0 * mu * y(0) * y(1) - 1.0

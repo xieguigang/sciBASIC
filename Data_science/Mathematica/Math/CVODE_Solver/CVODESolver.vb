@@ -72,6 +72,7 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
 ''' <summary>
@@ -130,8 +131,8 @@ Public Class CVODESolver : Implements IDisposable
 
     ' 线性求解器与矩阵 / 临时向量
     Private _linearSolver As DenseLinearSolver
-    Private _J As DenseMatrix
-    Private _A As DenseMatrix
+    Private _J As NumericMatrix
+    Private _A As NumericMatrix
     Private _tempV As Vector
     Private _tempV2 As Vector
     Private _tempV3 As Vector
@@ -191,8 +192,8 @@ Public Class CVODESolver : Implements IDisposable
         Next
 
         _linearSolver = New DenseLinearSolver(_n)
-        _J = New DenseMatrix(_n, _n)
-        _A = New DenseMatrix(_n, _n)
+        _J = New NumericMatrix(_n, _n)
+        _A = New NumericMatrix(_n, _n)
 
         _isInitialized = False
     End Sub

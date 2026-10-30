@@ -2,6 +2,7 @@ Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
 ''' <summary>
@@ -13,7 +14,8 @@ Imports std = System.Math
 ''' 1. 把 <see cref="ODEs.Derivatives(Double, Double(), Double())"/> 适配成
 '''    <see cref="RHSFunction"/>（直接使用 <see cref="Vector.Array"/> 的内部缓冲，零拷贝）；
 ''' 2. 把 <see cref="ODEs.Jacobian"/> 适配成 <see cref="JacobianFunction"/>
-'''    （直接写入 <see cref="DenseMatrix.Data"/>）；
+'''    （借助一个复用的矩形缓冲，把 <see cref="NumericMatrix"/> 的 jagged 行数组与外部回调
+'''    要求的 ``Double(,)`` 之间做「读入 → 写入 → 写回」的显式搬运）；
 ''' 3. 把通用的 <see cref="ODESolverOptions"/> 与专有的 <see cref="CVODEOptions"/> 合并；
 ''' 4. 调用 <see cref="CVODESolverExtensions.Solve(CVODESolver, Double, Double, Vector, Integer, String())"/>
 '''    输出统一的 <see cref="ODESolution"/>。
@@ -83,8 +85,20 @@ Public Class CvodeSolverProvider : Implements IODEsolverProvider
             Dim analytic As Action(Of Double, Double(), Double(,)) = model.Jacobian
 
             If analytic IsNot Nothing Then
-                ' DenseMatrix.Data 返回内部数组的引用，因此这里也是零拷贝
-                solver.SetJacobianFunction(Sub(t, y, fy, j) Call analytic(t, y.Array, j.Data))
+                ' NumericMatrix 内部是行数组（jagged），而 ODEs.Jacobian 需要 Double(,)，
+                ' 因此用一个只在首次回调时分配的缓冲完成「读入 -> 回调写入 -> 写回」的搬运
+                Dim jacobianBuffer As Double(,) = Nothing
+
+                solver.SetJacobianFunction(
+                    Sub(t, y, fy, j)
+                        If jacobianBuffer Is Nothing Then
+                            jacobianBuffer = New Double(j.RowDimension - 1, j.ColumnDimension - 1) {}
+                        End If
+
+                        Call j.ToRectangular(jacobianBuffer)
+                        Call analytic(t, y.Array, jacobianBuffer)
+                        Call j.CopyFrom(jacobianBuffer)
+                    End Sub)
             End If
 
             result = solver.Solve(a, b, state, n, names)

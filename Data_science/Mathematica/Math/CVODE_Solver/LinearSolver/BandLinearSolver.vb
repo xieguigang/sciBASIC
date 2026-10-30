@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
 ' ============================================================================
@@ -136,8 +137,8 @@ Public Class BandLinearSolver
     ''' <summary>
     ''' 从稠密矩阵加载带状矩阵
     ''' </summary>
-    Public Sub LoadFromDense(A As DenseMatrix)
-        If A Is Nothing OrElse A.Rows <> _n OrElse A.Columns <> _n Then
+    Public Sub LoadFromDense(A As NumericMatrix)
+        If A Is Nothing OrElse A.RowDimension <> _n OrElse A.ColumnDimension <> _n Then
             Throw New ArgumentException("矩阵维度不匹配")
         End If
         Array.Clear(_bandMatrix, 0, _bandMatrix.Length)
