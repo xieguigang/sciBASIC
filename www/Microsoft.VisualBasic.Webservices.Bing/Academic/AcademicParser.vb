@@ -156,6 +156,17 @@ Namespace Bing.Academic
                 node = doc.QuerySelector("span.sb_count")
             End If
             If node Is Nothing Then
+                node = doc.QuerySelector("div.sb_count")
+            End If
+            If node Is Nothing Then
+                ' 最后兜底：在整个文档之中查找带有计数类名的元素
+                node = doc.Root _
+                    .Descendants() _
+                    .FirstOrDefault(Function(n)
+                                        Return n.HasClass("aca_algo_count") OrElse n.HasClass("sb_count")
+                                    End Function)
+            End If
+            If node Is Nothing Then
                 Return -1
             End If
 

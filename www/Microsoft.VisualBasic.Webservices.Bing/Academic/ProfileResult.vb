@@ -90,7 +90,41 @@ Namespace Bing.Academic
             Return article.URL.QueryStringParameters!id
         End Function
 
+        ''' <summary>
+        ''' 从一个详情信息表之中安全的读取一个字段：字段不存在的时候返回空字符串而不是抛出异常
+        ''' </summary>
+        Private Function Field(contents As Dictionary(Of String, NamedValue(Of String)), name As String) As String
+            Dim value As NamedValue(Of String) = Nothing
+
+            If contents Is Nothing OrElse String.IsNullOrEmpty(name) Then
+                Return ""
+            End If
+            If Not contents.TryGetValue(name, value) Then
+                Return ""
+            End If
+
+            Return If(value.Value, "")
+        End Function
+
+        ''' <summary>
+        ''' 拉取并且解析必应学术的文献详情页
+        ''' </summary>
+        ''' <param name="url">必应学术的详情页地址，形如 https://cn.bing.com/academic/profile?id=...</param>
+        ''' <param name="refer">引用页地址</param>
+        ''' <returns>
+        ''' 解析出来的文献详细信息；如果给定的地址不是一个必应学术的详情页地址，
+        ''' 或者页面之上没有解析到任何有效的信息，则返回 <c>Nothing</c>。
+        ''' </returns>
         Public Function GetProfile(url As String, Optional refer$ = Nothing) As ArticleProfile
+            If String.IsNullOrWhiteSpace(url) Then
+                Return Nothing
+            End If
+            If url.IndexOf("/academic/profile", StringComparison.OrdinalIgnoreCase) < 0 Then
+                ' 只有必应学术的详情页才可以被这个函数解析，
+                ' 搜索结果页面之上也存在直接指向出版商网站的网页型结果
+                Return Nothing
+            End If
+
             Dim html$ = url.GET(refer:=refer) _
                 .RemovesCSSstyles _
                 .RemovesImageLinks _
@@ -111,12 +145,12 @@ Namespace Bing.Academic
                 .Matches(htmlLink) _
                 .Select(AddressOf GetTarget) _
                 .ToArray
-            Dim abstract$ = r.Match(html, "<span title="".+?"">", RegexICSng) _
+            Dim abstractAttrs = r.Match(html, "<span title="".+?"">", RegexICSng) _
                 .Value _
                 .TagAttributes _
-                .Where(Function(t) t.Name.TextEquals("title")) _
-                .FirstOrDefault _
-                .Value
+                .Where(Function(t) t.Name IsNot Nothing AndAlso t.Name.TextEquals("title")) _
+                .ToArray
+            Dim abstract As String = If(abstractAttrs.Length > 0, abstractAttrs(0).Value, "")
             Dim contents = r.Matches(html, "<div class=""b_hPanel"">.+?</div>", RegexICSng) _
                 .EachValue _
                 .Select(Function(key)
@@ -132,42 +166,38 @@ Namespace Bing.Academic
             Dim doi$
             Dim areas As Link()
 
-            If contents.Keys.Any(Function(fieldName) Not ASCII.IsASCIIString(fieldName)) Then
+            If contents.Keys.Any(Function(fieldName) fieldName IsNot Nothing AndAlso Not ASCII.IsASCIIString(fieldName)) Then
                 ' 中文的
-                time = contents("发表日期").Value.GetBetween("<div>", "</div>")
-                journal = contents("期　　刊").Value.GetBetween("<div>", "</div>").GetTarget
-                volumn = contents("卷　　号").Value.GetBetween("<div>", "</div>")
-                issue = contents("期　　号").Value.GetBetween("<div>", "</div>")
-                pageSpan = contents("页码范围").Value.GetBetween("<div>", "</div>")
-                doi = contents("DOI").Value.GetBetween("<div>", "</div>")
-                areas = contents("研究领域") _
-                    .Value _
+                time = Field(contents, "发表日期").GetBetween("<div>", "</div>")
+                journal = Field(contents, "期　　刊").GetBetween("<div>", "</div>").GetTarget
+                volumn = Field(contents, "卷　　号").GetBetween("<div>", "</div>")
+                issue = Field(contents, "期　　号").GetBetween("<div>", "</div>")
+                pageSpan = Field(contents, "页码范围").GetBetween("<div>", "</div>")
+                doi = Field(contents, "DOI").GetBetween("<div>", "</div>")
+                areas = Field(contents, "研究领域") _
                     .Matches("<a .+?</a>") _
                     .Select(AddressOf GetTarget) _
                     .ToArray
             Else
-                With contents
-                    ' English
-                    time = !Year.Value.GetBetween("<div>", "</div>")
-                    journal = !Journal.Value.GetBetween("<div>", "</div>").GetTarget
-                    volumn = !Volume.Value.GetBetween("<div>", "</div>")
-                    issue = !Issue.Value.GetBetween("<div>", "</div>")
-                    pageSpan = !Pages.Value.GetBetween("<div>", "</div>")
-                    doi = !DOI.Value.GetBetween("<div>", "</div>")
-                    areas = !Keywords _
-                        .Value _
-                        .Matches(htmlLink) _
-                        .Select(AddressOf GetTarget) _
-                        .ToArray
+                ' English
+                time = Field(contents, "Year").GetBetween("<div>", "</div>")
+                journal = Field(contents, "Journal").GetBetween("<div>", "</div>").GetTarget
+                volumn = Field(contents, "Volume").GetBetween("<div>", "</div>")
+                issue = Field(contents, "Issue").GetBetween("<div>", "</div>")
+                pageSpan = Field(contents, "Pages").GetBetween("<div>", "</div>")
+                doi = Field(contents, "DOI").GetBetween("<div>", "</div>")
+                areas = Field(contents, "Keywords") _
+                    .Matches(htmlLink) _
+                    .Select(AddressOf GetTarget) _
+                    .ToArray
 
-                    If abstract.StringEmpty Then
+                If abstract.StringEmpty Then
 
-                        ' 因为split之后，<div被去掉后会留下class=...>，StripHTMLTags会因为标记不完整而无法去除
-                        ' 所以需要在开头额外添加标签标记来完成html标签的删除
-                        abstract = ("<null " & !Introduction.Value.SplitBy("<div").Last) _
-                            .StripHTMLTags(stripBlank:=True)
-                    End If
-                End With
+                    ' 因为split之后，<div被去掉后会留下class=...>，StripHTMLTags会因为标记不完整而无法去除
+                    ' 所以需要在开头额外添加标签标记来完成html标签的删除
+                    abstract = ("<null " & Field(contents, "Introduction").SplitBy("<div").Last) _
+                        .StripHTMLTags(stripBlank:=True)
+                End If
             End If
 
             Dim source = Strings _
@@ -180,12 +210,19 @@ Namespace Bing.Academic
                 .Select(AddressOf GetTarget) _
                 .ToArray
 
-            Dim pubDate As Date
+            Dim pubDate As Date = Nothing
 
-            If time.IsPattern("\d+") Then
-                pubDate = New Date(time, 1, 1)
-            Else
-                pubDate = Date.Parse(time)
+            If Not String.IsNullOrWhiteSpace(time) Then
+                If time.IsPattern("\d+") Then
+                    Dim y As Integer
+
+                    If Integer.TryParse(time, y) AndAlso y >= 1 AndAlso y <= 9999 Then
+                        pubDate = New Date(y, 1, 1)
+                    End If
+                ElseIf Not Date.TryParse(time, pubDate) Then
+                    ' 页面之上的日期格式可能是任意的，解析不出来的时候不应该中断整个解析过程
+                    pubDate = Nothing
+                End If
             End If
 
             Return New ArticleProfile With {
