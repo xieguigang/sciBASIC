@@ -54,10 +54,12 @@ Public Module AnfisFitting
     ''' <remarks>
     ''' 定义域统计**只使用传入的数据**。做交叉验证时请对训练折调用本方法，
     ''' 不要用全量数据建模再把同一结构套到每一折上（那会泄漏验证折的分布信息）。
-    ''' 具体实现下沉在 <see cref="TskNetworkBuilder.CreateGrid"/>。
+    ''' 具体实现下沉在 <see cref="TskNetworkBuilder.Create"/>：它按
+    ''' <see cref="TskStructureOptions.RulePartition"/> 决定用网格划分还是散射划分
+    ''' （<c>Auto</c> 时网格装不下就自动切散射，因此 18 个输入这类配置也能落地）。
     ''' </remarks>
     Public Function CreateModel(x As Double()(), y As Double()(), Optional options As AnfisOptions = Nothing) As TskNetwork
-        Return TskNetworkBuilder.CreateGrid(x, y, options)
+        Return TskNetworkBuilder.Create(x, y, options)
     End Function
 
     ''' <summary>批量预测。</summary>
@@ -213,7 +215,12 @@ Public Module AnfisFitting
             .FeatureNames = CType(model.FeatureNames.Clone(), String())
         }
 
-        Call trimmed.SetPremiseParameters(model.GetPremiseParameters())
+        ' 散射划分的前提参数是「每规则 × 每输入」的高斯参数，条数随规则数变化：
+        ' SelectRules 已经把保留下来的规则中心/宽度一起搬过去了，这里再按旧模型的
+        ' 扁平向量整体覆盖会因为长度不等而抛异常。
+        If Not rules.IsScatter Then
+            Call trimmed.SetPremiseParameters(model.GetPremiseParameters())
+        End If
 
         Dim trainer As New AnfisHybridTrainer(trimmed, config)
         Dim result As AnfisFitResult = trainer.Train(x, y)

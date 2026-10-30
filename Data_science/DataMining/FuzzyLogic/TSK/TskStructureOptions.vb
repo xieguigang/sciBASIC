@@ -6,6 +6,33 @@ Imports System
 Namespace TSK
 
     ''' <summary>
+    ''' 规则划分方式。
+    ''' </summary>
+    ''' <remarks>
+    ''' <para>
+    ''' <see cref="Grid"/> 是经典做法：每个输入等距放 m 个模糊集，穷举 <c>m^n</c> 条规则。
+    ''' 规则可解释、前向可向量化，但规则数随输入维数指数增长（K=18 时 2^18 = 26 万条，无法落地）。
+    ''' </para>
+    ''' <para>
+    ''' <see cref="Scatter"/> 用聚类（scatter partitioning）：对训练样本聚 C 个簇，每簇一条规则，
+    ''' 每条规则对每个输入有自己的高斯中心/宽度，规则数只由 C 决定、与输入维数解耦，
+    ''' 因此可以支持十几个调控因子。代价是规则之间不再共享模糊集，可读性略差。
+    ''' </para>
+    ''' <para>
+    ''' <see cref="Auto"/> 在「网格装得下」时用 Grid、装不下时自动切 Scatter，
+    ''' 判定条件与 <c>MaxRules</c>/<c>MaxConsequentParams</c> 完全一致。
+    ''' </para>
+    ''' </remarks>
+    Public Enum RulePartitionKind
+        ''' <summary>网格装得下就用 <see cref="Grid"/>，否则用 <see cref="Scatter"/>。</summary>
+        Auto = 0
+        ''' <summary>网格划分（经典 TSK，<c>m^n</c> 条规则）。</summary>
+        Grid = 1
+        ''' <summary>散射划分（聚类，规则数 = 簇数）。</summary>
+        Scatter = 2
+    End Enum
+
+    ''' <summary>
     ''' TSK 网络的**结构**配置：输入/输出的命名、模糊划分方式与规模保护。
     ''' </summary>
     ''' <remarks>
@@ -43,6 +70,33 @@ Namespace TSK
         ''' <summary>分块处理的每块行数（控制临时内存与缓存命中率）。</summary>
         Public Property ChunkRows As Integer = 512
 
+        ''' <summary>规则划分方式，默认 <see cref="RulePartitionKind.Auto"/>。</summary>
+        Public Property RulePartition As RulePartitionKind = RulePartitionKind.Auto
+
+        ''' <summary>
+        ''' 散射划分的簇数（= 规则数上限），默认 48。
+        ''' </summary>
+        ''' <remarks>
+        ''' 实际规则数可能略小（空簇/退化簇会被丢弃）。簇数越多拟合越细，但结论参数
+        ''' <c>P = 簇数 ×(输入数+1)</c> 会同步增长，LSE 的成本是 <c>P²</c>。
+        ''' </remarks>
+        Public Property ScatterRuleCount As Integer = 48
+
+        ''' <summary>散射划分下每条规则最多保留的输入个数（默认 8）。</summary>
+        Public Property ScatterInputs As Integer = 8
+
+        ''' <summary>散射划分下每条规则至少保留的输入个数（默认 2）。</summary>
+        Public Property ScatterMinInputs As Integer = 2
+
+        ''' <summary>
+        ''' 散射划分下「某输入进入某规则」的门槛：簇中心相对全局均值的 z 分数绝对值
+        ''' 超过该值才会成为该规则的前件（默认 1.0）。
+        ''' </summary>
+        Public Property ScatterZThreshold As Double = 1.0
+
+        ''' <summary>散射划分聚类的随机种子（保证同输入同配置可复现）。</summary>
+        Public Property ScatterSeed As Integer = 0
+
         ''' <summary>规则数上限，超过直接报错（默认 1024，对应 n=6、m=4 的量级）。</summary>
         Public Property MaxRules As Integer = 1024
         ''' <summary>结论参数总数上限 <c>R*(n+1)</c>，超过直接报错（默认 4096）。</summary>
@@ -72,6 +126,22 @@ Namespace TSK
             End If
             If MaxConsequentParams <= 0 Then
                 Throw New ArgumentOutOfRangeException(NameOf(MaxConsequentParams), MaxConsequentParams, "the consequent parameter limit must be positive")
+            End If
+            If ScatterRuleCount <= 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(ScatterRuleCount), ScatterRuleCount, "the scatter rule count must be positive")
+            End If
+            If ScatterInputs <= 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(ScatterInputs), ScatterInputs, "the scatter input limit must be positive")
+            End If
+            If ScatterMinInputs <= 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(ScatterMinInputs), ScatterMinInputs, "the scatter minimum input count must be positive")
+            End If
+            If ScatterMinInputs > ScatterInputs Then
+                Throw New ArgumentOutOfRangeException(
+                    NameOf(ScatterMinInputs), ScatterMinInputs, "the scatter minimum input count must not exceed ScatterInputs")
+            End If
+            If ScatterZThreshold < 0.0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(ScatterZThreshold), ScatterZThreshold, "the scatter z threshold must not be negative")
             End If
 
             Return Me
