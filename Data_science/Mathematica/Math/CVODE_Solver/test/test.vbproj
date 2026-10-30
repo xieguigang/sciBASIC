@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="all.log" />
+    <None Remove="dbg.log" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- 本地求解器库自包含，仅引用它即可；外部项目引用会导致编译失败 -->
     <ProjectReference Include="..\Sundials.CVODE.vbproj" />
   </ItemGroup>
