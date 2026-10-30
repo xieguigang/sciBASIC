@@ -816,11 +816,11 @@ Namespace Compute
         ''' 批量图卷积的标量实现同样是这一形态，此处优先覆盖代谢网络中占比最大的 RK4 内核。
         ''' </para>
         ''' </remarks>
-        Public Overrides Function LtcRk4Batch(state As Tensor, input As Tensor,
-                                              weightRecurrent As Tensor, weightInput As Tensor, bias As Tensor,
-                                              weightGate As Tensor, weightGateInput As Tensor, biasGate As Tensor,
-                                              tauEff As Tensor, dt As Double, subSteps As Integer,
-                                              activation As Integer) As Boolean
+        Private Function LtcRk4BatchRowwise(state As Tensor, input As Tensor,
+                                            weightRecurrent As Tensor, weightInput As Tensor, bias As Tensor,
+                                            weightGate As Tensor, weightGateInput As Tensor, biasGate As Tensor,
+                                            tauEff As Tensor, dt As Double, subSteps As Integer,
+                                            activation As Integer) As Boolean
 
             If state Is Nothing OrElse input Is Nothing OrElse weightRecurrent Is Nothing OrElse
                weightInput Is Nothing OrElse tauEff Is Nothing OrElse
@@ -963,6 +963,228 @@ Namespace Compute
         End Function
 
 #End Region
+
+        ''' <summary>
+        ''' LTC 的 RK4 批量前向（分块 GEMM 形态）。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 按行的实现会在每一行都完整读一遍 <c>Wrec(m×m)</c> 与 <c>Win(n×m)</c>：
+        ''' m≈8130、n≈3401 时每个 stage 的权重流量是 <c>B·(m²+n·m)·8B</c>，在 8 细胞时已约 4 GB，
+        ''' 完全是内存带宽瓶颈。
+        ''' </para>
+        ''' <para>
+        ''' 这里把批内 8 行作为一组：固定输入维度 k 之后，对组内所有行复用同一行权重，
+        ''' 使权重流量降为原来的 1/8；组内的累加缓冲（8×m 个 double，约 520 KB）驻留在 L2，
+        ''' 不会被反复换出。组与组之间互不相关，因此可以并行。
+        ''' </para>
+        ''' <para>
+        ''' 数学定义与 <see cref="TensorComputeBase.LtcRk4Batch"/> 完全一致，只有求和次序不同。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function LtcRk4Batch(state As Tensor, input As Tensor,
+                                              weightRecurrent As Tensor, weightInput As Tensor, bias As Tensor,
+                                              weightGate As Tensor, weightGateInput As Tensor, biasGate As Tensor,
+                                              tauEff As Tensor, dt As Double, subSteps As Integer,
+                                              activation As Integer) As Boolean
+
+            If state Is Nothing OrElse input Is Nothing OrElse weightRecurrent Is Nothing OrElse
+               weightInput Is Nothing OrElse tauEff Is Nothing OrElse
+               state.Rank <> 2 OrElse input.Rank <> 2 Then
+
+                Return MyBase.LtcRk4Batch(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+
+            Dim batch As Integer = state.Shape(0)
+            Dim m As Integer = state.Shape(1)
+            Dim nIn As Integer = input.Shape(1)
+
+            If input.Shape(0) <> batch OrElse subSteps < 1 Then
+                Return MyBase.LtcRk4Batch(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+
+            ' 小批量直接走按行实现：分块与并行的调度开销大于收益
+            ' （实测 8/32 行时两者持平或按行略快；≥64 行时权重复用才开始摊薄开销）
+            If batch < 64 Then
+                Return LtcRk4BatchRowwise(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+
+            Dim h As Double() = state.Data
+            Dim u As Double() = input.Data
+            Dim wrec As Double() = weightRecurrent.Data
+            Dim win As Double() = weightInput.Data
+            Dim bdv As Double() = If(bias Is Nothing, Nothing, bias.Data)
+            Dim wg As Double() = If(weightGate Is Nothing, Nothing, weightGate.Data)
+            Dim wgi As Double() = If(weightGateInput Is Nothing, Nothing, weightGateInput.Data)
+            Dim bgv As Double() = If(biasGate Is Nothing, Nothing, biasGate.Data)
+            Dim tau As Double() = tauEff.Data
+            Dim hasGate As Boolean = wg IsNot Nothing AndAlso wgi IsNot Nothing
+
+            Dim dtStep As Double = dt / subSteps
+            Dim half As Double = 0.5 * dtStep
+            Dim invTau As Double() = New Double(m - 1) {}
+
+            For i As Integer = 0 To m - 1
+                invTau(i) = 1.0 / tau(i)
+            Next
+
+            Dim total As Integer = batch * m
+            Dim shArr As Double() = New Double(total - 1) {}
+            Dim skArr As Double() = New Double(4 * total - 1) {}
+
+            Call Array.Copy(h, shArr, total)
+
+            Const blockSize As Integer = 8
+            Dim blocks As Integer = (batch + blockSize - 1) \ blockSize
+
+            Dim body As Func(Of Integer, System.Threading.Tasks.ParallelLoopState, BlockWorkspace, BlockWorkspace) =
+                Function(blk As Integer, loopState As System.Threading.Tasks.ParallelLoopState, ws As BlockWorkspace) As BlockWorkspace
+                    Dim b0 As Integer = blk * blockSize
+                    Dim cnt As Integer = System.Math.Min(blockSize, batch - b0)
+                    Dim z As Double() = ws.z
+                    Dim zg As Double() = ws.zg
+                    Dim sw As Double() = ws.sw
+
+                    For s As Integer = 1 To subSteps
+                        For lb As Integer = 0 To cnt - 1
+                            Call Array.Copy(shArr, (b0 + lb) * m, sw, lb * m, m)
+                        Next
+
+                        For stage As Integer = 0 To 3
+                            For lb As Integer = 0 To cnt - 1
+                                If bdv Is Nothing Then
+                                    Call Array.Clear(z, lb * m, m)
+                                Else
+                                    Call Array.Copy(bdv, 0, z, lb * m, m)
+                                End If
+
+                                If hasGate Then
+                                    If bgv Is Nothing Then
+                                        Call Array.Clear(zg, lb * m, m)
+                                    Else
+                                        Call Array.Copy(bgv, 0, zg, lb * m, m)
+                                    End If
+                                End If
+                            Next
+
+                            ' 循环权重：固定 k，组内所有行复用 Wrec 的第 k 行
+                            For k As Integer = 0 To m - 1
+                                Dim wOff As Integer = k * m
+
+                                For lb As Integer = 0 To cnt - 1
+                                    Dim coef As Double = sw(lb * m + k)
+
+                                    If coef <> 0.0 Then
+                                        Call Axpy(coef, wrec, wOff, z, lb * m, m)
+
+                                        If hasGate Then
+                                            Call Axpy(coef, wg, wOff, zg, lb * m, m)
+                                        End If
+                                    End If
+                                Next
+                            Next
+
+                            ' 输入权重：固定 j，组内所有行复用 Win 的第 j 行
+                            For j As Integer = 0 To nIn - 1
+                                Dim wOff As Integer = j * m
+
+                                For lb As Integer = 0 To cnt - 1
+                                    Dim coef As Double = u((b0 + lb) * nIn + j)
+
+                                    If coef <> 0.0 Then
+                                        Call Axpy(coef, win, wOff, z, lb * m, m)
+
+                                        If hasGate Then
+                                            Call Axpy(coef, wgi, wOff, zg, lb * m, m)
+                                        End If
+                                    End If
+                                Next
+                            Next
+
+                            For lb As Integer = 0 To cnt - 1
+                                Dim rowOff As Integer = (b0 + lb) * m
+                                Dim zOff As Integer = lb * m
+                                Dim sOff As Integer = stage * total + rowOff
+
+                                For i As Integer = 0 To m - 1
+                                    Dim decay As Double = invTau(i)
+
+                                    If hasGate Then
+                                        decay += 1.0 / (1.0 + std.Exp(-zg(zOff + i)))
+                                    End If
+
+                                    skArr(sOff + i) = decay * (CellActivation.Apply(z(zOff + i), activation) - sw(zOff + i))
+                                Next
+                            Next
+
+                            If stage < 3 Then
+                                Dim scale As Double = If(stage = 2, dtStep, half)
+
+                                For lb As Integer = 0 To cnt - 1
+                                    Dim rowOff As Integer = (b0 + lb) * m
+                                    Dim sOff As Integer = stage * total + rowOff
+
+                                    For i As Integer = 0 To m - 1
+                                        sw(lb * m + i) = shArr(rowOff + i) + scale * skArr(sOff + i)
+                                    Next
+                                Next
+                            End If
+                        Next
+
+                        For lb As Integer = 0 To cnt - 1
+                            Dim rowOff As Integer = (b0 + lb) * m
+
+                            For i As Integer = 0 To m - 1
+                                shArr(rowOff + i) += (dtStep / 6.0) * (
+                                    skArr(rowOff + i) + 2.0 * skArr(total + rowOff + i) +
+                                    2.0 * skArr(2 * total + rowOff + i) + skArr(3 * total + rowOff + i))
+                            Next
+                        Next
+                    Next
+
+                    Return ws
+                End Function
+
+            If blocks > 1 Then
+                Call tpl.Parallel.For(0, blocks,
+                    Function() New BlockWorkspace(blockSize, m),
+                    body,
+                    Sub(ws)
+                    End Sub)
+            Else
+                Dim ws As New BlockWorkspace(blockSize, m)
+
+                For blk As Integer = 0 To blocks - 1
+                    Call body(blk, Nothing, ws)
+                Next
+            End If
+
+            Call Array.Copy(shArr, h, total)
+
+            Call state.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 分块 RK4 的工作区：组内累加缓冲 + 组内求值状态
+        ''' </summary>
+        Private Class BlockWorkspace
+
+            Public ReadOnly z As Double()
+            Public ReadOnly zg As Double()
+            Public ReadOnly sw As Double()
+
+            Sub New(blockSize As Integer, m As Integer)
+                z = New Double(blockSize * m - 1) {}
+                zg = New Double(blockSize * m - 1) {}
+                sw = New Double(blockSize * m - 1) {}
+            End Sub
+
+        End Class
 
         ''' <summary>
         ''' RK4 单行积分的工作区（按线程复用，避免批内每行都分配）
