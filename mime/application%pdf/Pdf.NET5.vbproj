@@ -178,7 +178,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

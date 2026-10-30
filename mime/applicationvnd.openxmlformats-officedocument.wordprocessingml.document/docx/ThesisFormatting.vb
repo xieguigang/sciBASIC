@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::08f7f0c9c233909672caab35ef98fde3, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\ThesisFormatting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 350
-    '    Code Lines: 212 (60.57%)
-    ' Comment Lines: 94 (26.86%)
-    '    - Xml Docs: 35.11%
-    ' 
-    '   Blank Lines: 44 (12.57%)
-    '     File Size: 16.28 KB
+' Summaries:
 
 
-    ' Class ThesisFormatting
-    ' 
-    '     Properties: BlockquoteStyle, BodyStyle, CaptionStyle, ChineseBodyFont, ChineseHeadingFont
-    '                 CodeStyle, Heading1Style, Heading2Style, Heading3Style, Heading4Style
-    '                 Heading5Style, Heading6Style, LatinFont, MarginBottom, MarginLeft
-    '                 MarginRight, MarginTop, PageHeight, PageWidth, ReferenceStyle
-    '                 Table, TableTextStyle, TitleStyle, UseThreeLineTable
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ApplyTo
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 350
+'    Code Lines: 212 (60.57%)
+' Comment Lines: 94 (26.86%)
+'    - Xml Docs: 35.11%
+' 
+'   Blank Lines: 44 (12.57%)
+'     File Size: 16.28 KB
+
+
+' Class ThesisFormatting
+' 
+'     Properties: BlockquoteStyle, BodyStyle, CaptionStyle, ChineseBodyFont, ChineseHeadingFont
+'                 CodeStyle, Heading1Style, Heading2Style, Heading3Style, Heading4Style
+'                 Heading5Style, Heading6Style, LatinFont, MarginBottom, MarginLeft
+'                 MarginRight, MarginTop, PageHeight, PageWidth, ReferenceStyle
+'                 Table, TableTextStyle, TitleStyle, UseThreeLineTable
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ApplyTo
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -86,6 +86,8 @@
 '   doc.WriteBlocks(blocks)
 '   doc.Save("thesis.docx")
 ' ============================================================================
+
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 
 ''' <summary>
 ''' 学位论文主题格式对象。默认内置《江南大学研究生学位论文要求及格式规范（2025年修订）》

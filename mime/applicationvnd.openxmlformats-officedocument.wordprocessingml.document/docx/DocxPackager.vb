@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::44a6bd00fa4355ab1185cf278f633da8, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\DocxPackager.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 383
-    '    Code Lines: 268 (69.97%)
-    ' Comment Lines: 69 (18.02%)
-    '    - Xml Docs: 26.09%
-    ' 
-    '   Blank Lines: 46 (12.01%)
-    '     File Size: 21.23 KB
+' Summaries:
 
 
-    ' Class DocxPackager
-    ' 
-    '     Function: BuildAppProps, BuildContentTypes, BuildCoreProps, BuildDocumentRels, BuildDocumentXml
-    '               BuildRootRels, BuildSettingsXml, BuildStylesXml, GetImageContentType, JcVal
-    '               PtToTwip, XEsc
-    ' 
-    '     Sub: Save, WriteEntry
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 383
+'    Code Lines: 268 (69.97%)
+' Comment Lines: 69 (18.02%)
+'    - Xml Docs: 26.09%
+' 
+'   Blank Lines: 46 (12.01%)
+'     File Size: 21.23 KB
+
+
+' Class DocxPackager
+' 
+'     Function: BuildAppProps, BuildContentTypes, BuildCoreProps, BuildDocumentRels, BuildDocumentXml
+'               BuildRootRels, BuildSettingsXml, BuildStylesXml, GetImageContentType, JcVal
+'               PtToTwip, XEsc
+' 
+'     Sub: Save, WriteEntry
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,6 +76,7 @@ Imports System.Globalization
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 
 ''' <summary>
 ''' .docx 文件打包器。
