@@ -9,6 +9,10 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj" />

@@ -18,6 +18,10 @@
     <ApplicationIcon>3mf.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
