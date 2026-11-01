@@ -7,6 +7,10 @@
     <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj" />

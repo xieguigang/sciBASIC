@@ -60,7 +60,7 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.MIME.application.pdf.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>

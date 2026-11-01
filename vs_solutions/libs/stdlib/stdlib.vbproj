@@ -7,6 +7,10 @@
     <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\..\Microsoft.VisualBasic.Drawing\src\Microsoft.VisualBasic.Drawing\Microsoft.VisualBasic.Drawing.vbproj" />
     <ProjectReference Include="..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />

@@ -17,6 +17,10 @@
     <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <!-- the xunit project lives in a sub folder; it must not be globbed into this assembly -->
   <ItemGroup>
     <Compile Remove="test\**" />
