@@ -1,5 +1,6 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports sysmath = System.Math
 
 ''' <summary>
 ''' 推理回归：用 <c>resources/model</c> 下的真实 XGBoost 模型文件，
@@ -124,4 +125,18 @@ Public Module PredictorRegression
         Call DebugAudit.Check(result.outliers = 0,
             $"{label}: {result.outliers} 个输出超出容差 {tolerance:G3}（最大偏差 {result.maxDiff:G6}）")
     End Sub
+
+    Private Function previewOf(expected As Double()(), actual As Double()()) As String
+        If expected.Length = 0 OrElse actual.Length = 0 Then
+            Return "<empty>"
+        End If
+
+        Dim n As Integer = sysmath.Min(expected(0).Length, actual(0).Length)
+
+        If n = 0 Then
+            Return "<empty>"
+        End If
+
+        Return $"{expected(0)(0):G6} / 实际={actual(0)(0):G6}"
+    End Function
 End Module
