@@ -1,6 +1,7 @@
 Imports System.Buffers
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports par = System.Threading.Tasks.Parallel
 Imports sysmath = System.Math
 Imports taskParallel = System.Threading.Tasks.ParallelOptions
@@ -132,34 +133,47 @@ Namespace train.kernels
                 End If
             Next
 
-            Dim options As New taskParallel With {
-                .MaxDegreeOfParallelism = If(numThread <= 0, -1, numThread)
-            }
-            Dim sync As New Object()
+            Dim numericCount As Integer = numericCols.Count
 
-            If numericCols.Count > 0 Then
-                Call par.For(0, numericCols.Count, options,
-                    Sub(ci As Integer)
-                        Dim local As SplitCandidate() = New SplitCandidate(nodeCount - 1) {}
+            If numericCount > 0 Then
+                ' 每列写自己的候选数组，最后串行归约：
+                ' 1) 去掉逐列 SyncLock 遍历全部节点的竞争点；
+                ' 2) 归约顺序固定，结果与线程调度无关（比旧实现更可复现）。
+                Dim locals As SplitCandidate()() = New SplitCandidate(numericCount - 1)() {}
 
-                        For i As Integer = 0 To nodeCount - 1
-                            local(i) = SplitCandidate.NoSplit
-                        Next
+                If numericCount = 1 OrElse Not SimdOptions.IsActive OrElse numThread = 1 Then
 
-                        Call ScanNumericColumn(nodes, slotIndex, partitioner, numericCols(ci), grad, hess, mask, local)
+                    For ci As Integer = 0 To numericCount - 1
+                        locals(ci) = scanColumn(nodes, slotIndex, partitioner, numericCols(ci), grad, hess, mask, nodeCount)
+                    Next
+                Else
+                    ' 注意：回调第二个参数是**开区间终点**（exclusive），不是长度
+                    Call SimdParallel.ForRange(numericCount,
+                        Sub(start As Integer, ends As Integer)
 
-                        SyncLock sync
-
-                            For i As Integer = 0 To nodeCount - 1
-
-                                If local(i).HasSplit AndAlso
-                                    (Not best(i).HasSplit OrElse local(i).Gain > best(i).Gain) Then
-
-                                    best(i) = local(i)
-                                End If
+                            For ci As Integer = start To ends - 1
+                                locals(ci) = scanColumn(nodes, slotIndex, partitioner, numericCols(ci), grad, hess, mask, nodeCount)
                             Next
-                        End SyncLock
-                    End Sub)
+                        End Sub,
+                        minLength:=1)
+                End If
+
+                For ci As Integer = 0 To numericCount - 1
+                    Dim local As SplitCandidate() = locals(ci)
+
+                    If local Is Nothing Then
+                        Continue For
+                    End If
+
+                    For i As Integer = 0 To nodeCount - 1
+
+                        If local(i).HasSplit AndAlso
+                            (Not best(i).HasSplit OrElse local(i).Gain > best(i).Gain) Then
+
+                            best(i) = local(i)
+                        End If
+                    Next
+                Next
             End If
 
             ' 类别列通常很少，串行处理（内部按节点循环）
@@ -211,6 +225,25 @@ Namespace train.kernels
             End If
 
             Return 0.5 * bestGain - gamma
+        End Function
+
+        ''' <summary>
+        ''' 单列扫描：分配本列独享的候选数组并完成 <see cref="Scan"/>
+        ''' </summary>
+        Private Function scanColumn(nodes As List(Of BuildNode), slotIndex As Integer(),
+                                    partitioner As RowPartitioner, feature As Integer,
+                                    grad As Double(), hess As Double(), mask As Boolean(),
+                                    nodeCount As Integer) As SplitCandidate()
+
+            Dim local As SplitCandidate() = New SplitCandidate(nodeCount - 1) {}
+
+            For i As Integer = 0 To nodeCount - 1
+                local(i) = SplitCandidate.NoSplit
+            Next
+
+            Call ScanNumericColumn(nodes, slotIndex, partitioner, feature, grad, hess, mask, local)
+
+            Return local
         End Function
 
         ''' <summary>

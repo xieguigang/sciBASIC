@@ -1,4 +1,5 @@
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace train
@@ -67,8 +68,6 @@ Namespace train.kernels
         ''' </summary>
         Private Const MAX_DEPTH_HARD_LIMIT As Integer = 30
 
-        Friend Shared ReadOnly DebugSplit As Boolean = Environment.GetEnvironmentVariable("XGB_DEBUG_SPLIT") = "1"
-
         Public Sub New(columns As ColumnBlock, lambda As Double, gamma As Double, maxDepth As Integer,
                        minChildWeight As Double, minSamples As Integer,
                        method As TreeMethod, maxBin As Integer, numThread As Integer)
@@ -120,6 +119,7 @@ Namespace train.kernels
             While alive.Count > 0
                 Dim candidates As SplitCandidate() = finder.FindAll(alive, partitioner, grad, hess, mask, colSelected)
                 Dim nextAlive As New List(Of BuildNode)()
+                Dim created As New List(Of BuildNode)()
 
                 For i As Integer = 0 To alive.Count - 1
                     Dim node = alive(i)
@@ -157,42 +157,23 @@ Namespace train.kernels
 
                     Call partitioner.Split(node.Id, leftNode.Id, rightNode.Id, nanId, assign)
 
-                    If DebugSplit Then
-                        Dim total As Integer = partitioner.RowsOf(leftNode.Id).Count +
-                                               partitioner.RowsOf(rightNode.Id).Count +
-                                               If(nanNode Is Nothing, 0, partitioner.RowsOf(nanNode.Id).Count)
-
-                        If total <> node.NSamples Then
-                            Call Console.Error.WriteLine($"[debug-split] node={node.Id} n={node.NSamples} -> {total}")
-                        End If
-                    End If
-
-                    Call computeStats(leftNode, partitioner, grad, hess, mask)
-                    Call computeStats(rightNode, partitioner, grad, hess, mask)
+                    ' 统计推迟到本层循环结束后并行执行：新建节点的行集合互不相交
+                    Call created.Add(leftNode)
+                    Call created.Add(rightNode)
 
                     If nanNode IsNot Nothing Then
-                        Call computeStats(nanNode, partitioner, grad, hess, mask)
+                        Call created.Add(nanNode)
                     End If
+                Next
 
-                    If shouldStop(leftNode) Then
-                        Call makeLeaf(leftNode)
+                Call computeStatsAll(created, partitioner, grad, hess, mask)
+
+                For Each child As BuildNode In created
+
+                    If shouldStop(child) Then
+                        Call makeLeaf(child)
                     Else
-                        Call nextAlive.Add(leftNode)
-                    End If
-
-                    If shouldStop(rightNode) Then
-                        Call makeLeaf(rightNode)
-                    Else
-                        Call nextAlive.Add(rightNode)
-                    End If
-
-                    If nanNode IsNot Nothing Then
-
-                        If shouldStop(nanNode) Then
-                            Call makeLeaf(nanNode)
-                        Else
-                            Call nextAlive.Add(nanNode)
-                        End If
+                        Call nextAlive.Add(child)
                     End If
                 Next
 
@@ -305,6 +286,39 @@ Namespace train.kernels
             node.Hess = h
             node.HessAll = hall
             node.NSamples = count
+        End Sub
+
+        ''' <summary>
+        ''' 并行统计一批新建节点的梯度/海森和。
+        '''
+        ''' 新建节点的行集合互不相交，因此各节点可以完全并行地累加，没有共享写入；
+        ''' 旧实现把这一步放在逐节点分裂的循环里串行执行，是每层最主要的串行段之一。
+        ''' </summary>
+        Private Sub computeStatsAll(created As List(Of BuildNode), partitioner As RowPartitioner,
+                                    grad As Double(), hess As Double(), mask As Boolean())
+
+            If created.Count = 0 Then
+                Return
+            End If
+
+            If created.Count = 1 OrElse Not SimdOptions.IsActive OrElse numThread = 1 Then
+
+                For Each node As BuildNode In created
+                    Call computeStats(node, partitioner, grad, hess, mask)
+                Next
+
+                Return
+            End If
+
+            ' 注意：回调第二个参数是**开区间终点**（exclusive），不是长度
+            Call SimdParallel.ForRange(created.Count,
+                Sub(start As Integer, ends As Integer)
+
+                    For i As Integer = start To ends - 1
+                        Call computeStats(created(i), partitioner, grad, hess, mask)
+                    Next
+                End Sub,
+                minLength:=4)
         End Sub
 
         Private Function shouldStop(node As BuildNode) As Boolean

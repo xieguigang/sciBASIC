@@ -97,6 +97,38 @@ Console.WriteLine($"best iteration = {gbm.bestIteration}, trees = {gbm.trees.Cou
 > `tree_method=Hist` 通过分桶压缩分裂搜索空间，在高基数（连续型、取值很多）特征上更快，
 > 但会引入量化误差。默认仍是 `Exact`，以保证与既有模型/基线的数值一致。
 
+## SIMD 加速
+
+热路径默认走 `Microsoft.VisualBasic.Core` 的 SIMD 算子（`SimdIntrinsics` FMA /
+`SimdMath` 向量化 `exp` / `SimdReduce` / `SimdParallel`）。可观测性与开关：
+
+```vbnet
+' 训练日志会打印一行能力信息，例如：
+' SIMD=on,fma=on,avx2=on,vecWidth=4,fastExp=on,minVec=8,minParallel=4096,cpus=24
+Console.WriteLine(SimdOptions.Describe())
+
+' 关闭 SIMD，退回纯标量实现（用于数值对照或排查硬件问题）
+SimdOptions.UseSimd = False
+```
+
+环境变量（无需改代码）：
+
+| 变量 | 作用 |
+|---|---|
+| `XGB_SIMD=0` | 全局关闭 SIMD 与并行算子，退回标量实现 |
+| `XGB_SIMD_FASTEXP=0` | 关闭多项式近似 `exp`（改用 `System.Math.Exp`，精度更高但更慢） |
+
+精度口径（测试 `SimdPrecision` 实测）：
+
+- 近似 `exp` 相对误差 `1.53E-15`（z ∈ [-40, 0]），因此 `FastExp` 默认开启；
+- 多累加器求和的重结合误差 `3.36E-14`，会让**极接近**的两个候选切分点交换胜负，
+  端到端 loss 因此有 1e-4 量级的差异——属离散分裂选择的固有放大，不是数值错误；
+- 需要与历史结果逐位一致的场景，请设置 `XGB_SIMD=0`。
+
+并行度提示：训练是流式访存内核，加速比会先撞内存带宽墙。开发机（24 逻辑核）上
+`num_thread=8` 即饱和，`32/64` 反而略慢；请在自己机器上用 `SimdBenchmark` 的
+线程扩展性输出确认拐点，再决定线上 `num_thread`。
+
 ## 回归与基准测试
 
 ```bash

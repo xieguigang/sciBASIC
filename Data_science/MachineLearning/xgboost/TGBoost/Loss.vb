@@ -27,6 +27,28 @@ Namespace train
         End Sub
 
         ''' <summary>
+        ''' 把梯度/海森写入**调用方提供的缓冲**（不重新分配），可附带一块复用的暂存区。
+        '''
+        ''' 与 <see cref="grad_hess"/> 的区别：后者通过 <c>ByRef</c> 换掉数组引用，
+        ''' 每轮都会产生 2 个 <c>N</c> 长的新数组；训练主循环改为复用
+        ''' <see cref="kernels.SimdWorkspace"/> 缓冲后，GC 压力与内存带宽都更低。
+        ''' </summary>
+        ''' <param name="pred"></param>
+        ''' <param name="label"></param>
+        ''' <param name="gradient">输出缓冲（长度 &gt;= 样本数）</param>
+        ''' <param name="hessian">输出缓冲（长度 &gt;= 样本数）</param>
+        ''' <param name="workspace">可复用的暂存区，可为 Nothing</param>
+        Friend Overridable Sub grad_hess_with(pred As Double(), label As Double(),
+                                             gradient As Double(), hessian As Double(),
+                                             workspace As kernels.SimdWorkspace)
+            Dim g As Double() = grad(pred, label)
+            Dim h As Double() = hess(pred, label)
+
+            Call Array.Copy(g, gradient, std.Min(g.Length, gradient.Length))
+            Call Array.Copy(h, hessian, std.Min(h.Length, hessian.Length))
+        End Sub
+
+        ''' <summary>
         ''' 第 0 轮的初始预测值（加性模型的常数项）。
         ''' </summary>
         ''' <param name="label"></param>
@@ -185,10 +207,14 @@ Namespace train
 
         Public Overrides Function transform(pred As Double()) As Double()
             Dim ret = New Double(pred.Length - 1) {}
+            Dim n As Integer = pred.Length
 
-            For i As Integer = 0 To ret.Length - 1
-                ret(i) = clip(sigmoid(pred(i)))
+            For i As Integer = 0 To n - 1
+                ret(i) = pred(i)
             Next
+
+            ' 向量化 sigmoid + 裁剪；关闭 SIMD 时退化为逐元素标量
+            Call kernels.SimdOps.SigmoidClampedInPlace(ret, n, CLIP_LOW, CLIP_HIGH)
 
             Return ret
         End Function
@@ -216,15 +242,21 @@ Namespace train
 
         Public Overrides Sub grad_hess(pred As Double(), label As Double(),
                                        ByRef gradient As Double(), ByRef hessian As Double())
-            gradient = New Double(pred.Length - 1) {}
-            hessian = New Double(pred.Length - 1) {}
+            Dim n As Integer = pred.Length
 
-            For i As Integer = 0 To pred.Length - 1
-                Dim p As Double = sigmoid(pred(i))
+            gradient = New Double(n - 1) {}
+            hessian = New Double(n - 1) {}
 
-                gradient(i) = p - label(i)
-                hessian(i) = p * (1.0 - p)
-            Next
+            Call kernels.SimdOps.SigmoidGradHess(pred, label, gradient, hessian, n, Nothing)
+        End Sub
+
+        ''' <summary>
+        ''' 复用外部缓冲的梯度/海森计算（SIMD 路径需要一块 <c>exp(-|z|)</c> 暂存区）。
+        ''' </summary>
+        Friend Overrides Sub grad_hess_with(pred As Double(), label As Double(),
+                                            gradient As Double(), hessian As Double(),
+                                            workspace As kernels.SimdWorkspace)
+            Call kernels.SimdOps.SigmoidGradHess(pred, label, gradient, hessian, pred.Length, workspace)
         End Sub
 
         ''' <summary>

@@ -814,3 +814,73 @@ dotnet run --project test/test.vbproj -c Debug
 3. `routing:flat-vs-tree` —— 扁平树与 `TreeNode` 引用实现逐样本一致。
 
 这三条断言保留在测试工程中，作为后续改动的回归护栏。
+
+---
+
+## 10. SIMD 与并行算子优化
+
+在上一轮内核重构的基础上，把标量热循环替换为同仓 `Microsoft.VisualBasic.Core/src/Math/SIMD`
+提供的算子，并统一并行调度。所有 SIMD 调用收敛在 `TGBoost/kernels/SimdOps.vb` 一处，
+便于整体降级与精度控制。
+
+### 10.1 改造点
+
+| 位置 | 改造 |
+|---|---|
+| `TGBoost/SimdOptions.vb`（新增） | 策略开关：`UseSimd`、`FastExp`、`MinVectorLength`、`MinParallelLength`；`XGB_SIMD=0` / `XGB_SIMD_FASTEXP=0` 可全局切换；`Describe()` 供训练日志打印能力位 |
+| `TGBoost/kernels/SimdWorkspace.vb`（新增） | 每棵树复用的暂存缓冲（概率、叶分数），消除每轮 `New Double(N)` |
+| `TGBoost/kernels/SimdOps.vb`（新增） | 桥接层：`SigmoidGradHess`、`SigmoidClampedInPlace`、`Axpy`、`SumRange`、`SumFull`、`MaskMultiply`、`Fill`、`GatherLeafScores`、`Dot`、`DotSingle`；每个方法内部先判「启用 + 长度阈值」，否则走逐值等价的标量循环 |
+| `TGBoost/Loss.vb` | `LogisticLoss.grad_hess` 改为「一次 `exp(−\|z\|)` 区间约减 + 符号选择 + 向量乘加」同时产出 `grad`/`hess`；`transform` 走向量 sigmoid + 裁剪；新增 `grad_hess_with`（写入调用方缓冲，不再每轮换掉数组） |
+| `TGBoost/ClassList.vb` | `update_pred`：`gather 叶分数 → AxpyInPlace`（FMA）；`sampling`：掩码乘向量化；`initialize_pred`：块填充 |
+| `TGBoost/kernels/SplitFinderBase.vb` | 每列写**自己的**候选数组，末尾串行归约 → 去掉逐列 `SyncLock` 全节点合并（归约顺序固定，结果与线程调度无关）；调度改 `SimdParallel.ForRange` |
+| `TGBoost/kernels/TreeBuilder.vb` | `computeStats` 从「逐节点分裂循环内串行」改为「本层结束后按节点并行」（节点行集合互不相交，无共享写入） |
+| `TGBoost/kernels/FeatureBinning.vb` / `HistogramSplitFinder.vb` | 新增 `Bins16`（`UShort`）窄整型视图，`hist` 内层循环读桶号的访存减半 |
+| `TGBoost/kernels/FlatTree.vb` / `Predictor.vb` | 批量预测统一走 `SimdParallel.ForRange` / `ForEachRow`（带 `minLength` 门槛，小批量自动串行） |
+| `gbm/GBLinear.vb` | 稠密 `FVec` + 单输出组时，评分改用 `DotSingle`（`Vector(Of Single)` 4/8 路并行，NaN 车道按 0 处理，与标量语义一致） |
+
+### 10.2 精度实测
+
+| 项目 | 结果 | 门槛 |
+|---|---|---|
+| `SimdMath.ExpInPlace` vs `Math.Exp`（z ∈ [-40, 0]，100001 点） | 最大相对误差 **1.53E-15** | < 1E-12 |
+| `SimdReduce.Sum` vs 逐次累加（20 万随机数） | 相对偏差 **3.36E-14** | < 1E-12 |
+| SIMD / 标量两条训练路径（1200 行、10 轮） | loss `0.118539873` → `0.118513711`（rel **2.21E-4**），AUC 偏差 **0** | loss 绝对偏差 < 1E-3、AUC < 1E-4 |
+
+结论：**`FastExp` 可以默认开启**（13 阶多项式 + magic-round 在 double 上的误差已达机器精度量级）。
+
+端到端 loss 仍有 1e-4 量级差异，原因是**离散分裂选择对噪声的放大**：求和重结合带来的
+1e-14 差异足以让两个增益极接近的候选切点交换胜负，树结构一旦不同，损失差异就被放大。
+这不是数值错误，因此回归里考核的是「指标等价」而不是「结果逐位相同」。
+
+### 10.3 基准实测（开发机 24 逻辑核）
+
+数据集：8000 行 × 24 特征，12 轮，深度 5，`tree_method=Hist`。
+
+| 配置 | 耗时 |
+|---|---|
+| `simd-off`（纯标量，并行） | 108 ms |
+| `simd-on` | **62 ms**（**1.74×**） |
+| `num_thread=1` | 118 ms |
+| `num_thread=8` | 62 ms |
+| `num_thread=32` | 63 ms |
+| `num_thread=64` | 64 ms |
+
+关于「128 线程只用 48」的结论在本轮得到进一步印证：
+
+1. 8 线程即已饱和，32/64 线程反而略慢——训练是**流式访存**内核，
+   加速比首先撞到内存带宽墙，而不是核数；
+2. 并行度上限仍是「采样列数」（`SplitFinderBase.FindAll` 按列分块），
+   本轮把归约改成无锁，但没有改变工作项数量级——**要真正吃满 128 线程，
+   下一步必须把工作项扁平化为 (节点, 列)**，并让 `hist` 的列存进一步窄化
+   （`UShort` bin 已落地，可继续降到 `Byte`）。
+
+### 10.4 回归状态
+
+`dotnet run --project test/test.vbproj -c Debug` → **0 失败断言**，原有护栏全部保持：
+
+- 损失单调性：`0.411268 → 0.323268 → 0.268283 → 0.196809 → 0.147853`（与改造前一致）
+- 叶值最优性：25 片叶子全部满足 `-G/(H+λ)`（最大偏差 `2.2E-16`，来自求和重结合）
+- 扁平树 vs `TreeNode` 引用实现：不一致 0 处
+- 序列化往返 / 相同种子可复现：最大偏差 **0**
+- 类别分裂取值保真：40 个取值、0 个被截断
+- 推理回归 `gblinear`：最大偏差 `1.07E-07`

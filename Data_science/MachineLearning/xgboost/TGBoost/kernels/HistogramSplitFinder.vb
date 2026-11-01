@@ -31,6 +31,8 @@ Namespace train.kernels
             End If
 
             Dim bins = binning.Bins
+            ' 窄整型视图：桶数 <= 65535 时优先使用，减少内层循环的访存带宽
+            Dim bins16 = binning.Bins16
             Dim thresholds = binning.Thresholds
             Dim ids = columns.RowIds(ctx.Feature)
             Dim positions = ctx.Positions
@@ -59,7 +61,8 @@ Namespace train.kernels
                     Dim row As Integer = ids(pos)
 
                     If mask Is Nothing OrElse mask(row) Then
-                        Dim bin As Integer = bins(pos)
+                        Dim bin As Integer = If(bins16 IsNot Nothing, CInt(bins16(pos)), bins(pos))
+
                         binG(bin) += grad(row)
                         binH(bin) += hess(row)
                     End If

@@ -63,7 +63,7 @@
 #End Region
 
 Imports System.IO
-Imports sysparallel = System.Threading.Tasks.Parallel
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.config
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.gbm
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.learner
@@ -193,10 +193,11 @@ Public Class Predictor
 
         Dim ret As Double()() = New Double(rows.Length - 1)() {}
 
-        Call sysparallel.For(0, rows.Length,
+        Call SimdParallel.ForEachRow(rows.Length,
             Sub(i As Integer)
                 ret(i) = predict(rows(i), output_margin)
-            End Sub)
+            End Sub,
+            minLength:=64)
 
         Return ret
     End Function

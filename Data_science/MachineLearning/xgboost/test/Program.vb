@@ -24,9 +24,11 @@ Module Program
         Console.WriteLine($" 资源目录: {TestSupport.ResourcesRoot}")
         Console.WriteLine("==================================================")
 
+        Call runSuite("SIMD 精度", AddressOf SimdPrecision.Run)
         Call runSuite("推理回归", AddressOf PredictorRegression.Run)
         Call runSuite("训练回归", AddressOf TrainingRegression.Run)
         Call runSuite("性能基准", AddressOf Benchmark.Run)
+        Call runSuite("SIMD 基准", AddressOf SimdBenchmark.Run)
 
         Call DebugAudit.SaveReport(reportPath)
 

@@ -1,4 +1,5 @@
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports par = System.Threading.Tasks.Parallel
 Imports taskParallel = System.Threading.Tasks.ParallelOptions
 
@@ -223,21 +224,45 @@ Namespace train.kernels
         ''' <param name="numThread"></param>
         Public Shared Sub AccumulateAll(trees As FlatTree(), features As Single()(), output As Double(),
                                         scale As Double, numThread As Integer)
-            Dim options As New taskParallel With {
-                .MaxDegreeOfParallelism = If(numThread <= 0, -1, numThread)
-            }
+            Dim rows As Integer = features.Length
 
-            Call par.For(0, features.Length, options,
-                Sub(i As Integer)
-                    Dim row = features(i)
+            If rows = 0 Then
+                Return
+            End If
+
+            ' num_thread = 1 或数据量不足时串行；否则统一走 SimdParallel 的分块调度
+            ' （该入口没有 DOP 参数，num_thread > 1 时使用默认并行度）
+            If numThread = 1 OrElse Not SimdOptions.IsActive Then
+
+                For i As Integer = 0 To rows - 1
                     Dim sum As Double = 0
 
                     For t As Integer = 0 To trees.Length - 1
-                        sum += trees(t).Predict(row)
+                        sum += trees(t).Predict(features(i))
                     Next
 
                     output(i) += scale * sum
-                End Sub)
+                Next
+
+                Return
+            End If
+
+            ' 注意：回调第二个参数是**开区间终点**（exclusive）
+            Call SimdParallel.ForRange(rows,
+                Sub(start As Integer, ends As Integer)
+
+                    For i As Integer = start To ends - 1
+                        Dim row = features(i)
+                        Dim sum As Double = 0
+
+                        For t As Integer = 0 To trees.Length - 1
+                            sum += trees(t).Predict(row)
+                        Next
+
+                        output(i) += scale * sum
+                    Next
+                End Sub,
+                minLength:=SimdOptions.MinParallelLength)
         End Sub
     End Class
 End Namespace

@@ -265,7 +265,7 @@ Namespace train
             End If
 
             'Start learning
-            GBM.logger.info("TGBoost start training")
+            GBM.logger.info("TGBoost start training (" & SimdOptions.Describe() & ")")
 
             For i As Integer = 0 To num_boost_round - 1
 

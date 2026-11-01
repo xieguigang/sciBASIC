@@ -67,6 +67,32 @@ Namespace train
         Public grad As Double()
         Public hess As Double()
 
+        ''' <summary>
+        ''' 训练期复用的 SIMD 暂存缓冲（叶分数 gather、概率、采样掩码）
+        ''' </summary>
+        Private _workspace As kernels.SimdWorkspace
+        Private _mask As Double()
+
+        Private Function ensureWorkspace() As kernels.SimdWorkspace
+
+            If _workspace Is Nothing Then
+                _workspace = New kernels.SimdWorkspace()
+            End If
+
+            Call _workspace.Ensure(dataset_size)
+
+            Return _workspace
+        End Function
+
+        Private Function ensureMask() As Double()
+
+            If _mask Is Nothing OrElse _mask.Length <> dataset_size Then
+                _mask = New Double(dataset_size - 1) {}
+            End If
+
+            Return _mask
+        End Function
+
         Public Sub New(data As TrainData)
             dataset_size = data.dataset_size
             label = data.label
@@ -77,22 +103,46 @@ Namespace train
         End Sub
 
         Public Overridable Sub initialize_pred(first_round_pred As Double)
-            Arrays.fill(pred, first_round_pred)
+            Call kernels.SimdOps.Fill(pred, dataset_size, first_round_pred)
         End Sub
 
+        ''' <summary>
+        ''' 累加本棵树对预测值的贡献：<c>pred += eta * leaf_score</c>。
+        '''
+        ''' 改造点：先把「行 -&gt; 叶分数」gather 成连续缓冲，再用 FMA 就地乘加。
+        ''' 旧实现直接在循环里解引用 <see cref="corresponding_tree_node"/>，属于指针追逐，
+        ''' 向量化器无法展开。
+        ''' </summary>
+        ''' <param name="eta"></param>
         Public Overridable Sub update_pred(eta As Double)
-            For i = 0 To dataset_size - 1
-                Dim leaf = corresponding_tree_node(i)
+            Dim ws As kernels.SimdWorkspace = ensureWorkspace()
+            Dim buffer As Double() = ws.LeafScores
+            Dim hasLeaf As Boolean
 
-                If leaf IsNot Nothing Then
-                    pred(i) += eta * leaf.leaf_score
-                End If
-            Next
+            Call kernels.SimdOps.GatherLeafScores(corresponding_tree_node, buffer, dataset_size, hasLeaf)
+
+            If hasLeaf Then
+                Call kernels.SimdOps.Axpy(eta, buffer, pred)
+            End If
         End Sub
 
         Public Overridable Sub update_grad_hess(loss As Loss, scale_pos_weight As Double)
-            ' 一次产出梯度与海森：LogisticLoss 只做一次 sigmoid
-            Call loss.grad_hess(pred, label, grad, hess)
+            Call update_grad_hess_ws(loss, scale_pos_weight, Nothing)
+        End Sub
+
+        ''' <summary>
+        ''' 复用训练期缓冲计算梯度/海森（内部入口）。
+        ''' </summary>
+        ''' <param name="loss"></param>
+        ''' <param name="scale_pos_weight"></param>
+        ''' <param name="workspace">可复用的暂存区，可为 <c>Nothing</c></param>
+        Friend Sub update_grad_hess_ws(loss As Loss, scale_pos_weight As Double,
+                                       workspace As kernels.SimdWorkspace)
+            Dim ws As kernels.SimdWorkspace = If(workspace, ensureWorkspace())
+
+            Call ws.Ensure(dataset_size)
+            ' 一次产出梯度与海森：LogisticLoss 只做一次向量化 sigmoid
+            Call loss.grad_hess_with(pred, label, grad, hess, ws)
 
             If scale_pos_weight <> 1.0 Then
                 For i = 0 To dataset_size - 1
@@ -105,11 +155,31 @@ Namespace train
             End If
         End Sub
 
+        ''' <summary>
+        ''' 按行采样掩码缩放梯度/海森（掩码为 <c>1/0</c>）
+        ''' </summary>
+        ''' <param name="row_mask"></param>
         Public Overridable Sub sampling(row_mask As List(Of Double))
-            For i = 0 To dataset_size - 1
-                grad(i) *= row_mask(i)
-                hess(i) *= row_mask(i)
+            If row_mask Is Nothing Then
+                Return
+            End If
+
+            Dim mask As Double() = ensureMask()
+
+            For i As Integer = 0 To dataset_size - 1
+                mask(i) = row_mask(i)
             Next
+
+            Call sampling(mask)
+        End Sub
+
+        ''' <summary>
+        ''' 按行采样掩码缩放梯度/海森（掩码为 <c>1/0</c> 的连续数组）
+        ''' </summary>
+        ''' <param name="mask"></param>
+        Public Overridable Sub sampling(mask As Double())
+            Call kernels.SimdOps.MaskMultiply(grad, mask, dataset_size)
+            Call kernels.SimdOps.MaskMultiply(hess, mask, dataset_size)
         End Sub
 
         'TODO

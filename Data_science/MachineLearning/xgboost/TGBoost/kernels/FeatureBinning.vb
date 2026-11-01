@@ -16,6 +16,13 @@ Namespace train.kernels
         ''' </summary>
         Public ReadOnly Bins As Integer()
         ''' <summary>
+        ''' 桶号的窄整型视图（桶数 &lt; 65536 时非空）。
+        '''
+        ''' <c>hist</c> 的内层循环只读桶号，用 <c>UShort</c> 可把该列的访存带宽减半
+        ''' （训练时这一项是每层每样本每特征一次读）。
+        ''' </summary>
+        Public ReadOnly Bins16 As UShort()
+        ''' <summary>
         ''' 桶号 -&gt; 该桶内最大特征值
         ''' </summary>
         Public ReadOnly Thresholds As Single()
@@ -28,6 +35,16 @@ Namespace train.kernels
             Me.Bins = bins
             Me.Thresholds = thresholds
             Me.BucketCount = bucketCount
+
+            If bucketCount > 0 AndAlso bucketCount <= UShort.MaxValue AndAlso bins IsNot Nothing Then
+                Dim narrow As UShort() = New UShort(bins.Length - 1) {}
+
+                For i As Integer = 0 To bins.Length - 1
+                    narrow(i) = CUShort(bins(i))
+                Next
+
+                Me.Bins16 = narrow
+            End If
         End Sub
 
         ''' <summary>
