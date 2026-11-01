@@ -1,4 +1,4 @@
-﻿Imports sysmath = System.Math
+﻿Imports std = System.Math
 
 Namespace train
 
@@ -30,8 +30,8 @@ Namespace train
         ''' <param name="sampling_rate">采样率，会被裁剪到 [0, 1]</param>
         ''' <param name="seed">随机种子；<c>Nothing</c> 表示使用时间种子</param>
         Public Sub New(n As Integer, sampling_rate As Double, seed As Integer?)
-            Me.rowCount = sysmath.Max(n, 0)
-            Me.rate = If(Double.IsNaN(sampling_rate), 1.0, sysmath.Min(sysmath.Max(sampling_rate, 0.0), 1.0))
+            Me.rowCount = std.Max(n, 0)
+            Me.rate = If(Double.IsNaN(sampling_rate), 1.0, std.Min(std.Max(sampling_rate, 0.0), 1.0))
             Me.rand = If(seed.HasValue, New Random(seed.Value), New Random())
 
             Call buildMask()
@@ -97,14 +97,14 @@ Namespace train
         End Sub
 
         Public Sub New(n As Integer, sampling_rate As Double, seed As Integer?)
-            Dim total As Integer = sysmath.Max(n, 1)
-            Dim rate As Double = If(Double.IsNaN(sampling_rate), 1.0, sysmath.Min(sysmath.Max(sampling_rate, 0.0), 1.0))
+            Dim total As Integer = std.Max(n, 1)
+            Dim rate As Double = If(Double.IsNaN(sampling_rate), 1.0, std.Min(std.Max(sampling_rate, 0.0), 1.0))
 
             For i As Integer = 0 To total - 1
                 Call cols.Add(i)
             Next
 
-            Dim k As Integer = CInt(sysmath.Round(total * rate))
+            Dim k As Integer = CInt(std.Round(total * rate))
 
             If k < 1 Then
                 k = 1

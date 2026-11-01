@@ -121,8 +121,8 @@ Public Class Training
         tgb.predict(test).AsCharacter.SaveTo(file_output)
     End Sub
 
-    Public Shared Sub Main(ByVal args As String())
-        Call training()
-        Call testing()
-    End Sub
+    ' 注意：本类保留为「读取真实 CSV 并训练」的手工示例，其中的路径指向本地演示数据目录，
+    ' 不适合作为自动化测试入口。自动化回归请使用 Program.Main
+    ' （推理回归 / 训练回归 / 性能基准，结果由 DebugAudit 输出）。
+    ' 原 Main 入口已移除，避免与 Program.Main 形成双入口。
 End Class

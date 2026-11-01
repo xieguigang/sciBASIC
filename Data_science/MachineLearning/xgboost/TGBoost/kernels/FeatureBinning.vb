@@ -1,4 +1,4 @@
-Imports sysmath = System.Math
+Imports std = System.Math
 
 Namespace train.kernels
 
@@ -44,7 +44,7 @@ Namespace train.kernels
                 Return New FeatureBinning(bins, New Single() {}, 0)
             End If
 
-            Dim binCount As Integer = sysmath.Min(sysmath.Max(maxBin, 1), n)
+            Dim binCount As Integer = std.Min(std.Max(maxBin, 1), n)
             Dim stepSize As Double = n / CDbl(binCount)
             Dim current As Integer = 0
             Dim nextCut As Double = stepSize

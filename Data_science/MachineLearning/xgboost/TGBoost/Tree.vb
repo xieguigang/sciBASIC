@@ -115,7 +115,9 @@ Namespace train
                                    row_sampler As RowSampler, col_sampler As ColumnSampler)
 
             Dim mask As Boolean() = If(row_sampler Is Nothing, Nothing, row_sampler.Resample())
-            Dim colSelected As List(Of Integer) = Nothing
+            ' 注意：本文件 Imports 了 Microsoft.VisualBasic.Language，其中的 List(Of T)
+            ' 会遮蔽 System.Collections.Generic.List(Of T)，因此这里显式使用 BCL 类型。
+            Dim colSelected As System.Collections.Generic.List(Of Integer) = Nothing
 
             If col_sampler IsNot Nothing Then
                 Call col_sampler.shuffle()

@@ -5,10 +5,18 @@
     <RootNamespace>test</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;ARM32;x64</Platforms>
-    <StartupObject>test.Training</StartupObject>
     <Version>1.0.9753.4776</Version>
     <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <OptionStrict>Off</OptionStrict>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="resources\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />

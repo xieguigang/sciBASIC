@@ -110,7 +110,11 @@ Namespace tree
         End Function
 
         Friend Overridable Function default_left() As Boolean
-            Return CInt(CUInt(sindex_) >> 31) <> 0
+            ' 旧实现是 CInt(CUInt(sindex_) >> 31)：CUInt 是**有溢出检查**的转换，
+            ' 当 sindex_ 为负数（最高位 = default_left 标志）时会直接抛 OverflowException。
+            ' 该路径只在 `<RemoveIntegerChecks>true</RemoveIntegerChecks>` 的配置下才能工作，
+            ' Debug 构建加载任何模型都会崩溃。这里直接做位测试。
+            Return (sindex_ And Integer.MinValue) <> 0
         End Function
 
         Friend Overridable Function [next](feat As FVec) As Integer

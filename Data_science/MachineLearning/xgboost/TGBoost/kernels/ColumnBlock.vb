@@ -1,6 +1,5 @@
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language.Java
-Imports sysmath = System.Math
+Imports std = System.Math
 
 Namespace train.kernels
 
@@ -266,7 +265,7 @@ Namespace train.kernels
             Dim keys As Single() = New Single(rowCount - 1) {}
             Dim ids As Integer() = New Integer(rowCount - 1) {}
             Dim cursor As Integer = 0
-            Dim upper As Integer = sysmath.Min(rowCount, origin.Length) - 1
+            Dim upper As Integer = std.Min(rowCount, origin.Length) - 1
 
             For row As Integer = 0 To upper
                 Dim rowValues = origin(row)

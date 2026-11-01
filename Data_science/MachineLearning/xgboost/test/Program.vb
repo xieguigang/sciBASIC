@@ -1,128 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::f3308cdd32c5bbe290daeee48c4e3dc6, Data_science\MachineLearning\xgboost\test\Program.vb"
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 73
-    '    Code Lines: 46 (63.01%)
-    ' Comment Lines: 14 (19.18%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 13 (17.81%)
-    '     File Size: 3.03 KB
-
-
-    ' Module Program
-    ' 
-    '     Function: loadData
-    ' 
-    '     Sub: Main, predictAndLogLoss, predictLeafIndex
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MachineLearning
-Imports Microsoft.VisualBasic.MachineLearning.XGBoost
-Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
-Imports Microsoft.VisualBasic.Serialization.JSON
-
+''' <summary>
+''' xgboost 回归 / 基准测试入口（唯一入口）。
+'''
+''' 依次执行：
+''' 1. 推理回归（真实 XGBoost 模型 + 期望输出逐值比对）
+''' 2. 训练回归（收敛、早停回滚、序列化往返、类别保真、可复现性、exact/hist 一致性）
+''' 3. 性能基准（exact / hist / 串并行 / 预测吞吐）
+'''
+''' 所有断言与度量通过 <see cref="DebugAudit"/> 记录，最后输出 JSON 报告。
+''' </summary>
 Module Program
 
-    Public Sub Main(ByVal args As String())
-        Dim data As DMatrix = loadData()
-        Dim predictor As Predictor = New Predictor("E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\xgboost\test\resources\model\gbtree\v47\binary-logistic.model".Open)
-        predictAndLogLoss(predictor, data)
-        predictLeafIndex(predictor, data)
+    Public Function Main(args As String()) As Integer
+        Dim reportPath As String = Path.Combine(AppContext.BaseDirectory, "xgboost-test-report.json")
 
-        Pause()
-    End Sub
+        Call DebugAudit.Reset()
+        DebugAudit.MaxEvents = 16384
 
-    ''' <summary>
-    ''' Predicts probability and calculate its logarithmic loss using <seealsocref="Predictor"/>.
-    ''' </summary>
-    ''' <param name="predictor"> Predictor </param>
-    ''' <param name="data">      test data </param>
-    Friend Sub predictAndLogLoss(ByVal predictor As Predictor, ByVal data As DMatrix)
-        Dim sum As Double = 0
+        Console.WriteLine("==================================================")
+        Console.WriteLine(" xgboost 回归 / 基准测试")
+        Console.WriteLine($" 资源目录: {TestSupport.ResourcesRoot}")
+        Console.WriteLine("==================================================")
 
-        For Each pair As IntegerTagged(Of XGBoost.util.FVec) In data.enumerateData
-            Dim predicted As Double() = predictor.predict(pair.Value)
-            Dim predValue = Math.Min(Math.Max(predicted(0), 0.000000000000001), 1 - 0.000000000000001)
-            Dim actual As Integer = pair.Tag
-            sum = actual * Math.Log(predValue) + (1 - actual) * Math.Log(1 - predValue)
-        Next
+        Call runSuite("推理回归", AddressOf PredictorRegression.Run)
+        Call runSuite("训练回归", AddressOf TrainingRegression.Run)
+        Call runSuite("性能基准", AddressOf Benchmark.Run)
 
-        Dim logLoss = -sum / data.size
-        Console.WriteLine("Logloss: " & logLoss)
-    End Sub
+        Call DebugAudit.SaveReport(reportPath)
 
-    ''' <summary>
-    ''' Predicts leaf index of each tree.
-    ''' </summary>
-    ''' <param name="predictor"> Predictor </param>
-    ''' <param name="data"> test data </param>
-    Friend Sub predictLeafIndex(ByVal predictor As Predictor, ByVal data As DMatrix)
-        Dim count As i32 = 0
+        Console.WriteLine()
+        Console.WriteLine("==================================================")
+        Console.WriteLine($" 失败断言数: {DebugAudit.FailureCount}")
+        Console.WriteLine($" 测试报告:   {reportPath}")
+        Console.WriteLine("==================================================")
 
-        For Each pair As IntegerTagged(Of XGBoost.util.FVec) In data.enumerateData
-            Dim leafIndexes As Integer() = predictor.predictLeaf(pair.Value)
-            Console.Write("leafIndexes[{0:D}]: {1}{2}", ++count, (leafIndexes).GetJson, Environment.NewLine)
-        Next
-    End Sub
-
-    ''' <summary>
-    ''' Loads test data.
-    ''' </summary>
-    ''' <returns> test data </returns>
-    Friend Function loadData() As DMatrix
-        Dim handler = DMatrix.Builder
-
-        For Each line As String In "E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\xgboost\test\resources\data\agaricus.txt.0.test".ReadAllLines
-            Dim values = line.Split(" "c)
-            Dim map As New Dictionary(Of Integer, Single)()
-
-            For i = 1 To values.Length - 1
-                Dim pair = values(i).Split(":"c)
-                map(Integer.Parse(pair(0))) = Single.Parse(pair(1))
-            Next
-
-            handler.add(Integer.Parse(values(0)), XGBoost.util.FVecTransformer.fromMap(Of Single)(map))
-        Next
-
-        Return handler.getMatrix()
+        Return DebugAudit.FailureCount
     End Function
+
+    ''' <summary>
+    ''' 执行一组用例：单组异常不会中断后续用例，但会被记录为失败断言
+    ''' </summary>
+    Private Sub runSuite(name As String, action As Action)
+        Try
+            Call action()
+        Catch ex As Exception
+            Call DebugAudit.Mark($"crash:{name}", ex.Message)
+            Call DebugAudit.Check(False, $"{name} 抛出异常：{ex.GetType().Name}: {ex.Message}")
+            Call Console.Error.WriteLine($"[{name}] 异常: {ex}")
+        End Try
+    End Sub
 End Module

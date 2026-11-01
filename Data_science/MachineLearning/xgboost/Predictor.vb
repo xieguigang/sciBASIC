@@ -63,6 +63,7 @@
 #End Region
 
 Imports System.IO
+Imports sysparallel = System.Threading.Tasks.Parallel
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.config
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.gbm
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.learner
@@ -174,6 +175,30 @@ Public Class Predictor
     ''' <returns> prediction values </returns>
     Public Overridable Function predict(feat As FVec) As Double()
         Return predict(feat, False)
+    End Function
+
+    ''' <summary>
+    ''' 批量预测（按样本并行）。返回顺序与输入一致。
+    '''
+    ''' 旧实现只提供单样本入口，大规模评分时调用方无法利用并行；
+    ''' 这里按行并行，每行独立走树，无共享可变状态。
+    ''' </summary>
+    ''' <param name="rows">特征向量集合</param>
+    ''' <param name="output_margin">是否只输出 margin</param>
+    ''' <returns></returns>
+    Public Overridable Function predict(rows As FVec(), Optional output_margin As Boolean = False) As Double()()
+        If rows Is Nothing Then
+            Return New Double()() {}
+        End If
+
+        Dim ret As Double()() = New Double(rows.Length - 1)() {}
+
+        Call sysparallel.For(0, rows.Length,
+            Sub(i As Integer)
+                ret(i) = predict(rows(i), output_margin)
+            End Sub)
+
+        Return ret
     End Function
 
     ''' <summary>
