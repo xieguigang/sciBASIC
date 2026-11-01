@@ -62,24 +62,27 @@ Public Module TrainingRegression
     Private Sub convergence()
         Dim ds = BenchmarkData.Create(2400, 8, {3}, 0.05, 20240501)
         Dim gbm = train(ds, 40, 200)
-        Dim pred As Double() = gbm.predict(ds.Rows)
+
+        ' 训练集损失必须下降（验证集损失可能因过拟合而上升，不在此判定）
+        Dim trainPred As Double() = gbm.predict(ds.TrainRows)
+        Dim validPred As Double() = gbm.predict(ds.ValidationRows)
 
         Dim p0 As Double = 1.0 / (1.0 + sysmath.Exp(-gbm.first_round_pred))
-        Dim baseLine = TestSupport.BasePrediction(p0, pred.Length)
-        Dim baseLoss = TestSupport.LogLoss(baseLine, ds.Labels)
-        Dim finalLoss = TestSupport.LogLoss(pred, ds.Labels)
+        Dim baseLine = TestSupport.BasePrediction(p0, trainPred.Length)
+        Dim baseLoss = TestSupport.LogLoss(baseLine, ds.TrainLabels)
+        Dim finalLoss = TestSupport.LogLoss(trainPred, ds.TrainLabels)
         Dim aucMetric As IMetric = Metric.GetMetric(Metrics.auc)
-        Dim auc As Double = aucMetric(pred, ds.Labels)
+        Dim auc As Double = aucMetric(validPred, ds.ValidationLabels)
 
-        Call DebugAudit.Mark("train:loss", $"base={baseLoss:F6}, final={finalLoss:F6}, auc={auc:F4}")
-        Console.WriteLine($"  loss: base={baseLoss:F6} -> final={finalLoss:F6}, auc={auc:F4}, trees={gbm.trees.Count}")
+        Call DebugAudit.Mark("train:loss", $"base={baseLoss:F6}, final={finalLoss:F6}, val-auc={auc:F4}")
+        Console.WriteLine($"  训练损失: base={baseLoss:F6} -> final={finalLoss:F6}，验证 AUC={auc:F4}，trees={gbm.trees.Count}")
 
         Call DebugAudit.Check(finalLoss < baseLoss,
             $"训练后损失未下降（base={baseLoss:F6}, final={finalLoss:F6}）")
-        Call DebugAudit.Check(finalLoss < 0.7,
-            $"训练 40 轮后损失仍偏高（{finalLoss:F6}）")
-        Call DebugAudit.Check(auc > 0.8,
-            $"AUC 偏低（{auc:F4}），模型未学到数据中的结构")
+        Call DebugAudit.Check(finalLoss < 0.5,
+            $"训练 40 轮后训练损失仍偏高（{finalLoss:F6}）")
+        Call DebugAudit.Check(auc > 0.75,
+            $"验证集 AUC 偏低（{auc:F4}），模型未学到数据中的结构")
 
         ' 树必须真的被建立（防止 num_thread / colsample 等参数导致空树）
         Call DebugAudit.Check(gbm.trees.Count > 0, "没有训练出任何树")
@@ -133,8 +136,9 @@ Public Module TrainingRegression
     ''' 类别分裂的左子集必须保持原始类别取值（旧实现经 CStr-&gt;CDbl-&gt;CInt 截断）
     ''' </summary>
     Private Sub categoryFidelity()
-        Dim ds = BenchmarkData.Create(2400, 6, {2}, 0.0, 2468)
-        Dim gbm = train(ds, 25, 200)
+        ' 标签完全由类别列决定的合成数据：必须真的在类别列上发生分裂
+        Dim ds = BenchmarkData.CreateCategoricalOnly(1200, 2468)
+        Dim gbm = train(ds, 20, 200)
         Dim values As New List(Of Double)()
 
         For Each tree As Tree In gbm.trees
@@ -164,6 +168,8 @@ Public Module TrainingRegression
         Console.WriteLine($"  类别分裂取值: {values.Count} 个，非法取值 {bad.Count} 个")
 
         Call DebugAudit.Check(gbm.trees.Count > 0, "没有训练出树")
+        Call DebugAudit.Check(values.Count > 0,
+            "标签完全由类别列决定，但树里没有出现任何类别分裂")
         Call DebugAudit.Check(bad.Count = 0,
             $"类别左子集中出现被截断的取值：{String.Join(", ", bad.Take(5))}")
     End Sub

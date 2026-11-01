@@ -20,14 +20,16 @@ Public Class SyntheticSet
 
     Public Property Train As TrainData
     Public Property Validation As ValidationData
+    ''' <summary>
+    ''' 训练集部分（前 1 - validationRatio 的行）
+    ''' </summary>
+    Public Property TrainRows As Single()()
+    Public Property TrainLabels As Double()
+    ''' <summary>
+    ''' 验证集部分
+    ''' </summary>
     Public Property ValidationRows As Single()()
     Public Property ValidationLabels As Double()
-
-    Public ReadOnly Property TrainRows As Single()()
-        Get
-            Return Rows
-        End Get
-    End Property
 End Class
 
 ''' <summary>
@@ -96,19 +98,23 @@ Public Module BenchmarkData
 
         Dim validSize As Integer = sysmath.Max(CInt(n * validationRatio), 1)
         Dim trainSize As Integer = n - validSize
-        Dim trainRows As DoubleTagged(Of Single())() = New DoubleTagged(Of Single())(trainSize - 1) {}
-        Dim validRows As DoubleTagged(Of Single())() = New DoubleTagged(Of Single())(validSize - 1) {}
+        Dim trainTags As DoubleTagged(Of Single())() = New DoubleTagged(Of Single())(trainSize - 1) {}
+        Dim validTags As DoubleTagged(Of Single())() = New DoubleTagged(Of Single())(validSize - 1) {}
+        Dim trainMatrix As Single()() = New Single(trainSize - 1)() {}
+        Dim trainLabel As Double() = New Double(trainSize - 1) {}
         Dim validMatrix As Single()() = New Single(validSize - 1)() {}
         Dim validLabels As Double() = New Double(validSize - 1) {}
 
         For i As Integer = 0 To trainSize - 1
-            trainRows(i) = New DoubleTagged(Of Single())(labels(i), rows(i))
+            trainTags(i) = New DoubleTagged(Of Single())(labels(i), rows(i))
+            trainMatrix(i) = rows(i)
+            trainLabel(i) = labels(i)
         Next
 
         For i As Integer = 0 To validSize - 1
             Dim src As Integer = trainSize + i
 
-            validRows(i) = New DoubleTagged(Of Single())(labels(src), rows(src))
+            validTags(i) = New DoubleTagged(Of Single())(labels(src), rows(src))
             validMatrix(i) = rows(src)
             validLabels(i) = labels(src)
         Next
@@ -118,8 +124,72 @@ Public Module BenchmarkData
             .Labels = labels,
             .Columns = columns,
             .Categorical = categorical,
-            .Train = Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet.Conversion.ToTrainingSet(trainRows, columns, categorical),
-            .Validation = Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet.Conversion.ToValidateSet(validRows),
+            .Train = Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet.Conversion.ToTrainingSet(trainTags, columns, categorical),
+            .Validation = Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet.Conversion.ToValidateSet(validTags),
+            .TrainRows = trainMatrix,
+            .TrainLabels = trainLabel,
+            .ValidationRows = validMatrix,
+            .ValidationLabels = validLabels
+        }
+    End Function
+
+    ''' <summary>
+    ''' 生成一个「标签完全由类别列决定」的数据集，用于验证类别分裂路径是否真的被启用。
+    ''' </summary>
+    Public Function CreateCategoricalOnly(n As Integer, seed As Integer) As SyntheticSet
+        Dim rand As New Random(seed)
+        Dim rows As Single()() = New Single(n - 1)() {}
+        Dim labels As Double() = New Double(n - 1) {}
+
+        For i As Integer = 0 To n - 1
+            Dim level As Double = CategoryLevels(rand.Next(CategoryLevels.Length))
+            Dim noise As Double = rand.NextDouble() * 0.1
+
+            rows(i) = New Single() {CSng(level), CSng(noise)}
+            ' 只有「高档编码」为正类
+            labels(i) = If(level >= 2.5, 1.0, 0.0)
+        Next
+
+        Dim columns As String() = {"f0", "f1"}
+        Dim categorical As String() = {"f0"}
+
+        Return build(rows, labels, columns, categorical, n, rand)
+    End Function
+
+    Private Function build(rows As Single()(), labels As Double(), columns As String(),
+                           categorical As String(), n As Integer, rand As Random) As SyntheticSet
+        Dim validSize As Integer = sysmath.Max(n \ 4, 1)
+        Dim trainSize As Integer = n - validSize
+        Dim trainTags As DoubleTagged(Of Single())() = New DoubleTagged(Of Single())(trainSize - 1) {}
+        Dim validTags As DoubleTagged(Of Single())() = New DoubleTagged(Of Single())(validSize - 1) {}
+        Dim trainMatrix As Single()() = New Single(trainSize - 1)() {}
+        Dim trainLabel As Double() = New Double(trainSize - 1) {}
+        Dim validMatrix As Single()() = New Single(validSize - 1)() {}
+        Dim validLabels As Double() = New Double(validSize - 1) {}
+
+        For i As Integer = 0 To trainSize - 1
+            trainTags(i) = New DoubleTagged(Of Single())(labels(i), rows(i))
+            trainMatrix(i) = rows(i)
+            trainLabel(i) = labels(i)
+        Next
+
+        For i As Integer = 0 To validSize - 1
+            Dim src As Integer = trainSize + i
+
+            validTags(i) = New DoubleTagged(Of Single())(labels(src), rows(src))
+            validMatrix(i) = rows(src)
+            validLabels(i) = labels(src)
+        Next
+
+        Return New SyntheticSet With {
+            .Rows = rows,
+            .Labels = labels,
+            .Columns = columns,
+            .Categorical = categorical,
+            .Train = Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet.Conversion.ToTrainingSet(trainTags, columns, categorical),
+            .Validation = Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet.Conversion.ToValidateSet(validTags),
+            .TrainRows = trainMatrix,
+            .TrainLabels = trainLabel,
             .ValidationRows = validMatrix,
             .ValidationLabels = validLabels
         }

@@ -73,8 +73,10 @@ Public Module TestSupport
                 map(kv(0)) = Single.Parse(kv(1), NumberStyles.Float, CultureInfo.InvariantCulture)
             Next
 
-            handler.add(Integer.Parse(parts(0), NumberStyles.Integer, CultureInfo.InvariantCulture),
-                        FVecTransformer.fromMap(Of Single)(map))
+            ' 第一列是标签：分类数据集是类别编号，回归数据集是实数值
+            Dim label As Double = Double.Parse(parts(0), NumberStyles.Float, CultureInfo.InvariantCulture)
+
+            handler.add(CInt(sysmath.Round(label)), FVecTransformer.fromMap(Of Single)(map))
         Next
 
         Return handler.getMatrix()
