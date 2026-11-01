@@ -12,6 +12,9 @@ Public Module TrainingRegression
     Public Sub Run()
         Console.WriteLine("[训练回归] 开始")
 
+        Call monotoneConvergence()
+        Call leafOptimality()
+        Call routingConsistency()
         Call convergence()
         Call earlyStopping()
         Call roundTrip()
@@ -29,7 +32,9 @@ Public Module TrainingRegression
                            Optional rounds As Integer = 40,
                            Optional earlyStop As Integer = 200,
                            Optional method As TreeMethod = TreeMethod.Exact,
-                           Optional seed As Integer = 20240501) As GBM
+                           Optional seed As Integer = 20240501,
+                           Optional rowsample As Double = 0.8,
+                           Optional colsample As Double = 0.8) As GBM
         Dim gbm As New GBM()
 
         Call gbm.fit(trainset:=ds.Train,
@@ -42,8 +47,8 @@ Public Module TrainingRegression
                      num_boost_round:=rounds,
                      max_depth:=4,
                      scale_pos_weight:=1.0,
-                     rowsample:=0.8,
-                     colsample:=0.8,
+                     rowsample:=rowsample,
+                     colsample:=colsample,
                      min_child_weight:=1.0,
                      min_sample_split:=5,
                      lambda:=1.0,
@@ -55,6 +60,33 @@ Public Module TrainingRegression
 
         Return gbm
     End Function
+
+    ''' <summary>
+    ''' 训练损失必须随轮次单调下降。
+    '''
+    ''' 这是最关键的一条回归护栏：本轮重构过程中出现过的真实缺陷
+    ''' （类别分裂被物化成 <c>&lt;= 0</c> 的数值分裂）会导致「划分与梯度不一致」，
+    ''' 表现为树结构每轮相同、而损失随轮次单调**上升**。
+    ''' </summary>
+    Private Sub monotoneConvergence()
+        Dim ds = BenchmarkData.Create(2000, 6, {3}, 0.05, 20240501)
+        Dim previous As Double = Double.MaxValue
+        Dim trace As New List(Of String)()
+
+        For Each rounds As Integer In {1, 2, 3, 5, 8}
+            Dim gbm = train(ds, rounds, 1000)
+            Dim loss As Double = TestSupport.LogLoss(gbm.predict(ds.TrainRows), ds.TrainLabels)
+
+            Call trace.Add($"{rounds}={loss:F6}")
+            Call DebugAudit.Check(loss < previous,
+                $"第 {rounds} 轮后训练损失未下降（{loss:F6} >= {previous:F6}）")
+
+            previous = loss
+        Next
+
+        Call DebugAudit.Mark("train:monotone", String.Join(", ", trace))
+        Console.WriteLine($"  损失单调性: {String.Join(", ", trace)}")
+    End Sub
 
     ''' <summary>
     ''' 训练必须真正降低损失，并取得可接受的 AUC
@@ -173,6 +205,156 @@ Public Module TrainingRegression
         Call DebugAudit.Check(bad.Count = 0,
             $"类别左子集中出现被截断的取值：{String.Join(", ", bad.Take(5))}")
     End Sub
+
+    ''' <summary>
+    ''' 叶值最优性：每片叶子的 <c>leaf = -G/(H+λ)</c>，其中 G/H 由落在该叶子里的样本
+    ''' 在当前轮次（上一轮的预测）上的梯度/海森累加得到。
+    '''
+    ''' 该检查同时验证：树的划分与梯度是否一致、叶值是否按正确的一阶/二阶导计算。
+    ''' </summary>
+    Private Sub leafOptimality()
+        Dim ds = BenchmarkData.Create(1200, 6, {3}, 0.05, 424242)
+        Dim first = train(ds, 1, 1000, TreeMethod.Exact, 7, rowsample:=1.0, colsample:=1.0)
+        Dim second = train(ds, 2, 1000, TreeMethod.Exact, 7, rowsample:=1.0, colsample:=1.0)
+
+        ' 第 1 棵树：所有样本的预测都等于常数项
+        Dim p0 As Double = 1.0 / (1.0 + sysmath.Exp(-first.first_round_pred))
+        Dim uniform As Double() = TestSupport.BasePrediction(p0, ds.TrainRows.Length)
+        Dim firstTree = checkLeaf(first.trees(0), ds, uniform, "leaf:tree0")
+
+        ' 第 2 棵树：样本预测来自第 1 棵树的输出
+        Dim p1 As Double() = first.predict(ds.TrainRows)
+        Dim secondTree = checkLeaf(second.trees(1), ds, p1, "leaf:tree1")
+    End Sub
+
+    Private Function checkLeaf(tree As Tree, ds As SyntheticSet, pred As Double(), label As String) As Integer
+        Dim stat As New Dictionary(Of TreeNode, (g As Double, h As Double, n As Integer))()
+        Const LAMBDA As Double = 1.0
+
+        For i As Integer = 0 To ds.TrainRows.Length - 1
+            Dim node As TreeNode = walkToNode(tree.root, ds.TrainRows(i))
+            Dim p As Double = pred(i)
+            Dim g As Double = p - ds.TrainLabels(i)
+            Dim h As Double = p * (1 - p)
+            Dim cur As (g As Double, h As Double, n As Integer) = Nothing
+
+            If stat.TryGetValue(node, cur) Then
+                stat(node) = (cur.g + g, cur.h + h, cur.n + 1)
+            Else
+                stat(node) = (g, h, 1)
+            End If
+        Next
+
+        Dim maxDiff As Double = 0
+        Dim outliers As Integer = 0
+        Dim detail As Integer = 0
+
+        For Each item As KeyValuePair(Of TreeNode, (g As Double, h As Double, n As Integer)) In stat
+            Dim expected As Double = -item.Value.g / (item.Value.h + LAMBDA)
+            Dim diff As Double = sysmath.Abs(expected - item.Key.leafValue)
+
+            If diff > maxDiff Then
+                maxDiff = diff
+            End If
+
+            If diff > 1.0E-6 Then
+                outliers += 1
+
+                ' 最多打印 3 条明细，便于定位划分与梯度不一致的叶子
+                If detail < 3 Then
+                    detail += 1
+                    Console.WriteLine($"    [不匹配] n={item.Value.n}, G={item.Value.g:F4}, H={item.Value.h:F4}, 期望={expected:F6}, 实际={item.Key.leafValue:F6}")
+                End If
+            End If
+        Next
+
+        Call DebugAudit.Mark(label, $"leaves={stat.Count}, outliers={outliers}, maxDiff={maxDiff:G6}")
+        Console.WriteLine($"  叶值最优性[{label}]: {stat.Count} 片叶子，不符 {outliers}，最大偏差 {maxDiff:G6}")
+
+        Call DebugAudit.Check(outliers = 0,
+            $"{label}: 叶值不是 -G/(H+λ)，{outliers}/{stat.Count} 片叶子不符（最大偏差 {maxDiff:G6}）")
+
+        Return outliers
+    End Function
+
+    ''' <summary>
+    ''' 扁平树（预测路径）与节点对象树（参考实现）必须给出相同的叶值
+    ''' </summary>
+    Private Sub routingConsistency()
+        Dim ds = BenchmarkData.Create(1200, 6, {3}, 0.05, 13579)
+        Dim gbm = train(ds, 5, 1000)
+        Dim mismatches As Integer = 0
+        Dim maxDiff As Double = 0
+
+        For Each tree As Tree In gbm.trees
+            Dim flat = tree.Flat
+
+            For i As Integer = 0 To ds.TrainRows.Length - 1
+                Dim expected As Double = walkToLeaf(tree.root, ds.TrainRows(i))
+                Dim actual As Double = flat.Predict(ds.TrainRows(i))
+                Dim diff As Double = sysmath.Abs(expected - actual)
+
+                If diff > maxDiff Then
+                    maxDiff = diff
+                End If
+
+                If diff > 1.0E-12 Then
+                    mismatches += 1
+                End If
+            Next
+        Next
+
+        Call DebugAudit.Mark("routing:flat-vs-tree", $"mismatches={mismatches}, maxDiff={maxDiff:G6}")
+        Console.WriteLine($"  扁平树 vs 引用实现: 不一致 {mismatches} 处，最大偏差 {maxDiff:G6}")
+
+        Call DebugAudit.Check(mismatches = 0,
+            $"扁平树的叶路由与 TreeNode 参考实现不一致（{mismatches} 处，最大偏差 {maxDiff:G6}）")
+    End Sub
+
+    ''' <summary>
+    ''' 参照实现：直接按 <see cref="TreeNode"/> 的公共字段走一遍
+    ''' </summary>
+    Private Function walkToLeaf(root As TreeNode, row As Single()) As Double
+        Return walkToNode(root, row).leafValue
+    End Function
+
+    ''' <summary>
+    ''' 参照实现：直接按 <see cref="TreeNode"/> 的公共字段走到叶节点并返回该节点
+    ''' </summary>
+    Private Function walkToNode(root As TreeNode, row As Single()) As TreeNode
+        Dim node As TreeNode = root
+
+        While Not node.is_leaf
+            Dim v As Single = row(node.split_feature)
+            Dim child As TreeNode
+
+            If Single.IsNaN(v) OrElse v = TrainData.NA Then
+                Select Case CInt(node.nan_go_to)
+                    Case 0
+                        child = node.nan_child
+                    Case 1
+                        child = node.left_child
+                    Case 2
+                        child = node.right_child
+                    Case Else
+                        child = If(node.left_child.num_sample > node.right_child.num_sample,
+                                   node.left_child, node.right_child)
+                End Select
+            ElseIf node.split_left_child_catvalue IsNot Nothing Then
+                child = If(node.split_left_child_catvalue.Contains(CDbl(v)), node.left_child, node.right_child)
+            Else
+                child = If(CDbl(v) <= node.split_threshold, node.left_child, node.right_child)
+            End If
+
+            If child Is Nothing Then
+                Return node
+            End If
+
+            node = child
+        End While
+
+        Return node
+    End Function
 
     Private Sub collectCategories(node As TreeNode, output As List(Of Double))
         If node Is Nothing Then

@@ -198,6 +198,29 @@ Namespace train
         End Sub
 
         ''' <summary>
+        ''' 由类别取值集合设置「进入左子树的类别」。
+        '''
+        ''' 供建树器物化使用：直接赋值会因为 <see cref="split_left_child_catvalue"/> 的类型
+        ''' （<c>Microsoft.VisualBasic.Language.List(Of Double)</c>）与 BCL 的
+        ''' <c>System.Collections.Generic.List(Of Double)</c> 不同而触发类型转换异常。
+        ''' </summary>
+        ''' <param name="values"></param>
+        Friend Sub set_left_categories(values As Double())
+            If values Is Nothing OrElse values.Length = 0 Then
+                split_left_child_catvalue = Nothing
+                Return
+            End If
+
+            Dim list As New List(Of Double)()
+
+            For Each v As Double In values
+                Call list.Add(v)
+            Next
+
+            split_left_child_catvalue = list
+        End Sub
+
+        ''' <summary>
         ''' 旧逐区间实现使用的候选更新入口。
         '''
         ''' 新内核（<see cref="kernels.SplitFinderBase"/>）在查找器内部维护线程本地候选，

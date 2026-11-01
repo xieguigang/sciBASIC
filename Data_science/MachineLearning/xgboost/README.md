@@ -28,6 +28,7 @@ XGBoost 是表格数据上最常用的强模型之一。本包提供**两个方�
 | `....XGBoost.learner` | learner 抽象 |
 | `....XGBoost.tree` | 决策树基学习器 |
 | `....XGBoost.train` | TGBoost 训练实现（三元树） |
+| `....XGBoost.train.kernels` | 训练内核：列块 `ColumnBlock`、行分区 `RowPartitioner`、分裂查找 `Exact/Histogram`、`FlatTree` |
 | `....XGBoost.config` | 参数模型（学习率、子采样、正则化） |
 | `....XGBoost.util`（+ `FVecArray`） | 特征向量与工具方法 |
 | `....XGBoost.spark` | Spark 集成类型 |
@@ -36,22 +37,79 @@ XGBoost 是表格数据上最常用的强模型之一。本包提供**两个方�
 
 ```vbnet
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train
 
-' 1. 读取别处训练好的模型并预测
-Dim model = XGBoostModel.Load("./model.json")
-Dim score = model.Predict(features)
+' 1. 读取别处训练好的 XGBoost 二进制模型并预测
+Using stream = IO.File.OpenRead("./model.bin")
+    Dim predictor As New Predictor(stream)
+    Dim score As Double() = predictor.predict(featureVector)          ' 变换后的预测值
+    Dim margin As Double() = predictor.predict(featureVector, True)   ' 原始 margin
+    Dim leaves As Integer() = predictor.predictLeaf(featureVector)    ' 每棵树的叶子下标
+End Using
 
-' 2. 在 .NET 内训练（TGBoost，显式处理类别列与缺失值）
-Dim config As New XGBoostConfig With {
-    .LearningRate = 0.1,
-    .MaxDepth = 8,
-    .Subsample = 0.8,
-    .Lambda = 1.0
-}
+' 2. 在 .NET 内训练（TGBoost，三元树 + 类别特征 + 缺失值）
+Dim gbm As New GBM()
 
-Dim booster = TGBoost.Train(config, trainData)
-Dim prediction = booster.Predict(testData)
+Call gbm.fit(trainset:=trainData,
+             valset:=validData,
+             early_stopping_rounds:=10,
+             maximize:=True,
+             eval_metric:=Metrics.auc,
+             loss:="logloss",
+             eta:=0.3,
+             num_boost_round:=100,
+             max_depth:=6,
+             rowsample:=0.8,
+             colsample:=0.8,
+             min_child_weight:=1,
+             min_sample_split:=5,
+             lambda:=1.0,
+             gamma:=0.0,
+             num_thread:=-1,
+             tree_method:=TreeMethod.Exact,
+             max_bin:=256,
+             random_seed:=42)
+
+Dim prediction As Double() = gbm.predict(testData)
+' 早停选出的最优轮次（模型已自动截断到该轮次）
+Console.WriteLine($"best iteration = {gbm.bestIteration}, trees = {gbm.trees.Count}")
 ```
+
+## 训练参数
+
+| 参数 | 默认 | 说明 |
+|---|---|---|
+| `loss` | `logloss` | `logloss` / `squareloss` / `qlinearloss`（也接受 `binary:logistic`、`reg:squarederror` 等别名）。未知名称会抛 `ArgumentException` |
+| `eta` | `0.3` | 学习率（收缩系数） |
+| `num_boost_round` | `20` | 最大提升轮数 |
+| `max_depth` | `7` | 最大深度；`0` 表示不限制（内部硬上限 30） |
+| `rowsample` | `0.8` | **每轮重新**伯努利抽样的行比例 |
+| `colsample` | `0.8` | 每轮重新抽样的列比例（至少保留 1 列） |
+| `min_child_weight` | `1` | 子节点海森和下限（按未抽样前的全量海森计算） |
+| `min_sample_split` | `5` | 子节点最小样本量 |
+| `lambda` | `1` | L2 正则；仅当传入 ≤ 0 时内部兜底为 `1e-5` |
+| `gamma` | `0` | 分裂最小增益 |
+| `num_thread` | `-1` | 并行度；`-1` 取 CPU 核心数，`1` 表示串行 |
+| `tree_method` | `Exact` | `Exact`（精确前缀扫描）/ `Hist`（`max_bin` 分桶直方图） |
+| `max_bin` | `256` | `Hist` 模式的最大分桶数 |
+| `random_seed` | `Nothing` | 随机种子；固定后可完全复现训练结果 |
+
+> `tree_method=Hist` 通过分桶压缩分裂搜索空间，在高基数（连续型、取值很多）特征上更快，
+> 但会引入量化误差。默认仍是 `Exact`，以保证与既有模型/基线的数值一致。
+
+## 回归与基准测试
+
+```bash
+dotnet run --project test/test.vbproj -c Debug
+```
+
+- 退出码 = 失败断言数（`0` 表示全部通过）；
+- 报告写入 `test/bin/Debug/net10.0/xgboost-test-report.json`（由 `DebugAudit` 生成）；
+- 覆盖：推理回归（真实 `.model` + 期望值逐值比对）、训练回归（损失单调性、叶值最优性
+  `leaf = -G/(H+λ)`、扁平树与 `TreeNode` 路由一致性、早停回滚、序列化往返、类别编码保真、
+  相同种子可复现、`hist`/`exact` 一致性）、性能基准。
+
+缺陷与优化记录见 [REVIEW.md](./REVIEW.md)。
 
 ## 实现要点
 

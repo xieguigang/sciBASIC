@@ -67,6 +67,8 @@ Namespace train.kernels
         ''' </summary>
         Private Const MAX_DEPTH_HARD_LIMIT As Integer = 30
 
+        Friend Shared ReadOnly DebugSplit As Boolean = Environment.GetEnvironmentVariable("XGB_DEBUG_SPLIT") = "1"
+
         Public Sub New(columns As ColumnBlock, lambda As Double, gamma As Double, maxDepth As Integer,
                        minChildWeight As Double, minSamples As Integer,
                        method As TreeMethod, maxBin As Integer, numThread As Integer)
@@ -144,6 +146,7 @@ Namespace train.kernels
 
                     node.Feature = candidate.Feature
                     node.Threshold = candidate.Threshold
+                    node.LeftCategories = candidate.LeftCategories
                     node.NanDirection = candidate.NanDirection
                     node.Left = leftNode
                     node.Right = rightNode
@@ -153,6 +156,17 @@ Namespace train.kernels
                     Dim assign As Func(Of Integer, Integer) = createAssigner(candidate, leftNode.Id, rightNode.Id, nanId)
 
                     Call partitioner.Split(node.Id, leftNode.Id, rightNode.Id, nanId, assign)
+
+                    If DebugSplit Then
+                        Dim total As Integer = partitioner.RowsOf(leftNode.Id).Count +
+                                               partitioner.RowsOf(rightNode.Id).Count +
+                                               If(nanNode Is Nothing, 0, partitioner.RowsOf(nanNode.Id).Count)
+
+                        If total <> node.NSamples Then
+                            Call Console.Error.WriteLine($"[debug-split] node={node.Id} n={node.NSamples} -> {total}")
+                        End If
+                    End If
+
                     Call computeStats(leftNode, partitioner, grad, hess, mask)
                     Call computeStats(rightNode, partitioner, grad, hess, mask)
 
@@ -331,13 +345,13 @@ Namespace train.kernels
 
             If node.LeftCategories IsNot Nothing Then
                 Dim cats = columns.CategoryValues(node.Feature)
-                Dim list As New List(Of Double)(node.LeftCategories.Length)
+                Dim list As Double() = New Double(node.LeftCategories.Length - 1) {}
 
-                For Each code As Integer In node.LeftCategories
-                    Call list.Add(cats(code))
+                For k As Integer = 0 To node.LeftCategories.Length - 1
+                    list(k) = cats(node.LeftCategories(k))
                 Next
 
-                treeNode.split_left_child_catvalue = list
+                Call treeNode.set_left_categories(list)
             Else
                 treeNode.split_threshold = node.Threshold
             End If

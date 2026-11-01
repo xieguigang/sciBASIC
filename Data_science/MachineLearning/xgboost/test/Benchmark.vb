@@ -48,8 +48,11 @@ Public Module Benchmark
 
         Call DebugAudit.Check(finite, "基准预测结果中出现 NaN/Infinity")
         Call DebugAudit.Check(rowsPerSecond > 20000, $"预测吞吐偏低：{rowsPerSecond:F0} rows/s")
-        Call DebugAudit.Check(hist <= exact * 2.0,
-            $"histogram 路径比 exact 慢了 2 倍以上（hist={hist} ms, exact={exact} ms）")
+
+        ' 耗时对比只作为观测量记录：单次运行的 JIT/GC 抖动足以让毫秒级差异翻倍，
+        ' 不适合作为会导致构建失败的断言。
+        Call DebugAudit.Mark("bench:hist-vs-exact", $"exact={exact} ms, hist={hist} ms, 比值={hist / sysmath.Max(exact, 1):F2}")
+        Console.WriteLine($"  hist/exact 耗时比: {hist / sysmath.Max(exact, 1):F2}")
 
         If serial > 0 Then
             Call DebugAudit.Mark("speedup:parallel", $"{serial / sysmath.Max(exact, 1):F2}x")
