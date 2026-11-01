@@ -2,6 +2,7 @@ Imports System.Buffers
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Java
 Imports par = System.Threading.Tasks.Parallel
+Imports sysmath = System.Math
 Imports taskParallel = System.Threading.Tasks.ParallelOptions
 
 Namespace train.kernels
@@ -101,6 +102,9 @@ Namespace train.kernels
                     maxId = nodes(i).Id
                 End If
             Next
+
+            ' 叶节点仍然持有行，因此 Slot 中的取值可能超出本层存活节点的最大编号
+            maxId = sysmath.Max(maxId, partitioner.MaxNodeId)
 
             Dim slotIndex As Integer() = New Integer(maxId) {}
 

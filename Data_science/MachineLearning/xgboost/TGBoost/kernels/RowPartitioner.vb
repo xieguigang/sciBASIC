@@ -136,6 +136,19 @@ Namespace train.kernels
             End If
         End Sub
 
+        ''' <summary>
+        ''' 已经出现过的最大节点编号。
+        '''
+        ''' 注意：叶节点会继续持有自己的行（用于回填「行 -&gt; 叶节点」），
+        ''' 因此某一层的 <c>Slot</c> 取值可能**大于**本层存活节点的最大编号，
+        ''' 分裂查找器必须按本属性来界定索引数组的长度。
+        ''' </summary>
+        Public ReadOnly Property MaxNodeId As Integer
+            Get
+                Return rowSets.Count - 1
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub ensure(node As Integer)
 
