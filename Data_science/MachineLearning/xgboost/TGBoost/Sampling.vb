@@ -1,106 +1,149 @@
-﻿#Region "Microsoft.VisualBasic::b28f96d34a7cd0de5a99bea569856d95, Data_science\MachineLearning\xgboost\TGBoost\Sampling.vb"
+﻿Namespace train
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 46
-    '    Code Lines: 35 (76.09%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 11 (23.91%)
-    '     File Size: 1.30 KB
-
-
-    '     Class RowSampler
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: shuffle
-    ' 
-    '     Class ColumnSampler
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: shuffle
-    ' 
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports Microsoft.VisualBasic.Language.Java.Arrays
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-
-Namespace train
+    ''' <summary>
+    ''' 行（样本）子采样器。
+    '''
+    ''' 旧实现只在构造时随机一次 0/1 掩码，之后每轮只是 <c>Shuffle</c> 同一组掩码——
+    ''' 每轮被选中的样本数恒定、且是「同一多重集合的置换」，与 xgboost 的
+    ''' <c>subsample</c>（每轮独立抽样）语义不同，也无法保证每轮参与的训练子集不同。
+    '''
+    ''' 现在 <see cref="Resample"/> 每轮重新做伯努利抽样，并支持注入随机种子以便复现。
+    ''' </summary>
     Public Class RowSampler
 
+        ''' <summary>
+        ''' 最近一次的 0/1 掩码（保留该字段以兼容既有调用方）
+        ''' </summary>
         Public row_mask As New List(Of Double)()
 
+        Private ReadOnly rowCount As Integer
+        Private ReadOnly rate As Double
+        Private ReadOnly rand As Random
+
         Public Sub New(n As Integer, sampling_rate As Double)
-            For i = 0 To n - 1
-                row_mask.Add(If(randf.NextDouble <= sampling_rate, 1.0, 0.0))
+            Me.New(n, sampling_rate, Nothing)
+        End Sub
+
+        ''' <param name="n">样本数</param>
+        ''' <param name="sampling_rate">采样率，会被裁剪到 [0, 1]</param>
+        ''' <param name="seed">随机种子；<c>Nothing</c> 表示使用时间种子</param>
+        Public Sub New(n As Integer, sampling_rate As Double, seed As Integer?)
+            Me.rowCount = Math.Max(n, 0)
+            Me.rate = If(Double.IsNaN(sampling_rate), 1.0, Math.Min(Math.Max(sampling_rate, 0.0), 1.0))
+            Me.rand = If(seed.HasValue, New Random(seed.Value), New Random())
+
+            Call buildMask()
+        End Sub
+
+        Private Sub buildMask()
+            row_mask.Clear()
+
+            For i As Integer = 0 To rowCount - 1
+                row_mask.Add(If(rand.NextDouble() < rate, 1.0, 0.0))
             Next
         End Sub
 
+        ''' <summary>
+        ''' 重新抽样一轮
+        ''' </summary>
         Public Overridable Sub shuffle()
-            Dim rands = row_mask.Shuffles
-
-            row_mask.Clear()
-            row_mask.AddRange(rands)
+            SyncLock rand
+                Call buildMask()
+            End SyncLock
         End Sub
+
+        ''' <summary>
+        ''' 返回本轮的布尔掩码（<c>Nothing</c> 表示全量参与）
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Resample() As Boolean()
+            If rate >= 1.0 Then
+                Return Nothing
+            End If
+
+            Call shuffle()
+
+            Dim mask As Boolean() = New Boolean(rowCount - 1) {}
+
+            For i As Integer = 0 To rowCount - 1
+                mask(i) = row_mask(i) > 0.5
+            Next
+
+            Return mask
+        End Function
+
+        Public ReadOnly Property Rate As Double
+            Get
+                Return rate
+            End Get
+        End Property
     End Class
 
+    ''' <summary>
+    ''' 列（特征）子采样器。
+    '''
+    ''' 旧实现用 <c>CInt(n * sampling_rate)</c> 计算列数，在特征少或采样率低时可能得到 0，
+    ''' 于是「一棵树没有任何候选特征」——树无法分裂且没有任何提示。现在至少保留 1 列。
+    ''' </summary>
     Public Class ColumnSampler
 
-        Private cols As New List(Of Integer)()
+        Private ReadOnly cols As New List(Of Integer)()
+        Private ReadOnly rand As Random
+
+        ''' <summary>
+        ''' 当前轮次被选中的特征列
+        ''' </summary>
         Public col_selected As List(Of Integer)
-        Private n_selected As Integer
+        Private ReadOnly n_selected As Integer
 
         Public Sub New(n As Integer, sampling_rate As Double)
-            For i = 0 To n - 1
-                cols.Add(i)
+            Me.New(n, sampling_rate, Nothing)
+        End Sub
+
+        Public Sub New(n As Integer, sampling_rate As Double, seed As Integer?)
+            Dim total As Integer = Math.Max(n, 1)
+            Dim rate As Double = If(Double.IsNaN(sampling_rate), 1.0, Math.Min(Math.Max(sampling_rate, 0.0), 1.0))
+
+            For i As Integer = 0 To total - 1
+                Call cols.Add(i)
             Next
 
-            n_selected = CInt(n * sampling_rate)
-            col_selected = cols.subList(0, n_selected)
+            Dim k As Integer = CInt(Math.Round(total * rate))
+
+            If k < 1 Then
+                k = 1
+            ElseIf k > total Then
+                k = total
+            End If
+
+            Me.n_selected = k
+            Me.rand = If(seed.HasValue, New Random(seed.Value), New Random())
+            Me.col_selected = cols.GetRange(0, n_selected)
         End Sub
 
+        ''' <summary>
+        ''' 重新抽样一轮特征列
+        ''' </summary>
         Public Overridable Sub shuffle()
-            Dim rands = cols.Shuffles
+            SyncLock rand
 
-            cols.Clear()
-            cols.AddRange(rands)
-            col_selected = cols.subList(0, n_selected)
+                For i As Integer = cols.Count - 1 To 1 Step -1
+                    Dim j As Integer = rand.Next(i + 1)
+                    Dim tmp As Integer = cols(i)
+                    cols(i) = cols(j)
+                    cols(j) = tmp
+                Next
+            End SyncLock
+
+            col_selected = cols.GetRange(0, n_selected)
         End Sub
+
+        ''' <summary>
+        ''' 当前轮次选中的特征列（调用前请先 <see cref="shuffle"/>）
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function SelectedColumns() As List(Of Integer)
+            Return col_selected
+        End Function
     End Class
 End Namespace

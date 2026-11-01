@@ -1,68 +1,9 @@
-﻿#Region "Microsoft.VisualBasic::d02ca339171c2448ebd8d5475fa36b2f, Data_science\MachineLearning\xgboost\TGBoost\GBM.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 347
-    '    Code Lines: 205 (59.08%)
-    ' Comment Lines: 97 (27.95%)
-    '    - Xml Docs: 87.63%
-    ' 
-    '   Blank Lines: 45 (12.97%)
-    '     File Size: 15.67 KB
-
-
-    '     Class GBM
-    ' 
-    '         Properties: eta, first_round_pred, loss, trees
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) predict, TGBoostIteration
-    ' 
-    '         Sub: fit
-    ' 
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.DataMining.Evaluation
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.My
+Imports train.kernels
 
 Namespace train
 
@@ -113,6 +54,11 @@ Namespace train
         Private min_child_weight As Double
         Private scale_pos_weight As Double
         Private eval_metric As String
+        Private tree_method As TreeMethod
+        Private max_bin As Integer
+        Private random_seed As Integer?
+        Private best_iteration As Integer = -1
+        Private best_score As Double = Double.NaN
 
         Shared ReadOnly logger As LogFile
 
@@ -120,6 +66,33 @@ Namespace train
         Public Overridable ReadOnly Property eta As Double
         Public Overridable ReadOnly Property loss As Loss
         Public Overridable ReadOnly Property trees As New List(Of Tree)
+
+        ''' <summary>
+        ''' 早停选出的最优轮次（从 0 开始）；<c>-1</c> 表示未启用早停或未产生最优轮次。
+        ''' </summary>
+        Public Overridable ReadOnly Property bestIteration As Integer
+            Get
+                Return best_iteration
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 早停最优轮次对应的验证集指标
+        ''' </summary>
+        Public Overridable ReadOnly Property bestScore As Double
+            Get
+                Return best_score
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 本模型使用的分裂查找算法
+        ''' </summary>
+        Public Overridable ReadOnly Property treeMethod As TreeMethod
+            Get
+                Return tree_method
+            End Get
+        End Property
 
         Shared Sub New()
             logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.WriteLine($"{header}({level}): {msg}"))
@@ -146,6 +119,29 @@ Namespace train
         End Sub
 
         ''' <summary>
+        ''' 按名称解析损失函数；未知名称直接抛 <see cref="ArgumentException"/>，
+        ''' 而不是像旧实现那样留下 <c>Nothing</c> 让后续步骤抛 <see cref="NullReferenceException"/>。
+        ''' </summary>
+        ''' <param name="loss"></param>
+        ''' <returns></returns>
+        Public Shared Function resolveLoss(loss As String) As Loss
+            Dim name As String = If(loss, "").ToLowerInvariant.Trim
+
+            Select Case name
+                Case "logloss", "logistic", "binary:logistic", "reg:logistic"
+                    Return New LogisticLoss()
+                Case "squareloss", "squarederror", "reg:squarederror", "reg:linear", "mse"
+                    Return New SquareLoss()
+                Case "qlinearloss", "pseudo-huber", "reg:absoluteerror", "mae"
+                    Return New QLinearLoss()
+                Case Else
+                    Throw New ArgumentException(
+                        $"不支持的损失函数 '{loss}'；可用取值：logloss / squareloss / qlinearloss。",
+                        NameOf(loss))
+            End Select
+        End Function
+
+        ''' <summary>
         ''' do model training
         ''' </summary>
         ''' <param name="trainset"></param>
@@ -168,48 +164,51 @@ Namespace train
         ''' <param name="num_boost_round"></param>
         ''' <param name="max_depth">
         ''' Maximum depth of a tree. Increasing this value will make the model more
-        ''' complex and more likely to overfit. 0 indicates no limit on depth. Beware
-        ''' that XGBoost aggressively consumes memory when training a deep tree.
-        ''' exact tree method requires non-zero value. range: [0,∞]
+        ''' complex and more likely to overfit. 0 indicates no limit on depth (capped at 30).
         ''' </param>
         ''' <param name="scale_pos_weight"></param>
-        ''' <param name="rowsample"></param>
+        ''' <param name="rowsample">
+        ''' 每轮重新抽取的样本比例（伯努利抽样）
+        ''' </param>
         ''' <param name="colsample"></param>
         ''' <param name="min_child_weight">
-        ''' Minimum sum of instance weight (hessian) needed in a child. If the tree 
-        ''' partition step results in a leaf node with the sum of instance weight less
-        ''' than min_child_weight, then the building process will give up further 
-        ''' partitioning. In linear regression task, this simply corresponds to 
-        ''' minimum number of instances needed to be in each node. The larger min_child_weight
-        ''' is, the more conservative the algorithm will be. range: [0,∞]
+        ''' Minimum sum of instance weight (hessian) needed in a child.
         ''' </param>
         ''' <param name="min_sample_split"></param>
         ''' <param name="lambda">
-        ''' [reg_lambda] L2 regularization term on weights. Increasing this value
-        ''' will make model more conservative.
+        ''' [reg_lambda] L2 regularization term on weights.
         ''' </param>
         ''' <param name="gamma">
-        ''' [min_split_loss] Minimum loss reduction required to make a further partition
-        ''' on a leaf node of the tree. The larger gamma is, the more conservative the 
-        ''' algorithm will be. range: [0,∞]
+        ''' [min_split_loss] Minimum loss reduction required to make a further partition.
         ''' </param>
-        ''' <param name="num_thread"></param>
+        ''' <param name="num_thread">
+        ''' 并行度；<c>-1</c> 取 CPU 核心数，<c>1</c> 表示串行
+        ''' </param>
+        ''' <param name="tree_method">
+        ''' <see cref="TreeMethod.Exact"/>（默认，与旧实现数值一致）或
+        ''' <see cref="TreeMethod.Hist"/>（分桶直方图，高基数特征更快）
+        ''' </param>
+        ''' <param name="max_bin">直方图模式下的最大分桶数</param>
+        ''' <param name="random_seed">随机种子，便于复现实验</param>
         Public Overridable Sub fit(trainset As TrainData, valset As ValidationData,
-                                   Optional early_stopping_rounds As Integer = 10,
-                                   Optional maximize As Boolean = True,
-                                   Optional eval_metric As Metrics = Metrics.auc,
-                                   Optional loss As String = "logloss",
-                                   Optional eta As Double = 0.3,
-                                   Optional num_boost_round As Integer = 20,
-                                   Optional max_depth As Integer = 7,
-                                   Optional scale_pos_weight As Double = 1,
-                                   Optional rowsample As Double = 0.8,
-                                   Optional colsample As Double = 0.8,
-                                   Optional min_child_weight As Double = 1,
-                                   Optional min_sample_split As Integer = 5,
-                                   Optional lambda As Double = 1,
-                                   Optional gamma As Double = 0,
-                                   Optional num_thread As Integer = -1)
+                                  Optional early_stopping_rounds As Integer = 10,
+                                  Optional maximize As Boolean = True,
+                                  Optional eval_metric As Metrics = Metrics.auc,
+                                  Optional loss As String = "logloss",
+                                  Optional eta As Double = 0.3,
+                                  Optional num_boost_round As Integer = 20,
+                                  Optional max_depth As Integer = 7,
+                                  Optional scale_pos_weight As Double = 1,
+                                  Optional rowsample As Double = 0.8,
+                                  Optional colsample As Double = 0.8,
+                                  Optional min_child_weight As Double = 1,
+                                  Optional min_sample_split As Integer = 5,
+                                  Optional lambda As Double = 1,
+                                  Optional gamma As Double = 0,
+                                  Optional num_thread As Integer = -1,
+                                  Optional tree_method As TreeMethod = TreeMethod.Exact,
+                                  Optional max_bin As Integer = 256,
+                                  Optional random_seed As Integer? = Nothing)
 
             Me.num_boost_round = num_boost_round
             Me.max_depth = max_depth
@@ -222,26 +221,22 @@ Namespace train
             Me.eval_metric = eval_metric.Description
             Me.min_child_weight = min_child_weight
             Me.scale_pos_weight = scale_pos_weight
+            Me.tree_method = tree_method
+            Me.max_bin = max_bin
+            Me.random_seed = random_seed
 
             _eta = eta
 
             Dim attribute_list As New AttributeList(trainset)
             Dim class_list As New ClassList(trainset)
-            Dim row_sampler As New RowSampler(trainset.dataset_size, Me.rowsample)
-            Dim col_sampler As New ColumnSampler(trainset.feature_dim, Me.colsample)
+            Dim row_sampler As New RowSampler(trainset.dataset_size, Me.rowsample, random_seed)
+            Dim col_sampler As New ColumnSampler(trainset.feature_dim, Me.colsample, random_seed)
             Dim calculate_metric As IMetric = Metric.GetMetric(eval_metric)
 
-            If loss.Equals("logloss") Then
-                _loss = New LogisticLoss()
-                _first_round_pred = 0.0
-            ElseIf loss.Equals("squareloss") OrElse loss = "qlinearloss" Then
-                _loss = If(loss = "squareloss", New SquareLoss(), New QLinearLoss())
-                _first_round_pred = class_list.label.Average
+            _loss = resolveLoss(loss)
+            _first_round_pred = _loss.base_score(class_list.label)
 
-                If eval_metric = Metrics.mse OrElse eval_metric = Metrics.mae Then
-                    GBM.logger.info("Going to solve a regression model!")
-                End If
-            End If
+            GBM.logger.info($"TGBoost loss={_loss.Name}, base_score={_first_round_pred:F6}, tree_method={tree_method}")
 
             class_list.initialize_pred(_first_round_pred)
             class_list.update_grad_hess(_loss, Me.scale_pos_weight)
@@ -252,7 +247,6 @@ Namespace train
 
             If valset Is Nothing Then
                 do_validation = False
-                valset = Nothing
                 val_pred = Nothing
             Else
                 do_validation = True
@@ -274,6 +268,7 @@ Namespace train
             GBM.logger.info("TGBoost start training")
 
             For i As Integer = 0 To num_boost_round - 1
+
                 If Not TGBoostIteration(
                     i,
                     attribute_list,
@@ -292,9 +287,38 @@ Namespace train
                     eval_metric
                 ) Then
 
+                    ' 回滚到最优轮次：旧实现只打日志、保留了 best_round 之后的全部树，
+                    ' 导致「日志里的 best round」与「实际模型」不一致。
+                    Call rollbackTo(best_round)
+
+                    Me.best_iteration = best_round
+                    Me.best_score = best_val_metric
+
                     Exit For
                 End If
+
+                If i = num_boost_round - 1 Then
+                    Me.best_iteration = If(do_validation, best_round, num_boost_round - 1)
+                    Me.best_score = best_val_metric
+                End If
             Next
+        End Sub
+
+        ''' <summary>
+        ''' 丢弃 <paramref name="round"/> 之后训练出来的树
+        ''' </summary>
+        ''' <param name="round"></param>
+        Private Sub rollbackTo(round As Integer)
+            Dim keep As Integer = round + 1
+
+            If keep < 1 Then
+                keep = 1
+            End If
+
+            If _trees.Count > keep Then
+                GBM.logger.info($"early stopping: 回滚 {_trees.Count - keep} 棵多余的树（保留前 {keep} 棵）")
+                Call _trees.RemoveRange(keep, _trees.Count - keep)
+            End If
         End Sub
 
         Private Function TGBoostIteration(i As Integer,
@@ -313,7 +337,9 @@ Namespace train
                                           ByRef early_stopping_rounds As Integer,
                                           ByRef eval_metric As Metrics) As Boolean
 
-            Dim tree As New Tree(min_sample_split, min_child_weight, max_depth, colsample, rowsample, lambda, gamma, num_thread, attribute_list.cat_features_cols)
+            Dim tree As New Tree(min_sample_split, min_child_weight, max_depth, colsample, rowsample,
+                                 lambda, gamma, num_thread, attribute_list.cat_features_cols,
+                                 tree_method, max_bin)
 
             tree.fit(attribute_list, class_list, row_sampler, col_sampler)
             'when finish building this tree, update the class_list.pred, grad, hess
@@ -348,32 +374,26 @@ Namespace train
             GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost round {0:D},train-{1}:{2:F6},val-{3}:{4:F6}", i, eval_metric, train_metric, eval_metric, val_metric))
 
             'check whether to early stop
+            Dim improved As Boolean
+
             If maximize Then
-                If val_metric > best_val_metric Then
-                    best_val_metric = val_metric
-                    best_round = i
-                    become_worse_round = 0
-                Else
-                    become_worse_round += 1
-                End If
-
-                If become_worse_round > early_stopping_rounds Then
-                    GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost training stop,best round is {0:D},best val-{1} is {2:F6}", i, eval_metric, best_val_metric))
-                    Return False
-                End If
+                improved = val_metric > best_val_metric
             Else
-                If val_metric < best_val_metric Then
-                    best_val_metric = val_metric
-                    best_round = i
-                    become_worse_round = 0
-                Else
-                    become_worse_round += 1
-                End If
+                improved = val_metric < best_val_metric
+            End If
 
-                If become_worse_round > early_stopping_rounds Then
-                    GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost training stop,best round is {0:D},best val-{1} is {2:F6}", i, eval_metric, best_val_metric))
-                    Return False
-                End If
+            If improved Then
+                best_val_metric = val_metric
+                best_round = i
+                become_worse_round = 0
+            Else
+                become_worse_round += 1
+            End If
+
+            ' 旧实现使用 > ，比 early_stopping_rounds 多跑一轮
+            If become_worse_round >= early_stopping_rounds Then
+                GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost training stop,best round is {0:D},best val-{1} is {2:F6}", best_round, eval_metric, best_val_metric))
+                Return False
             End If
 
             Return True
@@ -383,23 +403,33 @@ Namespace train
             Return predict(data.origin_feature)
         End Function
 
+        ''' <summary>
+        ''' 批量预测。
+        '''
+        ''' 旧实现是「外层按树循环 + 每棵树内部一次 PLINQ + OrderBy 排序恢复顺序」，
+        ''' 复杂度 <c>O(T · N log N)</c> 且产生 <c>T × N</c> 次堆分配。现在把每棵树编译为
+        ''' 扁平数组后，按行并行、内层遍历全部树，只派发一次任务。
+        ''' </summary>
+        ''' <param name="features"></param>
+        ''' <returns></returns>
         Public Overridable Function predict(features As Single()()) As Double()
             Dim pred = New Double(features.Length - 1) {}
 
-            GBM.logger.info($"feature set: {features.GetHashCode}")
-            GBM.logger.info("TGBoost start predicting...")
-
-            For i = 0 To pred.Length - 1
-                pred(i) += _first_round_pred
+            For i As Integer = 0 To pred.Length - 1
+                pred(i) = _first_round_pred
             Next
 
-            For Each tree As Tree In _trees
-                Dim cur_tree_pred As Double() = tree.predict(features)
+            If _trees.Count = 0 Then
+                Return _loss.transform(pred)
+            End If
 
-                For i = 0 To pred.Length - 1
-                    pred(i) += _eta * cur_tree_pred(i)
-                Next
+            Dim flats As FlatTree() = New FlatTree(_trees.Count - 1) {}
+
+            For i As Integer = 0 To _trees.Count - 1
+                flats(i) = _trees(i).Flat
             Next
+
+            Call FlatTree.AccumulateAll(flats, features, pred, _eta, num_thread)
 
             Return _loss.transform(pred)
         End Function

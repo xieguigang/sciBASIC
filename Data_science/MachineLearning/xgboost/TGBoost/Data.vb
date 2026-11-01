@@ -96,6 +96,14 @@ Namespace train
 
     Public Class TrainData : Inherits ValidationData
 
+        ''' <summary>
+        ''' 【已废弃】解析阶段为「按值排序」而构造的 (value, row) 对。
+        '''
+        ''' 该结构每 (样本,特征) 分配一个两元素 <c>Single()</c> 对象（约 32~40 字节），
+        ''' 10 万 × 100 的数据集上约占用 400MB，是训练期最大的内存热点。
+        ''' 自本次重构起由 <see cref="kernels.ColumnBlock"/>（SoA）取代：
+        ''' <c>AttributeList</c> 构建列块后会调用 <see cref="ReleaseRawColumns"/> 释放本字段。
+        ''' </summary>
         Friend feature_value_index As Single()()()
         Friend missing_index As Integer()()
         Friend missing_count As New List(Of Integer)()
@@ -104,6 +112,16 @@ Namespace train
 
         Public Sub New(categorical_features As IEnumerable(Of String))
             cat_features_names = categorical_features.AsList
+        End Sub
+
+        ''' <summary>
+        ''' 释放解析阶段构造的 <see cref="feature_value_index"/>。
+        '''
+        ''' 调用后仍可继续使用：<see cref="kernels.ColumnBlock"/> 会在该字段为空时
+        ''' 回落到从 <see cref="Data.origin_feature"/> 直接构建。
+        ''' </summary>
+        Friend Sub ReleaseRawColumns()
+            feature_value_index = Nothing
         End Sub
 
         Public Overrides Function ToString() As String

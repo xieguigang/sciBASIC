@@ -82,13 +82,17 @@ Namespace train
 
         Public Overridable Sub update_pred(eta As Double)
             For i = 0 To dataset_size - 1
-                pred(i) += eta * corresponding_tree_node(i).leaf_score
+                Dim leaf = corresponding_tree_node(i)
+
+                If leaf IsNot Nothing Then
+                    pred(i) += eta * leaf.leaf_score
+                End If
             Next
         End Sub
 
         Public Overridable Sub update_grad_hess(loss As Loss, scale_pos_weight As Double)
-            grad = loss.grad(pred, label)
-            hess = loss.hess(pred, label)
+            ' 一次产出梯度与海森：LogisticLoss 只做一次 sigmoid
+            Call loss.grad_hess(pred, label, grad, hess)
 
             If scale_pos_weight <> 1.0 Then
                 For i = 0 To dataset_size - 1
