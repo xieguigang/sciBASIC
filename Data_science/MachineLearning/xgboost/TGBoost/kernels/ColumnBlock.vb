@@ -1,5 +1,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Java
+Imports sysmath = System.Math
 
 Namespace train.kernels
 
@@ -83,7 +84,7 @@ Namespace train.kernels
             Me.Origin = origin
             Me.CategoryCodes = catCodes
             Me.CategoryValues = catValues
-            Me.bins = New Integer(featureDim - 1)() {}
+            Me.bins = New FeatureBinning(featureDim - 1) {}
         End Sub
 
         ''' <summary>
@@ -168,8 +169,8 @@ Namespace train.kernels
             Dim boundaries As Integer()() = New Integer(featureDim - 1)() {}
             Dim nanRows As Integer()() = New Integer(featureDim - 1)() {}
             Dim categorical As Boolean() = New Boolean(featureDim - 1) {}
-            Dim catCodes As Dictionary(Of Single, Integer)() = New Dictionary(Of Single, Integer)(featureDim - 1)() {}
-            Dim catValues As Single()() = New Single(featureDim - 1)() {}
+            Dim catCodes(featureDim - 1) As Dictionary(Of Single, Integer)
+            Dim catValues(featureDim - 1)() As Single
 
             Dim catCols = If(data.cat_features_cols, New List(Of Integer)())
 
@@ -180,8 +181,10 @@ Namespace train.kernels
                 End If
             Next
 
+            Dim raw = data.feature_value_index
+
             For feature As Integer = 0 To featureDim - 1
-                Dim src = If(data.feature_value_index, New Single(featureDim - 1)() {})(feature)
+                Dim src As Single()() = If(raw Is Nothing, Nothing, raw(feature))
                 Dim keys As Single()
                 Dim ids As Integer()
 
@@ -197,7 +200,10 @@ Namespace train.kernels
                     Next
                 Else
                     ' 解析阶段未构造 (value,row) 对（默认路径），直接从原始矩阵重建
-                    Call buildFromOrigin(data, feature, keys, ids)
+                    Dim pair = buildFromOrigin(data, feature)
+
+                    keys = pair.keys
+                    ids = pair.ids
                 End If
 
                 ' 双数组重载：内建 Single 比较，避免 IComparer(Of Single()) 的接口虚调用
@@ -207,11 +213,12 @@ Namespace train.kernels
                 rowIds(feature) = ids
                 boundaries(feature) = BuildBoundaries(keys, keys.Length)
 
-                Dim nan = data.missing_index(feature)
+                Dim nan = If(data.missing_index, New Integer(featureDim - 1)() {})(feature)
                 nanRows(feature) = If(nan, New Integer() {})
 
                 If categorical(feature) Then
-                    Call buildCategories(feature, keys, boundaries(feature), catCodes, catValues)
+                    catCodes(feature) = buildCategoryCodes(keys, boundaries(feature))
+                    catValues(feature) = buildCategoryValues(keys, boundaries(feature))
                 End If
             Next
 
@@ -247,23 +254,19 @@ Namespace train.kernels
         ''' 解析阶段不再预先构造 <c>Single()()()</c>，而是在这里一次性扫描原始矩阵：
         ''' 峰值内存从「每单元一个对象」降为「每特征两条平行数组」。
         ''' </summary>
-        Private Shared Sub buildFromOrigin(data As TrainData, feature As Integer,
-                                           ByRef keys As Single(), ByRef ids As Integer())
+        Private Shared Function buildFromOrigin(data As TrainData, feature As Integer) As (keys As Single(), ids As Integer())
             Dim origin = data.origin_feature
             Dim rowCount As Integer = data.dataset_size
 
             If origin Is Nothing OrElse rowCount <= 0 Then
-                keys = New Single() {}
-                ids = New Integer() {}
-                Return
+                Return (Nothing, Nothing)
             End If
 
-            ' 先按上界分配，最后再收缩到实际长度（缺失值数量远小于样本数时无额外压力）
-            keys = New Single(rowCount - 1) {}
-            ids = New Integer(rowCount - 1) {}
-
+            ' 先按上界分配，最后再收缩到实际长度
+            Dim keys As Single() = New Single(rowCount - 1) {}
+            Dim ids As Integer() = New Integer(rowCount - 1) {}
             Dim cursor As Integer = 0
-            Dim upper As Integer = Math.Min(rowCount, origin.Length) - 1
+            Dim upper As Integer = sysmath.Min(rowCount, origin.Length) - 1
 
             For row As Integer = 0 To upper
                 Dim rowValues = origin(row)
@@ -287,34 +290,46 @@ Namespace train.kernels
                 Call Array.Resize(keys, cursor)
                 Call Array.Resize(ids, cursor)
             End If
-        End Sub
+
+            Return (keys, ids)
+        End Function
 
         ''' <summary>
         ''' 建立类别值到整数编码的映射
         ''' </summary>
-        Private Shared Sub buildCategories(feature As Integer, keys As Single(), boundaries As Integer(),
-                                           ByRef codes As Dictionary(Of Single, Integer)(),
-                                           ByRef values As Single()())
-            Dim distinct = boundaries.Length - 1
+        Private Shared Function buildCategoryCodes(keys As Single(), boundaries As Integer()) As Dictionary(Of Single, Integer)
+            Dim distinct As Integer = boundaries.Length - 1
 
             If distinct <= 0 Then
-                codes(feature) = New Dictionary(Of Single, Integer)()
-                values(feature) = New Single() {}
-                Return
+                Return New Dictionary(Of Single, Integer)()
             End If
 
             Dim map As New Dictionary(Of Single, Integer)(distinct)
+
+            For code As Integer = 0 To distinct - 1
+                map(keys(boundaries(code))) = code
+            Next
+
+            Return map
+        End Function
+
+        ''' <summary>
+        ''' 建立整数编码到原始类别值的映射
+        ''' </summary>
+        Private Shared Function buildCategoryValues(keys As Single(), boundaries As Integer()) As Single()
+            Dim distinct As Integer = boundaries.Length - 1
+
+            If distinct <= 0 Then
+                Return New Single() {}
+            End If
+
             Dim list As Single() = New Single(distinct - 1) {}
 
             For code As Integer = 0 To distinct - 1
-                Dim value As Single = keys(boundaries(code))
-
-                list(code) = value
-                map(value) = code
+                list(code) = keys(boundaries(code))
             Next
 
-            codes(feature) = map
-            values(feature) = list
-        End Sub
+            Return list
+        End Function
     End Class
 End Namespace

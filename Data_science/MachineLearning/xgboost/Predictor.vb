@@ -128,7 +128,7 @@ Public Class Predictor
                 modelType = SparkModelParam.MODEL_TYPE_REG
             End If
 
-            If Not ReferenceEquals(modelType, Nothing) Then
+            If modelType IsNot Nothing Then
                 Dim len As Integer = (next4Bytes(3) << 8) + (reader.readByteAsInt())
                 Dim featuresCol = reader.readUTF(len)
                 sparkModelParam_Renamed = New SparkModelParam(modelType, featuresCol, reader)
@@ -157,7 +157,12 @@ Public Class Predictor
     End Sub
 
     Friend Overridable Sub initObjGbm()
-        obj = ObjFunction.fromName(name_obj)
+        ' 注意：不能在这里重新解析 name_obj —— 旧实现在这里无条件覆盖了 obj，
+        ' 使 PredictorConfiguration.objFunction 注入的自定义目标函数永远不生效。
+        If obj Is Nothing Then
+            obj = ObjFunction.fromName(name_obj, strict:=False)
+        End If
+
         gbm = GradBooster_Factory.createGradBooster(name_gbm)
         gbm.numClass = mparam.num_class
     End Sub

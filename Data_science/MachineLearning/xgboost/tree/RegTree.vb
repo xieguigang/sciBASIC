@@ -102,11 +102,12 @@ Namespace tree
         ''' <param name="root_id"> starting root index </param>
         ''' <returns> leaf index </returns>
         Public Overridable Function getLeafIndex(feat As FVec, root_id As Integer) As Integer
-            Dim pid = root_id
-            Dim n As New Value(Of Node)
+            Dim pid As Integer = root_id
+            Dim n = nodes(pid)
 
-            While Not (n = nodes(pid))._isLeaf
-                pid = n.Value.next(feat)
+            While Not n._isLeaf
+                pid = n.next(feat)
+                n = nodes(pid)
             End While
 
             Return pid
@@ -119,10 +120,12 @@ Namespace tree
         ''' <param name="root_id"> starting root index </param>
         ''' <returns> leaf value </returns>
         Public Overridable Function getLeafValue(feat As FVec, root_id As Integer) As Double
-            Dim n = nodes(root_id)
+            Dim pid As Integer = root_id
+            Dim n = nodes(pid)
 
             While Not n._isLeaf
-                n = nodes(n.next(feat))
+                pid = n.next(feat)
+                n = nodes(pid)
             End While
 
             Return n.leaf_value

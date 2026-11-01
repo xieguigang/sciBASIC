@@ -1,4 +1,5 @@
 Imports System.Runtime.CompilerServices
+Imports sysmath = System.Math
 
 Namespace train
 
@@ -73,7 +74,7 @@ Namespace train.kernels
             Me.columns = columns
             Me.lambda = If(lambda <= 0, 0.00001, lambda)
             Me.gamma = gamma
-            Me.maxDepth = If(maxDepth <= 0, MAX_DEPTH_HARD_LIMIT, Math.Min(maxDepth, MAX_DEPTH_HARD_LIMIT))
+            Me.maxDepth = If(maxDepth <= 0, MAX_DEPTH_HARD_LIMIT, sysmath.Min(maxDepth, MAX_DEPTH_HARD_LIMIT))
             Me.minChildWeight = minChildWeight
             Me.minSamples = minSamples
             Me.method = method

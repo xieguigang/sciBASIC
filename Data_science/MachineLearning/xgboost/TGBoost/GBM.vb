@@ -2,8 +2,8 @@
 Imports Microsoft.VisualBasic.DataMining.Evaluation
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train.kernels
 Imports Microsoft.VisualBasic.My
-Imports train.kernels
 
 Namespace train
 

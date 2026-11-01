@@ -1,7 +1,8 @@
 Imports System.Buffers
 Imports System.Runtime.CompilerServices
-Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Language.Java
+Imports par = System.Threading.Tasks.Parallel
+Imports taskParallel = System.Threading.Tasks.ParallelOptions
 
 Namespace train.kernels
 
@@ -81,20 +82,20 @@ Namespace train.kernels
                                 grad As Double(), hess As Double(), mask As Boolean(),
                                 colSelected As List(Of Integer)) As SplitCandidate()
 
-            Dim n = nodes.Count
-            Dim best As SplitCandidate() = New SplitCandidate(n - 1) {}
+            Dim nodeCount As Integer = nodes.Count
+            Dim best As SplitCandidate() = New SplitCandidate(nodeCount - 1) {}
 
-            For i As Integer = 0 To n - 1
+            For i As Integer = 0 To nodeCount - 1
                 best(i) = SplitCandidate.NoSplit
             Next
 
-            If n = 0 OrElse colSelected Is Nothing OrElse colSelected.Count = 0 Then
+            If nodeCount = 0 OrElse colSelected Is Nothing OrElse colSelected.Count = 0 Then
                 Return best
             End If
 
             Dim maxId As Integer = -1
 
-            For i As Integer = 0 To n - 1
+            For i As Integer = 0 To nodeCount - 1
 
                 If nodes(i).Id > maxId Then
                     maxId = nodes(i).Id
@@ -107,7 +108,7 @@ Namespace train.kernels
                 slotIndex(i) = -1
             Next
 
-            For i As Integer = 0 To n - 1
+            For i As Integer = 0 To nodeCount - 1
                 slotIndex(nodes(i).Id) = i
             Next
 
@@ -127,17 +128,17 @@ Namespace train.kernels
                 End If
             Next
 
-            Dim options As New ParallelOptions With {
+            Dim options As New taskParallel With {
                 .MaxDegreeOfParallelism = If(numThread <= 0, -1, numThread)
             }
             Dim sync As New Object()
 
             If numericCols.Count > 0 Then
-                Call Parallel.For(0, numericCols.Count, options,
+                Call par.For(0, numericCols.Count, options,
                     Sub(ci As Integer)
-                        Dim local As SplitCandidate() = New SplitCandidate(n - 1) {}
+                        Dim local As SplitCandidate() = New SplitCandidate(nodeCount - 1) {}
 
-                        For i As Integer = 0 To n - 1
+                        For i As Integer = 0 To nodeCount - 1
                             local(i) = SplitCandidate.NoSplit
                         Next
 
@@ -145,7 +146,7 @@ Namespace train.kernels
 
                         SyncLock sync
 
-                            For i As Integer = 0 To n - 1
+                            For i As Integer = 0 To nodeCount - 1
 
                                 If local(i).HasSplit AndAlso
                                     (Not best(i).HasSplit OrElse local(i).Gain > best(i).Gain) Then
@@ -191,21 +192,21 @@ Namespace train.kernels
 
             Dim g2 As Double = (gl + gn) * (gl + gn) / (hl + hn + lambda) + gr * gr / (hr + lambda) - parent
             Dim g3 As Double = gl * gl / (hl + lambda) + (gr + gn) * (gr + gn) / (hr + hn + lambda) - parent
-            Dim best As Double = g1
+            Dim bestGain As Double = g1
 
             nanDirection = SplitCandidate.NanDirectionChild
 
-            If g2 > best Then
-                best = g2
+            If g2 > bestGain Then
+                bestGain = g2
                 nanDirection = SplitCandidate.NanDirectionLeft
             End If
 
-            If g3 > best Then
-                best = g3
+            If g3 > bestGain Then
+                bestGain = g3
                 nanDirection = SplitCandidate.NanDirectionRight
             End If
 
-            Return 0.5 * best - gamma
+            Return 0.5 * bestGain - gamma
         End Function
 
         ''' <summary>
@@ -222,15 +223,15 @@ Namespace train.kernels
                 Return
             End If
 
-            Dim n = ids.Length
-            Dim K = nodes.Count
+            Dim n As Integer = ids.Length
+            Dim nodeCount As Integer = nodes.Count
             Dim slotOf = partitioner.Slot
 
-            Dim counts As Integer() = New Integer(K - 1) {}
-            Dim starts As Integer() = New Integer(K - 1) {}
-            Dim nanG As Double() = New Double(K - 1) {}
-            Dim nanH As Double() = New Double(K - 1) {}
-            Dim nanCount As Integer() = New Integer(K - 1) {}
+            Dim counts As Integer() = New Integer(nodeCount - 1) {}
+            Dim starts As Integer() = New Integer(nodeCount - 1) {}
+            Dim nanG As Double() = New Double(nodeCount - 1) {}
+            Dim nanH As Double() = New Double(nodeCount - 1) {}
+            Dim nanCount As Integer() = New Integer(nodeCount - 1) {}
 
             ' 1) 缺失值梯度统计
             Dim nanRows = columns.NanRows(feature)
@@ -253,8 +254,8 @@ Namespace train.kernels
             End If
 
             ' 2) 每个节点在本列上的样本量
-            For k As Integer = 0 To n - 1
-                Dim s As Integer = slotOf(ids(k))
+            For pos As Integer = 0 To n - 1
+                Dim s As Integer = slotOf(ids(pos))
 
                 If s >= 0 Then
                     Dim ai As Integer = slotIndex(s)
@@ -267,7 +268,7 @@ Namespace train.kernels
 
             Dim total As Integer = 0
 
-            For i As Integer = 0 To K - 1
+            For i As Integer = 0 To nodeCount - 1
                 starts(i) = total
                 total += counts(i)
             Next
@@ -281,20 +282,20 @@ Namespace train.kernels
             Dim positions = pool.Rent(total)
 
             Try
-                Dim cursor As Integer() = New Integer(K - 1) {}
+                Dim cursor As Integer() = New Integer(nodeCount - 1) {}
 
-                For i As Integer = 0 To K - 1
+                For i As Integer = 0 To nodeCount - 1
                     cursor(i) = starts(i)
                 Next
 
-                For k As Integer = 0 To n - 1
-                    Dim s As Integer = slotOf(ids(k))
+                For pos As Integer = 0 To n - 1
+                    Dim s As Integer = slotOf(ids(pos))
 
                     If s >= 0 Then
                         Dim ai As Integer = slotIndex(s)
 
                         If ai >= 0 Then
-                            positions(cursor(ai)) = k
+                            positions(cursor(ai)) = pos
                             cursor(ai) += 1
                         End If
                     End If
@@ -337,18 +338,18 @@ Namespace train.kernels
                 Return
             End If
 
-            Dim D = cats.Length
-            Dim K = nodes.Count
+            Dim catCount As Integer = cats.Length
+            Dim nodeCount As Integer = nodes.Count
             Dim slotOf = partitioner.Slot
             Dim origin = columns.Origin
-            Dim cg As Double() = New Double(K * D - 1) {}
-            Dim ch As Double() = New Double(K * D - 1) {}
-            Dim cn As Integer() = New Integer(K * D - 1) {}
+            Dim cg As Double() = New Double(nodeCount * catCount - 1) {}
+            Dim ch As Double() = New Double(nodeCount * catCount - 1) {}
+            Dim cn As Integer() = New Integer(nodeCount * catCount - 1) {}
 
-            For ai As Integer = 0 To K - 1
+            For ai As Integer = 0 To nodeCount - 1
                 Dim node = nodes(ai)
                 Dim rows = partitioner.RowsOf(node.Id)
-                Dim offset As Integer = ai * D
+                Dim offset As Integer = ai * catCount
 
                 For Each row As Integer In rows
                     Dim v As Single = origin(row)(feature)
@@ -372,11 +373,11 @@ Namespace train.kernels
             Next
 
             Dim nanRows = columns.NanRows(feature)
-            Dim order As Integer() = New Integer(D - 1) {}
+            Dim order As Integer() = New Integer(catCount - 1) {}
 
-            For ai As Integer = 0 To K - 1
+            For ai As Integer = 0 To nodeCount - 1
                 Dim node = nodes(ai)
-                Dim offset As Integer = ai * D
+                Dim offset As Integer = ai * catCount
                 Dim gn As Double = 0
                 Dim hn As Double = 0
                 Dim nn As Integer = 0
@@ -396,10 +397,10 @@ Namespace train.kernels
                 ' 只保留有样本的类别
                 Dim m As Integer = 0
 
-                For d As Integer = 0 To D - 1
+                For code As Integer = 0 To catCount - 1
 
-                    If cn(offset + d) > 0 Then
-                        order(m) = d
+                    If cn(offset + code) > 0 Then
+                        order(m) = code
                         m += 1
                     End If
                 Next
@@ -410,12 +411,12 @@ Namespace train.kernels
                 End If
 
                 ' 插入排序：按 G/H 升序（类别数通常很小）
-                For i As Integer = 1 To m - 1
-                    Dim key As Integer = order(i)
-                    Dim kr As Double = ratioG2H(cg(offset + key), ch(offset + key))
-                    Dim j As Integer = i - 1
+                For idx As Integer = 1 To m - 1
+                    Dim key As Integer = order(idx)
+                    Dim keyRatio As Double = ratioG2H(cg(offset + key), ch(offset + key))
+                    Dim j As Integer = idx - 1
 
-                    While j >= 0 AndAlso ratioG2H(cg(offset + order(j)), ch(offset + order(j))) > kr
+                    While j >= 0 AndAlso ratioG2H(cg(offset + order(j)), ch(offset + order(j))) > keyRatio
                         order(j + 1) = order(j)
                         j -= 1
                     End While
@@ -428,12 +429,12 @@ Namespace train.kernels
                 Dim picked As New List(Of Integer)(m)
                 Dim bestGain As Double = If(best(ai).HasSplit, best(ai).Gain, 0.0)
 
-                For i As Integer = 0 To m - 2
-                    Dim c As Integer = order(i)
+                For idx As Integer = 0 To m - 2
+                    Dim code As Integer = order(idx)
 
-                    gl += cg(offset + c)
-                    hl += ch(offset + c)
-                    Call picked.Add(c)
+                    gl += cg(offset + code)
+                    hl += ch(offset + code)
+                    Call picked.Add(code)
 
                     Dim gr As Double = node.Grad - gl - gn
                     Dim hr As Double = node.Hess - hl - hn

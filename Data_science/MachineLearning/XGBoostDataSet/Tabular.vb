@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::437fdd296f49d14ae7d3c678dd574fdf, Data_science\MachineLearning\XGBoostDataSet\Tabular.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 208
-    '    Code Lines: 154 (74.04%)
-    ' Comment Lines: 10 (4.81%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 44 (21.15%)
-    '     File Size: 7.11 KB
-
-
-    ' Module Tabular
-    ' 
-    '     Function: ReadTestData, ReadTrainData, ReadValidationData
-    ' 
-    '     Sub: (+3 Overloads) first_scan, (+3 Overloads) second_scan
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
+﻿Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Language.Values
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train
 
+''' <summary>
+''' CSV 表格数据读取（训练 / 验证 / 测试）。
+'''
+''' 缺失值识别统一走 <see cref="IsMissingToken"/>，并且不再构造
+''' <c>TrainData.feature_value_index</c>（每 (样本,特征) 一个两元素 <c>Single()</c> 对象，
+''' 10 万 × 100 的数据集约 400MB）：训练期的列主序结构由
+''' <c>ColumnBlock</c> 直接从原始矩阵构建。
+''' </summary>
 Public Module Tabular
+
+    ''' <summary>
+    ''' 常见缺失值记号
+    ''' </summary>
+    Private ReadOnly MISSING_TOKENS As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase) From {
+        "",
+        "na",
+        "n/a",
+        "nan",
+        "null",
+        "nil",
+        "none",
+        "?"
+    }
+
+    ''' <summary>
+    ''' 判断单元格是否表示缺失值
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsMissingToken(value As String) As Boolean
+        If value Is Nothing Then
+            Return True
+        End If
+
+        Return MISSING_TOKENS.Contains(value.Trim())
+    End Function
+
+    ''' <summary>
+    ''' 解析特征值（缺失返回 <c>Nothing</c>）
+    ''' </summary>
+    Private Function parseFeature(value As String) As Single?
+        If IsMissingToken(value) Then
+            Return Nothing
+        End If
+
+        Return Single.Parse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture)
+    End Function
+
+    Private Function parseLabel(value As String) As Double
+        If IsMissingToken(value) Then
+            Throw New ArgumentException($"标签列不能为缺失值：'{value}'")
+        End If
+
+        Return Double.Parse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture)
+    End Function
 
 #Region "ReadTestData"
 
@@ -99,12 +99,9 @@ Public Module Tabular
                 Dim strs As String() = br.ReadLine().Split(","c)
 
                 For col = 0 To data.feature_dim - 1
+                    Dim value = parseFeature(strs(col))
 
-                    If strs(col).Equals("") Then
-                        data.origin_feature(row)(col) = TestData.NA
-                    Else
-                        data.origin_feature(row)(col) = Single.Parse(strs(col))
-                    End If
+                    data.origin_feature(row)(col) = If(value.HasValue, value.Value, TestData.NA)
                 Next
             Next
         End Using
@@ -146,15 +143,12 @@ Public Module Tabular
 
             For row = 0 To data.dataset_size - 1
                 Dim strs As String() = br.ReadLine().Split(","c)
-                data.label(row) = Single.Parse(strs(strs.Length - 1))
+                data.label(row) = parseLabel(strs(strs.Length - 1))
 
                 For col = 0 To data.feature_dim - 1
+                    Dim value = parseFeature(strs(col))
 
-                    If strs(col).Equals("") Then
-                        data.origin_feature(row)(col) = ValidationData.NA
-                    Else
-                        data.origin_feature(row)(col) = Single.Parse(strs(col))
-                    End If
+                    data.origin_feature(row)(col) = If(value.HasValue, value.Value, ValidationData.NA)
                 Next
             Next
         End Using
@@ -184,7 +178,9 @@ Public Module Tabular
             Dim columns = header.Split(","c)
             data.feature_dim = columns.Length - 1
 
-            For i = 0 To columns.Length - 1
+            ' 只扫描特征列：旧实现用含标签列的下标循环，若标签列名出现在
+            ' categorical_features 列表中，会得到等于 feature_dim 的越界列下标。
+            For i = 0 To data.feature_dim - 1
 
                 If data.cat_features_names.Contains(columns(i)) Then
                     data.cat_features_cols.Add(i)
@@ -204,7 +200,7 @@ Public Module Tabular
 
                 For i = 0 To data.feature_dim - 1
 
-                    If strs(i).Equals("") Then
+                    If IsMissingToken(strs(i)) Then
                         data.missing_count(i) = data.missing_count(i) + 1
                     End If
                 Next
@@ -213,7 +209,10 @@ Public Module Tabular
     End Sub
 
     ''' <summary>
-    ''' to obtain:feature_value_index,label,missing_index,origin_feature,cat_features_values
+    ''' to obtain: label, missing_index, origin_feature
+    '''
+    ''' 不再构造 <c>feature_value_index</c>：训练期的列主序结构由 <c>ColumnBlock</c> 直接
+    ''' 从 <c>origin_feature</c> 构建，省去约 400MB 的「每单元一个对象」开销。
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="file"></param>
@@ -221,42 +220,39 @@ Public Module Tabular
     Private Sub second_scan(data As TrainData, file As String)
         data.label = New Double(data.dataset_size - 1) {}
         data.missing_index = New Integer(data.feature_dim - 1)() {}
-        data.feature_value_index = New Single(data.feature_dim - 1)()() {}
 
         For i = 0 To data.feature_dim - 1
             Dim cnt = data.missing_count(i)
             data.missing_index(i) = New Integer(cnt - 1) {}
-            data.feature_value_index(i) = RectangularArray.Matrix(Of Single)(data.dataset_size - cnt, 2)
         Next
 
         data.origin_feature = RectangularArray.Matrix(Of Single)(data.dataset_size, data.feature_dim)
 
+        Using br As New StreamReader(file)
+            br.ReadLine()
 
-        Dim br As StreamReader = New StreamReader(file)
-        br.ReadLine()
-        Dim cur_index = New Integer(data.feature_dim - 1) {}
-        Dim cur_missing_index = New Integer(data.feature_dim - 1) {}
-        Arrays.fill(cur_index, 0)
-        Arrays.fill(cur_missing_index, 0)
+            Dim cur_missing_index = New Integer(data.feature_dim - 1) {}
 
-        For row = 0 To data.dataset_size - 1
-            Dim strs As String() = br.ReadLine().Split(","c)
-            data.label(row) = Single.Parse(strs(strs.Length - 1))
+            For row = 0 To data.dataset_size - 1
+                Dim strs As String() = br.ReadLine().Split(","c)
+                data.label(row) = parseLabel(strs(strs.Length - 1))
 
-            For col = 0 To data.feature_dim - 1
+                For col = 0 To data.feature_dim - 1
+                    Dim value = parseFeature(strs(col))
 
-                If strs(col).Equals("") Then
-                    data.missing_index(col)(cur_missing_index(col)) = row
-                    cur_missing_index(col) += 1
-                    data.origin_feature(row)(col) = TrainData.NA
-                Else
-                    data.feature_value_index(col)(cur_index(col))(0) = Single.Parse(strs(col))
-                    data.feature_value_index(col)(cur_index(col))(1) = row
-                    cur_index(col) += 1
-                    data.origin_feature(row)(col) = Single.Parse(strs(col))
-                End If
+                    If value.HasValue Then
+                        data.origin_feature(row)(col) = value.Value
+                    Else
+                        If cur_missing_index(col) < data.missing_index(col).Length Then
+                            data.missing_index(col)(cur_missing_index(col)) = row
+                        End If
+
+                        cur_missing_index(col) += 1
+                        data.origin_feature(row)(col) = TrainData.NA
+                    End If
+                Next
             Next
-        Next
+        End Using
     End Sub
 #End Region
 

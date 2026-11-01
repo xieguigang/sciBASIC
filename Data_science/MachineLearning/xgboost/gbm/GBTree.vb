@@ -79,6 +79,10 @@ Namespace gbm
         Private trees As RegTree()
         Private tree_info As Integer()
         Friend _groupTrees As RegTree()()
+        ''' <summary>
+        ''' 每个输出组在**全局树序**中的下标，供 <see cref="Dart"/> 按全局下标取 dropout 权重
+        ''' </summary>
+        Friend _groupTreeIndex As Integer()()
 
         Friend Sub New()
             ' do nothing
@@ -101,26 +105,26 @@ Namespace gbm
             End If
 
             _groupTrees = New RegTree(mparam.num_output_group - 1)() {}
+            _groupTreeIndex = New Integer(mparam.num_output_group - 1)() {}
 
             For i = 0 To mparam.num_output_group - 1
-                Dim treeCount = 0
+                Dim indices As New List(Of Integer)()
 
                 For j = 0 To tree_info.Length - 1
 
                     If tree_info(j) = i Then
-                        treeCount += 1
+                        Call indices.Add(j)
                     End If
                 Next
 
-                _groupTrees(i) = New RegTree(treeCount - 1) {}
-                treeCount = 0
+                Dim group As RegTree() = New RegTree(indices.Count - 1) {}
 
-                For j = 0 To tree_info.Length - 1
-
-                    If tree_info(j) = i Then
-                        _groupTrees(i)(std.Min(Threading.Interlocked.Increment(treeCount), treeCount - 1)) = trees(j)
-                    End If
+                For k As Integer = 0 To indices.Count - 1
+                    group(k) = trees(indices(k))
                 Next
+
+                _groupTrees(i) = group
+                _groupTreeIndex(i) = indices.ToArray
             Next
         End Sub
 

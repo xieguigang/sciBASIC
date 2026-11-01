@@ -86,9 +86,22 @@ Namespace gbm
             Dim trees = _groupTrees(bst_group)
             Dim treeleft = If(ntree_limit = 0, trees.Length, std.Min(ntree_limit, trees.Length))
             Dim psum As Double = 0
+            ' dropout 权重是按**全局树序**保存的：旧实现直接用组内局部下标 i 取值，
+            ' 在多输出组（num_class > 1）时会取错权重。
+            Dim globalIndex = If(_groupTreeIndex Is Nothing, Nothing, _groupTreeIndex(bst_group))
 
             For i = 0 To treeleft - 1
-                psum += weightDrop(i) * trees(i).getLeafValue(feat, root_index)
+                Dim w As Double = 1
+
+                If weightDrop IsNot Nothing Then
+                    Dim idx As Integer = If(globalIndex Is Nothing, i, globalIndex(i))
+
+                    If idx >= 0 AndAlso idx < weightDrop.Length Then
+                        w = weightDrop(idx)
+                    End If
+                End If
+
+                psum += w * trees(i).getLeafValue(feat, root_index)
             Next
 
             Return psum

@@ -1,5 +1,6 @@
 Imports System.Runtime.CompilerServices
-Imports System.Threading.Tasks
+Imports par = System.Threading.Tasks.Parallel
+Imports taskParallel = System.Threading.Tasks.ParallelOptions
 
 Namespace train.kernels
 
@@ -222,11 +223,11 @@ Namespace train.kernels
         ''' <param name="numThread"></param>
         Public Shared Sub AccumulateAll(trees As FlatTree(), features As Single()(), output As Double(),
                                         scale As Double, numThread As Integer)
-            Dim options As New ParallelOptions With {
+            Dim options As New taskParallel With {
                 .MaxDegreeOfParallelism = If(numThread <= 0, -1, numThread)
             }
 
-            Call Parallel.For(0, features.Length, options,
+            Call par.For(0, features.Length, options,
                 Sub(i As Integer)
                     Dim row = features(i)
                     Dim sum As Double = 0

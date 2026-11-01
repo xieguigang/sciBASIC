@@ -91,20 +91,16 @@ Public Module Conversion
 
         data.label = New Double(data.dataset_size - 1) {}
         data.missing_index = New Integer(data.feature_dim - 1)() {}
-        data.feature_value_index = New Single(data.feature_dim - 1)()() {}
 
         For i As Integer = 0 To data.feature_dim - 1
             Dim cnt = data.missing_count(i)
             data.missing_index(i) = New Integer(cnt - 1) {}
-            data.feature_value_index(i) = RectangularArray.Matrix(Of Single)(data.dataset_size - cnt, 2)
         Next
 
         data.origin_feature = RectangularArray.Matrix(Of Single)(data.dataset_size, data.feature_dim)
 
-        Dim cur_index = New Integer(data.feature_dim - 1) {}
         Dim cur_missing_index = New Integer(data.feature_dim - 1) {}
 
-        Arrays.fill(cur_index, 0)
         Arrays.fill(cur_missing_index, 0)
 
         For row As Integer = 0 To data.dataset_size - 1
@@ -113,13 +109,13 @@ Public Module Conversion
 
             For col = 0 To data.feature_dim - 1
                 If rowLine(col) = TrainData.NA OrElse rowLine(col).IsNaNImaginary Then
-                    data.missing_index(col)(cur_missing_index(col)) = row
+                    If cur_missing_index(col) < data.missing_index(col).Length Then
+                        data.missing_index(col)(cur_missing_index(col)) = row
+                    End If
+
                     cur_missing_index(col) += 1
                     data.origin_feature(row)(col) = TrainData.NA
                 Else
-                    data.feature_value_index(col)(cur_index(col))(0) = rowLine(col)
-                    data.feature_value_index(col)(cur_index(col))(1) = row
-                    cur_index(col) += 1
                     data.origin_feature(row)(col) = rowLine(col)
                 End If
             Next

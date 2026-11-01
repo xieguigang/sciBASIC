@@ -83,12 +83,23 @@ Namespace learner
         ''' Gets <seealso cref="ObjFunction"/> from given name.
         ''' </summary>
         ''' <param name="name"> name of objective function </param>
+        ''' <param name="strict">
+        ''' <c>True</c>（默认）：未知名称抛 <see cref="ArgumentException"/>，避免静默使用错误的变换；
+        ''' <c>False</c>：未知名称回退到恒等变换并输出告警，用于加载第三方模型时保持可用。
+        ''' </param>
         ''' <returns> objective function </returns>
-        Public Shared Function fromName(name As String) As ObjFunction
+        Public Shared Function fromName(name As String, Optional strict As Boolean = True) As ObjFunction
             Dim result = FUNCTIONS.GetValueOrNull(name)
 
             If result Is Nothing Then
-                Throw New ArgumentException(name & " is not supported objective function.")
+
+                If strict Then
+                    Throw New ArgumentException(name & " is not supported objective function.")
+                End If
+
+                Call Console.Error.WriteLine($"[XGBoost] 未注册的目标函数 '{name}'，回退为恒等变换（预测值将不做变换）。")
+
+                Return New ObjFunction()
             End If
 
             Return result

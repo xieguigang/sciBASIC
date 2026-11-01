@@ -5,9 +5,9 @@ Namespace train.kernels
     '''
     ''' 先把节点的有序切片累积到 <c>max_bin</c> 个桶的直方图上，再在直方图上做前缀扫描。
     ''' 当特征取值基数很大（连续型、浮点测量值）时，exact 模式需要为每个不同取值评估一次分裂，
-    ''' 本模式把评估次数压到桶数级别，是 `tree_method=hist` 的主要收益来源。
+    ''' 本模式把评估次数压到桶数级别，是 <c>tree_method=hist</c> 的主要收益来源。
     '''
-    ''' 注意：分桶会引入量化误差，因此默认的 `tree_method` 仍是 `exact`；
+    ''' 注意：分桶会引入量化误差，因此默认的 <c>tree_method</c> 仍是 <c>exact</c>；
     ''' 需要显式开启本模式，并通过回归/基准报告评估指标偏差。
     ''' </summary>
     Friend Class HistogramSplitFinder
@@ -24,9 +24,9 @@ Namespace train.kernels
 
         Protected Overrides Sub Scan(ctx As ScanContext)
             Dim binning = columns.GetBins(ctx.Feature, maxBin)
-            Dim B As Integer = binning.BucketCount
+            Dim bucketCount As Integer = binning.BucketCount
 
-            If B <= 1 Then
+            If bucketCount <= 1 Then
                 Return
             End If
 
@@ -38,8 +38,8 @@ Namespace train.kernels
             Dim grad = ctx.Grad
             Dim hess = ctx.Hess
             Dim mask = ctx.Mask
-            Dim binG As Double() = New Double(B - 1) {}
-            Dim binH As Double() = New Double(B - 1) {}
+            Dim binG As Double() = New Double(bucketCount - 1) {}
+            Dim binH As Double() = New Double(bucketCount - 1) {}
 
             For ai As Integer = 0 To nodes.Count - 1
                 Dim count As Integer = ctx.Counts(ai)
@@ -48,20 +48,20 @@ Namespace train.kernels
                     Continue For
                 End If
 
-                Call Array.Clear(binG, 0, B)
-                Call Array.Clear(binH, 0, B)
+                Call Array.Clear(binG, 0, bucketCount)
+                Call Array.Clear(binH, 0, bucketCount)
 
                 Dim j0 As Integer = ctx.Starts(ai)
                 Dim j1 As Integer = j0 + count - 1
 
                 For t As Integer = j0 To j1
-                    Dim k As Integer = positions(t)
-                    Dim row As Integer = ids(k)
+                    Dim pos As Integer = positions(t)
+                    Dim row As Integer = ids(pos)
 
                     If mask Is Nothing OrElse mask(row) Then
-                        Dim b As Integer = bins(k)
-                        binG(b) += grad(row)
-                        binH(b) += hess(row)
+                        Dim bin As Integer = bins(pos)
+                        binG(bin) += grad(row)
+                        binH(bin) += hess(row)
                     End If
                 Next
 
@@ -75,9 +75,9 @@ Namespace train.kernels
                 Dim bestThreshold As Single = 0
                 Dim bestDirection As Integer = SplitCandidate.NanDirectionNone
 
-                For b As Integer = 0 To B - 2
-                    gl += binG(b)
-                    hl += binH(b)
+                For bin As Integer = 0 To bucketCount - 2
+                    gl += binG(bin)
+                    hl += binH(bin)
 
                     Dim gr As Double = node.Grad - gl - gn
                     Dim hr As Double = node.Hess - hl - hn
@@ -86,7 +86,7 @@ Namespace train.kernels
 
                     If gain > bestGain Then
                         bestGain = gain
-                        bestThreshold = thresholds(b)
+                        bestThreshold = thresholds(bin)
                         bestDirection = direction
                         improved = True
                     End If

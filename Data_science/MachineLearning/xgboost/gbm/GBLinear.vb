@@ -88,12 +88,12 @@ Namespace gbm
 
         Public Overrides Function predict(feat As FVec, ntree_limit As Integer) As Double()
             Dim preds = New Double(mparam.num_output_group - 1) {}
-            Dim gid = 0
 
-            While gid < mparam.num_output_group
+            ' 旧实现在自增局部变量时使用 Interlocked.Increment：每特征一次完整内存屏障，
+            ' 直接把线性 booster 的评分成本抬高一个量级。
+            For gid As Integer = 0 To preds.Length - 1
                 preds(gid) = pred(feat, gid)
-                Threading.Interlocked.Increment(gid)
-            End While
+            Next
 
             Return preds
         End Function
@@ -109,17 +109,14 @@ Namespace gbm
         Friend Overridable Function pred(feat As FVec, gid As Integer) As Double
             Dim psum As Double = bias(gid)
             Dim featValue As Double
-            Dim fid = 0
 
-            While fid < mparam.num_feature
+            For fid As Integer = 0 To mparam.num_feature - 1
                 featValue = feat.fvalue(fid)
 
                 If Not Double.IsNaN(featValue) Then
                     psum += featValue * weight(fid, gid)
                 End If
-
-                Threading.Interlocked.Increment(fid)
-            End While
+            Next
 
             Return psum
         End Function

@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train.kernels
 Imports Microsoft.VisualBasic.My
-Imports train.kernels
 Imports std = System.Math
 
 Namespace train

@@ -1,4 +1,4 @@
-﻿Imports train.kernels
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train.kernels
 
 Namespace train
 
@@ -41,7 +41,7 @@ Namespace train
 
             Columns = ColumnBlock.FromTrainData(data)
 
-            cutting_inds = New Integer(feature_dim - 1)() {}
+            cutting_inds = New Integer(feature_dim - 1)()() {}
             cutting_thresholds = New Single(feature_dim - 1)() {}
 
             ' 列块建好之后，解析阶段为「按值排序」而构造的

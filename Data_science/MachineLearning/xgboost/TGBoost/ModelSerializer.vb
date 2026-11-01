@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
@@ -81,11 +82,22 @@ Namespace train
 
     Public Class ModelSerializer
 
+        ''' <summary>
+        ''' 浮点往返格式：替代旧的 <c>"F6"</c>（固定 6 位小数）。
+        '''
+        ''' <c>"F6"</c> 在阈值较大时有可见相对误差，在叶值很小时会把值截断为 0；
+        ''' 同时 <c>ToString()</c> 默认走当前区域设置，小数点会随系统语言变成逗号，
+        ''' 导致模型文件跨机器不可读。
+        ''' </summary>
+        Private Shared Function fmt(value As Double) As String
+            Return value.ToString("R", CultureInfo.InvariantCulture)
+        End Function
+
         Private Shared Function serializeLeafNode(node As TreeNode) As String
             Dim sb As New StringBuilder()
             sb.Append(node.index)
             sb.Append(":leaf=")
-            sb.Append(String.Format("{0:F6}", node.leaf_score))
+            sb.Append(fmt(node.leaf_score))
             Return sb.ToString()
         End Function
 
@@ -98,13 +110,13 @@ Namespace train
 
             If node.split_left_child_catvalue Is Nothing Then
                 sb.Append("num,")
-                sb.Append(String.Format("{0:F6}", node.split_threshold))
+                sb.Append(fmt(node.split_threshold))
                 sb.Append("],")
             Else
                 sb.Append("cat")
 
                 For Each catvalue As Double In node.split_left_child_catvalue
-                    sb.Append("," & catvalue)
+                    sb.Append("," & fmt(catvalue))
                 Next
 
                 sb.Append("],")
@@ -139,14 +151,11 @@ Namespace train
             Dim loss As Loss = gbm.loss
             Dim trees As List(Of Tree) = gbm.trees
 
-            Yield "first_round_predict=" & first_round_predict
-            Yield "eta=" & eta
-
-            If TypeOf loss Is LogisticLoss Then
-                Yield "logloss"
-            Else
-                Yield "squareloss"
-            End If
+            Yield "first_round_predict=" & fmt(first_round_predict)
+            Yield "eta=" & fmt(eta)
+            ' 写 loss 的实际名称，而不是只区分 logloss / squareloss
+            ' （旧实现会把 qlinearloss 静默降级成 squareloss）
+            Yield If(loss Is Nothing, "logloss", loss.Name)
 
             For i As Integer = 1 To trees.Count
                 Dim tree As Tree = trees(i - 1)
@@ -189,15 +198,9 @@ Namespace train
         ''' <returns></returns>
         Public Shared Function load_model(txtLine As String()) As GBM
             Dim i As i32 = 0
-            Dim first_round_predict As Double = Double.Parse(txtLine(++i).Split("="c)(1))
-            Dim eta As Double = Double.Parse(txtLine(++i).Split("="c)(1))
-            Dim loss As Loss = Nothing
-
-            If txtLine(++i) = "logloss" Then
-                loss = New LogisticLoss()
-            Else
-                loss = New SquareLoss()
-            End If
+            Dim first_round_predict As Double = Double.Parse(txtLine(++i).Split("="c)(1), CultureInfo.InvariantCulture)
+            Dim eta As Double = Double.Parse(txtLine(++i).Split("="c)(1), CultureInfo.InvariantCulture)
+            Dim loss As Loss = GBM.resolveLoss(txtLine(++i))
 
             Dim trees As List(Of Tree) = New List(Of Tree)()
             Dim line As New Value(Of String)
@@ -237,28 +240,28 @@ Namespace train
                     End If
                 Else
                     'store this node into map
-                    Dim index = Integer.Parse(line.Split(":"c)(0))
+                    Dim index = Integer.Parse(line.Split(":"c)(0), CultureInfo.InvariantCulture)
 
                     If line.Split(":"c)(1).StartsWith("leaf") Then
-                        Dim leaf_score = Double.Parse(line.Split(":"c)(CInt(1)).Split("="c)(1))
+                        Dim leaf_score = Double.Parse(line.Split(":"c)(CInt(1)).Split("="c)(1), CultureInfo.InvariantCulture)
                         Dim node As TreeNode = New TreeNode(index, leaf_score)
                         map(index) = node
                     Else
-                        Dim nan_go_to = Double.Parse(line.Split("="c)(1))
+                        Dim nan_go_to = Double.Parse(line.Split("="c)(1), CultureInfo.InvariantCulture)
                         Dim split_info = line.Split(":"c)(1).Split("]"c)(0)
                         split_info = split_info.Substring(1)
                         Dim strs = split_info.Split(","c)
-                        Dim split_feature = Integer.Parse(strs(0))
+                        Dim split_feature = Integer.Parse(strs(0), CultureInfo.InvariantCulture)
 
                         If strs(1).Equals("num") Then
-                            Dim split_threshold = Double.Parse(strs(2))
+                            Dim split_threshold = Double.Parse(strs(2), CultureInfo.InvariantCulture)
                             Dim node As TreeNode = New TreeNode(index, split_feature, split_threshold, nan_go_to)
                             map(index) = node
                         Else
                             Dim split_left_child_catvalue As New List(Of Double)()
 
                             For j As Integer = 2 To strs.Length - 1
-                                split_left_child_catvalue.Add(Double.Parse(strs(j)))
+                                split_left_child_catvalue.Add(Double.Parse(strs(j), CultureInfo.InvariantCulture))
                             Next
 
                             Dim node As TreeNode = New TreeNode(index, split_feature, split_left_child_catvalue, nan_go_to)

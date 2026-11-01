@@ -100,7 +100,9 @@ Namespace tree
         End Function
 
         Friend Overridable Function split_index() As Integer
-            Return sindex_ And (1L << 31) - 1L
+            ' 最高位是 default_left 标志，取低 31 位作为特征下标；
+            ' 显式 CInt 以避免依赖 OptionStrict Off 的隐式窄化。
+            Return CInt(CLng(sindex_) And ((1L << 31) - 1L))
         End Function
 
         Friend Overridable Function cdefault() As Integer
