@@ -9,6 +9,7 @@ Option Infer On
 
 Imports System
 Imports System.Collections.Generic
+Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.Protobuf
 Imports Microsoft.VisualBasic.Data.IO.Protobuf.Serialization

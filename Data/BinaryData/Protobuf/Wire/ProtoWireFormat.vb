@@ -137,15 +137,14 @@ Public Module ProtoWireFormat
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ZigZagDecode64(value As ULong) As Long
-        Dim wide As Long
+        ' 先做无符号右移（结果必然落在 Long 取值范围内），再依据最低位决定是否按位取反
+        Dim half As Long = CLng(value >> 1UL)
 
-        If (value And &H8000000000000000UL) <> 0UL Then
-            wide = CLng(value And &H7FFFFFFFFFFFFFFFUL) Or Long.MinValue
+        If (value And 1UL) <> 0UL Then
+            Return Not half
         Else
-            wide = CLng(value)
+            Return half
         End If
-
-        Return (wide >> 1) Xor -(wide And 1L)
     End Function
 
 End Module

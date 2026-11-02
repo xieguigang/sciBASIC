@@ -263,7 +263,7 @@ Friend Module WireTests
     End Sub
 
     Private Sub SkipFields()
-        Call AssertSkip(HexBytes("08 96 01"), WireType.Varint, "跳过 varint")
+        Call AssertSkip(HexBytes("96 01"), WireType.Varint, "跳过 varint")
         Call AssertSkip(HexBytes("01 02 03 04 05 06 07 08"), WireType.Fixed64, "跳过 fixed64")
         Call AssertSkip(HexBytes("01 02 03 04"), WireType.Fixed32, "跳过 fixed32")
         Call AssertSkip(HexBytes("03 41 42 43"), WireType.LengthDelimited, "跳过 length-delimited")

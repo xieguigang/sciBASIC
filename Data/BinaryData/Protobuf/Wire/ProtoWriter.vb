@@ -323,6 +323,9 @@ Namespace Wire
 
                 WriteTag(fieldNumber, WireType.LengthDelimited)
                 WriteLengthPrefix(CInt(buffer.Length))
+
+                ' MemoryStream.WriteTo 从当前位置开始拷贝，必须先回到起点
+                buffer.Position = 0
                 Call buffer.WriteTo(_writer.BaseStream)
             End Using
         End Sub

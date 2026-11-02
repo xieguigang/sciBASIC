@@ -124,11 +124,11 @@ Friend Module TestSupport
     ''' 创建一个唯一的临时目录。
     ''' </summary>
     Friend Function TempDir() As String
-        Dim path As String = Path.Combine(Path.GetTempPath(), "protobuf-demo-" & Guid.NewGuid().ToString("N"))
+        Dim dirPath As String = Path.Combine(Path.GetTempPath(), "protobuf-demo-" & Guid.NewGuid().ToString("N"))
 
-        Call Directory.CreateDirectory(path)
+        Call Directory.CreateDirectory(dirPath)
 
-        Return path
+        Return dirPath
     End Function
 
 End Module

@@ -158,6 +158,10 @@ Namespace Wire
                 Throw New WireFormatException($"长度前缀 {byteCount} 超过了当前消息剩余的可用字节数", _reader.Position)
             End If
 
+            If _sourceLength >= 0 AndAlso newLimit > _sourceLength Then
+                Throw New WireFormatException($"长度前缀 {byteCount} 超出了数据流的实际长度", _reader.Position)
+            End If
+
             _limits.Push(_limit)
             _limit = newLimit
             _depth += 1

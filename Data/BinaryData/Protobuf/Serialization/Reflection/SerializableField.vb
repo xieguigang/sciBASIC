@@ -30,6 +30,13 @@ Namespace Serialization.Reflection
         ''' </summary>
         Friend Shared ReadOnly UnixEpoch As New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
 
+        Friend Const ListTypeName As String = "System.Collections.Generic.List`1"
+        Friend Const IListTypeName As String = "System.Collections.Generic.IList`1"
+        Friend Const ICollectionTypeName As String = "System.Collections.Generic.ICollection`1"
+        Friend Const IEnumerableTypeName As String = "System.Collections.Generic.IEnumerable`1"
+        Friend Const DictionaryTypeName As String = "System.Collections.Generic.Dictionary`2"
+        Friend Const IDictionaryTypeName As String = "System.Collections.Generic.IDictionary`2"
+
         Private ReadOnly _property As PropertyInfo
         Private ReadOnly _field As FieldInfo
 
@@ -100,6 +107,11 @@ Namespace Serialization.Reflection
             IsRequired = attr.IsRequired
             DeclaredType = If(_property IsNot Nothing, _property.PropertyType, _field.FieldType)
 
+            If DeclaredType Is Nothing Then
+                Throw New InvalidOperationException(
+                    $"无法解析成员 {member.DeclaringType?.FullName}.{member.Name} 的 CLR 类型")
+            End If
+
             Dim underlying As Type = Nullable.GetUnderlyingType(DeclaredType)
 
             If underlying IsNot Nothing Then
@@ -113,15 +125,35 @@ Namespace Serialization.Reflection
                 ' bytes 是标量类型，而不是 repeated
                 FieldType = FieldTypeKind.Bytes
                 ElementType = GetType(Byte)
+
+                If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
+                    Call System.IO.File.AppendAllText(
+                        System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
+                        $"[bytes] {member.Name}{Environment.NewLine}")
+                End If
             ElseIf ValueType.IsArray Then
                 IsArray = True
                 ElementType = ValueType.GetElementType()
+
+                If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
+                    Call System.IO.File.AppendAllText(
+                        System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
+                        $"[array] {member.Name}{Environment.NewLine}")
+                End If
             Else
                 Dim keyType As Type = Nothing
                 Dim valueType As Type = Nothing
                 Dim listElement As Type = Nothing
+                Dim isDict As Boolean = TryGetDictionaryTypes(ValueType, keyType, valueType)
+                Dim isList As Boolean = TryGetListElementType(ValueType, listElement)
 
-                If TryGetDictionaryTypes(ValueType, keyType, valueType) Then
+                If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
+                    Call System.IO.File.AppendAllText(
+                        System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
+                        $"[else] {member.Name} isDict={isDict} isList={isList}{Environment.NewLine}")
+                End If
+
+                If isDict Then
                     IsDictionary = True
                     DictionaryKeyType = keyType
                     DictionaryValueType = valueType
@@ -129,7 +161,7 @@ Namespace Serialization.Reflection
                     MapKeyType = DetermineKind(keyType, ProtoDataFormat.Auto)
                     MapValueType = DetermineKind(valueType, ProtoDataFormat.Auto)
                     FieldType = FieldTypeKind.Message
-                ElseIf TryGetListElementType(ValueType, listElement) Then
+                ElseIf isList Then
                     IsList = True
                     IsRepeated = True
                     ElementType = listElement
@@ -149,6 +181,12 @@ Namespace Serialization.Reflection
                 FieldType = DetermineKind(ValueType, DataFormat)
                 ElementFieldType = FieldType
                 IsPacked = False
+            End If
+
+            If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
+                Call System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
+                    $"{member.DeclaringType.Name}.{member.Name} type={ValueType.FullName} array={IsArray} list={IsList} dict={IsDictionary} repeated={IsRepeated} kind={FieldType}{Environment.NewLine}")
             End If
         End Sub
 
@@ -214,6 +252,9 @@ Namespace Serialization.Reflection
                     If buffer.Length > 0 Then
                         Call writer.WriteTag(FieldNumber, WireType.LengthDelimited)
                         Call writer.WriteLengthPrefix(CInt(buffer.Length))
+
+                        ' MemoryStream.WriteTo 从当前位置开始拷贝，必须先回到起点
+                        buffer.Position = 0
                         Call buffer.WriteTo(writer.BaseWriter.BaseStream)
                     End If
                 End Using
@@ -623,12 +664,16 @@ Namespace Serialization.Reflection
         End Sub
 
         Private Function NewListInstance() As Object
-            Return Activator.CreateInstance(GetType(List(Of )).MakeGenericType(ElementType))
+            Dim definition As Type = GetType(List(Of Integer)).GetGenericTypeDefinition()
+
+            Return Activator.CreateInstance(definition.MakeGenericType(ElementType))
         End Function
 
         Private Function NewDictionaryInstance() As Object
+            Dim definition As Type = GetType(Dictionary(Of String, Integer)).GetGenericTypeDefinition()
+
             Return Activator.CreateInstance(
-                GetType(Dictionary(Of ,)).MakeGenericType(DictionaryKeyType, DictionaryValueType))
+                definition.MakeGenericType(DictionaryKeyType, DictionaryValueType))
         End Function
 
 #End Region
@@ -759,28 +804,39 @@ Namespace Serialization.Reflection
             Return kind
         End Function
 
+        ''' <summary>
+        ''' 判断类型是否为指定的泛型类型定义（按完全限定名比较，避免跨程序集的 Type 实例差异）。
+        ''' </summary>
+        Private Shared Function IsGenericDefinition(type As Type, definitionFullName As String) As Boolean
+            If type Is Nothing OrElse Not type.IsGenericType Then
+                Return False
+            End If
+
+            Return String.Equals(type.GetGenericTypeDefinition().FullName, definitionFullName, StringComparison.Ordinal)
+        End Function
+
         Private Shared Function TryGetListElementType(type As Type, ByRef element As Type) As Boolean
-            If type.IsGenericType Then
-                Dim definition As Type = type.GetGenericTypeDefinition()
+            If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
+                Throw New InvalidOperationException($"[list-called] type={If(type Is Nothing, "<null>", type.FullName)}")
+            End If
 
-                If definition Is GetType(List(Of )) OrElse
-                   definition Is GetType(IList(Of )) OrElse
-                   definition Is GetType(ICollection(Of )) OrElse
-                   definition Is GetType(IEnumerable(Of )) Then
+            If type Is Nothing Then
+                Return False
+            End If
 
-                    element = type.GetGenericArguments()(0)
-                    Return True
-                End If
+            If IsGenericDefinition(type, ListTypeName) OrElse
+               IsGenericDefinition(type, IListTypeName) OrElse
+               IsGenericDefinition(type, ICollectionTypeName) OrElse
+               IsGenericDefinition(type, IEnumerableTypeName) Then
+
+                element = type.GetGenericArguments()(0)
+                Return True
             End If
 
             For Each item As Type In type.GetInterfaces()
-                If item.IsGenericType Then
-                    Dim definition As Type = item.GetGenericTypeDefinition()
-
-                    If definition Is GetType(IList(Of )) OrElse definition Is GetType(ICollection(Of )) Then
-                        element = item.GetGenericArguments()(0)
-                        Return True
-                    End If
+                If IsGenericDefinition(item, IListTypeName) OrElse IsGenericDefinition(item, ICollectionTypeName) Then
+                    element = item.GetGenericArguments()(0)
+                    Return True
                 End If
             Next
 
@@ -788,6 +844,10 @@ Namespace Serialization.Reflection
         End Function
 
         Private Shared Function TryGetDictionaryTypes(type As Type, ByRef key As Type, ByRef value As Type) As Boolean
+            If type Is Nothing Then
+                Return False
+            End If
+
             Dim candidates As New List(Of Type)
 
             If type.IsGenericType Then
@@ -801,9 +861,7 @@ Namespace Serialization.Reflection
             Next
 
             For Each candidate As Type In candidates
-                Dim definition As Type = candidate.GetGenericTypeDefinition()
-
-                If definition Is GetType(IDictionary(Of ,)) OrElse definition Is GetType(Dictionary(Of ,)) Then
+                If IsGenericDefinition(candidate, DictionaryTypeName) OrElse IsGenericDefinition(candidate, IDictionaryTypeName) Then
                     Dim arguments As Type() = candidate.GetGenericArguments()
 
                     key = arguments(0)

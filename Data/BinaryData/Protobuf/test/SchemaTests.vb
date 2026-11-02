@@ -133,11 +133,11 @@ Friend Module SchemaTests
 
     Private Sub LoadFromFile()
         Dim dir As String = TempDir()
-        Dim path As String = Path.Combine(dir, "sample.proto")
+        Dim protoPath As String = Path.Combine(dir, "sample.proto")
 
-        Call IO.File.WriteAllText(path, SampleProto.Text)
+        Call IO.File.WriteAllText(protoPath, SampleProto.Text)
 
-        Dim parsed As ProtoFile = ProtoFile.Load(path)
+        Dim parsed As ProtoFile = ProtoFile.Load(protoPath)
 
         Call AssertEqual("sample.proto", parsed.SourceFile, "从文件解析时记录文件名")
         Call AssertEqual(3, parsed.Messages.Count, "从文件解析的消息数量")

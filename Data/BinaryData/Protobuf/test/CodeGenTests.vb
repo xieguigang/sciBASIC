@@ -97,8 +97,8 @@ Friend Module CodeGenTests
         Call AssertEqual(4, paths.Count, "落盘文件数量")
 
         For Each path As String In paths
-            Call AssertTrue(IO.File.Exists(path), $"文件已写入：{Path.GetFileName(path)}")
-            Call AssertTrue(New FileInfo(path).Length > 0, $"文件非空：{Path.GetFileName(path)}")
+            Call AssertTrue(IO.File.Exists(path), $"文件已写入：{IO.Path.GetFileName(path)}")
+            Call AssertTrue(New FileInfo(path).Length > 0, $"文件非空：{IO.Path.GetFileName(path)}")
         Next
 
         Dim csDir As String = TempDir()
