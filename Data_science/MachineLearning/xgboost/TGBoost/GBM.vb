@@ -60,7 +60,7 @@ Namespace train
         Private best_iteration As Integer = -1
         Private best_score As Double = Double.NaN
 
-        Shared ReadOnly logger As LogFile
+        Public Shared ReadOnly logger As LogFile
 
         Public Overridable ReadOnly Property first_round_pred As Double
         Public Overridable ReadOnly Property eta As Double

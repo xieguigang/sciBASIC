@@ -146,6 +146,19 @@ Namespace ApplicationServices.Debugging.Logging
             Me.split = split
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="split"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 将split设置为Nothing就可以屏蔽掉控制台的输出
+        ''' </remarks>
+        Public Function SetSplit(split As LoggingDriver) As LogFile
+            Me.split = split
+            Return Me
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetConsoleSplit() As LoggingDriver
             Return Sub(header, msg, level) Console.WriteLine($"[{level.ToString.ToLower} - {header}] {msg}")
