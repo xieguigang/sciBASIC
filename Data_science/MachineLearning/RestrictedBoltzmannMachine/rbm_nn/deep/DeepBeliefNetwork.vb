@@ -261,7 +261,7 @@ Namespace nn.rbm.deep
             Dim state As DenseMatrix = RandomBinary(samples, top.VisibleSize)
 
             ' 最顶层的两层构成一个无向RBM，在这里进行交替Gibbs采样
-            For step As Integer = 1 To System.Math.Max(1, gibbsSteps)
+            For gibbsStep As Integer = 1 To System.Math.Max(1, gibbsSteps)
                 Dim hidden As DenseMatrix = top.SampleHidden(state)
 
                 state = top.SampleVisible(hidden)

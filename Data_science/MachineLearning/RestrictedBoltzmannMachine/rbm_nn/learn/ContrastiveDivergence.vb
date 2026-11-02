@@ -141,7 +141,7 @@ Namespace nn.rbm.learn
             Dim negativeHiddenProbabilities As DenseMatrix = Nothing
             Dim k As Integer = System.Math.Max(1, learningParameters.K)
 
-            For step As Integer = 1 To k
+            For gibbsStep As Integer = 1 To k
                 negativeVisibleProbabilities = rbm.VisibleProbabilities(negativeHiddenStates)
 
                 Dim negativeVisibleStates As DenseMatrix = negativeVisibleProbabilities.apply(DenseMatrix.random(numberSamples, rbm.VisibleSize), ACTIVATION_STATE)
