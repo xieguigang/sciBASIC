@@ -4,7 +4,6 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 Imports Microsoft.VisualBasic.Serialization.JSON.Formatter
 
 Namespace ApplicationServices.Debugging
@@ -194,7 +193,7 @@ Namespace ApplicationServices.Debugging
                     End If
 
                     snapshot(item.name) = item.value
-                    Call names.Add(item.name)
+                    names.Add(item.name)
                 Next
             End If
 
@@ -221,8 +220,7 @@ Namespace ApplicationServices.Debugging
         ''' <param name="line">源代码行号，由编译器自动传入</param>
         ''' <param name="callee">函数名称，由编译器自动传入</param>
         <Conditional("DEBUG")>
-        Public Sub Check(condition As Boolean,
-                         Optional msg As String = Nothing,
+        Public Sub Check(condition As Boolean, Optional msg As String = Nothing,
                          <CallerArgumentExpression("condition")> Optional expr As String = Nothing,
                          <CallerFilePath> Optional sourceFile As String = Nothing,
                          <CallerLineNumber> Optional line As Integer = -1,
@@ -252,8 +250,7 @@ Namespace ApplicationServices.Debugging
         ''' <param name="line">源代码行号，由编译器自动传入</param>
         ''' <param name="callee">函数名称，由编译器自动传入</param>
         ''' <returns></returns>
-        Public Function Test(condition As Boolean,
-                             Optional msg As String = Nothing,
+        Public Function Test(condition As Boolean, Optional msg As String = Nothing,
                              <CallerArgumentExpression("condition")> Optional expr As String = Nothing,
                              <CallerFilePath> Optional sourceFile As String = Nothing,
                              <CallerLineNumber> Optional line As Integer = -1,
@@ -283,8 +280,7 @@ Namespace ApplicationServices.Debugging
         ''' <param name="line">源代码行号，由编译器自动传入</param>
         ''' <param name="callee">函数名称，由编译器自动传入</param>
         ''' <returns>条件成立的时候返回<c>True</c></returns>
-        Public Function Require(condition As Boolean,
-                                Optional msg As String = Nothing,
+        Public Function Require(condition As Boolean, Optional msg As String = Nothing,
                                 <CallerArgumentExpression("condition")> Optional expr As String = Nothing,
                                 <CallerFilePath> Optional sourceFile As String = Nothing,
                                 <CallerLineNumber> Optional line As Integer = -1,
