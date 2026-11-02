@@ -75,6 +75,23 @@ Namespace nn.rbm.learn
 
         Private memoryField As Integer = 1
 
+        Private kField As Integer = 1
+
+        ''' <summary>
+        ''' 对比散度算法之中的Gibbs采样步数<c>k</c>，默认值为<c>1</c>（即CD-1）。
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property K As Integer
+            Get
+                Return kField
+            End Get
+        End Property
+
+        Public Function setK(k As Integer) As LearningParameters
+            kField = If(k < 1, 1, k)
+            Return Me
+        End Function
+
         Public ReadOnly Property LearningRate As Double
             Get
                 Return learningRateField
@@ -132,7 +149,7 @@ Namespace nn.rbm.learn
         End Function
 
         Public Overrides Function ToString() As String
-            Return "LearningParameters{" & "learningRate=" & learningRateField.ToString() & ", logisticsFunction=" & logisticsFunctionField.ToString() & ", epochs=" & epochsField.ToString() & ", log=" & logField.ToString() & ", memory=" & memoryField.ToString() & "}"c.ToString()
+            Return "LearningParameters{" & "learningRate=" & learningRateField.ToString() & ", logisticsFunction=" & logisticsFunctionField.ToString() & ", epochs=" & epochsField.ToString() & ", log=" & logField.ToString() & ", memory=" & memoryField.ToString() & ", k=" & kField.ToString() & "}"c.ToString()
         End Function
 
     End Class

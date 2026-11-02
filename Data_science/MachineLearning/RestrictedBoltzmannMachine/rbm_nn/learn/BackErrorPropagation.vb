@@ -113,6 +113,10 @@ Namespace nn.rbm.learn
 
             Dim weights = rbm.Weights
 
+            For j As Integer = 0 To rbm.HiddenSize - 1
+                Call output.set(0, j, rbm.HBias(j))
+            Next
+
             For i = 0 To rbm.VisibleSize - 1
                 For j = 0 To rbm.HiddenSize - 1
                     output.set(0, j, output.get(0, j) + input.get(0, i) * weights.get(i, j))
@@ -142,6 +146,13 @@ Namespace nn.rbm.learn
                     weights.set(i, j, weights.get(i, j) + learningParameters.LearningRate * errors.get(0, j) * input.get(0, i))
                 Next
             Next
+
+            ' adjust the hidden layer bias
+            Dim hbias As Double() = rbm.HBias
+            For j As Integer = 0 To rbm.HiddenSize - 1
+                hbias(j) += learningParameters.LearningRate * errors.get(0, j)
+            Next
+            rbm.HBias = hbias
         End Sub
 
         ''' <summary>

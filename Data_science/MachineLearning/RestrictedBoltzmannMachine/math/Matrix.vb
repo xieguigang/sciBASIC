@@ -119,8 +119,32 @@ Namespace math
             Return New DenseMatrix(NumericMatrix.Gauss(c, r))
         End Function
 
+        ''' <summary>
+        ''' 创建一个使用均匀分布<c>[0,1)</c>随机数填充的矩阵。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这里必须使用均匀分布：激活状态的伯努利采样(`ActivationState`)使用的是
+        ''' <c>probability &gt;= random</c>的判据，当<c>random</c>服从<c>U[0,1)</c>的时候，
+        ''' 单元被激活的概率恰好等于传入的概率值<c>p</c>；如果使用高斯分布，则实际激活概率会变成<c>Φ(p)</c>，
+        ''' 从而导致对比散度的负相采样出现系统性的偏差。
+        ''' </remarks>
         Public Shared Function random(r As Integer, c As Integer) As DenseMatrix
-            Return New DenseMatrix(NumericMatrix.Gauss(c, r))
+            Return make(r, c).apply(RANDOM_DOUBLE)
+        End Function
+
+        ''' <summary>
+        ''' 创建指定尺寸的矩阵，并且使用固定的数值来填充每一个元素。
+        ''' </summary>
+        Public Shared Function fill(r As Integer, c As Integer, value As Double) As DenseMatrix
+            Dim matrix As DenseMatrix = make(r, c)
+
+            For i As Integer = 0 To r - 1
+                For j As Integer = 0 To c - 1
+                    Call matrix.set(i, j, value)
+                Next
+            Next
+
+            Return matrix
         End Function
 
         Public Shared Function make(m As Double()()) As DenseMatrix
@@ -228,9 +252,56 @@ Namespace math
             Return lSum
         End Function
 
-        Public Shared Function splitColumns(m As DenseMatrix, numPieces As Integer) As IList(Of Double()())
+        ''' <summary>
+        ''' 将长度为<c>columns()</c>的向量按照行进行广播相加：<c>result(i, j) = m(i, j) + v(j)</c>
+        ''' </summary>
+        ''' <remarks>
+        ''' RBM的偏置项计算需要这个操作：<c>P(h=1|v) = σ(vW + b)</c>，其中的隐藏层偏置<c>b</c>
+        ''' 需要按照样本(行)广播到每一个样本上面。
+        ''' </remarks>
+        Public Function addRowVector(v As Double()) As DenseMatrix
+            If v Is Nothing Then
+                Throw New ArgumentNullException(NameOf(v))
+            End If
+            If v.Length <> columns() Then
+                Throw New ArgumentException($"vector size {v.Length} does not match the matrix columns {columns()}")
+            End If
 
-            Dim pieces As IList(Of Double()()) = New List(Of Double()())(numPieces)
+            Dim nRows As Integer = rows()
+            Dim nCols As Integer = columns()
+            Dim data = RectangularArray.Matrix(Of Double)(nRows, nCols)
+
+            For i As Integer = 0 To nRows - 1
+                For j As Integer = 0 To nCols - 1
+                    data(i)(j) = [get](i, j) + v(j)
+                Next
+            Next
+
+            Return New DenseMatrix(New NumericMatrix(data))
+        End Function
+
+        ''' <summary>
+        ''' 按照列进行求和：返回长度为<c>columns()</c>的向量，即所有样本(行)在某一个特征维度上面的累加值。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这个函数用于计算RBM的偏置梯度：<c>∂logP/∂b = E_data[h] - E_model[h]</c>。
+        ''' </remarks>
+        Public Function columnSum() As Double()
+            Dim nCols As Integer = columns()
+            Dim sums As Double() = New Double(nCols - 1) {}
+
+            For i As Integer = 0 To rows() - 1
+                For j As Integer = 0 To nCols - 1
+                    sums(j) += [get](i, j)
+                Next
+            Next
+
+            Return sums
+        End Function
+
+        Public Shared Function splitColumns(m As DenseMatrix, numPieces As Integer) As IList(Of DenseMatrix)
+
+            Dim pieces As IList(Of DenseMatrix) = New List(Of DenseMatrix)(numPieces)
 
             Dim rows As Integer = m.rows()
 
@@ -243,7 +314,7 @@ Namespace math
                         piece(i)(j) = m.get(i, j + p * cols)
                     Next
                 Next
-                pieces.Add(piece)
+                pieces.Add(New DenseMatrix(New NumericMatrix(piece)))
             Next
             Return pieces
         End Function
