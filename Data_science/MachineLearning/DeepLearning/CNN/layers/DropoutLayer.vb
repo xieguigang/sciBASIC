@@ -90,6 +90,21 @@ Namespace CNN.layers
             End Get
         End Property
 
+        ''' <summary>Gets the probability of dropping an activation (serialization helper).</summary>
+        Public ReadOnly Property DropProbability As Double
+            Get
+                Return drop_prob
+            End Get
+        End Property
+
+        ''' <summary>Gets the output geometry of this layer, which equals the input geometry.</summary>
+        ''' <returns>A snapshot of the output size.</returns>
+        Public ReadOnly Property OutputShape As OutputDefinition
+            Get
+                Return New OutputDefinition(out_sx, out_sy, out_depth)
+            End Get
+        End Property
+
         ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub

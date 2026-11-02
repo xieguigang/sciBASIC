@@ -11,14 +11,14 @@
     <RepositoryType>git</RepositoryType>
     <Version>10.8.9797.36764</Version>
     <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
-    <Title>Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import</Title>
-    <Description>Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.</Description>
+    <Title>Machine Learning Dataset and Model Storage: DataPack, MNIST, DataFrame Import and ONNX</Title>
+    <Description>Persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, packs large sample collections into streamable HDSPack archives, and reads and writes ONNX model files (export a trained CNN to .onnx, restore it, or run an ONNX graph with the built-in double precision evaluator).</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.DataStorage</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;machine-learning;dataset;mnist;data-storage</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
+    <PackageTags>scibasic;machine-learning;dataset;mnist;data-storage;onnx;model-exchange</PackageTags>
+    <PackageReleaseNotes>Adds ONNX model persistence for convolutional networks: OnnxModel/OnnxExport/OnnxImport translate between ConvolutionalNN and the standard ONNX graph format, and OnnxGraphEvaluator runs a model without any external inference engine.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -67,8 +67,4 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ONNX\" />
-  </ItemGroup>
-
 </Project>

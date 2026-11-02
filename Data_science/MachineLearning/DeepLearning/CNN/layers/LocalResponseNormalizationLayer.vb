@@ -110,6 +110,34 @@ Namespace CNN.layers
             End Get
         End Property
 
+        ''' <summary>Gets the size of the normalization neighborhood (serialization helper).</summary>
+        Public ReadOnly Property Size As Integer
+            Get
+                Return CInt(n)
+            End Get
+        End Property
+
+        ''' <summary>Gets the <c>alpha</c> hyper parameter (serialization helper).</summary>
+        Public ReadOnly Property AlphaValue As Double
+            Get
+                Return alpha
+            End Get
+        End Property
+
+        ''' <summary>Gets the <c>beta</c> hyper parameter (serialization helper).</summary>
+        Public ReadOnly Property BetaValue As Double
+            Get
+                Return beta
+            End Get
+        End Property
+
+        ''' <summary>Gets the <c>k</c> hyper parameter (serialization helper).</summary>
+        Public ReadOnly Property BiasValue As Double
+            Get
+                Return k
+            End Get
+        End Property
+
         ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub

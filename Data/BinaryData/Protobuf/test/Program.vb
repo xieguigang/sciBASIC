@@ -19,6 +19,7 @@ Module Program
 
     Sub Main(args As String())
         Call DebugAudit.Reset()
+        Call TestSupport.ResetChecks()
 
         Dim reportPath As String = Path.Combine(AppContext.BaseDirectory, "protobuf-test-report.json")
 
@@ -27,31 +28,23 @@ Module Program
         Console.WriteLine()
 
         Try
-            Using DebugAudit.Watch("suite:wire")
-                Call WireTests.Run()
-            End Using
-
-            Using DebugAudit.Watch("suite:serialization")
-                Call SerializationTests.Run()
-            End Using
-
-            Using DebugAudit.Watch("suite:schema")
-                Call SchemaTests.Run()
-            End Using
-
-            Using DebugAudit.Watch("suite:codegen")
-                Call CodeGenTests.Run()
-            End Using
+            Call RunSuite("suite:wire", AddressOf WireTests.Run)
+            Call RunSuite("suite:serialization", AddressOf SerializationTests.Run)
+            Call RunSuite("suite:schema", AddressOf SchemaTests.Run)
+            Call RunSuite("suite:codegen", AddressOf CodeGenTests.Run)
         Catch ex As Exception
             Call DebugAudit.Mark("fatal", ex.ToString())
             Call Console.WriteLine(ex.ToString())
         End Try
+
+        Call DebugAudit.Mark("assertions:total", TestSupport.Checks)
 
         Console.WriteLine()
         Console.WriteLine(DebugAudit.Dump())
 
         Call DebugAudit.SaveReport(reportPath)
         Console.WriteLine($"测试报告：{reportPath}")
+        Console.WriteLine($"断言总数：{TestSupport.Checks}")
 
         If DebugAudit.FailureCount > 0 Then
             Console.WriteLine($"共 {DebugAudit.FailureCount} 项断言失败。")
@@ -59,6 +52,19 @@ Module Program
         Else
             Console.WriteLine("全部断言通过。")
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 运行一组用例，并把该组的断言数量记录到审计报告中。
+    ''' </summary>
+    Private Sub RunSuite(name As String, body As Action)
+        Dim baseline As Integer = TestSupport.Checks
+
+        Using DebugAudit.Watch(name)
+            Call body()
+        End Using
+
+        Call DebugAudit.Mark(name & ":assertions", TestSupport.Checks - baseline)
     End Sub
 
 End Module

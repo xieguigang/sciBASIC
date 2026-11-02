@@ -78,6 +78,13 @@ Namespace CNN.layers
 
         Dim leakySlope As Double = 0.01
 
+        ''' <summary>Gets the slope applied to the negative half axis (serialization helper).</summary>
+        Public ReadOnly Property Slope As Double
+            Get
+                Return leakySlope
+            End Get
+        End Property
+
         ''' <summary>
         ''' Creates a leaky ReLU layer with the given negative slope.
         ''' </summary>
