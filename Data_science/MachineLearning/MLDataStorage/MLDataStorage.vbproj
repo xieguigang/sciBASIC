@@ -67,4 +67,7 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PT\" />
+  </ItemGroup>
 </Project>
