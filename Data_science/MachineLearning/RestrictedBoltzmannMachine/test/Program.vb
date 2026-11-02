@@ -19,7 +19,7 @@ Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.
 Module Program
 
     Public Function Main(args As String()) As Integer
-        Dim report As String = Path.Combine(AppContext.BaseDirectory, "rbm-test-report.json")
+        Dim report As String = System.IO.Path.Combine(AppContext.BaseDirectory, "rbm-test-report.json")
 
         Call DebugAudit.Reset()
         DebugAudit.MaxEvents = 4096
@@ -160,7 +160,7 @@ Module Program
 
         Call dbn.TrainLayerWise(data, epochs:=20, learningRate:=0.05)
 
-        Dim path As String = Path.Combine(AppContext.BaseDirectory, "dbn-roundtrip.rbm")
+        Dim path As String = System.IO.Path.Combine(AppContext.BaseDirectory, "dbn-roundtrip.rbm")
         Call dbn.Save(path)
 
         Call DebugAudit.Test(File.Exists(path), "模型文件应该被成功的创建")
