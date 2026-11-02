@@ -280,13 +280,14 @@ Namespace Wire
                 Return
             End If
 
-            Dim rented As Byte() = ArrayPool(Of Byte).Shared.Rent(byteCount)
+            Dim pool As ArrayPool(Of Byte) = ArrayPool(Of Byte).Shared
+            Dim rented As Byte() = pool.Rent(byteCount)
 
             Try
                 Call Encoding.UTF8.GetBytes(value, 0, value.Length, rented, 0)
                 _writer.Write(rented, 0, byteCount)
             Finally
-                ArrayPool(Of Byte).Shared.Return(rented)
+                Call pool.[Return](rented)
             End Try
         End Sub
 
@@ -306,10 +307,10 @@ Namespace Wire
             End If
 
             Using buffer As New MemoryStream()
-                Using sub As New ProtoWriter(buffer, leaveOpen:=True)
-                    sub._depth = _depth + 1
-                    Call body(sub)
-                    Call sub.Flush()
+                Using child As New ProtoWriter(buffer, leaveOpen:=True)
+                    child._depth = _depth + 1
+                    Call body(child)
+                    Call child.Flush()
                 End Using
 
                 WriteTag(fieldNumber, WireType.LengthDelimited)
