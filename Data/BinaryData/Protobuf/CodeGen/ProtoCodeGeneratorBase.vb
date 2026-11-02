@@ -137,7 +137,8 @@ Namespace CodeGen
                 Dim enums As New List(Of EnumDescriptor)
 
                 Call CollectEnums(message, enums)
-                Call WriteDocument(writer, sourceName, enums, message.AllMessages(), namespaceName)
+                Call WriteDocument(writer, sourceName, enums,
+                                   message.AllMessages().Where(Function(m) Not m.MapEntry), namespaceName)
 
                 result(GetTypeName(message.FullName) & FileExtension) = writer.ToString()
             Next
