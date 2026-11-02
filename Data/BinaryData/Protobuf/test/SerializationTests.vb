@@ -141,7 +141,7 @@ Friend Module SerializationTests
         Call AssertEqual(person.Name, viaExtension.Name, "扩展方法往返")
     End Sub
 
-    Private Shared Sub AssertPersonsEqual(expected As Person, actual As Person, message As String)
+    Private Sub AssertPersonsEqual(expected As Person, actual As Person, message As String)
         Call AssertEqual(expected.Name, actual.Name, $"{message}：Name")
         Call AssertEqual(expected.Id, actual.Id, $"{message}：Id")
         Call AssertEqual(expected.Email, actual.Email, $"{message}：Email")
