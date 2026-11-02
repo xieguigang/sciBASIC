@@ -134,6 +134,7 @@ Module Program
             Next
         Next
 
+        Call TestConvTransposeRoundtrip()
         Call TestUnsupportedExport()
     End Sub
 
@@ -144,7 +145,8 @@ Module Program
             .ModelName = "roundtrip"
         }
 
-        Call TestRoundtripWith(BuildCNN(), $"channelLast={channelLast}, precision={precision}", options)
+        Call TestRoundtripWith(BuildCNN(), $"channelLast={channelLast}, precision={precision}", options,
+                               {"Conv", "MaxPool", "Relu", "Gemm", "Elu", "Softmax"})
     End Sub
 
     Private Sub TestConvTransposeRoundtrip()
@@ -154,10 +156,12 @@ Module Program
             .ModelName = "decoder"
         }
 
-        Call TestRoundtripWith(BuildDecoderCNN(), "conv-transpose, precision=Float64", options)
+        Call TestRoundtripWith(BuildDecoderCNN(), "conv-transpose, precision=Float64", options,
+                               {"Conv", "ConvTranspose", "Relu", "Elu", "Gemm", "Softmax"})
     End Sub
 
-    Private Sub TestRoundtripWith(cnn As ConvolutionalNN, label As String, options As OnnxExportOptions)
+    Private Sub TestRoundtripWith(cnn As ConvolutionalNN, label As String, options As OnnxExportOptions,
+                                  requiredOps As String())
         Try
             Dim width As Integer = cnn.input.dims.x
             Dim height As Integer = cnn.input.dims.y
@@ -168,7 +172,7 @@ Module Program
             Dim model As OnnxModel = cnn.ToOnnx(options)
             Dim ops As String() = model.GetOpTypes()
 
-            For Each required As String In New String() {"Conv", "MaxPool", "Relu", "Gemm", "Elu", "Softmax"}
+            For Each required As String In requiredOps
                 Call DebugAudit.Test(ops.Contains(required), $"{label}: 导出的计算图应当包含 {required} 节点")
             Next
 
@@ -205,6 +209,7 @@ Module Program
             Dim restored As Double() = Predict(imported, input, width, height, depth)
             Dim diffImport As Double = MaxAbsDifference(expected, restored)
 
+            Call DebugAudit.AreEqual(cnn.LayerNum, imported.LayerNum, $"{label}: 还原网络的层数应当一致")
             Call DebugAudit.AreEqual(expected.Length, restored.Length, $"{label}: 还原网络的输出长度应当一致")
             Call DebugAudit.Test(diffImport < tolerance,
                                  $"{label}: 还原网络的预测应当与原始网络一致（max|Δ| = {diffImport:G3}）")
@@ -263,6 +268,22 @@ Module Program
             CNNLayers.full_connected_layer(16) +
             CNNLayers.elu_layer() +
             CNNLayers.full_connected_layer(5) +
+            CNNLayers.softmax_layer()
+
+        Return New ConvolutionalNN(builder)
+    End Function
+
+    ''' <summary>
+    ''' 构建一个包含转置卷积（解码器）的网络，用于覆盖 ConvTranspose 的导出 / 导入路径。
+    ''' </summary>
+    Private Function BuildDecoderCNN() As ConvolutionalNN
+        Dim builder As LayerBuilder = New LayerBuilder() +
+            CNNLayers.input_layer({8, 8}, 1) +
+            CNNLayers.conv_layer(3, 2, 1, 1) +
+            CNNLayers.relu_layer() +
+            CNNLayers.conv_transpose_layer(2, 2, 2, 0) +
+            CNNLayers.elu_layer() +
+            CNNLayers.full_connected_layer(4) +
             CNNLayers.softmax_layer()
 
         Return New ConvolutionalNN(builder)
