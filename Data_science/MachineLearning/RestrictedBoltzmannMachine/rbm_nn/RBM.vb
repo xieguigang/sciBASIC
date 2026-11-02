@@ -97,8 +97,18 @@ Namespace nn.rbm
         ''' </summary>
         Public Property HBias As Double()
 
+        ''' <summary>
+        ''' 创建一个新的受限玻尔兹曼机。
+        ''' </summary>
+        ''' <param name="visibleSize">可见层的单元数</param>
+        ''' <param name="hiddenSize">隐藏层的单元数</param>
+        ''' <param name="bias">偏置项的初始值，默认值为<c>0</c></param>
+        ''' <remarks>
+        ''' 权重矩阵使用<c>0.1 * N(0,1)</c>的小随机数初始化：如果直接使用标准正态分布来初始化权重，
+        ''' sigmoid在训练的初期就会饱和，对比散度的梯度会变得非常小。
+        ''' </remarks>
         Public Sub New(visibleSize As Integer, hiddenSize As Integer, Optional bias As Double = 0.0)
-            Weights = DenseMatrix.randomGaussian(visibleSize, hiddenSize)
+            Weights = DenseMatrix.randomGaussian(visibleSize, hiddenSize).multiply(0.1)
             VBias = fillBias(visibleSize, bias)
             HBias = fillBias(hiddenSize, bias)
         End Sub

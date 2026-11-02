@@ -106,8 +106,6 @@ Module Program
         Dim data As DenseMatrix = TrainingData()
 
         Dim rbm As New BernoulliRBM(6, 3)
-        ' 使用较小的初始权重，避免sigmoid在训练开始的时候就饱和
-        rbm.Weights = rbm.Weights.multiply(0.1)
 
         Dim before As Double = rbm.ReconstructionError(data)
         Dim after As Double = rbm.Train(data, epochs:=200, learningRate:=0.1, k:=1)
@@ -128,10 +126,6 @@ Module Program
 
         Call DebugAudit.Test(dbn.LayerCount = 2, "深度信念网络应该包含两层RBM")
         Call DebugAudit.Test(dbn.VisibleSize = 6 AndAlso dbn.HiddenSize = 2, "深度信念网络的输入输出尺寸不正确")
-
-        For Each rbm As RBM In dbn.Layers
-            rbm.Weights = rbm.Weights.multiply(0.1)
-        Next
 
         Dim before As Double = dbn.ReconstructionError(data)
         Dim energyBefore As Double = dbn.AverageFreeEnergy(data)
@@ -163,10 +157,6 @@ Module Program
         Dim dbn As New DeepBeliefNetwork()
         Call dbn.AddLayer(6, 4)
         Call dbn.AddLayer(4, 2)
-
-        For Each rbm As RBM In dbn.Layers
-            rbm.Weights = rbm.Weights.multiply(0.1)
-        Next
 
         Call dbn.TrainLayerWise(data, epochs:=20, learningRate:=0.05)
 
