@@ -9,31 +9,59 @@ Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX
 Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX.Proto
 
 ''' <summary>
-''' MLDataStorage 的 ONNX 支持测试：
-''' 1) 解析并推理 microduck-simulator 的策略模型（PyTorch 导出的 MLP）；
-''' 2) 把策略模型还原成 <c>ConvolutionalNN</c> 并逐值比对推理结果；
-''' 3) 卷积网络导出为 ONNX 之后再导入，比对预测值（单精度/双精度、两种展平方式）。
+''' MLDataStorage 的存储格式支持测试：
+''' 1) ONNX：解析并推理 microduck-simulator 的策略模型（PyTorch 导出的 MLP）、
+'''    把策略模型还原成 <c>ConvolutionalNN</c> 并逐值比对推理结果、
+'''    卷积网络导出为 ONNX 之后再导入并比对预测值（单精度/双精度、两种展平方式）；
+''' 2) PyTorch <c>.pt</c>：读取 KcatNet 的真实归档、写出并再读取做逐值往返比对。
 ''' </summary>
+''' <remarks>
+''' 命令行参数 <c>pt</c> 表示只运行 PyTorch <c>.pt</c> 测试（跳过 ONNX 部分）。
+''' </remarks>
 Module Program
 
     Const PoliciesDir As String = "G:\microduck-simulator\app\public\policies"
 
     Sub Main(args As String())
+        Dim options As String() = If(args, Array.Empty(Of String)())
+        Dim ptOnly As Boolean = options.Any(Function(s) String.Equals(s, "pt", StringComparison.OrdinalIgnoreCase))
+        Dim failures As Integer = 0
+
+        If Not ptOnly Then
+            Call DebugAudit.Reset()
+
+            Call TestPolicyModels()
+            Call TestCnnRoundtrip()
+
+            Dim report As String = IO.Path.Combine(AppContext.BaseDirectory, "onnx-test-report.txt")
+
+            Call DebugAudit.SaveReport(report)
+
+            Call Console.WriteLine()
+            Call Console.WriteLine(DebugAudit.Dump())
+            Call Console.WriteLine($"report saved to: {report}")
+            Call Console.WriteLine($"failures: {DebugAudit.FailureCount}")
+            Call Console.WriteLine()
+
+            failures += DebugAudit.FailureCount
+        End If
+
+        ' PyTorch .pt 使用独立的测试会话与报告文件
         Call DebugAudit.Reset()
+        Call PtTests.Run()
 
-        Call TestPolicyModels()
-        Call TestCnnRoundtrip()
+        Dim ptReport As String = IO.Path.Combine(AppContext.BaseDirectory, "pt-test-report.txt")
 
-        Dim report As String = IO.Path.Combine(AppContext.BaseDirectory, "onnx-test-report.txt")
-
-        Call DebugAudit.SaveReport(report)
+        Call DebugAudit.SaveReport(ptReport)
 
         Call Console.WriteLine()
         Call Console.WriteLine(DebugAudit.Dump())
-        Call Console.WriteLine($"report saved to: {report}")
-        Call Console.WriteLine($"failures: {DebugAudit.FailureCount}")
+        Call Console.WriteLine($"report saved to: {ptReport}")
+        Call Console.WriteLine($"pt failures: {DebugAudit.FailureCount}")
 
-        Environment.ExitCode = If(DebugAudit.FailureCount = 0, 0, 1)
+        failures += DebugAudit.FailureCount
+
+        Environment.ExitCode = If(failures = 0, 0, 1)
     End Sub
 
 #Region "POLICY MODELS"

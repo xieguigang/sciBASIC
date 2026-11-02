@@ -415,15 +415,24 @@ Namespace PT
         End Function
 
         ''' <summary>把元组形态的整数参数展开为 <see cref="Integer"/> 数组。</summary>
-        Private Shared Function ToInt32Array(raw As Object(), label As String) As Integer()
-            If raw Is Nothing Then
-                Throw New InvalidDataException($"PyTorch 张量参数 {label} 缺失")
+        ''' <param name="raw">pickle 中的元组（<see cref="PyPickle.PythonTuple"/>、<c>Object()</c> 或 <c>IList</c>）</param>
+        ''' <param name="label">参数名（用于错误信息）</param>
+        Private Shared Function ToInt32Array(raw As Object, label As String) As Integer()
+            Dim items As Object() = ToItems(raw)
+
+            If items Is Nothing Then
+                ' 单个整数（0 阶张量的 size 偶尔被写成标量）
+                If TypeOf raw Is Long OrElse TypeOf raw Is Integer Then
+                    Return New Integer() {CInt(ToInteger(raw, label))}
+                End If
+
+                Throw New InvalidDataException($"PyTorch 张量参数 {label} 缺失或不是元组")
             End If
 
-            Dim result As Integer() = New Integer(raw.Length - 1) {}
+            Dim result As Integer() = New Integer(items.Length - 1) {}
 
-            For i As Integer = 0 To raw.Length - 1
-                result(i) = CInt(ToInteger(raw(i), label))
+            For i As Integer = 0 To items.Length - 1
+                result(i) = CInt(ToInteger(items(i), label))
             Next
 
             Return result
@@ -477,7 +486,8 @@ Namespace PT
                 Return pyObject.FullName
             End If
 
-            Return CStr(raw)
+            ' 注意：不能用 CStr(obj)，PythonGlobalRef 之类没有实现 IConvertible 的类型会抛 InvalidCastException
+            Return raw.ToString()
         End Function
 
         ''' <summary>把参数对象渲染成可读文本（仅用于异常信息）。</summary>
@@ -501,11 +511,11 @@ Namespace PT
         Private NotInheritable Class TensorReferenceComparer
             Implements IEqualityComparer(Of Tensor)
 
-            Public Function Equals(x As Tensor, y As Tensor) As Boolean Implements IEqualityComparer(Of Tensor).Equals
+            Public Overloads Function Equals(x As Tensor, y As Tensor) As Boolean Implements IEqualityComparer(Of Tensor).Equals
                 Return Object.ReferenceEquals(x, y)
             End Function
 
-            Public Function GetHashCode(obj As Tensor) As Integer Implements IEqualityComparer(Of Tensor).GetHashCode
+            Public Overloads Function GetHashCode(obj As Tensor) As Integer Implements IEqualityComparer(Of Tensor).GetHashCode
                 Return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj)
             End Function
 

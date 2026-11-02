@@ -235,7 +235,8 @@ Namespace PT
                     Case PtElementType.Int16
                         result(i) = BitConverter.ToInt16(bytes, at)
                     Case PtElementType.Int8
-                        result(i) = CSByte(bytes(at))
+                        ' 直接把 >127 的字节转 SByte 会触发溢出检查，这里显式做补码解释
+                        result(i) = If(bytes(at) < 128, CInt(bytes(at)), CInt(bytes(at)) - 256)
                     Case PtElementType.UInt8
                         result(i) = bytes(at)
                     Case PtElementType.Bool
@@ -335,43 +336,55 @@ Namespace PT
             End If
         End Sub
 
-        ''' <summary>IEEE 754 半精度（binary16）位模式 → 双精度。</summary>
-        Public Function HalfToDouble(bits As UShort) As Double
-            Return HalfToSingle(bits)
+        ''' <summary>
+        ''' IEEE 754 半精度（binary16）位模式 → 单精度。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这里按数值重建而不是拼接位模式：<c>&amp;H8000 &lt;&lt; 16</c> 之类的移位会让 Integer 溢出
+        ''' （工程默认开启整数溢出检查），而半精度的每一个值都能被 <see cref="Double"/> 精确表示，
+        ''' 因此数值路径既安全又精确。
+        ''' </remarks>
+        Public Function HalfToSingle(bits As UShort) As Single
+            Return CSng(HalfToDouble(bits))
         End Function
 
-        ''' <summary>IEEE 754 半精度（binary16）位模式 → 单精度。</summary>
-        Public Function HalfToSingle(bits As UShort) As Single
-            Dim sign As Integer = (CInt(bits) And &H8000) << 16
+        ''' <summary>IEEE 754 半精度（binary16）位模式 → 双精度。</summary>
+        Public Function HalfToDouble(bits As UShort) As Double
+            Dim negative As Boolean = (CInt(bits) And &H8000) <> 0
             Dim exponent As Integer = (CInt(bits) >> 10) And &H1F
             Dim mantissa As Integer = CInt(bits) And &H3FF
+            Dim magnitude As Double
 
-            If exponent = 0 Then
-                If mantissa = 0 Then
-                    Return BitConverter.Int32BitsToSingle(sign)
-                End If
-
-                ' 非规约数：规格化到最小指数
-                Do While (mantissa And &H400) = 0
-                    mantissa <<= 1
-                    exponent -= 1
-                Loop
-
-                exponent += 1
-                mantissa = mantissa And &H3FF
-
-                Return BitConverter.Int32BitsToSingle(sign Or ((exponent + 127 - 15) << 23) Or (mantissa << 13))
-            ElseIf exponent = &H1F Then
+            If exponent = &H1F Then
                 ' Inf / NaN
-                Return BitConverter.Int32BitsToSingle(sign Or &H7F800000 Or (mantissa << 13))
+                magnitude = If(mantissa = 0, Double.PositiveInfinity, Double.NaN)
+            ElseIf exponent = 0 Then
+                ' 0 或非规约数（mantissa × 2^-24）
+                magnitude = mantissa * 2.0 ^ -24
             Else
-                Return BitConverter.Int32BitsToSingle(sign Or ((exponent + 127 - 15) << 23) Or (mantissa << 13))
+                magnitude = (1.0 + mantissa / 1024.0) * 2.0 ^ (exponent - 15)
             End If
+
+            Return If(negative, -magnitude, magnitude)
         End Function
 
         ''' <summary>BFloat16 位模式 → 双精度。</summary>
         Public Function BFloat16ToDouble(bits As UShort) As Double
-            Return BitConverter.Int32BitsToSingle(CInt(bits) << 16)
+            Dim negative As Boolean = (CInt(bits) And &H8000) <> 0
+            Dim exponent As Integer = (CInt(bits) >> 7) And &HFF
+            Dim mantissa As Integer = CInt(bits) And &H7F
+            Dim magnitude As Double
+
+            If exponent = &HFF Then
+                magnitude = If(mantissa = 0, Double.PositiveInfinity, Double.NaN)
+            ElseIf exponent = 0 Then
+                ' 0 或非规约数（mantissa × 2^-133）
+                magnitude = mantissa * 2.0 ^ -133
+            Else
+                magnitude = (1.0 + mantissa / 128.0) * 2.0 ^ (exponent - 127)
+            End If
+
+            Return If(negative, -magnitude, magnitude)
         End Function
 
         ''' <summary>双精度 → IEEE 754 半精度位模式（就近舍入到偶数）。</summary>
@@ -437,16 +450,21 @@ Namespace PT
 
         ''' <summary>双精度 → BFloat16 位模式（就近舍入到偶数）。</summary>
         Public Function DoubleToBFloat16(value As Double) As UShort
-            Dim bits As Integer = BitConverter.SingleToInt32Bits(CSng(value))
+            Dim single_ As Single = CSng(value)
+            Dim bits As Integer = BitConverter.SingleToInt32Bits(single_)
 
-            If Single.IsNaN(CSng(value)) Then
-                Return CUShort((bits >> 16) Or &H40)
+            ' 用 Long 做加法与移位：Integer 在符号位附近会触发溢出检查
+            Dim wide As Long = CLng(bits) And &HFFFFFFFFL
+            Dim high As Long = (wide >> 16) And &HFFFFL
+
+            If Single.IsNaN(single_) Then
+                Return CUShort(high Or &H40L)
             End If
 
-            Dim lsb As Integer = (bits >> 16) And 1
-            Dim rounding As Integer = &H7FFF + lsb
+            Dim lsb As Long = high And 1L
+            Dim rounded As Long = (wide + &H7FFFL + lsb) >> 16
 
-            Return CUShort((bits + rounding) >> 16)
+            Return CUShort(rounded And &HFFFFL)
         End Function
 
         ''' <summary>
