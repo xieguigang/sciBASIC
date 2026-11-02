@@ -214,6 +214,13 @@ Namespace CNN
             Return add(New LeakyReluLayer)
         End Function
 
+        ''' <summary>Appends an ELU (exponential linear unit) activation layer.</summary>
+        ''' <param name="alpha">Scaling factor applied to the negative half axis.</param>
+        ''' <returns>This builder.</returns>
+        Public Function buildEluLayer(Optional alpha As Double = EluLayer.DefaultAlpha) As LayerBuilder
+            Return add(New EluLayer(alpha))
+        End Function
+
         ''' <summary>Appends a sigmoid activation layer.</summary>
         ''' <returns>This builder.</returns>
         Public Function buildSigmoidLayer() As LayerBuilder

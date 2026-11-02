@@ -113,6 +113,31 @@ Namespace CNN.layers
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the number of inputs of this layer, i.e. the flattened size of the previous layer output.
+        ''' </summary>
+        ''' <remarks>供模型序列化（例如 ONNX 导出）使用，避免外部程序集反射私有字段。</remarks>
+        Public ReadOnly Property InputLength As Integer
+            Get
+                Return num_inputs
+            End Get
+        End Property
+
+        ''' <summary>Gets the number of neurons, i.e. the number of outputs of this layer.</summary>
+        Public ReadOnly Property OutputSize As Integer
+            Get
+                Return out_depth
+            End Get
+        End Property
+
+        ''' <summary>Gets the output geometry of this layer, which is always <c>1 x 1 x OutputSize</c>.</summary>
+        ''' <returns>A snapshot of the output size.</returns>
+        Public ReadOnly Property OutputShape As OutputDefinition
+            Get
+                Return New OutputDefinition(1, 1, out_depth)
+            End Get
+        End Property
+
         ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub

@@ -209,6 +209,16 @@ Namespace CNN
             Return spec(NameOf(leaky_relu_layer), Function(cnn) cnn.buildLeakyReLULayer())
         End Function
 
+        ''' <summary>
+        ''' ELU activation: <c>f(x) = x</c> for <c>x &gt;= 0</c> and <c>f(x) = alpha * (exp(x) - 1)</c> otherwise.
+        ''' </summary>
+        ''' <param name="alpha">Scaling factor applied to the negative half axis.</param>
+        ''' <returns>The ELU layer specification.</returns>
+        Public Function elu_layer(Optional alpha As Double = layers.EluLayer.DefaultAlpha) As CNNLayerArguments
+            Return spec($"elu_layer(alpha={alpha})",
+                        Function(cnn) cnn.buildEluLayer(alpha))
+        End Function
+
         ''' <summary>Sigmoid activation: <c>f(x) = 1 / (1 + exp(-x))</c>, with output in <c>(0, 1)</c>.</summary>
         ''' <returns>The sigmoid layer specification.</returns>
         Public Function sigmoid_layer() As CNNLayerArguments

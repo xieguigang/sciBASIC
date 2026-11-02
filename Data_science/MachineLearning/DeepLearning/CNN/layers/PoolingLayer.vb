@@ -106,6 +106,46 @@ Namespace CNN.layers
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the input geometry (width, height, channels) recorded when this layer was created.
+        ''' </summary>
+        ''' <remarks>供模型序列化（例如 ONNX 导出）使用，避免外部程序集反射私有字段。</remarks>
+        ''' <returns>A snapshot of the input size.</returns>
+        Public ReadOnly Property InputShape As OutputDefinition
+            Get
+                Return New OutputDefinition(in_sx, in_sy, in_depth)
+            End Get
+        End Property
+
+        ''' <summary>Gets the output geometry (width, height, channels) of this layer.</summary>
+        ''' <returns>A snapshot of the output size.</returns>
+        Public ReadOnly Property OutputShape As OutputDefinition
+            Get
+                Return New OutputDefinition(out_sx, out_sy, out_depth)
+            End Get
+        End Property
+
+        ''' <summary>Gets the side length of the (square) pooling window.</summary>
+        Public ReadOnly Property KernelSize As Integer
+            Get
+                Return sx
+            End Get
+        End Property
+
+        ''' <summary>Gets the stride of the pooling window.</summary>
+        Public ReadOnly Property StrideSize As Integer
+            Get
+                Return stride
+            End Get
+        End Property
+
+        ''' <summary>Gets the width of the zero padding applied around the input.</summary>
+        Public ReadOnly Property PaddingSize As Integer
+            Get
+                Return padding
+            End Get
+        End Property
+
         ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub

@@ -119,6 +119,14 @@ Namespace CNN
         ''' <summary>Gaussian activation (<c>gaussian</c>).</summary>
         <Description("gaussian")> Gaussian
 
+        ''' <summary>
+        ''' Exponential linear unit activation (<c>elu</c>).
+        ''' </summary>
+        ''' <remarks>
+        ''' 追加在枚举末尾并显式赋值，保证既有模型文件里的层类型数值不变。
+        ''' </remarks>
+        <Description("elu")> Elu = 19
+
         ''' <summary>Alias of <see cref="FullyConnected"/> (<c>linear</c>).</summary>
         <Description("linear")> Linear = FullyConnected
     End Enum

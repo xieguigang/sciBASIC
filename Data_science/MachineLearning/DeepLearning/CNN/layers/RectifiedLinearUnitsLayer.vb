@@ -94,6 +94,13 @@ Namespace CNN.layers
         ''' <summary>Values below this threshold are clamped; zero gives the standard ReLU behaviour.</summary>
         Protected threshold As Double = 0.0
 
+        ''' <summary>Gets the activation threshold (serialization helper).</summary>
+        Public ReadOnly Property ThresholdValue As Double
+            Get
+                Return threshold
+            End Get
+        End Property
+
         ''' <summary>Creates a rectified linear unit layer.</summary>
         Sub New()
         End Sub
