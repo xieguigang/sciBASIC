@@ -54,7 +54,11 @@ Namespace Serialization.Reflection
         ''' <summary>
         ''' 去掉 Nullable 包装后的 CLR 类型。
         ''' </summary>
-        Friend ReadOnly ValueType As Type
+        ''' <remarks>
+        ''' 字段名刻意不叫 <c>ValueType</c>：VB 会把裸写的 <c>ValueType</c> 解析为
+        ''' <see cref="System.ValueType"/> 类型本身，导致成员读取得到 Nothing。
+        ''' </remarks>
+        Friend ReadOnly ClrType As Type
 
         Friend ReadOnly IsNullableValueType As Boolean
         Friend ReadOnly IsArray As Boolean
@@ -105,88 +109,65 @@ Namespace Serialization.Reflection
             FieldNumber = attr.FieldNumber
             DataFormat = attr.DataFormat
             IsRequired = attr.IsRequired
-            DeclaredType = If(_property IsNot Nothing, _property.PropertyType, _field.FieldType)
+            Me.DeclaredType = If(_property IsNot Nothing, _property.PropertyType, _field.FieldType)
 
-            If DeclaredType Is Nothing Then
+            If Me.DeclaredType Is Nothing Then
                 Throw New InvalidOperationException(
                     $"无法解析成员 {member.DeclaringType?.FullName}.{member.Name} 的 CLR 类型")
             End If
 
-            Dim underlying As Type = Nullable.GetUnderlyingType(DeclaredType)
+            Dim underlying As Type = Nullable.GetUnderlyingType(Me.DeclaredType)
 
             If underlying IsNot Nothing Then
-                ValueType = underlying
-                IsNullableValueType = True
+                Me.ClrType = underlying
+                Me.IsNullableValueType = True
             Else
-                ValueType = DeclaredType
+                Me.ClrType = Me.DeclaredType
             End If
 
-            If ValueType Is GetType(Byte()) Then
+            Dim itemType As Type = Me.ClrType
+
+            If itemType Is GetType(Byte()) Then
                 ' bytes 是标量类型，而不是 repeated
-                FieldType = FieldTypeKind.Bytes
-                ElementType = GetType(Byte)
-
-                If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
-                    Call System.IO.File.AppendAllText(
-                        System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
-                        $"[bytes] {member.Name}{Environment.NewLine}")
-                End If
-            ElseIf ValueType.IsArray Then
-                IsArray = True
-                ElementType = ValueType.GetElementType()
-
-                If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
-                    Call System.IO.File.AppendAllText(
-                        System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
-                        $"[array] {member.Name}{Environment.NewLine}")
-                End If
+                Me.FieldType = FieldTypeKind.Bytes
+                Me.ElementType = GetType(Byte)
+            ElseIf itemType.IsArray Then
+                Me.IsArray = True
+                Me.IsRepeated = True
+                Me.ElementType = itemType.GetElementType()
             Else
                 Dim keyType As Type = Nothing
-                Dim valueType As Type = Nothing
+                Dim mapValueType As Type = Nothing
                 Dim listElement As Type = Nothing
-                Dim isDict As Boolean = TryGetDictionaryTypes(ValueType, keyType, valueType)
-                Dim isList As Boolean = TryGetListElementType(ValueType, listElement)
 
-                If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
-                    Call System.IO.File.AppendAllText(
-                        System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
-                        $"[else] {member.Name} isDict={isDict} isList={isList}{Environment.NewLine}")
-                End If
-
-                If isDict Then
-                    IsDictionary = True
-                    DictionaryKeyType = keyType
-                    DictionaryValueType = valueType
-                    IsRepeated = True
-                    MapKeyType = DetermineKind(keyType, ProtoDataFormat.Auto)
-                    MapValueType = DetermineKind(valueType, ProtoDataFormat.Auto)
-                    FieldType = FieldTypeKind.Message
-                ElseIf isList Then
-                    IsList = True
-                    IsRepeated = True
-                    ElementType = listElement
+                If TryGetDictionaryTypes(itemType, keyType, mapValueType) Then
+                    Me.IsDictionary = True
+                    Me.DictionaryKeyType = keyType
+                    Me.DictionaryValueType = mapValueType
+                    Me.IsRepeated = True
+                    Me.MapKeyType = DetermineKind(keyType, ProtoDataFormat.Auto)
+                    Me.MapValueType = DetermineKind(mapValueType, ProtoDataFormat.Auto)
+                    Me.FieldType = FieldTypeKind.Message
+                ElseIf TryGetListElementType(itemType, listElement) Then
+                    Me.IsList = True
+                    Me.IsRepeated = True
+                    Me.ElementType = listElement
                 End If
             End If
 
-            If IsDictionary Then
-                IsPacked = False
+            If Me.IsDictionary Then
+                Me.IsPacked = False
                 Return
             End If
 
-            If IsRepeated Then
-                ElementFieldType = DetermineKind(ElementType, DataFormat)
-                FieldType = ElementFieldType
-                IsPacked = If(attr.IsPacked, FieldDescriptor.IsPackableKind(ElementFieldType))
+            If Me.IsRepeated Then
+                Me.ElementFieldType = DetermineKind(Me.ElementType, DataFormat)
+                Me.FieldType = Me.ElementFieldType
+                Me.IsPacked = If(attr.IsPacked, FieldDescriptor.IsPackableKind(Me.ElementFieldType))
             Else
-                FieldType = DetermineKind(ValueType, DataFormat)
-                ElementFieldType = FieldType
-                IsPacked = False
-            End If
-
-            If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
-                Call System.IO.File.AppendAllText(
-                    System.IO.Path.Combine(System.IO.Path.GetTempPath(), "protobuf-trace.txt"),
-                    $"{member.DeclaringType.Name}.{member.Name} type={ValueType.FullName} array={IsArray} list={IsList} dict={IsDictionary} repeated={IsRepeated} kind={FieldType}{Environment.NewLine}")
+                Me.FieldType = DetermineKind(Me.ClrType, DataFormat)
+                Me.ElementFieldType = Me.FieldType
+                Me.IsPacked = False
             End If
         End Sub
 
@@ -221,7 +202,7 @@ Namespace Serialization.Reflection
                     Throw New InvalidOperationException($"消息嵌套深度超过上限 {context.MaxDepth}，疑似循环引用")
                 End If
 
-                Dim nested As TypeInfo = context.GetTypeInfo(ValueType)
+                Dim nested As TypeInfo = context.GetTypeInfo(Me.ClrType)
                 Dim item As Object = value
 
                 Call writer.WriteMessage(FieldNumber, Sub(w) nested.WriteTo(item, w, context))
@@ -419,7 +400,7 @@ Namespace Serialization.Reflection
                 Call reader.PushLimit(length)
 
                 Try
-                    Dim nested As TypeInfo = context.GetTypeInfo(ValueType)
+                    Dim nested As TypeInfo = context.GetTypeInfo(Me.ClrType)
                     Dim message As Object = nested.ReadFrom(reader, GetValue(owner), context)
 
                     Call SetValue(owner, Coerce(message))
@@ -697,7 +678,7 @@ Namespace Serialization.Reflection
         End Sub
 
         Private Function Coerce(value As Object) As Object
-            Return CoerceTo(value, ValueType)
+            Return CoerceTo(value, Me.ClrType)
         End Function
 
         Private Shared Function CoerceTo(value As Object, target As Type) As Object
@@ -816,10 +797,6 @@ Namespace Serialization.Reflection
         End Function
 
         Private Shared Function TryGetListElementType(type As Type, ByRef element As Type) As Boolean
-            If Environment.GetEnvironmentVariable("PROTOBUF_TRACE") = "1" Then
-                Throw New InvalidOperationException($"[list-called] type={If(type Is Nothing, "<null>", type.FullName)}")
-            End If
-
             If type Is Nothing Then
                 Return False
             End If
