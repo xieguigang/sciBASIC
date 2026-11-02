@@ -6,7 +6,7 @@
 Imports System.IO
 Imports System.Linq
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports Pickle
+Imports PyPickle = Microsoft.VisualBasic.Data.IO.Pickle
 
 Namespace PT
 
@@ -33,7 +33,7 @@ Namespace PT
     ''' </para>
     ''' </remarks>
     Public Class PtPickleFactory
-        Implements IPickleObjectFactory
+        Implements PyPickle.IPickleObjectFactory
 
         Private ReadOnly _readRecord As Func(Of String, Byte())
         Private ReadOnly _storages As New Dictionary(Of String, PtStorage)(StringComparer.Ordinal)
@@ -104,7 +104,7 @@ Namespace PT
         ''' <param name="className">类 / 函数名</param>
         ''' <param name="args">构造参数</param>
         ''' <returns>张量或形状元组；非 PyTorch 符号返回 <c>Nothing</c></returns>
-        Public Function Construct(moduleName As String, className As String, args As Object()) As Object Implements IPickleObjectFactory.Construct
+        Public Function Construct(moduleName As String, className As String, args As Object()) As Object Implements PyPickle.IPickleObjectFactory.Construct
             If String.IsNullOrEmpty(className) Then
                 Return Nothing
             End If
@@ -126,7 +126,7 @@ Namespace PT
                     If args IsNot Nothing AndAlso args.Length > 0 Then
                         Return args(0)
                     Else
-                        Return New PythonTuple(Array.Empty(Of Object)())
+                        Return New PyPickle.PythonTuple(Array.Empty(Of Object)())
                     End If
 
                 Case Else
@@ -137,7 +137,7 @@ Namespace PT
         ''' <summary>
         ''' BUILD 状态回填：PyTorch 的张量不使用 <c>__setstate__</c>，这里始终交回默认实现。
         ''' </summary>
-        Public Function ApplyState(ByRef obj As Object, state As Object) As Boolean Implements IPickleObjectFactory.ApplyState
+        Public Function ApplyState(ByRef obj As Object, state As Object) As Boolean Implements PyPickle.IPickleObjectFactory.ApplyState
             Return False
         End Function
 
@@ -337,13 +337,13 @@ Namespace PT
         Private Function TotalSize(shape As Integer(), storage As PtStorage) As Integer
             Dim total As Long = 1
 
-            For Each dim As Integer In shape
-                If dim < 0 Then
+            For Each size As Integer In shape
+                If size < 0 Then
                     Throw New InvalidDataException(
-                        $"张量形状中存在非法维度 {dim}（storage='{storage.Key}'）")
+                        $"张量形状中存在非法维度 {size}（storage='{storage.Key}'）")
                 End If
 
-                total *= dim
+                total *= size
 
                 If total > Integer.MaxValue Then
                     Throw New NotSupportedException(
@@ -389,7 +389,7 @@ Namespace PT
 
         ''' <summary>把元组形态的参数展开为对象数组。</summary>
         Private Shared Function ToItems(raw As Object) As Object()
-            Dim [tuple] As PythonTuple = TryCast(raw, PythonTuple)
+            Dim [tuple] As PyPickle.PythonTuple = TryCast(raw, PyPickle.PythonTuple)
 
             If [tuple] IsNot Nothing Then
                 Return [tuple].Items
@@ -471,7 +471,7 @@ Namespace PT
                 Return "None"
             End If
 
-            Dim pyObject As PythonObject = TryCast(raw, PythonObject)
+            Dim pyObject As PyPickle.PythonObject = TryCast(raw, PyPickle.PythonObject)
 
             If pyObject IsNot Nothing Then
                 Return pyObject.FullName

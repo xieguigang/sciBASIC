@@ -173,11 +173,11 @@ Namespace PT
         ''' <param name="shape">形状</param>
         Friend Shared Function ContiguousStride(shape As Integer()) As Integer()
             Dim strides As Integer() = New Integer(shape.Length - 1) {}
-            Dim step As Integer = 1
+            Dim distance As Integer = 1
 
             For d As Integer = shape.Length - 1 To 0 Step -1
-                strides(d) = step
-                step *= shape(d)
+                strides(d) = distance
+                distance *= shape(d)
             Next
 
             Return strides

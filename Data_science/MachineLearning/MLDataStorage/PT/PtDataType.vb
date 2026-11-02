@@ -456,33 +456,6 @@ Namespace PT
             Return $"{DTypeName(type)} ({ElementSize(type)} bytes)"
         End Function
 
-        ''' <summary>
-        ''' 把形式参数 <paramref name="values"/> 拼接成调试文本（仅用于异常信息）。
-        ''' </summary>
-        Friend Function DescribeArray(values As Double(), Optional maxItems As Integer = 8) As String
-            If values Is Nothing Then
-                Return "Nothing"
-            End If
-
-            Dim sb As New StringBuilder()
-            Dim count As Integer = std.Min(values.Length, maxItems)
-
-            Call sb.Append("{")
-
-            For i As Integer = 0 To count - 1
-                If i > 0 Then Call sb.Append(", ")
-                Call sb.Append(values(i).ToString("G7"))
-            Next
-
-            If values.Length > count Then
-                Call sb.Append($", ... ({values.Length} items)")
-            End If
-
-            Call sb.Append("}")
-
-            Return sb.ToString()
-        End Function
-
     End Module
 
 End Namespace

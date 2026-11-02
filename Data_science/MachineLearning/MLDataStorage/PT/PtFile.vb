@@ -9,7 +9,8 @@ Imports System.IO.Compression
 Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports PyPickle = Global.Pickle
+Imports IOPath = System.IO.Path
+Imports PyPickle = Microsoft.VisualBasic.Data.IO.Pickle
 
 Namespace PT
 
@@ -330,7 +331,7 @@ Namespace PT
             End If
 
             Dim archiveName As String = GetArchiveName(path)
-            Dim folder As String = Path.GetDirectoryName(Path.GetFullPath(path))
+            Dim folder As String = IOPath.GetDirectoryName(IOPath.GetFullPath(path))
 
             If Not String.IsNullOrEmpty(folder) AndAlso Not Directory.Exists(folder) Then
                 Call Directory.CreateDirectory(folder)
@@ -402,7 +403,7 @@ Namespace PT
 
         ''' <summary>由文件路径推导归档前缀（与 <c>torch.save</c> 一致，使用文件名主干）。</summary>
         Private Shared Function GetArchiveName(path As String) As String
-            Return SanitizeArchiveName(Path.GetFileNameWithoutExtension(path))
+            Return SanitizeArchiveName(IOPath.GetFileNameWithoutExtension(path))
         End Function
 
         ''' <summary>清理归档前缀中的非法字符（zip 条目名不能含路径分隔符）。</summary>
