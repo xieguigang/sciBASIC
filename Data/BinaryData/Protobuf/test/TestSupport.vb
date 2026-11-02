@@ -16,6 +16,28 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 ''' </summary>
 Friend Module TestSupport
 
+    Private _checks As Integer
+
+    ''' <summary>
+    ''' 已执行的断言总数（用于在测试报告中记录每个用例组的覆盖量）。
+    ''' </summary>
+    Friend ReadOnly Property Checks As Integer
+        Get
+            Return _checks
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 重置断言计数器。
+    ''' </summary>
+    Friend Sub ResetChecks()
+        _checks = 0
+    End Sub
+
+    Private Sub Count()
+        _checks += 1
+    End Sub
+
     ''' <summary>
     ''' 把字节数组格式化为 <c>0A 01 61</c> 形式的十六进制文本。
     ''' </summary>
@@ -63,6 +85,8 @@ Friend Module TestSupport
             Next
         End If
 
+        Call Count()
+
         If equal Then
             Call DebugAudit.Test(True, message)
         Else
@@ -74,6 +98,8 @@ Friend Module TestSupport
     ''' 断言两个值相等。
     ''' </summary>
     Friend Sub AssertEqual(Of T)(expected As T, actual As T, message As String)
+        Call Count()
+
         If EqualityComparer(Of T).Default.Equals(expected, actual) Then
             Call DebugAudit.Test(True, message)
         Else
@@ -85,6 +111,7 @@ Friend Module TestSupport
     ''' 断言条件成立。
     ''' </summary>
     Friend Sub AssertTrue(condition As Boolean, message As String)
+        Call Count()
         Call DebugAudit.Test(condition, message)
     End Sub
 
@@ -92,6 +119,7 @@ Friend Module TestSupport
     ''' 断言条件不成立。
     ''' </summary>
     Friend Sub AssertFalse(condition As Boolean, message As String)
+        Call Count()
         Call DebugAudit.Test(Not condition, message)
     End Sub
 
@@ -99,6 +127,8 @@ Friend Module TestSupport
     ''' 断言文本包含指定片段。
     ''' </summary>
     Friend Sub AssertContains(text As String, fragment As String, message As String)
+        Call Count()
+
         If text IsNot Nothing AndAlso text.Contains(fragment) Then
             Call DebugAudit.Test(True, message)
         Else
@@ -110,6 +140,8 @@ Friend Module TestSupport
     ''' 断言执行指定的代码块会抛出 <typeparamref name="TException"/>。
     ''' </summary>
     Friend Sub AssertThrows(Of TException As Exception)(code As Action, message As String)
+        Call Count()
+
         Try
             Call code()
             Call DebugAudit.Test(False, $"{message}：期望抛出 {GetType(TException).Name}，但执行成功")
