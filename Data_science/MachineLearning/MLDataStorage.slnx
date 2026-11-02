@@ -31,6 +31,9 @@
     <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../DataMining/DataMining/DataMining.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../Mathematica/Math/Math/Math.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -38,6 +41,9 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
+  <Project Path="DeepLearning/DeepLearning.NET6.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="MLDataStorage/MLDataStorage.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
@@ -49,5 +55,8 @@
     <BuildType Solution="nuget_release|*" Project="Release" />
     <BuildType Solution="Rsharp_app_release|*" Project="Release" />
     <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+  <Project Path="TensorFlow/TensorFlow.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
   </Project>
 </Solution>
