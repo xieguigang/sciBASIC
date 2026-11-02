@@ -53,6 +53,7 @@
 
 Imports System.ComponentModel
 Imports System.Reflection
+Imports System.Collections.Concurrent
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -142,16 +143,25 @@ Public Module EnumHelpers
     ''' </returns>
     ''' <remarks>
     ''' this extension function has an internal cache table for get the description
-    ''' text of a given enum value
+    ''' text of a given enum value.
+    ''' 
+    ''' the cache is a <see cref="ConcurrentDictionary(Of Object, String)"/> because the
+    ''' parallel model training (for example the GeneTree per gene fitting) will call this
+    ''' function from multiple threads at the same time: a plain Dictionary raises
+    ''' "An item with the same key has already been added" or even corrupts its internal
+    ''' state under that access pattern.
     ''' </remarks>
     <Extension>
     Public Function Description(value As [Enum], Optional deli$ = "|") As String
-        Static descriptionCache As New Dictionary(Of Object, String)
+        Static descriptionCache As New ConcurrentDictionary(Of Object, String)
 
-        If descriptionCache.ContainsKey(value) Then
-            Return descriptionCache(value)
-        End If
+        Return descriptionCache.GetOrAdd(value, Function(key) computeDescription(key, deli))
+    End Function
 
+    ''' <summary>
+    ''' 计算一个枚举值的描述文本（缓存未命中时执行）
+    ''' </summary>
+    Private Function computeDescription(value As [Enum], deli$) As String
         Dim type As Type = value.GetType()
         Dim s As String = value.ToString
         Dim memInfos As MemberInfo() = type.GetMember(name:=s)
@@ -169,8 +179,6 @@ Public Module EnumHelpers
                 .First _
                 .Description([default]:=s)
         End If
-
-        descriptionCache.Add(value, result)
 
         Return result
     End Function
