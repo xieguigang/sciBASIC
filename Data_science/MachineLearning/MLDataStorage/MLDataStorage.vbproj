@@ -49,6 +49,7 @@
     <ProjectReference Include="..\..\..\Data\BinaryData\HDSPack\HDSPack.vbproj" />
     <ProjectReference Include="..\..\..\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Data\BinaryData\netCDF\netCDF.vbproj" />
+    <ProjectReference Include="..\..\..\Data\BinaryData\Protobuf\Protobuf.vbproj" />
     <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
