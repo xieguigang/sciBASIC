@@ -55,7 +55,8 @@
 Namespace nn.rbm.deep
 
     ''' <summary>
-    ''' Deep (stacked) restricted Boltzmann machine networks.
+    ''' Deep (stacked) restricted Boltzmann machine networks: the <see cref="DeepRBM"/> container
+    ''' and the <see cref="DeepBeliefNetwork"/> implementation of the deep belief network models.
     ''' </summary>
     Module NamespaceDoc
     End Module
