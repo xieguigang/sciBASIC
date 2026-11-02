@@ -21,7 +21,7 @@ Namespace CodeGen
 
         Private _names As Dictionary(Of String, String)
 
-        Public MustOverride ReadOnly Property Language As CodeLanguage
+        Public MustOverride ReadOnly Property Language As CodeLanguage Implements IProtoCodeGenerator.Language
 
         ''' <summary>
         ''' 生成文件的扩展名（含点号）。
@@ -94,7 +94,7 @@ Namespace CodeGen
 
 #Region "ENTRY API"
 
-        Public Function Generate(file As ProtoFile) As String
+        Public Function Generate(file As ProtoFile) As String Implements IProtoCodeGenerator.Generate
             If file Is Nothing Then
                 Throw New ArgumentNullException(NameOf(file))
             End If
@@ -111,7 +111,7 @@ Namespace CodeGen
             Return writer.ToString()
         End Function
 
-        Public Function GenerateFiles(file As ProtoFile) As Dictionary(Of String, String)
+        Public Function GenerateFiles(file As ProtoFile) As Dictionary(Of String, String) Implements IProtoCodeGenerator.GenerateFiles
             If file Is Nothing Then
                 Throw New ArgumentNullException(NameOf(file))
             End If
@@ -119,7 +119,7 @@ Namespace CodeGen
             Call BuildNameMap(file)
 
             Dim result As New Dictionary(Of String, String)(StringComparer.Ordinal)
-            Dim nameSpace As String = NamingHelper.ToNamespace(file.Package)
+            Dim namespaceName As String = NamingHelper.ToNamespace(file.Package)
             Dim sourceName As String = If(file.SourceFile, "<memory>")
             Dim topLevelEnums As List(Of EnumDescriptor) =
                 file.AllEnums().Where(Function(e) e.Parent Is Nothing).ToList()
@@ -128,7 +128,7 @@ Namespace CodeGen
                 Dim writer As New CodeWriter()
 
                 Call WriteDocument(writer, sourceName, topLevelEnums,
-                                   Enumerable.Empty(Of MessageDescriptor)(), nameSpace)
+                                   Enumerable.Empty(Of MessageDescriptor)(), namespaceName)
                 result("ProtobufEnums" & FileExtension) = writer.ToString()
             End If
 
@@ -137,7 +137,7 @@ Namespace CodeGen
                 Dim enums As New List(Of EnumDescriptor)
 
                 Call CollectEnums(message, enums)
-                Call WriteDocument(writer, sourceName, enums, message.AllMessages(), nameSpace)
+                Call WriteDocument(writer, sourceName, enums, message.AllMessages(), namespaceName)
 
                 result(GetTypeName(message.FullName) & FileExtension) = writer.ToString()
             Next
@@ -145,7 +145,7 @@ Namespace CodeGen
             Return result
         End Function
 
-        Public Function GenerateToDirectory(file As ProtoFile, outputDir As String) As IReadOnlyList(Of String)
+        Public Function GenerateToDirectory(file As ProtoFile, outputDir As String) As IReadOnlyList(Of String) Implements IProtoCodeGenerator.GenerateToDirectory
             If String.IsNullOrEmpty(outputDir) Then
                 Throw New ArgumentNullException(NameOf(outputDir))
             End If
@@ -158,7 +158,7 @@ Namespace CodeGen
             For Each pair As KeyValuePair(Of String, String) In files
                 Dim filePath As String = Path.Combine(outputDir, pair.Key)
 
-                Call File.WriteAllText(filePath, pair.Value)
+                Call System.IO.File.WriteAllText(filePath, pair.Value)
                 Call paths.Add(filePath)
             Next
 
@@ -172,16 +172,16 @@ Namespace CodeGen
         Protected Sub WriteDocument(writer As CodeWriter, sourceName As String,
                                     enums As IEnumerable(Of EnumDescriptor),
                                     messages As IEnumerable(Of MessageDescriptor),
-                                    nameSpace As String)
+                                    namespaceName As String)
 
             Call WriteFileHeader(writer, sourceName)
             Call WriteImports(writer)
             Call writer.BlankLine()
 
-            Dim hasNamespace As Boolean = Not String.IsNullOrEmpty(nameSpace)
+            Dim hasNamespace As Boolean = Not String.IsNullOrEmpty(namespaceName)
 
             If hasNamespace Then
-                Call WriteNamespaceOpen(writer, nameSpace)
+                Call WriteNamespaceOpen(writer, namespaceName)
                 Call writer.Indent()
             End If
 
@@ -197,7 +197,7 @@ Namespace CodeGen
 
             If hasNamespace Then
                 Call writer.Dedent()
-                Call WriteNamespaceClose(writer, nameSpace)
+                Call WriteNamespaceClose(writer, namespaceName)
             End If
         End Sub
 
