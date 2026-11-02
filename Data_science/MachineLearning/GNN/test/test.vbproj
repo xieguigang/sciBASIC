@@ -10,9 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\GCN\GCN.vbproj" />
     <ProjectReference Include="..\..\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\GNN.vbproj" />
   </ItemGroup>
