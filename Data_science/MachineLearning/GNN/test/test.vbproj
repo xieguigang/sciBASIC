@@ -7,6 +7,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Version>1.0.9753.4776</Version>
     <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <!-- 入口固定为 GCN 测试入口；Demo.vb 里的时序图 demo 仍保留，可手动调用 -->
+    <StartupObject>test.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

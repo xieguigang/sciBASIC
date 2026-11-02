@@ -167,3 +167,93 @@ $$\boxed{H^{(l+1)} = \sigma\left(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2} H^{(l
 1. **加自环**：保留自身信息
 2. **对称归一化**：平衡高度数节点的影响
 3. **逐层堆叠**：扩大感受野
+
+---
+
+## 八、本工程的实现说明（`Microsoft.VisualBasic.DeepLearning.GCN`）
+
+### 8.1 类型一览
+
+| 类型 | 职责 |
+|------|------|
+| `NormalizedAdjacency` | 由 `GNN.Graph` 构造 `Ã=A+I` 并做 `D̃^(-1/2)(·)D̃^(-1/2)`；同时产出 **稠密 fp64** 与 **CSR** 两种表示，按需构建、可缓存 |
+| `PropagationMode` | `Auto` / `Dense` / `Sparse` —— 消息传递走哪条路径 |
+| `GCNPrecision` | GCN 专用精度路由：`MatMulOr` / `Propagate` / `SpMMOr`，不适用时回退 fp64，并计入诊断 |
+| `GraphConvLayer` | 单层图卷积 `H' = σ(Â·H·Wᵀ + b)`，含前向、反向、持久梯度 |
+| `GCNNetwork` | 多层堆叠 + 每层输入侧 Dropout，输出节点级 logits |
+| `GCNAdamW` | fp64 AdamW（解耦权重衰减），优先走设备端 `TryAdamWStep` |
+| `EarlyStopping` | 早停判定 + 最优权重快照/回滚 |
+| `SemiSupervisedTrainer` | 整图全批量训练：掩码交叉熵 → 反向 → 更新，含逐 epoch 历史 |
+
+### 8.2 精度分层（fp64 主存储 + fp32 热点）
+
+| 内容 | 精度 | 理由 |
+|------|------|------|
+| 权重 `W`、偏置 `b`、全部梯度、AdamW 的 `m`/`v` | fp64 | 优化器状态一旦被 `Inf` 污染就永久粘住 |
+| `Â`、度、`1/√d̃` | fp64 | 这些量被反复使用，先降精度等于把误差写进“常量” |
+| logits、交叉熵损失及其梯度 | fp64 | `MixedPrecisionPolicy` 里属于 `MustDouble` |
+| `Â·H`（稠密 GEMM / CSR SpMM） | **fp32** | 算力热点，CUDA 上收益最大 |
+| `W·Z`、`dW=dY·Zᵀ`、`dZ=Wᵀ·dY` | **fp32** | 同上 |
+
+是否降精度由 `MixedPrecisionPolicy.Decide`（按 `m·k·n` / `nnz` 与阈值）+ `IsSafeForSingle`（数值安全）裁决，
+统一经 `GCNPrecision` 路由；`GCNPrecision.Enabled = False` 或 `MixedPrecisionPolicy.Enabled = False`
+即可整体回退 fp64 用于定位数值回归。计数见 `MixedPrecisionDiagnostics.[Of]("GCN.MatMul")`。
+
+### 8.3 布局约定：层内使用“特征主序”
+
+`TensorFlow` 的 `SpMM(csr, dense)` 契约是 `dense[batch, Rows] × CSR(Rows, Columns)`（**稠密 × 稀疏**），
+而 GCN 需要 `Â·H`（**稀疏 × 稠密**）。由于 `Â` 对称：
+
+$$(\hat{A}H)^\top = H^\top \hat{A}$$
+
+因此层内部统一以 `Hᵀ`（形状 `[features, nodes]`）传递激活值：
+
+* 稀疏路径 = `SpMM(Â, Hᵀ)`，正好落在既有契约（含 CUDA 内核）上；
+* 稠密路径 = `MatMul(Hᵀ, Â)`，普通二维 GEMM；
+* 反向 `dHᵀ = SpMM(Â, dYᵀ)` —— 同样因为 `Â` 对称，不需要转置。
+
+模型边界只做两次转置（输入 `[n,d]→[d,n]`、输出 `[C,n]→[n,C]`），代价 `O(n·d)`，相对每层 `O(n²d)` 可忽略。
+
+### 8.4 稠密还是稀疏
+
+`PropagationMode.Auto` 按密度选择：`nnz / n² ≤ 0.25` 走 CSR，否则走稠密。
+稠密矩阵是**按需构建**的（只想跑稀疏路径的调用方不该付出 `8n²` 字节），也可用 `ReleaseDense()` 回收。
+
+### 8.5 最小用法
+
+```vbnet
+Imports Microsoft.VisualBasic.DeepLearning.GCN
+Imports Microsoft.VisualBasic.DeepLearning.GNN
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+
+' 1. 组织图（复用 GNN 的 Graph：边表 + 节点特征）
+Dim graph As New Graph(features)           ' features: [nodes, inFeatures]
+Call graph.AddUndirectedEdge(0, 1)
+Call graph.AddUndirectedEdge(1, 2)
+
+' 2. 归一化邻接（构造一次，可复用于所有层、所有 epoch）
+Dim adjacency = NormalizedAdjacency.[Get](graph)          ' Â = D̃^(-1/2)(A+I)D̃^(-1/2)
+
+' 3. 两层 GCN：inFeatures → 16 → numClasses
+Dim network As New GCNNetwork(inFeatures:=features.Shape(1), hiddenFeatures:=16, numClasses:=3,
+                              dropoutRate:=0.5, seed:=42)
+
+' 4. fp64 AdamW（readme 推荐 lr=0.01, wd=5e-4）
+Dim optimizer As New GCNAdamW(network.GetParameters(), network.GetGradients(),
+                              learningRate:=0.01, weightDecay:=5.0E-4)
+
+' 5. 半监督训练：只用 trainMask 上的标签，但全图参与传播
+Dim trainer As New SemiSupervisedTrainer(network, optimizer)
+Call trainer.Train(features, adjacency, labels, trainMask, valMask,
+                   epochs:=200, earlyStopping:=New EarlyStopping(patience:=50), printEvery:=10)
+
+' 6. 预测
+Dim predicted = network.Predict(features, adjacency)
+```
+
+### 8.6 训练要点（与第二节的关系）
+
+* **损失只在有标签节点上算**：`Tensor.computeKernel.MaskedCrossEntropy`（内部 log-sum-exp，损失与梯度都除以有效标签数）；
+* **weight decay 是主要正则**：`AdamW` 的解耦衰减，默认 `5e-4`；
+* **过平滑**：默认 2 层；`GCNNetwork` 支持任意层数，但超过 3 层通常需要残差/JK 才能避免节点表示趋同；
+* **早停**：标签极少时验证损失很早就回升，`EarlyStopping` 会回滚到最优一轮的权重。
