@@ -76,11 +76,21 @@ Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Namespace Transformer
 
     ''' <summary>
-    ''' Position wise feed forward network: two fully connected layers with a ReLU activation in between.
+    ''' 前馈网络的中间层激活类型。
+    ''' </summary>
+    Public Enum FeedForwardActivation
+        ''' <summary>ReLU（<c>nn.Transformer</c> 的默认激活，权重来自官方模型时使用）。</summary>
+        ReLU = 0
+        ''' <summary>GELU（tanh 近似，BERT 类模型使用）。</summary>
+        GELU = 1
+    End Enum
+
+    ''' <summary>
+    ''' Position wise feed forward network: two fully connected layers with an activation in between.
     ''' </summary>
     ''' <remarks>
     ''' Because the tensor runtime has no automatic differentiation, the forward pass caches the pre-activation (the source of
-    ''' the ReLU mask) and the activation (needed for the W2 gradient); the backward pass accumulates the W1, W2, b1 and b2
+    ''' the activation mask) and the activation (needed for the W2 gradient); the backward pass accumulates the W1, W2, b1 and b2
     ''' gradients by hand.
     ''' </remarks>
     Public Class FeedForwardNetwork
@@ -89,6 +99,7 @@ Namespace Transformer
         Private b1, b2 As Tensor
 
         Private W1Optimizer, W2Optimizer, b1Optimizer, b2Optimizer As Optimizer
+        Private ReadOnly activationKind As FeedForwardActivation
 
         ''' <summary>前向传播的中间量缓存，供反向传播使用。</summary>
         Public Class Cache
@@ -115,6 +126,18 @@ Namespace Transformer
         ''' <param name="dff">Hidden width of the inner layer.</param>
         ''' <param name="embeddingSize">Width of the model input and output.</param>
         Public Sub New(dff As Integer, embeddingSize As Integer)
+            Me.New(dff, embeddingSize, FeedForwardActivation.ReLU)
+        End Sub
+
+        ''' <summary>
+        ''' Creates the feed forward network with the requested activation.
+        ''' </summary>
+        ''' <param name="dff">Hidden width of the inner layer.</param>
+        ''' <param name="embeddingSize">Width of the model input and output.</param>
+        ''' <param name="activation">Activation between the two linear layers.</param>
+        Public Sub New(dff As Integer, embeddingSize As Integer, activation As FeedForwardActivation)
+            Me.activationKind = activation
+
             W1 = TensorOps.HeNormalInit(New Integer() {embeddingSize, dff})
             W2 = TensorOps.HeNormalInit(New Integer() {dff, embeddingSize})
             b1 = New Tensor(dff)
@@ -126,6 +149,41 @@ Namespace Transformer
             b2Optimizer = New Optimizer(b2)
         End Sub
 
+        ''' <summary>Gets the activation used between the two linear layers.</summary>
+        Public ReadOnly Property Activation As FeedForwardActivation
+            Get
+                Return activationKind
+            End Get
+        End Property
+
+        ''' <summary>第一层权重，形状 <c>[embeddingSize, dff]</c>。</summary>
+        Friend ReadOnly Property Weights1 As Tensor
+            Get
+                Return W1
+            End Get
+        End Property
+
+        ''' <summary>第二层权重，形状 <c>[dff, embeddingSize]</c>。</summary>
+        Friend ReadOnly Property Weights2 As Tensor
+            Get
+                Return W2
+            End Get
+        End Property
+
+        ''' <summary>第一层偏置，形状 <c>[dff]</c>。</summary>
+        Friend ReadOnly Property Bias1 As Tensor
+            Get
+                Return b1
+            End Get
+        End Property
+
+        ''' <summary>第二层偏置，形状 <c>[embeddingSize]</c>。</summary>
+        Friend ReadOnly Property Bias2 As Tensor
+            Get
+                Return b2
+            End Get
+        End Property
+
         ''' <summary>
         ''' Runs the two layer transformation and caches its intermediates.
         ''' </summary>
@@ -134,7 +192,13 @@ Namespace Transformer
         Public Function FeedForward(G As Tensor) As Tensor
             ' First layer
             Dim preActivation = TensorOps.VecAdd(TensorOps.BatchedMatMul(G, W1), b1)
-            Dim activation = Tensor.computeKernel.Relu(preActivation)
+            Dim activation As Tensor
+
+            If activationKind = FeedForwardActivation.GELU Then
+                activation = TensorOpsEx.Gelu(preActivation)
+            Else
+                activation = Tensor.computeKernel.Relu(preActivation)
+            End If
 
             ' Second layer
             Dim FFN2 = TensorOps.VecAdd(TensorOps.BatchedMatMul(activation, W2), b2)
@@ -170,8 +234,14 @@ Namespace Transformer
             Call TensorOps.BatchedMatMulBackward(dOut, cache.Activation, W2, dActivation, dW2)
             Call TensorOps.Accumulate(W2Optimizer.Gradient, dW2)
 
-            ' ReLU 反向：用预激活值的阶跃掩码门控上游梯度
-            Dim dPreActivation = TensorOps.ElementwiseMultiply(dActivation, TensorOps.Heaviside(cache.PreActivation))
+            ' 激活反向：ReLU 用阶跃掩码，GELU 用解析导数
+            Dim dPreActivation As Tensor
+
+            If activationKind = FeedForwardActivation.GELU Then
+                dPreActivation = TensorOpsEx.GeluBackward(dActivation, cache.PreActivation)
+            Else
+                dPreActivation = TensorOps.ElementwiseMultiply(dActivation, TensorOps.Heaviside(cache.PreActivation))
+            End If
 
             ' 偏置 b1
             Call TensorOps.Accumulate(b1Optimizer.Gradient, TensorOps.VecAddBackward(dPreActivation))
