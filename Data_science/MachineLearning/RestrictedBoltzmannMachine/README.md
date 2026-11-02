@@ -22,49 +22,59 @@ $$P(v, h) \propto e^{-E(v,h)}$$
 
 | 命名空间 | 内容 |
 |---|---|
-| `nn.rbm` | 单层 RBM（Bernoulli 与 Gaussian 两种） |
-| `nn.rbm.deep` | 堆叠为**深度信念网络**风格的深层结构 |
-| `nn.rbm.learn` | 对比散度训练（含 Gibbs 采样步）与基于反向误差传播的训练 |
+| `nn.rbm` | 单层 RBM（`RBM` / `BernoulliRBM`），带有可见层偏置 `a` 与隐藏层偏置 `b` |
+| `nn.rbm.deep` | `DeepRBM`（多 RBM 堆叠）与**深度信念网络** `DeepBeliefNetwork` |
+| `nn.rbm.learn` | 对比散度 CD-k 训练（同时更新权重与偏置）以及基于反向误差传播的训练 |
 | `nn.rbm.factory` | 由配置构建网络 |
-| `nn.rbm.save` | 训练权重序列化 |
-| `math`（+ `functions` / `distance` / `doubledouble`） | 激活与传递函数、距离函数，以及**双精度-双精度（double-double）算术层** |
-| `nlp`（+ `encode` / `ngram`） | 文本 → 词袋输入 |
-| `utils` | 辅助方法 |
+| `nn.rbm.save` | 历史上的序列化占位实现：请使用 `DeepBeliefNetwork.Save` / `DeepBeliefNetwork.Load` |
+| `math`（+ `functions` / `distance` / `doubledouble`） | 稠密矩阵运算、激活与传递函数、距离函数，以及把两个 `Double` 组合为逐元素二元运算的函数集合 |
+| `nlp`（+ `encode` / `ngram`） | 词编码接口与 n-gram 生成器 |
+| `utils` | 辅助方法（`PrettyPrint`） |
 
-## 为什么需要 double-double 精度
+## 关于 `doubledouble` 命名空间
 
-RBM 的似然计算涉及大量 `log-sum-exp` 运算，且各配置的概率差异可达数十个数量级；普通 `Double` 在累加过程中会因**抵消误差**而失去有效位。`math.functions.doubledouble` 用两个 `Double` 表示一个更高精度的数（约 32 位有效十进制数字），在不引入任意精度库的前提下稳定住这些估计。
+`math.functions.doubledouble` 之中的函数是把两个 `Double` 作为输入的**逐元素二元运算**（加、减、乘、除），
+它服务于矩阵的逐元素运算（`DenseMatrix.apply(m2, f)`），并不是扩展精度的数值类型。
 
 ## 快速上手
 
 ```vbnet
-Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.deep
 
-' 1. 构建单层 RBM（可见层 784，隐藏层 256）
+' 0. 训练数据：每一行是一个样本，元素取值为 0 / 1
+Dim data = DenseMatrix.make(training)
+
+' 1. 单层 RBM（可见层 784，隐藏层 256）与对比散度训练
 Dim rbm As New BernoulliRBM(visibleUnits:=784, hiddenUnits:=256)
+Dim error = rbm.Train(data, epochs:=20, learningRate:=0.01, k:=1)
 
-' 2. 对比散度训练
-Call rbm.Train(data, epochs:=20, learningRate:=0.01, k:=1)
-
-' 3. 堆叠为深度网络
+' 2. 堆叠为深度信念网络，逐层贪心预训练
 Dim dbn As New DeepBeliefNetwork()
-Call dbn.AddLayer(rbm)
-Call dbn.AddLayer(New BernoulliRBM(visibleUnits:=256, hiddenUnits:=64))
-Call dbn.TrainLayerWise(data)
+Call dbn.AddLayer(rbm)                                  ' 也可以使用 AddLayer(784, 256) 添加随机初始化的层
+Call dbn.AddLayer(visibleUnits:=256, hiddenUnits:=64)
+Call dbn.TrainLayerWise(data, epochs:=20, learningRate:=0.01, k:=1)
+
+' 3. 使用：均值场推断得到顶层特征，自顶向下重构或者采样生成
+Dim features = dbn.Encode(data)
+Dim restored = dbn.Reconstruct(data)
+Dim samples = dbn.Generate(64, gibbsSteps:=100)
 
 ' 4. 保存与加载
 Call dbn.Save("./model.rbm")
-
-' 5. 文本输入（可选）：先做词袋编码
-Dim encoded = nlp.encode.EncodeBagOfWords(documents)
+Dim model = DeepBeliefNetwork.Load("./model.rbm")
 ```
 
 ## 实现要点
 
 - **RBM 的用途**：无监督特征提取（用隐藏层表示作为下游特征）、协同过滤、以及深度网络的**逐层预训练**（在标注数据稀缺时特别有价值）。
-- **Gaussian RBM 的适用条件**：可见层表示连续值时（如归一化的像素强度、信号幅值）应使用 Gaussian 可见单元，否则二值假设会引入系统性偏差。
+- **偏置项的作用**：能量函数为 `E(v,h) = -v·a - h·b - v·W·h`，缺少偏置的时候模型无法表达隐藏单元的开启先验，学到的特征会明显变弱；CD-k 会同时更新权重 `W` 与两个偏置 `a`、`b`。
 - **k 步的作用**：k 越大，梯度估计越接近真值但越慢；k=1 的偏差在实践中可接受，这也是"CD-1"成为默认的原因。
 - **逐层训练的意义**：深层 RBM 逐层贪心训练，每层只依赖前一层输出；这让训练分解为若干个可独立完成的小问题。
+- **DBN 的推断与生成**：`Encode` 使用自底向上的均值场推断（返回概率而不是二值状态），`Decode`/`Reconstruct` 自顶向下传播；`Generate` 先在最顶层的 RBM 上做交替 Gibbs 采样，再把样本自顶向下传播到可见层。
+- **输入要求**：可见层是伯努利单元，输入数据必须是取值为 `0/1` 的稠密矩阵；连续值需要先归一化并二值化（本库尚未实现 Gaussian 可见单元）。
+- **训练监控**：`ReconstructionError` 与 `AverageFreeEnergy` 可以用于判断预训练是否收敛——训练良好的时候两者都应该下降。
 
 ## 包信息
 

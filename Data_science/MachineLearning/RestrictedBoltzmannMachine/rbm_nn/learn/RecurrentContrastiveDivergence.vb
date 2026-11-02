@@ -153,7 +153,8 @@ Namespace nn.rbm.learn
                 Dim negativeAssociations As DenseMatrix = negativeVisibleProbabilities.transpose().dot(negativeHiddenProbabilities)
 
                 ' Update weights.
-                weights.add(positiveAssociations.subtract(negativeAssociations).divide(numberEvents).multiply(learningParameters.LearningRate))
+                weights = weights.add(positiveAssociations.subtract(negativeAssociations).divide(numberEvents).multiply(learningParameters.LearningRate))
+                rbm.Weights = weights
 
                 [error] += currentAndNextEvent.subtract(negativeVisibleProbabilities).pow(2).sum()
             Next

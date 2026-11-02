@@ -127,7 +127,7 @@ Namespace nn.rbm.deep
         Public Sub New(rbmLayers As RBMLayer())
             rbmLayersField = rbmLayers
             visibleSizeField = rbmLayers(0).size() * rbmLayers(0).getRBM(0).VisibleSize
-            hiddenSizeField = rbmLayers(rbmLayers.Length - 1).size() * rbmLayers(rbmLayers.Length - 1).getRBM(0).VisibleSize
+            hiddenSizeField = rbmLayers(rbmLayers.Length - 1).size() * rbmLayers(rbmLayers.Length - 1).getRBM(0).HiddenSize
         End Sub
 
         Public ReadOnly Property RbmLayers As RBMLayer()
