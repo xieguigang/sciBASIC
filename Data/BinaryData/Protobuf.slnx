@@ -1,0 +1,20 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="BinaryData/binarydata-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="Protobuf/Protobuf.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Protobuf/test/test.vbproj" Id="316c3610-0852-4f9b-a06b-af06d103c091">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

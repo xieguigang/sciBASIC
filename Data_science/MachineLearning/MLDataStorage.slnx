@@ -25,6 +25,15 @@
       <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../../Data/BinaryData/Protobuf/Protobuf.vbproj">
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Release" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../Data/DataFrame/dataframework-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
