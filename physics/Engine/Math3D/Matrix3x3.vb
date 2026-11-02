@@ -129,7 +129,16 @@ Namespace Math3D
         Public Function Inverse() As Matrix3x3
             Dim det As Double = Determinant()
 
-            If std.Abs(det) < 1.0E-12 Then
+            ' the singularity test has to be relative to the magnitude of the
+            ' matrix and not absolute: the inertia tensor of a six gram link lives
+            ' in the 1e-6 range, so its determinant is ~1e-17 and an absolute floor
+            ' of 1e-12 declared every joint of a small robot singular. The inverse
+            ' came back as the zero matrix, no torque could ever change an angular
+            ' velocity, and the whole articulated tree stood frozen in the pose it
+            ' was assembled in while the solver reported perfectly healthy contacts
+            Dim scale As Double = std.Max(std.Abs(m11), std.Max(std.Abs(m22), std.Abs(m33)))
+
+            If scale <= 0 OrElse std.Abs(det) <= scale * scale * scale * 1.0E-12 Then
                 Return Matrix3x3.Zero
             End If
 
