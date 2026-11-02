@@ -9,6 +9,8 @@ Option Infer On
 
 Imports System.Runtime.CompilerServices
 
+Namespace Wire
+
 ''' <summary>
 ''' protobuf 线格式的纯函数辅助工具：tag 拼装、varint 尺寸预估、zigzag 变换。
 ''' </summary>
@@ -147,3 +149,5 @@ Public Module ProtoWireFormat
     End Function
 
 End Module
+
+End Namespace

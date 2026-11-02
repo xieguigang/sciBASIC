@@ -265,6 +265,14 @@ Namespace Wire
         End Sub
 
         ''' <summary>
+        ''' 写入 bytes 字段：varint 长度前缀 + 原始字节。
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub WriteBytes(payload As Byte())
+            Call WriteLengthDelimited(payload)
+        End Sub
+
+        ''' <summary>
         ''' 写入 UTF-8 字符串（varint 长度前缀）。
         ''' </summary>
         Public Sub WriteString(value As String)

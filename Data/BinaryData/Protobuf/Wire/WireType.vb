@@ -7,6 +7,8 @@ Option Infer On
 '  Data\BinaryData\Protobuf\Wire\WireType.vb
 ' /********************************************************************************/
 
+Namespace Wire
+
 ''' <summary>
 ''' protobuf 的线格式类型（wire type），对应 tag 的最低 3 位。
 ''' </summary>
@@ -48,3 +50,5 @@ Public Enum WireType As Byte
     Fixed32 = 5
 
 End Enum
+
+End Namespace

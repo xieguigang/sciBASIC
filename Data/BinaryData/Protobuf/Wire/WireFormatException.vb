@@ -7,6 +7,8 @@ Option Infer On
 '  Data\BinaryData\Protobuf\Wire\WireFormatException.vb
 ' /********************************************************************************/
 
+Namespace Wire
+
 ''' <summary>
 ''' 当输入字节序列不是合法的 protobuf 线格式时抛出的异常。
 ''' </summary>
@@ -58,3 +60,5 @@ Public Class WireFormatException : Inherits FormatException
     End Sub
 
 End Class
+
+End Namespace

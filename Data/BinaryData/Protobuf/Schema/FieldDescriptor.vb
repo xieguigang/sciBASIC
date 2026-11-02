@@ -223,13 +223,12 @@ Namespace Schema
         ''' 判断某个标量类型是否可以 packed 编码。
         ''' </summary>
         Public Shared Function IsPackableKind(kind As FieldTypeKind) As Boolean
-            Select Case kind
-                Case FieldTypeKind.[String], FieldTypeKind.Bytes, FieldTypeKind.Message, FieldTypeKind.Group
-                    Return False
+            If kind = FieldTypeKind.Group Then
+                Return False
+            End If
 
-                Case Else
-                    Return True
-            End Select
+            ' length-delimited 的标量（string / bytes / message / decimal / guid）不能 packed
+            Return GetWireType(kind) <> ProtoWireType.LengthDelimited
         End Function
 
         ''' <summary>

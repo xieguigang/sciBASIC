@@ -59,16 +59,16 @@ Namespace Schema
         ''' <summary>
         ''' 从磁盘上的 .proto 文件解析。
         ''' </summary>
-        Public Shared Function ParseFile(path As String) As ProtoFile
-            If String.IsNullOrEmpty(path) Then
-                Throw New ArgumentNullException(NameOf(path))
+        Public Shared Function ParseFile(protoFilePath As String) As ProtoFile
+            If String.IsNullOrEmpty(protoFilePath) Then
+                Throw New ArgumentNullException(NameOf(protoFilePath))
             End If
 
-            If Not File.Exists(path) Then
-                Throw New FileNotFoundException("找不到指定的 .proto 文件", path)
+            If Not File.Exists(protoFilePath) Then
+                Throw New FileNotFoundException("找不到指定的 .proto 文件", protoFilePath)
             End If
 
-            Return Parse(File.ReadAllText(path), Path.GetFileName(path))
+            Return Parse(File.ReadAllText(protoFilePath), Path.GetFileName(protoFilePath))
         End Function
 
 #Region "DOCUMENT"
@@ -774,7 +774,13 @@ Namespace Schema
 
         Private ReadOnly Property Current As ProtoToken
             Get
-                Return _tokens(Math.Min(_index, _tokens.Count - 1))
+                Dim index As Integer = _index
+
+                If index > _tokens.Count - 1 Then
+                    index = _tokens.Count - 1
+                End If
+
+                Return _tokens(index)
             End Get
         End Property
 
@@ -791,7 +797,17 @@ Namespace Schema
         End Sub
 
         Private Function PeekToken(offset As Integer) As ProtoToken
-            Return _tokens(Math.Min(_index + offset, _tokens.Count - 1))
+            Dim index As Integer = _index + offset
+
+            If index > _tokens.Count - 1 Then
+                index = _tokens.Count - 1
+            End If
+
+            If index < 0 Then
+                index = 0
+            End If
+
+            Return _tokens(index)
         End Function
 
         Private Function AcceptSymbol(symbol As String) As Boolean
