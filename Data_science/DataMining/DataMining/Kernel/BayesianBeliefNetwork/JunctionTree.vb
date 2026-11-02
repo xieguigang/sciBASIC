@@ -110,7 +110,7 @@ Namespace Kernel.BayesianBeliefNetwork
             Dim contains As Integer = FindCliqueContaining(sortedTargets)
 
             If contains >= 0 Then
-                Return calibrated(contains).MarginalizeTo(sortedTargets).ToProbabilities()
+                Return ExpandToTargets(calibrated(contains), evidence, sortedTargets)
             End If
 
             Dim marginals As Double()() = sortedTargets.Select(Function(v) Marginal(evidence, v)).ToArray()
@@ -152,7 +152,54 @@ Namespace Kernel.BayesianBeliefNetwork
                 Return uniform
             End If
 
-            Return calibrated(index).MarginalizeTo({target}).ToProbabilities()
+            Return ExpandToTargets(calibrated(index), evidence, {target})
+        End Function
+
+        ''' <summary>
+        ''' 把一个定义在目标变量子集之上的因子扩展为完整的目标变量分布。
+        ''' </summary>
+        ''' <remarks>
+        ''' 证据变量在构造团潜势的时候已经被固定并从定义域之中移除，因此当查询变量恰好就是
+        ''' 被观测的那个变量时，直接读出潜势只会得到一张秩为 0 的表。这里按照证据把它展开为
+        ''' 一个确定性的分布，与变量消除引擎的行为保持一致。
+        ''' </remarks>
+        Private Function ExpandToTargets(factor As Factor, evidence As Integer(), targets As Integer()) As Double()
+            ' 先把团潜势边缘化到目标变量集合之上，之后它的定义域一定是目标的子集
+            Dim marginalFactor As Factor = factor.MarginalizeTo(targets)
+            Dim cards As Integer() = targets.Select(Function(v) _nodes(v).Range).ToArray()
+            Dim strides As Integer() = Factor.ComputeStrides(cards)
+            Dim size As Integer = If(targets.Length = 0, 1, strides(targets.Length - 1) * cards(targets.Length - 1))
+            Dim raw As Double() = New Double(size - 1) {}
+            Dim codes As Integer() = New Integer(targets.Length - 1) {}
+            Dim subset As Integer() = marginalFactor.Variables
+            Dim buffer As Integer() = New Integer(subset.Length - 1) {}
+
+            For i As Integer = 0 To size - 1
+                Call Factor.Decode(i, cards, strides, codes)
+
+                Dim conflict As Boolean = False
+
+                For k As Integer = 0 To targets.Length - 1
+                    If evidence IsNot Nothing AndAlso evidence(targets(k)) <> BeliefNode.NotObserved AndAlso evidence(targets(k)) <> codes(k) Then
+                        conflict = True
+                        Exit For
+                    End If
+                Next
+
+                If conflict Then
+                    raw(i) = Double.NegativeInfinity
+                    Continue For
+                End If
+
+                For k As Integer = 0 To subset.Length - 1
+                    Dim position As Integer = Array.IndexOf(targets, subset(k))
+                    buffer(k) = If(position >= 0, codes(position), 0)
+                Next
+
+                raw(i) = If(subset.Length = 0, 0.0, marginalFactor.LogValue(buffer))
+            Next
+
+            Return NumericLogSpace.NormalizeLog(raw)
         End Function
 
         ''' <summary>

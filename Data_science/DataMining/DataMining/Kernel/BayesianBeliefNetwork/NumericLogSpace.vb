@@ -305,6 +305,69 @@ Namespace Kernel.BayesianBeliefNetwork
             Return logAbsDet
         End Function
 
+        ''' <summary>
+        ''' 对<b>对称正定</b>矩阵计算对数行列式，使用 Cholesky 分解。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 带主元的高斯消元在对角占优程度差异很大的矩阵之上会产生严重的相消误差，
+        ''' 而 Laplacian 矩阵去掉一行一列之后是一个对称正定矩阵，用 Cholesky 分解
+        ''' <c>A = L Lᵀ</c> 可以得到 <c>ln det(A) = 2 Σ ln L_ii</c>，
+        ''' 全程只有正数的开方与除法，数值上远比 LU 稳定。
+        ''' </para>
+        ''' <para>
+        ''' 矩阵非正定(或者数值上奇异)的时候返回负无穷。
+        ''' </para>
+        ''' </remarks>
+        Public Function LogDetSpd(matrix As Double(,)) As Double
+            Dim n As Integer = matrix.GetLength(0)
+
+            If n <> matrix.GetLength(1) Then
+                Throw New ArgumentException("The matrix must be square.", NameOf(matrix))
+            End If
+            If n = 0 Then
+                Return 0.0
+            End If
+
+            Dim lower As Double(,) = New Double(n - 1, n - 1) {}
+
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To i
+                    Dim sum As Double = matrix(i, j)
+
+                    For k As Integer = 0 To j - 1
+                        sum -= lower(i, k) * lower(j, k)
+                    Next
+
+                    If i = j Then
+                        If sum <= 0 OrElse Double.IsNaN(sum) Then
+                            Return Double.NegativeInfinity
+                        End If
+
+                        lower(i, i) = std.Sqrt(sum)
+                    Else
+                        If lower(j, j) = 0 Then
+                            Return Double.NegativeInfinity
+                        End If
+
+                        lower(i, j) = sum / lower(j, j)
+                    End If
+                Next
+            Next
+
+            Dim logDeterminant As Double = 0.0
+
+            For i As Integer = 0 To n - 1
+                If lower(i, i) <= 0 Then
+                    Return Double.NegativeInfinity
+                End If
+
+                logDeterminant += 2.0 * std.Log(lower(i, i))
+            Next
+
+            Return logDeterminant
+        End Function
+
 #End Region
     End Module
 End Namespace
