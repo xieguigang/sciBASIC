@@ -51,7 +51,7 @@ Namespace Schema
         ''' <summary>
         ''' <c>import</c> 声明的文件名列表（仅记录，不自动加载）。
         ''' </summary>
-        Public ReadOnly Property [Imports] As New List(Of String)
+        Public ReadOnly Property ImportFiles As New List(Of String)
 
         ''' <summary>
         ''' 文件级 <c>option</c>。

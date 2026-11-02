@@ -99,7 +99,7 @@ Namespace Schema
                         ' 同上
                     End If
 
-                    Call _file.[Imports].Add(ExpectStringLiteral())
+                    Call _file.ImportFiles.Add(ExpectStringLiteral())
                     Call ExpectSymbol(";")
                 ElseIf AcceptKeyword("option") Then
                     Call ParseOptionInto(_file.Options, Nothing)

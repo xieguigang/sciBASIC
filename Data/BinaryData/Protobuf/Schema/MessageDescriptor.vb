@@ -103,6 +103,20 @@ Namespace Schema
         End Function
 
         ''' <summary>
+        ''' 按名称查找直接嵌套的消息。
+        ''' </summary>
+        Public Function FindNestedMessage(name As String) As MessageDescriptor
+            Return NestedMessages.FirstOrDefault(Function(m) String.Equals(m.Name, name, StringComparison.Ordinal))
+        End Function
+
+        ''' <summary>
+        ''' 按名称查找直接嵌套的枚举。
+        ''' </summary>
+        Public Function FindNestedEnum(name As String) As EnumDescriptor
+            Return NestedEnums.FirstOrDefault(Function(e) String.Equals(e.Name, name, StringComparison.Ordinal))
+        End Function
+
+        ''' <summary>
         ''' 深度优先枚举本消息以及全部嵌套消息。
         ''' </summary>
         Public Iterator Function AllMessages() As IEnumerable(Of MessageDescriptor)
