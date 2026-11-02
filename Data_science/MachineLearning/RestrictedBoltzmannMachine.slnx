@@ -1,0 +1,76 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="CFD_win32" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Docker" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="mzkit" />
+    <BuildType Name="mzkit_win32" />
+    <BuildType Name="NPSearch" />
+    <BuildType Name="PlantMAT" />
+    <BuildType Name="Release" />
+    <BuildType Name="Rsharp_app_release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/math/">
+    <Project Path="../DataMining/DataMining/DataMining.NET5.vbproj">
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Mathematica/Math/Math/Math.NET5.vbproj">
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="MachineLearning/machine_learning-netcore5.vbproj">
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="RestrictedBoltzmannMachine/RestrictedBoltzmannMachine.vbproj">
+    <BuildType Solution="CFD_win32|*" Project="Debug" />
+    <BuildType Solution="Docker|*" Project="Debug" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="mzkit_win32|*" Project="Debug" />
+    <BuildType Solution="mzkit|*" Project="Debug" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="PlantMAT|*" Project="Debug" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="RestrictedBoltzmannMachine/test/test.vbproj">
+    <BuildType Solution="CFD_win32|*" Project="Debug" />
+    <BuildType Solution="Docker|*" Project="Debug" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="mzkit_win32|*" Project="Debug" />
+    <BuildType Solution="mzkit|*" Project="Debug" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="PlantMAT|*" Project="Debug" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>
