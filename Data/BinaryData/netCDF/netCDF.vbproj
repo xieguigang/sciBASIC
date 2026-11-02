@@ -42,6 +42,14 @@
   	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
   	  <Optimize>true</Optimize>
   	</PropertyGroup>
+
+  	<ItemGroup>
+  	  <None Remove="build.log" />
+  	  <None Remove="build2.log" />
+  	  <None Remove="build3.log" />
+  	  <None Remove="build4.log" />
+  	  <None Remove="build5.log" />
+  	</ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
