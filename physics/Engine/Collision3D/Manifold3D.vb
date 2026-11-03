@@ -119,6 +119,17 @@ Namespace Collision3D
         ''' </summary>
         Friend Const MaxBiasSpeed As Double = 3.0
 
+        ''' <summary>
+        ''' 接触刚度随穿透深度上升的过渡宽度（米），mujoco ``solimp`` 的 width
+        ''' </summary>
+        ''' <remarks>
+        ''' 深度为 0 时取全刚度，深度为 -width 时刚度降为 0。没有这条斜坡时，一个
+        ''' 仍在平面上方的顶点（在容差内、但并没有接触）会拿到满刚度冲量，产生一个
+        ''' 抬起脚掌的力矩：实测把脚底四个角都保留成接触面，策略站立从 250/250
+        ''' 掉到 48/250。
+        ''' </remarks>
+        Friend Const SolImpWidth As Double = 0.002
+
         ''' <summary>接触处的两条切线（与法向构成正交基）。</summary>
         Friend tangent1 As Vector3
         ''' <summary>接触处的第二条切线。</summary>
@@ -145,6 +156,17 @@ Namespace Collision3D
         Public Contacts As New List(Of ContactPoint3D)()
         ''' <summary>恢复系数（由双方材质组合而来）。</summary>
         Public Restitution As Double = 0.0
+        ''' <summary>
+        ''' 允许整个流形都只有 margin（还没有真正穿透）时仍然进入求解
+        ''' </summary>
+        ''' <remarks>
+        ''' 只有平面接触需要这个：脚掌贴着地面时，四个角里常常只有一两个真正穿透，
+        ''' 另外几个还在容差内。丢掉这些点，支撑面就退化成一条边，重心投影立刻跑到
+        ''' 支撑多边形之外。凸-凸的接触仍然要求 <c>Penetration &gt; 0</c>，否则大量
+        ''' 只是"接近"的物体对都会进入求解。
+        ''' </remarks>
+        Public Property AllowMarginOnly As Boolean = False
+
         ''' <summary>摩擦系数（由双方材质组合而来）。</summary>
         Public Friction As Double = 0.4
 
@@ -230,10 +252,34 @@ Namespace Collision3D
                 Dim excess As Double = std.Max(0.0, c.Penetration - slop)
 
                 If soft Then
-                    ' box2d 的软约束：把 C 换算成"有限力"的偏置，而不是目标速度
-                    c.gamma = 1.0 / (dt * (damping + dt * stiffness))
-                    c.softMass = 1.0 / (1.0 / c.normalMass + c.gamma)
-                    c.bias = excess * dt * stiffness * c.gamma
+                    ' solimp: the impedance of a contact ramps with the depth instead of
+                    ' switching on the moment a vertex crosses the plane. A vertex that
+                    ' is still above the floor (negative depth = gap) keeps its place in
+                    ' the patch, so the patch spans the whole sole, but it only carries a
+                    ' fraction of the force: full force at the plane, none at the far edge
+                    ' of the margin. Both extremes were measured and both are wrong - the
+                    ' full force gives the corner a torque that lifts the sole it should
+                    ' press down (250/250 -> 48/250 standing), no force at all leaves the
+                    ' patch with only the deepest edge carrying load (250/250 -> 40/250).
+                    Dim weight As Double = 1.0
+
+                    If c.Penetration < 0 Then
+                        weight = std.Max(0.0, 1.0 + c.Penetration / ContactPoint3D.SolImpWidth)
+                    End If
+
+                    If weight <= 0 Then
+                        c.gamma = 0
+                        c.softMass = 0
+                        c.bias = 0
+                    Else
+                        ' box2d 的软约束：把 C 换算成"有限力"的偏置，而不是目标速度
+                        Dim kk As Double = stiffness * weight
+                        Dim dd As Double = damping * weight
+
+                        c.gamma = 1.0 / std.Max(dt * (dd + dt * kk), 1.0E-12)
+                        c.softMass = 1.0 / (1.0 / c.normalMass + c.gamma)
+                        c.bias = excess * dt * kk * c.gamma
+                    End If
                 Else
                     c.gamma = 0.0
                     c.softMass = c.normalMass

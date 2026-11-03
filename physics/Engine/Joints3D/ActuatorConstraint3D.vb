@@ -66,44 +66,53 @@ Namespace Joints3D
         End Sub
 
         Public Sub SolveVelocity(dt As Double) Implements IConstraint3D.SolveVelocity
-            If A Is Nothing OrElse B Is Nothing OrElse dt <= 0 Then
+            If A Is Nothing OrElse B Is Nothing OrElse dt <= 0 OrElse Kp <= 0 Then
                 Return
             End If
 
             Dim invIA As Matrix3x3 = A.InvInertiaWorld()
             Dim invIB As Matrix3x3 = B.InvInertiaWorld()
-            Dim k As Double = Vector3Math.Dot(Axis, invIA.MultiplyLeft(Axis)) +
-                              Vector3Math.Dot(Axis, invIB.MultiplyLeft(Axis))
+            Dim compliance As Double = Vector3Math.Dot(Axis, invIA.MultiplyLeft(Axis)) +
+                                       Vector3Math.Dot(Axis, invIB.MultiplyLeft(Axis))
 
-            If k < 1.0E-12 Then
+            If compliance < 1.0E-12 Then
                 Return
             End If
 
-            ' the law of the affine servo of the reference model
-            Dim error_ As Double = Target - Angle
+            ' the servo is a *soft* constraint, not a torque that is integrated
+            ' explicitly: the reference solver builds efc_R and efc_D from the
+            ' impedance of the actuator (mj_solref / mj_solimp) and solves
+            ' (J M^-1 J' + R) λ = -(J qacc - aref), which is stable for any gain at
+            ' any step size. Writing the same law as a torque needs a step size that
+            ' the armature of these motors does not allow (measured: 22 of 200 steps
+            ' upright, against 250 of 250 for the velocity servo of the hook).
+            '
+            ' The softening term of Box2D is the same algebra:
+            '   gamma = 1 / (dt·(d + dt·k)),  mass = 1 / (1/m_eff + gamma)
+            '   bias  = C·dt·k·gamma,         Δλ = -mass·(v + bias + gamma·λ)
+            Dim gamma As Double = 1.0 / (dt * (Kv + dt * Kp))
+            Dim effectiveMass As Double = 1.0 / (compliance + gamma)
+            ' the sign convention of the soft constraint is C = (current - target):
+            ' a positive position error has to produce a negative impulse, otherwise
+            ' the servo pushes the joint away from its set point (measured: 21 of 200
+            ' steps upright, the legs simply fold)
+            Dim bias As Double = (Angle - Target) * dt * Kp * gamma
             Dim speed As Double = Vector3Math.Dot(B.AngularVelocity - A.AngularVelocity, Axis)
-            Dim torque As Double = Kp * error_ - Kv * speed
+            Dim delta As Double = -effectiveMass * (speed + bias + gamma * Accumulated)
+            Dim previous As Double = Accumulated
 
-            torque = Clamp(torque, ForceMin, ForceMax)
-            m_lastTorque = torque
+            ' the force range of the motor becomes a range of the impulse
+            Accumulated = Clamp(previous + delta, ForceMin * dt, ForceMax * dt)
+            delta = Accumulated - previous
 
-            ' only the increment of the impulse of this sub step is applied: the part
-            ' that is already in the velocities is kept in Accumulated, so the
-            ' iterations converge to the torque of the law instead of adding it again
-            ' and again
-            Dim wanted As Double = torque * dt
-            Dim increment As Double = wanted - Accumulated
+            m_lastTorque = Accumulated / dt
 
-            If increment = 0 Then
+            If delta = 0 Then
                 Return
             End If
 
-            Accumulated = wanted
-
-            Dim j As Double = increment / k
-
-            A.AngularVelocity = A.AngularVelocity - invIA.MultiplyLeft(Axis * j)
-            B.AngularVelocity = B.AngularVelocity + invIB.MultiplyLeft(Axis * j)
+            A.AngularVelocity = A.AngularVelocity - invIA.MultiplyLeft(Axis * delta)
+            B.AngularVelocity = B.AngularVelocity + invIB.MultiplyLeft(Axis * delta)
         End Sub
 
         ' the servo has no position level step: the velocity pass drives the error

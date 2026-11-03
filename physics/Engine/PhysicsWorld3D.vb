@@ -167,6 +167,17 @@ Public Class PhysicsWorld3D
     ''' converged, and the number of rounds it needed is the number that says whether
     ''' the scene is well conditioned.
     ''' </remarks>
+    ''' <summary>
+    ''' keep a plane contact that is still entirely inside the margin
+    ''' </summary>
+    ''' <remarks>
+    ''' The manifold carries no force in that case (every point has a negative depth,
+    ''' see Manifold3D.InitSolver), it only describes the patch before the first
+    ''' vertex touches. Off by default: enabling it changed nothing in the bench until
+    ''' the force of a margin point ramps with its depth, which is not implemented.
+    ''' </remarks>
+    Public Property MarginOnlyContacts As Boolean = False
+
     Public Property SolverTolerance As Double = 0.0
 
     ''' <summary>the rounds the last sub step actually used</summary>
@@ -352,16 +363,20 @@ Public Class PhysicsWorld3D
             Call ff.Apply(Bodies)
         Next
 
+        ' 3. 由力积分速度
+        For Each b In Bodies
+            Call b.IntegrateVelocity(dt)
+        Next
+
+        ' 3.5 速度层控制器：放在积分之后，重力已经进入速度，此时设定的速度才不会被
+        ' 下一步的重力覆盖。放在重力之前时，一个写入关节速度的伺服每个子步都会被
+        ' 它刚摆好的连杆的重力改回来（实测髋俯仰在十步内从 0.02 漂到 0.78 rad，
+        ' 增益提到 300 也一样，因为漂移与增益无关）
         If HooksAfterGravity Then
             For Each h In Hooks
                 Call h.BeforeSubstep(dt)
             Next
         End If
-
-        ' 3. 由力积分速度
-        For Each b In Bodies
-            Call b.IntegrateVelocity(dt)
-        Next
 
         ' 4. 宽相位
         Dim pairs = BroadPhase3D.ComputePairs(Bodies)
@@ -372,7 +387,12 @@ Public Class PhysicsWorld3D
         For Each pr In pairs
             Dim m = NarrowPhase3D.Collide(pr.A, pr.B)
 
-            If m IsNot Nothing AndAlso m.HasContacts AndAlso m.Penetration > 0 Then
+            ' a manifold whose points are all inside the margin (no penetration yet) is
+            ' still worth keeping when it comes from a plane: the solver gives those
+            ' points no force, but the patch they describe is what lets the body land on
+            ' the whole sole instead of on the single edge that happens to be the deepest
+            If m IsNot Nothing AndAlso m.HasContacts AndAlso
+               (m.Penetration > 0 OrElse (m.AllowMarginOnly AndAlso MarginOnlyContacts)) Then
                 ' 运动物体会撞醒与之接触的休眠物体：必须在热启动之前唤醒，
                 ' 否则继承下来的冲量施加到一个不参与积分的物体上没有意义
                 If pr.A.IsSleeping AndAlso Not pr.B.IsSleeping Then Call MaybeWake(pr.A, pr.B)
