@@ -150,6 +150,21 @@ Namespace Joints3D
             End Get
         End Property
 
+        ' ---- diagnostics of the last solve, read by the assembly bench ----
+
+        ''' <summary>the position bias of the first axis of the last solve</summary>
+        Public Shared LastBias As Double
+        ''' <summary>the diagonal of the effective mass matrix of the last solve</summary>
+        Public Shared LastK00 As Double
+        Public Shared LastK11 As Double
+        Public Shared LastK22 As Double
+        ''' <summary>the determinant of the effective mass matrix of the last solve</summary>
+        Public Shared LastDet As Double
+        ''' <summary>the multipliers that the last solve produced</summary>
+        Public Shared LastLambda0 As Double
+        Public Shared LastLambda1 As Double
+        Public Shared LastLambda2 As Double
+
         Public Sub SolveVelocity(dt As Double) Implements IConstraint3D.SolveVelocity
             Dim rA As Vector3 = A.Orientation.Rotate(anchorA)
             Dim rB As Vector3 = B.Orientation.Rotate(anchorB)
@@ -186,13 +201,28 @@ Namespace Joints3D
             Next
 
             Dim rhs(2) As Double
+            Dim biases(2) As Double
 
             For i As Integer = 0 To 2
                 Dim bias As Double = ClampBias(Baumgarte / dt * Vector3Math.Dot(err, axes(i)))
+                biases(i) = bias
                 rhs(i) = -(Vector3Math.Dot(v, axes(i)) + bias)
             Next
 
             Dim lambda As Double() = Solve3x3(k, rhs)
+
+            ' diagnostics for the assembly bench of the duck: the anchors of a six
+            ' gram link separate by 92 mm inside the first sub step, and these four
+            ' numbers tell whether the bias, the effective mass or the linear solve
+            ' is the one that is out of scale
+            LastBias = biases(0)
+            LastK00 = k(0, 0)
+            LastK11 = k(1, 1)
+            LastK22 = k(2, 2)
+            LastDet = Determinant3(k)
+            LastLambda0 = If(lambda Is Nothing, Double.NaN, lambda(0))
+            LastLambda1 = If(lambda Is Nothing, Double.NaN, lambda(1))
+            LastLambda2 = If(lambda Is Nothing, Double.NaN, lambda(2))
 
             If lambda Is Nothing Then Return
 
@@ -208,7 +238,15 @@ Namespace Joints3D
             End If
         End Sub
 
-        ''' <summary>3×3 线性方程组（克拉默法则），奇异时返回 Nothing。</summary>
+        ''' <summary>
+        ''' 3×3 线性方程组（克拉默法则），奇异时返回 Nothing。
+        ''' </summary>
+        ''' <remarks>
+        ''' 试过换成部分选主元的高斯－约当消元：方程本身良态（对角 234~493，
+        ''' 行列式 3.1e7），两种解法给出的乘子都是 <c>1e-12</c> 量级，而锚点仍然
+        ''' 以 4 m/s 分离，说明放大不在线性求解里。换过去反而让一条物理断言变差，
+        ''' 所以保留原实现。
+        ''' </remarks>
         Private Shared Function Solve3x3(a As Double(,), b As Double()) As Double()
             Dim det As Double = Determinant3(a)
 

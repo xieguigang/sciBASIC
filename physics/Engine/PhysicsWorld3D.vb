@@ -128,6 +128,19 @@ Public Class PhysicsWorld3D
     ''' </summary>
     Public Property WarmStarting As Boolean = True
 
+    ''' <summary>
+    ''' 丢弃上一子步的接触流形缓存。
+    ''' </summary>
+    ''' <remarks>
+    ''' 热启动会按刚体对和接触点位置把上一帧的累积冲量重新施加到速度上。谁把
+    ''' 刚体瞬移了（复位、重新生成、切换形态），谁就必须把它清掉：否则一落地的
+    ''' 机器人被"传送"回起始位姿时，上一帧那份支撑冲量会原样作用在新位置上，
+    ''' 连重力都还没参与，整机就凭空获得速度和角动量飞出去。
+    ''' </remarks>
+    Public Sub ClearContactCache()
+        contactCache.Clear()
+    End Sub
+
     ''' <summary>热启动时匹配上一帧接触点的位置容差（米）。</summary>
     Public Property WarmStartRadius As Double = 0.08
 
