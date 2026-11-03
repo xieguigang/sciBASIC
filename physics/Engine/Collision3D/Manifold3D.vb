@@ -100,6 +100,20 @@ Namespace Collision3D
         Friend restitutionBias As Double
 
         ''' <summary>
+        ''' 软约束的软化项（1/秒²量纲的等效质量补偿）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 刚性接触把"位置误差"直接换算成目标分离速度，穿透 1 cm 就能要求 3 m/s
+        ''' 的弹开速度；对一只 737 g、单节连杆 6 g 的机器人，这个冲量是支撑冲量的
+        ''' 好几倍，接触一发生就把整机弹飞。软化之后约束按"接触刚度 + 接触阻尼"
+        ''' 求解（mujoco 的 solref/solimp、box2d 的 soft constraint），位置误差只以
+        ''' 有限的力被慢慢推回，行程中的能量不再凭空增加。
+        ''' </remarks>
+        Friend gamma As Double
+        ''' <summary>软化之后用于求解的有效质量（已含 <see cref="gamma"/>）。</summary>
+        Friend softMass As Double
+
+        ''' <summary>
         ''' Baumgarte 位置修正速度的上限（m/s）。
         ''' 子步很小时 <c>β/dt·穿透</c> 会给出极大的弹开速度，必须夹住。
         ''' </summary>
@@ -160,14 +174,38 @@ Namespace Collision3D
         ''' <param name="dt">子步长，用于 Baumgarte 系数换算。</param>
         ''' <param name="baumgarte">位置修正强度（0.2 左右）。</param>
         ''' <param name="slop">允许的穿透容差，避免抖动。</param>
+        ''' <param name="contactTimeConstant">
+        ''' 软接触的时间常数（秒），mujoco 的 ``solref`` 第一个参数。大于 0 时走软
+        ''' 约束分支，0 表示保持原来的刚性 Baumgarte 行为（向后兼容）。
+        ''' </param>
+        ''' <param name="contactDampingRatio">
+        ''' 软接触的阻尼比，mujoco 的 ``solref`` 第二个参数，1 = 临界阻尼。
+        ''' </param>
         Public Sub InitSolver(Optional dt As Double = 1.0 / 60.0,
                               Optional baumgarte As Double = 0.2,
-                              Optional slop As Double = 0.01)
+                              Optional slop As Double = 0.01,
+                              Optional contactTimeConstant As Double = 0.0,
+                              Optional contactDampingRatio As Double = 1.0)
             Dim n As Vector3 = Normal
             Dim invIA As Matrix3x3 = A.InvInertiaWorld()
             Dim invIB As Matrix3x3 = B.InvInertiaWorld()
             Dim t1 As Vector3 = Vector3Math.OrthogonalOf(n)
             Dim t2 As Vector3 = Vector3Math.Cross(n, t1)
+
+            ' 软约束的刚度与阻尼，只算一次
+            Dim soft As Boolean = contactTimeConstant > 0 AndAlso dt > 0
+            Dim omega As Double = 0
+            Dim stiffness As Double = 0
+            Dim damping As Double = 0
+
+            If soft Then
+                Dim zeta As Double = std.Max(0.01, contactDampingRatio)
+
+                ' solref 的时间常数就是临界阻尼下的固有周期尺度：ω = 1 / tc
+                omega = 1.0 / std.Max(contactTimeConstant * zeta, 1.0E-06)
+                stiffness = omega * omega
+                damping = 2.0 * zeta * omega
+            End If
 
             For Each c In Contacts
                 c.rA = c.Position - A.Position
@@ -179,8 +217,20 @@ Namespace Collision3D
                 c.tangentMass1 = 1.0 / EffectiveMass(A, B, invIA, invIB, c.rA, c.rB, t1)
                 c.tangentMass2 = 1.0 / EffectiveMass(A, B, invIA, invIB, c.rA, c.rB, t2)
 
-                ' 位置修正速度同时受"最大修正速度"限制，避免深穿透时产生爆炸式冲量
-                c.bias = std.Min(ContactPoint3D.MaxBiasSpeed, baumgarte / dt * std.Max(0.0, c.Penetration - slop))
+                Dim excess As Double = std.Max(0.0, c.Penetration - slop)
+
+                If soft Then
+                    ' box2d 的软约束：把 C 换算成"有限力"的偏置，而不是目标速度
+                    c.gamma = 1.0 / (dt * (damping + dt * stiffness))
+                    c.softMass = 1.0 / (1.0 / c.normalMass + c.gamma)
+                    c.bias = excess * dt * stiffness * c.gamma
+                Else
+                    c.gamma = 0.0
+                    c.softMass = c.normalMass
+
+                    ' 位置修正速度同时受"最大修正速度"限制，避免深穿透时产生爆炸式冲量
+                    c.bias = std.Min(ContactPoint3D.MaxBiasSpeed, baumgarte / dt * excess)
+                End If
 
                 ' 恢复只在接近速度足够大时才生效，避免静止物体的持续抖动
                 Dim rv As Vector3 = RelativeVelocity(c.rA, c.rB)
@@ -188,7 +238,7 @@ Namespace Collision3D
 
                 c.restitutionBias = If(vn < -1.0, -Restitution * vn, 0.0)
 
-                ' 冲量累积在新的一帧开始时清零：本库不做跨帧热启动
+                ' 冲量累积在新的一帧开始时清零，随后由热启动按接触点匹配回填
                 c.NormalImpulse = 0.0
                 c.TangentImpulse1 = 0.0
                 c.TangentImpulse2 = 0.0

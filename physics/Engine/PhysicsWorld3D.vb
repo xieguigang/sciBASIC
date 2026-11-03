@@ -107,6 +107,22 @@ Public Class PhysicsWorld3D
     Public Property Slop As Double = 0.01
 
     ''' <summary>
+    ''' 软接触的时间常数（秒），等价于 mujoco ``solref`` 的第一个参数。
+    ''' </summary>
+    ''' <remarks>
+    ''' 大于 0 时接触按"刚度 + 阻尼"求解（见 <see cref="Manifold3D.InitSolver(Double, Double, Double, Double, Double)"/>），
+    ''' 位置误差只以有限的力被推回；为 0 时退回原来的刚性 Baumgarte 行为。
+    ''' 小尺度机器人（单节 6 g、惯量 1e-6 量级）只有软接触才能站稳：刚性接触把
+    ''' 1 cm 的穿透换算成 3 m/s 的弹开速度，接触一发生就把整机弹飞。
+    ''' </remarks>
+    Public Property ContactTimeConstant As Double = 0.0
+
+    ''' <summary>
+    ''' 软接触的阻尼比（``solref`` 的第二个参数），1 = 临界阻尼。
+    ''' </summary>
+    Public Property ContactDampingRatio As Double = 1.0
+
+    ''' <summary>
     ''' 跨帧热启动：把上一子步同一接触点上累积的法向/摩擦冲量继承下来并立即施加。
     ''' 堆叠与静止接触的收敛速度完全依赖它，关闭后物体会持续抖动。
     ''' </summary>
@@ -305,7 +321,7 @@ Public Class PhysicsWorld3D
                 If pr.A.IsSleeping AndAlso Not pr.B.IsSleeping Then Call MaybeWake(pr.A, pr.B)
                 If pr.B.IsSleeping AndAlso Not pr.A.IsSleeping Then Call MaybeWake(pr.B, pr.A)
 
-                Call m.InitSolver(dt, Baumgarte, Slop)
+                Call m.InitSolver(dt, Baumgarte, Slop, ContactTimeConstant, ContactDampingRatio)
 
                 If WarmStarting Then
                     Call ApplyWarmStart(m)
