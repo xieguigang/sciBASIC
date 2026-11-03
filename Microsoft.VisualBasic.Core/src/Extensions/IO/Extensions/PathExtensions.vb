@@ -184,7 +184,7 @@ Public Module PathExtensions
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ExtensionSuffix(path As String) As String
+    Public Function ExtensionSuffix(path As String, Optional dotPrefix As Boolean = False) As String
         If path.StringEmpty Then
             Return ""
         Else
@@ -193,6 +193,8 @@ Public Module PathExtensions
 
             If fileName = suffix Then
                 Return ""
+            ElseIf dotPrefix Then
+                Return "." & suffix.ToLower
             Else
                 Return suffix.ToLower
             End If
