@@ -239,6 +239,121 @@ Namespace TSK
             Return fwd
         End Function
 
+        ''' <summary>
+        ''' 单样本、单输出、<b>散射规则库</b>的前向（零分配）：归一化触发强度写入
+        ''' <paramref name="scratch"/>，直接返回网络输出。
+        ''' </summary>
+        ''' <param name="x">一行特征（长度不得小于 <see cref="TskNetwork.InputCount"/>，多余的列会被忽略）</param>
+        ''' <param name="scratch">
+        ''' 调用方持有的规则权重缓冲（长度不得小于规则数）；由调用方保证线程独占
+        ''' </param>
+        ''' <returns>第一个输出的值；该样本的规则全部失活时返回 <c>0</c></returns>
+        ''' <remarks>
+        ''' <para>
+        ''' <see cref="ForwardCore"/> 为「逐基因稳态迭代」服务时，绝大部分中间量是纯浪费：
+        ''' <c>X</c> / <c>Mu</c> / <c>LogMu</c> / <c>Pt</c> / <c>Prod</c> / <c>F</c> 都只是把
+        ''' 一个标量结论绕一圈算出来，而 <c>ClearForwardState</c> 每次还要清四个数组。
+        ''' 这里直接在寄存器/局部变量上完成同一套五层计算。
+        ''' </para>
+        ''' <para>
+        ''' <b>数值等价性是硬约束</b>：本方法的累加顺序与 <see cref="ForwardCore"/> 逐项对齐——
+        ''' 前件在 log 域按 <c>active(r)</c> 的顺序累加，结论 <c>f = Σ_k x_k·θ + θ_n</c> 按 <c>k</c> 升序，
+        ''' 第 5 层按规则升序累加，并且同样复刻 <c>MatrixOps.Multiply</c> 中
+        ''' 「<c>x_k = 0</c> 时跳过该项」的行为。因此结果与批量前向<b>逐位相同</b>，
+        ''' 不依赖任何容差。
+        ''' </para>
+        ''' <para>
+        ''' 网格划分不在此列：网格前件依赖每输入的隶属度表，语义不同，调用方应回落到
+        ''' <see cref="Forward(Double()(), Integer, Integer, TskForwardWorkspace)"/>。
+        ''' </para>
+        ''' </remarks>
+        Public Function ForwardScalar(x As Double(), scratch As Double()) As Double
+            If x Is Nothing Then
+                Throw New ArgumentNullException(NameOf(x))
+            End If
+
+            Dim n As Integer = _net.Inputs.Length
+            Dim rCount As Integer = _net.Rules.RuleCount
+
+            If x.Length < n Then
+                Throw New ArgumentException(
+                    $"the sample has {x.Length} features but the network expects at least {n}", NameOf(x))
+            End If
+            If scratch Is Nothing OrElse scratch.Length < rCount Then
+                Throw New ArgumentException($"the scratch buffer must have at least {rCount} elements", NameOf(scratch))
+            End If
+            If Not _net.Rules.IsScatter Then
+                Throw New InvalidOperationException(
+                    "ForwardScalar only supports a scatter rule base; use Forward() for a grid rule base")
+            End If
+
+            Dim rules As FuzzyRuleBase = _net.Rules
+            Dim active As Integer()() = rules.ActiveInputTable()
+            Dim centers As Double(,) = rules.RuleCenters
+            Dim sigmas As Double(,) = rules.RuleSigmas
+
+            ' ---- 第 1~3 层：模糊化 + 乘积 T-范数 + 归一化（与 ForwardScatter 同构）----
+            Dim total As Double = 0.0
+
+            For r As Integer = 0 To rCount - 1
+                Dim indices As Integer() = active(r)
+                Dim logW As Double = 0.0
+
+                For k As Integer = 0 To indices.Length - 1
+                    Dim i As Integer = indices(k)
+                    Dim sigma As Double = sigmas(r, i)
+                    Dim z As Double = (x(i) - centers(r, i)) / sigma
+
+                    logW += -0.5 * z * z
+                Next
+
+                Dim wv As Double
+
+                If logW < LogUnderflow Then
+                    wv = 0.0
+                Else
+                    wv = std.Exp(logW)
+                End If
+
+                scratch(r) = wv
+                total += wv
+            Next
+
+            ' 与 ForwardCore 的 valid(t) 判定一致：NaN 也视为失活（此时 Z 保持 0）
+            If Not (total > MinimumActivationSum) Then
+                Return 0.0
+            End If
+
+            For r As Integer = 0 To rCount - 1
+                scratch(r) = scratch(r) / total
+            Next
+
+            ' ---- 第 4、5 层：一阶 Sugeno 结论 + 加权求和 ----
+            Dim theta As Double(,) = _net.Theta
+            Dim acc As Double = 0.0
+
+            For r As Integer = 0 To rCount - 1
+                Dim offset As Integer = r * (n + 1)
+                Dim f As Double = 0.0
+
+                For k As Integer = 0 To n - 1
+                    Dim xk As Double = x(k)
+
+                    ' 复刻 MatrixOps.Multiply 的 "aik = 0 时整项跳过"（避免 0 * Inf -> NaN 的差异）
+                    If xk = 0.0 Then
+                        Continue For
+                    End If
+
+                    f += xk * theta(offset + k, 0)
+                Next
+
+                f += theta(offset + n, 0)
+                acc += scratch(r) * f
+            Next
+
+            Return acc
+        End Function
+
 #End Region
 
 #Region "设计矩阵与反向"

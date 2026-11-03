@@ -58,6 +58,17 @@ Namespace TSK
         ''' <summary>单样本推理用的 1 元素行批次容器（线程局部，避免每次调用新建数组）。</summary>
         Private _rowBatch As ThreadLocal(Of Double()())
 
+        ''' <summary>
+        ''' 单样本标量推理的规则权重缓冲（线程局部，长度 = 规则数）。
+        ''' </summary>
+        ''' <remarks>
+        ''' <see cref="PredictScalar"/> 走 <see cref="TskLayers.ForwardScalar"/> 时只借用一块
+        ''' 规则权重缓冲，完全不碰 <see cref="TskForwardWorkspace"/>——
+        ''' 因此不会与 <see cref="PredictRow"/> / <see cref="GetRuleActivations"/> 共用的
+        ''' 那份工作区产生「残留状态」耦合。
+        ''' </remarks>
+        Private _scalarScratch As ThreadLocal(Of Double())
+
         ''' <summary>按结构创建模型（结论参数初始化为 0，即输出恒为 0）。</summary>
         ''' <param name="inputs">输入变量（顺序即特征列顺序）</param>
         ''' <param name="rules">规则库</param>
@@ -365,12 +376,23 @@ Namespace TSK
         ''' <param name="x">一行特征（长度不得小于 <see cref="InputCount"/>）</param>
         ''' <returns>第一个输出的值</returns>
         ''' <remarks>
+        ''' <para>
         ''' 逐基因稳态迭代（<c>FuzzyGeneNetwork.SteadyState</c>）是这条路径的重度使用者：
         ''' 几万基因 × 上百步迭代，每次调用若还要分配结果数组就会产生 GB 级垃圾。
+        ''' </para>
+        ''' <para>
+        ''' 散射规则库走 <see cref="TskLayers.ForwardScalar"/> 的快路径（不物化任何中间矩阵）；
+        ''' 网格规则库的前件依赖每输入的隶属度表，仍然回落到通用前向。
+        ''' 两条路径的输出逐位相同，调用方无需区分。
+        ''' </para>
         ''' </remarks>
         Public Function PredictScalar(x As Double()) As Double
             If x Is Nothing Then
                 Throw New ArgumentNullException(NameOf(x))
+            End If
+
+            If Rules.IsScatter Then
+                Return _layers.ForwardScalar(x, ScalarScratch())
             End If
 
             Dim fwd As TskInferenceTrace = _layers.Forward(RowBatch(x), 0, 1, RowWorkspace())
@@ -438,6 +460,34 @@ Namespace TSK
             End If
 
             Return _rowWorkspace.Value
+        End Function
+
+        ''' <summary>
+        ''' 取当前线程的规则权重缓冲（延迟创建；每线程一份，长度 = 规则数）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 规则数在推理期不会变化，所以这里只在首次调用与「缓冲比规则数短」时分配；
+        ''' 后者仅用于防御规则库被就地重建的极端情况。
+        ''' </remarks>
+        Private Function ScalarScratch() As Double()
+            If _scalarScratch Is Nothing Then
+                Dim count As Integer = Rules.RuleCount
+
+                SyncLock Me
+                    If _scalarScratch Is Nothing Then
+                        _scalarScratch = New ThreadLocal(Of Double())(Function() New Double(count - 1) {})
+                    End If
+                End SyncLock
+            End If
+
+            Dim scratch As Double() = _scalarScratch.Value
+
+            If scratch.Length < Rules.RuleCount Then
+                scratch = New Double(Rules.RuleCount - 1) {}
+                _scalarScratch.Value = scratch
+            End If
+
+            Return scratch
         End Function
 
         ''' <summary>把单行包装成 1 元素批次（线程局部容器，避免每次调用新建数组）。</summary>
