@@ -135,6 +135,18 @@ Namespace Collision3D
 
         ''' <summary>单个流形最多保留的接触点数（多点流形才撑得住面接触）。</summary>
         Public Const MaxContacts As Integer = 4
+
+        ''' <summary>
+        ''' 离平面多近的顶点也算作接触点（米）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 平面接触原来只收集"已经穿进平面"的顶点。脚掌是一块平底的凸壳，静止时只有
+        ''' 零点几毫米的那几个角点穿过平面，于是接触多边形退化成 17 × 18 mm 的三角形，
+        ''' 并且每个子步在不同顶点之间跳变——机器人不可能在这样的支撑面上站住（实测
+        ''' 重心投影频繁落在支撑范围之外，0.4 s 内倾覆 109°）。把接近共面的顶点也收进
+        ''' 流形，脚底就会稳定地给出同样的四个角点。
+        ''' </remarks>
+        Public Const PlaneContactTolerance As Double = 0.0015
         ''' <summary>边×边候选轴数量上限，防止高分段圆柱/圆锥把 SAT 变成 O(n²) 灾难。</summary>
         Private Const MaxEdgePairs As Integer = 600
 
@@ -465,9 +477,12 @@ Namespace Collision3D
             For Each v As Vector3 In verts
                 Dim d As Double = pl.SignedDistance(v)
 
-                If d < 0.0 Then
+                ' a vertex that is about to touch counts as a contact as well, see
+                ' PlaneContactTolerance: otherwise a flat sole only ever reports the
+                ' one or two corners that happen to be inside the plane
+                If d < PlaneContactTolerance Then
                     pts.Add(v)
-                    pens.Add(-d)
+                    pens.Add(std.Max(-d, 0.0))
                 End If
             Next
 
@@ -495,9 +510,12 @@ Namespace Collision3D
             For Each v As Vector3 In verts
                 Dim d As Double = pl.SignedDistance(v)
 
-                If d < 0.0 Then
+                ' a vertex that is about to touch counts as a contact as well, see
+                ' PlaneContactTolerance: otherwise a flat sole only ever reports the
+                ' one or two corners that happen to be inside the plane
+                If d < PlaneContactTolerance Then
                     pts.Add(v)
-                    pens.Add(-d)
+                    pens.Add(std.Max(-d, 0.0))
                 End If
             Next
 
