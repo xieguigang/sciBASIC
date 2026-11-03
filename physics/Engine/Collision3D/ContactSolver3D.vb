@@ -117,7 +117,13 @@ Namespace Collision3D
 
             Dim t1 As Double = c.TangentImpulse1 - vt1 * c.tangentMass1
             Dim t2 As Double = c.TangentImpulse2 - vt2 * c.tangentMass2
-            Dim length As Double = std.Sqrt(t1 * t1 + t2 * t2)
+
+            ' the cone is an ellipse when impratio <> 1: the second tangent is
+            ' scaled before the length is measured, exactly like the reference solver
+            ' scales the cone dimension of the constraint
+            Dim ratio As Double = If(m.Impratio > 0, m.Impratio, 1.0)
+            Dim scaled As Double = t2 / ratio
+            Dim length As Double = std.Sqrt(t1 * t1 + scaled * scaled)
 
             If length > maxFriction Then
                 Dim scale As Double = maxFriction / length

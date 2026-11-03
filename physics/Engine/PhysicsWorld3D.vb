@@ -144,6 +144,37 @@ Public Class PhysicsWorld3D
     ''' <summary>热启动时匹配上一帧接触点的位置容差（米）。</summary>
     Public Property WarmStartRadius As Double = 0.08
 
+    ''' <summary>
+    ''' run the sub step hooks after the gravity and the force fields instead of
+    ''' before them
+    ''' </summary>
+    ''' <remarks>
+    ''' The reference solver evaluates the actuators in the same acceleration
+    ''' equation as the bias force, so a controller that writes a velocity has to see
+    ''' the gravity of that sub step already applied. Off by default: the old order
+    ''' is what every existing scene of this library was tuned on.
+    ''' </remarks>
+    Public Property HooksAfterGravity As Boolean = False
+
+    ''' <summary>
+    ''' stop the constraint iterations once the largest velocity change of a body
+    ''' between two rounds is below this value
+    ''' </summary>
+    ''' <remarks>
+    ''' 0 keeps the old behaviour of a fixed number of iterations. The reference solver
+    ''' reports the state of every constraint after each round; this is the cheap
+    ''' equivalent: a fixed point iteration that no longer changes any velocity has
+    ''' converged, and the number of rounds it needed is the number that says whether
+    ''' the scene is well conditioned.
+    ''' </remarks>
+    Public Property SolverTolerance As Double = 0.0
+
+    ''' <summary>the rounds the last sub step actually used</summary>
+    Public Property SolverIterations As Integer = 0
+
+    ''' <summary>the residual of the last round of the last sub step</summary>
+    Public Property LastResidual As Double = 0
+
     ''' <summary>是否允许刚体休眠（低速持续一段时间后冻结，既防抖又省 CPU）。</summary>
     Public Property AllowSleep As Boolean = True
 
@@ -301,9 +332,16 @@ Public Class PhysicsWorld3D
         Next
 
         ' 1.5 子步钩子：外部控制器补充持续力
-        For Each h In Hooks
-            Call h.BeforeSubstep(dt)
-        Next
+        '
+        ' 参考实现里执行器写在 qfrc_actuator 上，与重力一起进入同一个加速度方程
+        ' （engine_forward.c: mj_fwdActuation 在 mj_fwdAcceleration 之前）。钩子放在
+        ' 重力之前时，控制器对速度的修正会被随后的重力再改一次，顺序与参考不一致；
+        ' HooksAfterGravity 把钩子移到重力之后，默认关闭以保持旧行为。
+        If Not HooksAfterGravity Then
+            For Each h In Hooks
+                Call h.BeforeSubstep(dt)
+            Next
+        End If
 
         ' 2. 全局重力 + 力场
         For Each b In Bodies
@@ -313,6 +351,12 @@ Public Class PhysicsWorld3D
         For Each ff In ForceFields
             Call ff.Apply(Bodies)
         Next
+
+        If HooksAfterGravity Then
+            For Each h In Hooks
+                Call h.BeforeSubstep(dt)
+            Next
+        End If
 
         ' 3. 由力积分速度
         For Each b In Bodies
@@ -356,6 +400,21 @@ Public Class PhysicsWorld3D
         End If
 
         ' 6. 速度约束求解（接触 + 关节），多次迭代
+        '
+        ' 参考实现把约束分轮求解并检查残差（mj_projectConstraint 之后的
+        ' mj_constraintUpdate 给出 efc_state），而这里原来是固定轮数、看不到收敛。
+        ' SolverTolerance > 0 时按"相邻两轮之间刚体速度的最大变化"早停，
+        ' LastResidual / SolverIterations 把收敛情况暴露给上层诊断；默认 0 保持旧行为。
+        Dim watched As Double() = Nothing
+
+        If SolverTolerance > 0 Then
+            watched = New Double(Bodies.Count * 6 - 1) {}
+            Call CaptureSpeeds(watched)
+        End If
+
+        SolverIterations = 0
+        LastResidual = 0
+
         For i As Integer = 1 To Iterations
             For Each m In Contacts
                 Call ContactSolver3D.Solve(m, dt)
@@ -363,6 +422,19 @@ Public Class PhysicsWorld3D
             For Each j In Constraints
                 Call j.SolveVelocity(dt)
             Next
+
+            SolverIterations = i
+
+            If watched IsNot Nothing Then
+                Dim residual As Double = SpeedChange(watched)
+
+                LastResidual = residual
+                Call CaptureSpeeds(watched)
+
+                If residual < SolverTolerance Then
+                    Exit For
+                End If
+            End If
         Next
 
         ' 7. 由速度积分位置
@@ -380,6 +452,43 @@ Public Class PhysicsWorld3D
             Call b.ClearForces()
         Next
     End Sub
+
+    ''' <summary>
+    ''' copy the velocities of every body into a flat buffer
+    ''' </summary>
+    Private Function CaptureSpeeds(buffer As Double()) As Integer
+        Dim index As Integer = 0
+
+        For Each b In Bodies
+            buffer(index) = b.Velocity.x
+            buffer(index + 1) = b.Velocity.y
+            buffer(index + 2) = b.Velocity.z
+            buffer(index + 3) = b.AngularVelocity.x
+            buffer(index + 4) = b.AngularVelocity.y
+            buffer(index + 5) = b.AngularVelocity.z
+            index += 6
+        Next
+
+        Return index
+    End Function
+
+    ''' <summary>the largest change of any velocity component since the snapshot</summary>
+    Private Function SpeedChange(buffer As Double()) As Double
+        Dim index As Integer = 0
+        Dim worst As Double = 0
+
+        For Each b In Bodies
+            worst = System.Math.Max(worst, System.Math.Abs(b.Velocity.x - buffer(index)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.Velocity.y - buffer(index + 1)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.Velocity.z - buffer(index + 2)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.AngularVelocity.x - buffer(index + 3)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.AngularVelocity.y - buffer(index + 4)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.AngularVelocity.z - buffer(index + 5)))
+            index += 6
+        Next
+
+        Return worst
+    End Function
 
     ' ---------------- 热启动与休眠 ----------------
 

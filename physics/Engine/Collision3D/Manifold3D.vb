@@ -148,6 +148,16 @@ Namespace Collision3D
         ''' <summary>摩擦系数（由双方材质组合而来）。</summary>
         Public Friction As Double = 0.4
 
+        ''' <summary>
+        ''' 椭圆摩擦锥的各向异性比（mujoco 的 ``impratio``）
+        ''' </summary>
+        ''' <remarks>
+        ''' 1 表示圆形锥（与两轴独立裁剪等价）；大于 1 时第二条切线方向的摩擦上限
+        ''' 按比例收紧，这与 mujoco 在 ``mj_makeConstraint`` 里对锥维度做
+        ''' <c>R[i+1] = R[i]/impratio</c> 的处理是同一个几何。
+        ''' </remarks>
+        Public Property Impratio As Double = 1.0
+
         ''' <summary>是否存在有效接触。</summary>
         Public ReadOnly Property HasContacts As Boolean
             Get

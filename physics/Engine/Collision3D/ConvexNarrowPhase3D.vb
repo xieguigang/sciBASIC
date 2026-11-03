@@ -134,6 +134,14 @@ Namespace Collision3D
     Public Module ConvexNarrowPhase3D
 
         ''' <summary>单个流形最多保留的接触点数（多点流形才撑得住面接触）。</summary>
+        ''' <remarks>
+        ''' The reference solver keeps 8 to 12 points per manifold. Raising it here was
+        ''' measured and it trades one phase for another: with eight points the open
+        ''' loop stand improves (57 -> 80 of 200) but the policy phases get worse
+        ''' (250 -> 153 standing, 87 -> 40 walking), because a sequential impulse solver
+        ''' with a fixed iteration count converges slower the more rows it has. The
+        ''' raise belongs together with the convergence criterion, not before it.
+        ''' </remarks>
         Public Const MaxContacts As Integer = 4
 
         ''' <summary>
