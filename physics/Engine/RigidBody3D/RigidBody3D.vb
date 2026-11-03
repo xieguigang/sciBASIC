@@ -98,7 +98,28 @@ Public Class RigidBody3D
     Public Mass As Double = 1.0
 
     ''' <summary>局部惯性张量（相对质心）。</summary>
-    Public InertiaLocal As Matrix3x3 = Matrix3x3.Identity
+    ''' <remarks>
+    ''' 这是一个属性而不是公开字段，赋值时必须同时让逆矩阵的两级缓存失效。原来它是
+    ''' 字段：`InvInertiaLocal`/`InvInertiaWorld` 在第一次使用时把 `InertiaLocal`
+    ''' 求逆并缓存，之后谁再改 `InertiaLocal`（例如把转子惯量 armature 叠加进去）
+    ''' 缓存的逆矩阵都不会更新，整台机器人仍然按"没有电机"的惯量运动。
+    '''
+    ''' 实测：鸭子髋关节的轴向惯量写成 1.82e-3（含 armature 1.8e-3），而
+    ''' `InvInertiaWorld().m33` 返回 1.2e5，即连杆自身的 8.3e-6 的逆，比正确值
+    ''' （549）大 220 倍。伺服算出的角冲量因此小 220 倍，腿一压就折，鸭子永远站不住。
+    ''' </remarks>
+    Public Property InertiaLocal As Matrix3x3
+        Get
+            Return m_inertiaLocal
+        End Get
+        Set(value As Matrix3x3)
+            m_inertiaLocal = value
+            cacheInvInertiaValid = False
+            cacheInvLocalValid = False
+        End Set
+    End Property
+
+    Private m_inertiaLocal As Matrix3x3 = Matrix3x3.Identity
 
     ''' <summary>线性阻尼（0 = 无）。</summary>
     Public LinearDamping As Double = 0.0
