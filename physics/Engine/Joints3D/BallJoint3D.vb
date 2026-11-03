@@ -243,8 +243,7 @@ Namespace Joints3D
         ''' </summary>
         ''' <remarks>
         ''' 试过换成部分选主元的高斯－约当消元：方程本身良态（对角 234~493，
-        ''' 行列式 3.1e7），两种解法给出的乘子都是 <c>1e-12</c> 量级，而锚点仍然
-        ''' 以 4 m/s 分离，说明放大不在线性求解里。换过去反而让一条物理断言变差，
+        ''' 行列式 3.1e7），两种解法给出的乘子都是 <c>1e-12</c> 量级，结果一致，
         ''' 所以保留原实现。
         ''' </remarks>
         Private Shared Function Solve3x3(a As Double(,), b As Double()) As Double()
