@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
