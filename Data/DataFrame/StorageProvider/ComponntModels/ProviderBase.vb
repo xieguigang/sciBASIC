@@ -1,67 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::230ec7e3a4035d91642e1222aad26d67, Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 156
-    '    Code Lines: 74 (47.44%)
-    ' Comment Lines: 62 (39.74%)
-    '    - Xml Docs: 98.39%
-    ' 
-    '   Blank Lines: 20 (12.82%)
-    '     File Size: 6.13 KB
+' Summaries:
 
 
-    '     Class StorageProvider
-    ' 
-    '         Properties: BindProperty, CanReadDataFromObject, CanWriteDataToObject, IsMetaField, LoadMethod
-    '                     Ordinal
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: GetDescription, GetValue, ToString
-    ' 
-    '         Sub: SetValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 156
+'    Code Lines: 74 (47.44%)
+' Comment Lines: 62 (39.74%)
+'    - Xml Docs: 98.39%
+' 
+'   Blank Lines: 20 (12.82%)
+'     File Size: 6.13 KB
+
+
+'     Class StorageProvider
+' 
+'         Properties: BindProperty, CanReadDataFromObject, CanWriteDataToObject, IsMetaField, LoadMethod
+'                     Ordinal
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: GetDescription, GetValue, ToString
+' 
+'         Sub: SetValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Scripting
 
@@ -121,7 +123,7 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
-        Public MustOverride ReadOnly Property ProviderId As Reflection.ProviderIds
+        Public MustOverride ReadOnly Property ProviderId As ProviderIds
 
         ''' <summary>
         ''' 解析字符串为.NET对象的方法
@@ -132,7 +134,7 @@ Namespace StorageProvider.ComponentModels
         Public ReadOnly Property IsMetaField As Boolean
             Get
                 Dim hasAttribute As Boolean = Not BindProperty _
-                    .GetCustomAttributes(GetType(Reflection.MetaAttribute), inherit:=True) _
+                    .GetCustomAttributes(GetType(SchemaMaps.MetaAttribute), inherit:=True) _
                     .IsNullOrEmpty
 
                 Return hasAttribute OrElse Not BindProperty.PropertyType.GetMetaAttribute Is Nothing
