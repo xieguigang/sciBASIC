@@ -361,7 +361,9 @@ Namespace Kernel.BayesianBeliefNetwork
                 Dim owner As Integer = -1
 
                 For c As Integer = 0 To _cliques.Count - 1
-                    If vars.All(Function(v) _cliques(c).VariableSet.Contains(v)) Then
+                    Dim offset As Integer = c
+
+                    If vars.All(Function(v) _cliques(offset).VariableSet.Contains(v)) Then
                         owner = c
                         Exit For
                     End If
@@ -373,7 +375,9 @@ Namespace Kernel.BayesianBeliefNetwork
 
         Private Function FindCliqueContaining(variables As Integer()) As Integer
             For c As Integer = 0 To _cliques.Count - 1
-                If variables.All(Function(v) _cliques(c).VariableSet.Contains(v)) Then
+                Dim offset As Integer = c
+
+                If variables.All(Function(v) _cliques(offset).VariableSet.Contains(v)) Then
                     Return c
                 End If
             Next

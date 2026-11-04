@@ -272,7 +272,8 @@ Namespace Kernel.BayesianBeliefNetwork
 
                     ' 删边
                     For k As Integer = 0 To parents(i).Length - 1
-                        Dim candidate As Integer() = parents(i).Where(Function(v, idx) idx <> k).ToArray()
+                        Dim offset As Integer = k
+                        Dim candidate As Integer() = parents(i).Where(Function(v, idx) idx <> offset).ToArray()
                         Dim delta As Double = LocalScore(i, candidate) - LocalScore(i, parents(i))
 
                         If current + delta > bestScore Then
