@@ -84,6 +84,9 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
         Public ReadOnly Property [alias] As String()
 
+        Sub New()
+        End Sub
+
         Sub New(name As String, ParamArray [alias] As String())
             Me.Name = name
             Me.alias = [alias]

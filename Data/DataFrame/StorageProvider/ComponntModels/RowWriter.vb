@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::a639b7283b919ac561814e1d1abe0843, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 329
-    '    Code Lines: 232 (70.52%)
-    ' Comment Lines: 52 (15.81%)
-    '    - Xml Docs: 80.77%
-    ' 
-    '   Blank Lines: 45 (13.68%)
-    '     File Size: 13.43 KB
+' Summaries:
 
 
-    '     Class RowWriter
-    ' 
-    '         Properties: columns, metaRow, schemaProvider
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetColumnType, GetRowNames, ToRow
-    '         Delegate Function
-    ' 
-    '             Properties: hasMeta, isMetaIndexed
-    ' 
-    '             Function: __buildRowMeta, __buildRowNullMeta, __meta, CacheIndex, castStr
-    '                       extractAllKeys, getAllMetadata, GetMetaTitles, ToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 329
+'    Code Lines: 232 (70.52%)
+' Comment Lines: 52 (15.81%)
+'    - Xml Docs: 80.77%
+' 
+'   Blank Lines: 45 (13.68%)
+'     File Size: 13.43 KB
+
+
+'     Class RowWriter
+' 
+'         Properties: columns, metaRow, schemaProvider
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetColumnType, GetRowNames, ToRow
+'         Delegate Function
+' 
+'             Properties: hasMeta, isMetaIndexed
+' 
+'             Function: __buildRowMeta, __buildRowNullMeta, __meta, CacheIndex, castStr
+'                       extractAllKeys, getAllMetadata, GetMetaTitles, ToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,8 +66,8 @@ Option Strict Off
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.Framework.IO
-Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.JoinExtensions
