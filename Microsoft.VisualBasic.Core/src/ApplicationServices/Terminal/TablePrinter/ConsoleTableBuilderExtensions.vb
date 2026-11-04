@@ -471,11 +471,11 @@ Namespace ApplicationServices.Terminal.TablePrinter
                     Console.Write(row.Substring(newTitlePositionStartAt, builder.TitlePositionLength))
                     Console.ResetColor()
                     Console.Write(row.Substring(newTitlePositionStartAt + builder.TitlePositionLength, row.Length - (newTitlePositionStartAt + builder.TitlePositionLength)))
-                    Console.Write(Microsoft.VisualBasic.Strings.ChrW(10))
+                    Console.Write(ChrW(10))
                 Else
 
                     If i = linesCount - 2 Then
-                        If row.EndsWith(Microsoft.VisualBasic.Strings.ChrW(13).ToString()) Then
+                        If row.EndsWith(ChrW(13).ToString()) Then
                             Console.Write(row.Substring(0, row.Length - 1))
                         Else
                             Console.Write(row)
@@ -500,7 +500,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         <Extension()>
         Public Sub ExportAndWriteLine(builder As ConsoleTableBuilder, Optional alignment As TableAligntment = TableAligntment.Left)
             builder.ExportAndWrite(alignment)
-            Console.Write(Microsoft.VisualBasic.Strings.ChrW(10))
+            Console.Write(ChrW(10))
         End Sub
 
         Private Function CreateTableForCustomFormat(builder As ConsoleTableBuilder) As StringBuilder

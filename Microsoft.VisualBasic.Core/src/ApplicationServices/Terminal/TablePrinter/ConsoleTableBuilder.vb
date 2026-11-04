@@ -182,7 +182,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Return builder
         End Function
 
-        Public Shared Function From(Of T As Class)(list As List(Of T)) As ConsoleTableBuilder
+        Public Shared Function From(Of T As Class)(list As IReadOnlyCollection(Of T)) As ConsoleTableBuilder
             Dim builder = New ConsoleTableBuilder()
 
             If list Is Nothing Then
@@ -219,7 +219,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
 
             builder.Column = columnNames
 
-            For Each item In list
+            For Each item As T In list
 
                 If isClass = True Then
                     Dim itemPropValues = New List(Of Object)()
@@ -492,7 +492,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 Dim line = (If(CanRemoveBorderLeft(), String.Empty, topLeft.ToString())) & result & (If(CanRemoveBorderRight(), String.Empty, topRight.ToString()))
                 line = EmbedTitle(line)
 
-                If line.Trim(CChar(Microsoft.VisualBasic.Strings.ChrW(0))).Length = 0 Then
+                If line.Trim(CChar(ChrW(0))).Length = 0 Then
                     line = String.Empty
                 End If
 
@@ -561,7 +561,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 Dim result = Enumerable.Range(0, columnLengths.Count).[Select](Function(i) New String(dividerX, columnLengths(i) + (PaddingLeft & PaddingRight).Length)).Aggregate(Function(s, a) s & (If(CanRemoveDividerY(), String.Empty, middleCenter.ToString())) & a)
                 Dim line = (If(CanRemoveBorderLeft(), String.Empty, middleLeft.ToString())) & result & (If(CanRemoveBorderRight(), String.Empty, middleRight.ToString()))
 
-                If line.Trim(CChar(Microsoft.VisualBasic.Strings.ChrW(0))).Length = 0 Then
+                If line.Trim(CChar(ChrW(0))).Length = 0 Then
                     line = String.Empty
                 End If
 
@@ -581,7 +581,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 Dim result = Enumerable.Range(0, columnLengths.Count).[Select](Function(i) New String(borderBottom, columnLengths(i) + (PaddingLeft & PaddingRight).Length)).Aggregate(Function(s, a) s & (If(CanRemoveDividerY(), String.Empty, bottomCenter.ToString())) & a)
                 Dim line = (If(CanRemoveBorderLeft(), String.Empty, bottomLeft.ToString())) & result & (If(CanRemoveBorderRight(), String.Empty, bottomRight.ToString()))
 
-                If line.Trim(CChar(Microsoft.VisualBasic.Strings.ChrW(0))).Length = 0 Then
+                If line.Trim(CChar(ChrW(0))).Length = 0 Then
                     line = String.Empty
                 End If
 
@@ -607,7 +607,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 Dim line = (If(CanRemoveBorderLeft(), String.Empty, topLeft.ToString())) & result & (If(CanRemoveBorderRight(), String.Empty, topRight.ToString()))
                 line = EmbedTitle(line)
 
-                If line.Trim(CChar(Microsoft.VisualBasic.Strings.ChrW(0))).Length = 0 Then
+                If line.Trim(CChar(ChrW(0))).Length = 0 Then
                     line = String.Empty
                 End If
 
@@ -656,7 +656,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 Dim result = Enumerable.Range(0, columnLengths.Count).[Select](Function(i) New String(borderBottom, columnLengths(i) + (PaddingLeft & PaddingRight).Length)).Aggregate(Function(s, a) s & (If(CanRemoveDividerY(), String.Empty, bottomCenter.ToString())) & a)
                 Dim line = (If(CanRemoveBorderLeft(), String.Empty, bottomLeft.ToString())) & result & (If(CanRemoveBorderRight(), String.Empty, bottomRight.ToString()))
 
-                If line.Trim(CChar(Microsoft.VisualBasic.Strings.ChrW(0))).Length = 0 Then
+                If line.Trim(CChar(ChrW(0))).Length = 0 Then
                     line = String.Empty
                 End If
 
