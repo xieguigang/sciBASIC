@@ -728,6 +728,15 @@ Namespace Compute
                 nodes = rows
             End If
 
+            ' 纯矩阵乘形态（浓度读出头的调用方式：无图边、无逐节点缩放）：
+            ' batch 很小时按输出维分块并行，避免整机只有 1 个核在跑
+            If rp Is Nothing AndAlso sw Is Nothing AndAlso rows < 4 AndAlso outF >= 512 AndAlso ThreadBudget > 1 Then
+                Call outputHeadParallel(xd, ws, bd, od, rows, inF, outF, activation)
+                Call output.MarkHostModified()
+
+                Return True
+            End If
+
             Dim body As Func(Of Integer, System.Threading.Tasks.ParallelLoopState, Double(), Double()) =
                 Function(row As Integer, loopState As System.Threading.Tasks.ParallelLoopState, acc As Double()) As Double()
                     Dim nodeIdx As Integer = row Mod nodes
@@ -962,6 +971,171 @@ Namespace Compute
             Return True
         End Function
 
+        ''' <summary>
+        ''' 线程预算：与 Cella 的 <c>CELLA_THREADS</c> 约定一致，默认取物理核数。
+        ''' </summary>
+        Private Shared ReadOnly Property ThreadBudget As Integer
+            Get
+                Dim text As String = If(System.Environment.GetEnvironmentVariable("CELLA_THREADS"), "").Trim()
+                Dim value As Integer
+
+                If Integer.TryParse(text, value) AndAlso value >= 1 Then
+                    Return value
+                End If
+
+                Return System.Math.Max(1, System.Environment.ProcessorCount \ 2)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 输出维分块的 RK4 实现：即使 batch = 1 也能用满多个核心。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 逐行实现里，单个细胞的 m 个隐藏单元都在同一条线程上更新；当一次只推进
+        ''' 1~3 个细胞（多物种菌群中每个物种各自成组，batch 往往就是 1）时，
+        ''' 整台机器只有 1 个核在跑。
+        ''' </para>
+        ''' <para>
+        ''' 这里把隐藏维 m 切成若干块：每块只读取权重的对应列区间
+        ''' （<c>Wrec[k*m + j0 .. j1)</c>，连续访存），块间互不依赖；
+        ''' 每个 RK4 stage 之间由 <c>Parallel.For</c> 的隐式屏障同步。
+        ''' 求和次序与逐行实现一致（k 升序），因此结果可复现。
+        ''' </para>
+        ''' </remarks>
+        Private Function LtcRk4BatchOutputParallel(state As Tensor, input As Tensor,
+                                                   weightRecurrent As Tensor, weightInput As Tensor, bias As Tensor,
+                                                   weightGate As Tensor, weightGateInput As Tensor, biasGate As Tensor,
+                                                   tauEff As Tensor, dt As Double, subSteps As Integer,
+                                                   activation As Integer) As Boolean
+
+            Dim batch As Integer = state.Shape(0)
+            Dim m As Integer = state.Shape(1)
+            Dim nIn As Integer = input.Shape(1)
+
+            Dim h As Double() = state.Data
+            Dim u As Double() = input.Data
+            Dim wrec As Double() = weightRecurrent.Data
+            Dim win As Double() = weightInput.Data
+            Dim bd As Double() = If(bias Is Nothing, Nothing, bias.Data)
+            Dim wg As Double() = If(weightGate Is Nothing, Nothing, weightGate.Data)
+            Dim wgi As Double() = If(weightGateInput Is Nothing, Nothing, weightGateInput.Data)
+            Dim bg As Double() = If(biasGate Is Nothing, Nothing, biasGate.Data)
+            Dim tau As Double() = tauEff.Data
+            Dim hasGate As Boolean = wg IsNot Nothing AndAlso wgi IsNot Nothing
+
+            Dim dtStep As Double = dt / subSteps
+            Dim half As Double = 0.5 * dtStep
+            Dim invTau As Double() = New Double(m - 1) {}
+
+            For i As Integer = 0 To m - 1
+                invTau(i) = 1.0 / tau(i)
+            Next
+
+            ' 分块数：按隐藏维大小给出上限，避免块太小导致 AXPY 过短
+            Dim parts As Integer = System.Math.Min(ThreadBudget, System.Math.Max(1, m \ 128))
+
+            If parts <= 1 Then
+                Return LtcRk4BatchRowwise(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+
+            Dim block As Integer = (m + parts - 1) \ parts
+            Dim sh As Double() = New Double(m - 1) {}
+            Dim sw As Double() = New Double(m - 1) {}
+            Dim sk As Double() = New Double(4 * m - 1) {}
+
+            For b As Integer = 0 To batch - 1
+                Dim rowOff As Integer = b * m
+                Dim uOff As Integer = b * nIn
+
+                Call Array.Copy(h, rowOff, sh, 0, m)
+
+                For s As Integer = 1 To subSteps
+                    Call Array.Copy(sh, 0, sw, 0, m)
+
+                    For stage As Integer = 0 To 3
+                        Dim scale As Double = If(stage = 2, dtStep, half)
+                        Dim stageOffset As Integer = stage * m
+
+                        ' 每个分块独立计算自己的输出区间；k 外层保证权重行连续访存
+                        Call System.Threading.Tasks.Parallel.For(
+                            0, parts,
+                            Sub(part As Integer)
+                                Dim j0 As Integer = part * block
+
+                                If j0 >= m Then
+                                    Return
+                                End If
+
+                                Dim len As Integer = System.Math.Min(block, m - j0)
+                                Dim zs As Double() = New Double(len - 1) {}
+                                Dim zgs As Double() = If(hasGate, New Double(len - 1) {}, Nothing)
+
+                                If bd IsNot Nothing Then
+                                    Call Array.Copy(bd, j0, zs, 0, len)
+                                End If
+                                If hasGate AndAlso bg IsNot Nothing Then
+                                    Call Array.Copy(bg, j0, zgs, 0, len)
+                                End If
+
+                                For k As Integer = 0 To m - 1
+                                    Dim hk As Double = sw(k)
+
+                                    If hk <> 0.0 Then
+                                        Call Axpy(hk, wrec, k * m + j0, zs, 0, len)
+
+                                        If hasGate Then
+                                            Call Axpy(hk, wg, k * m + j0, zgs, 0, len)
+                                        End If
+                                    End If
+                                Next
+
+                                For k As Integer = 0 To nIn - 1
+                                    Dim uk As Double = u(uOff + k)
+
+                                    If uk <> 0.0 Then
+                                        Call Axpy(uk, win, k * m + j0, zs, 0, len)
+
+                                        If hasGate Then
+                                            Call Axpy(uk, wgi, k * m + j0, zgs, 0, len)
+                                        End If
+                                    End If
+                                Next
+
+                                For j As Integer = 0 To len - 1
+                                    Dim index As Integer = j0 + j
+                                    Dim decay As Double = invTau(index)
+
+                                    If hasGate Then
+                                        decay += 1.0 / (1.0 + std.Exp(-zgs(j)))
+                                    End If
+
+                                    sk(stageOffset + index) = decay * (CellActivation.Apply(zs(j), activation) - sw(index))
+                                Next
+                            End Sub)
+
+                        ' 元素级更新在分块之外完成（O(m)，相对于 stage 的 O(m²) 可忽略）
+                        If stage < 3 Then
+                            For j As Integer = 0 To m - 1
+                                sw(j) = sh(j) + scale * sk(stageOffset + j)
+                            Next
+                        End If
+                    Next
+
+                    For j As Integer = 0 To m - 1
+                        sh(j) += (dtStep / 6.0) * (sk(j) + 2.0 * sk(m + j) + 2.0 * sk(2 * m + j) + sk(3 * m + j))
+                    Next
+                Next
+
+                Call Array.Copy(sh, 0, h, rowOff, m)
+            Next
+
+            Call state.MarkHostModified()
+
+            Return True
+        End Function
+
 #End Region
 
         ''' <summary>
@@ -1008,6 +1182,13 @@ Namespace Compute
             ' 小批量直接走按行实现：分块与并行的调度开销大于收益
             ' （实测 8/32 行时两者持平或按行略快；≥64 行时权重复用才开始摊薄开销）
             If batch < 64 Then
+                ' 多物种菌群中每个物种各自成组，batch 往往只有 1~3：
+                ' 此时按输出维分块，让单个细胞也能用满多个核心
+                If batch < 4 AndAlso state.Shape(1) >= 1024 AndAlso ThreadBudget > 1 Then
+                    Return LtcRk4BatchOutputParallel(state, input, weightRecurrent, weightInput, bias,
+                                                     weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+                End If
+
                 Return LtcRk4BatchRowwise(state, input, weightRecurrent, weightInput, bias,
                                           weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
             End If
@@ -1206,6 +1387,272 @@ Namespace Compute
             End Sub
 
         End Class
+
+        ' ==================== 批量读出头（输出维并行） ====================
+
+        ''' <summary>
+        ''' 纯矩阵乘形态的批量输出头：<c>y = x·W + b</c>，按输出维分块并行。
+        ''' </summary>
+        ''' <remarks>
+        ''' 当 batch = 1（多物种菌群里每个物种各自成组）时，按行并行完全失效；
+        ''' 这里把输出维切成 <c>ThreadBudget</c> 块，块内沿输入维做 AXPY
+        ''' （权重 <c>W[k, j0..j1)</c> 连续访存），块间互不依赖。
+        ''' </remarks>
+        Private Shared Sub outputHeadParallel(xd As Double(), w As Double(), bd As Double(), od As Double(),
+                                              rows As Integer, inF As Integer, outF As Integer, activation As Integer)
+
+            Dim parts As Integer = System.Math.Min(ThreadBudget, System.Math.Max(1, outF \ 128))
+
+            If parts <= 1 Then
+                Dim acc As Double() = New Double(outF - 1) {}
+
+                For row As Integer = 0 To rows - 1
+                    If bd Is Nothing Then
+                        Call Array.Clear(acc, 0, outF)
+                    Else
+                        Call Array.Copy(bd, 0, acc, 0, outF)
+                    End If
+
+                    For k As Integer = 0 To inF - 1
+                        Dim v As Double = xd(row * inF + k)
+
+                        If v <> 0.0 Then
+                            Call Axpy(v, w, k * outF, acc, 0, outF)
+                        End If
+                    Next
+
+                    For j As Integer = 0 To outF - 1
+                        od(row * outF + j) = CellActivation.Apply(acc(j), activation)
+                    Next
+                Next
+
+                Return
+            End If
+
+            Dim block As Integer = (outF + parts - 1) \ parts
+
+            Call System.Threading.Tasks.Parallel.For(0, if(rows > parts, rows, parts * rows),
+                Sub(work As Integer)
+                    Dim row As Integer
+                    Dim j0 As Integer
+
+                    If rows > parts Then
+                        row = work
+                        j0 = 0
+                    Else
+                        row = work \ parts
+                        j0 = (work Mod parts) * block
+                    End If
+
+                    If j0 >= outF Then
+                        Return
+                    End If
+
+                    Dim len As Integer = If(rows > parts, outF, System.Math.Min(block, outF - j0))
+                    Dim acc As Double() = New Double(len - 1) {}
+
+                    If bd IsNot Nothing Then
+                        Call Array.Copy(bd, j0, acc, 0, len)
+                    End If
+
+                    For k As Integer = 0 To inF - 1
+                        Dim v As Double = xd(row * inF + k)
+
+                        If v <> 0.0 Then
+                            Call Axpy(v, w, k * outF + j0, acc, 0, len)
+                        End If
+                    Next
+
+                    Dim oOff As Integer = row * outF
+
+                    For j As Integer = 0 To len - 1
+                        od(oOff + j0 + j) = CellActivation.Apply(acc(j), activation)
+                    Next
+                End Sub)
+        End Sub
+
+        ''' <summary>
+        ''' 通量读出头的批量内核（输出维并行 + 连续访存）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 基类实现按 <c>W[i, j]</c> 的列跨步读取（步长 = 反应数 r），
+        ''' 在 r≈3.3e3 时几乎每次都 cache miss；这里改成固定输入维 i、沿输出维做 AXPY。
+        ''' </remarks>
+        Public Overrides Function FluxHeadBatch(h As Tensor, u As Tensor, wFlux As Tensor, fluxBias As Tensor,
+                                                reversible As Tensor, output As Tensor) As Boolean
+
+            If h Is Nothing OrElse u Is Nothing OrElse wFlux Is Nothing OrElse output Is Nothing OrElse
+               h.Rank <> 2 OrElse u.Rank <> 2 OrElse output.Rank <> 2 Then
+
+                Return MyBase.FluxHeadBatch(h, u, wFlux, fluxBias, reversible, output)
+            End If
+
+            Dim batch As Integer = h.Shape(0)
+            Dim m As Integer = h.Shape(1)
+            Dim nIn As Integer = u.Shape(1)
+            Dim r As Integer = output.Shape(1)
+
+            If wFlux.Shape(0) <> m + nIn OrElse wFlux.Shape(1) <> r OrElse u.Shape(0) <> batch Then
+                Return MyBase.FluxHeadBatch(h, u, wFlux, fluxBias, reversible, output)
+            End If
+
+            Dim hd As Double() = h.Data
+            Dim ud As Double() = u.Data
+            Dim wd As Double() = wFlux.Data
+            Dim bd As Double() = If(fluxBias Is Nothing, Nothing, fluxBias.Data)
+            Dim rd As Double() = If(reversible Is Nothing, Nothing, reversible.Data)
+            Dim od As Double() = output.Data
+
+            Dim parts As Integer = If(batch >= ThreadBudget,
+                                      1,
+                                      System.Math.Min(ThreadBudget, System.Math.Max(1, r \ 128)))
+            Dim block As Integer = (r + parts - 1) \ parts
+
+            Call System.Threading.Tasks.Parallel.For(0, batch * parts,
+                Sub(work As Integer)
+                    Dim b As Integer = work \ parts
+                    Dim j0 As Integer = (work Mod parts) * block
+
+                    If j0 >= r Then
+                        Return
+                    End If
+
+                    Dim len As Integer = System.Math.Min(block, r - j0)
+                    Dim zs As Double() = New Double(len - 1) {}
+
+                    If bd IsNot Nothing Then
+                        Call Array.Copy(bd, j0, zs, 0, len)
+                    End If
+
+                    Dim hOff As Integer = b * m
+                    Dim uOff As Integer = b * nIn
+
+                    For i As Integer = 0 To m - 1
+                        Dim hi As Double = hd(hOff + i)
+
+                        If hi <> 0.0 Then
+                            Call Axpy(hi, wd, i * r + j0, zs, 0, len)
+                        End If
+                    Next
+
+                    For i As Integer = 0 To nIn - 1
+                        Dim ui As Double = ud(uOff + i)
+
+                        If ui <> 0.0 Then
+                            Call Axpy(ui, wd, (m + i) * r + j0, zs, 0, len)
+                        End If
+                    Next
+
+                    Dim oOff As Integer = b * r
+
+                    For j As Integer = 0 To len - 1
+                        Dim index As Integer = j0 + j
+                        Dim z As Double = zs(j)
+
+                        If z > 30.0 Then
+                            z = 30.0
+                        ElseIf z < -30.0 Then
+                            z = -30.0
+                        End If
+
+                        Dim sat As Double = 1.0 / (1.0 + std.Exp(-z))
+                        Dim reversibleFlag As Boolean = rd IsNot Nothing AndAlso rd(index) <> 0.0
+
+                        od(oOff + index) = ud(uOff + index) * If(reversibleFlag, 2.0 * sat - 1.0, sat)
+                    Next
+                End Sub)
+
+            Call output.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 系统时间常数的批量内核（输出维并行 + 连续访存）。
+        ''' </summary>
+        Public Overrides Function SystemTauBatch(h As Tensor, u As Tensor, weightGate As Tensor,
+                                                 weightGateInput As Tensor, biasGate As Tensor,
+                                                 tauEff As Tensor, output As Tensor) As Boolean
+
+            If h Is Nothing OrElse u Is Nothing OrElse tauEff Is Nothing OrElse output Is Nothing OrElse
+               h.Rank <> 2 OrElse u.Rank <> 2 OrElse output.Rank <> 2 Then
+
+                Return MyBase.SystemTauBatch(h, u, weightGate, weightGateInput, biasGate, tauEff, output)
+            End If
+
+            Dim batch As Integer = h.Shape(0)
+            Dim m As Integer = h.Shape(1)
+            Dim nIn As Integer = u.Shape(1)
+            Dim hasGate As Boolean = weightGate IsNot Nothing AndAlso weightGateInput IsNot Nothing
+
+            Dim hd As Double() = h.Data
+            Dim ud As Double() = u.Data
+            Dim wg As Double() = If(hasGate, weightGate.Data, Nothing)
+            Dim wgi As Double() = If(hasGate, weightGateInput.Data, Nothing)
+            Dim bg As Double() = If(hasGate, If(biasGate Is Nothing, Nothing, biasGate.Data), Nothing)
+            Dim td As Double() = tauEff.Data
+            Dim od As Double() = output.Data
+
+            Dim parts As Integer = If(batch >= ThreadBudget,
+                                      1,
+                                      System.Math.Min(ThreadBudget, System.Math.Max(1, m \ 128)))
+            Dim block As Integer = (m + parts - 1) \ parts
+
+            Call System.Threading.Tasks.Parallel.For(0, batch * parts,
+                Sub(work As Integer)
+                    Dim b As Integer = work \ parts
+                    Dim j0 As Integer = (work Mod parts) * block
+
+                    If j0 >= m Then
+                        Return
+                    End If
+
+                    Dim len As Integer = System.Math.Min(block, m - j0)
+                    Dim hOff As Integer = b * m
+                    Dim uOff As Integer = b * nIn
+
+                    If Not hasGate Then
+                        For i As Integer = 0 To len - 1
+                            od(hOff + j0 + i) = td(j0 + i)
+                        Next
+
+                        Return
+                    End If
+
+                    Dim zgs As Double() = New Double(len - 1) {}
+
+                    If bg IsNot Nothing Then
+                        Call Array.Copy(bg, j0, zgs, 0, len)
+                    End If
+
+                    For k As Integer = 0 To m - 1
+                        Dim hk As Double = hd(hOff + k)
+
+                        If hk <> 0.0 Then
+                            Call Axpy(hk, wg, k * m + j0, zgs, 0, len)
+                        End If
+                    Next
+
+                    For k As Integer = 0 To nIn - 1
+                        Dim uk As Double = ud(uOff + k)
+
+                        If uk <> 0.0 Then
+                            Call Axpy(uk, wgi, k * m + j0, zgs, 0, len)
+                        End If
+                    Next
+
+                    For i As Integer = 0 To len - 1
+                        Dim index As Integer = j0 + i
+                        Dim decay As Double = 1.0 / td(index) + 1.0 / (1.0 + std.Exp(-zgs(i)))
+
+                        od(hOff + index) = 1.0 / decay
+                    Next
+                End Sub)
+
+            Call output.MarkHostModified()
+
+            Return True
+        End Function
 
     End Class
 
