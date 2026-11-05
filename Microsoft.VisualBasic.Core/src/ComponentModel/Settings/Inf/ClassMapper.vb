@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::c52953d3b5f2337a7cc033457a2f2fe8, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\ClassMapper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 159
-    '    Code Lines: 96 (60.38%)
-    ' Comment Lines: 40 (25.16%)
-    '    - Xml Docs: 97.50%
-    ' 
-    '   Blank Lines: 23 (14.47%)
-    '     File Size: 5.98 KB
+' Summaries:
 
 
-    '     Module ClassMapper
-    ' 
-    '         Function: (+2 Overloads) ClassWriter, LoadIni, (+2 Overloads) MapParser, WriteClass
-    ' 
-    '         Sub: (+2 Overloads) ClassDumper
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 159
+'    Code Lines: 96 (60.38%)
+' Comment Lines: 40 (25.16%)
+'    - Xml Docs: 97.50%
+' 
+'   Blank Lines: 23 (14.47%)
+'     File Size: 5.98 KB
+
+
+'     Module ClassMapper
+' 
+'         Function: (+2 Overloads) ClassWriter, LoadIni, (+2 Overloads) MapParser, WriteClass
+' 
+'         Sub: (+2 Overloads) ClassDumper
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -68,7 +69,7 @@ Namespace ComponentModel.Settings.Inf
     Public Module ClassMapper
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function MapParser(Of T As Class)() As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)())
+        Public Function MapParser(Of T As Class)() As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute))
             Return GetType(T).MapParser
         End Function
 
@@ -78,7 +79,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="type"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function MapParser(type As Type) As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)())
+        Public Function MapParser(type As Type) As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute))
             Dim nameCLS As ClassName = type.GetAttribute(Of ClassName)
             Dim name As String
 
@@ -89,11 +90,21 @@ Namespace ComponentModel.Settings.Inf
             End If
 
             Dim source = DataFrameColumnAttribute.LoadMapping(type, mapsAll:=True)
-            Dim binds = source.Values.ToArray
+            Dim binds As BindProperty(Of DataFrameColumnAttribute)() = source.Values _
+                .Where(Function(f)
+                           If TypeOf f.member Is PropertyInfo Then
+                               Return DirectCast(f.member, PropertyInfo) _
+                                   .GetIndexParameters _
+                                   .IsNullOrEmpty
+                           Else
+                               Return True
+                           End If
+                       End Function) _
+                .ToArray
 
-            Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
-                .Name = name,
-                .Value = binds
+            Return New NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) With {
+                .name = name,
+                .value = binds
             }
         End Function
 
@@ -149,24 +160,23 @@ Namespace ComponentModel.Settings.Inf
 
         <Extension>
         Public Sub ClassDumper(type As Type, x As Object, ini As IniFile)
-            Dim maps = MapParser(type)
+            Dim maps As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) = MapParser(type)
 
-            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps
                 Dim key As String = map.field.Name
                 Dim value As Object = map.GetValue(x)
 
                 If value IsNot Nothing AndAlso Not DataFramework.IsPrimitive(value.GetType) Then
                     Call ClassDumper(value.GetType, value, ini)
-                    Continue For
-                End If
-
-                Dim val_str As String = any.ToString(value)
-                Dim comment As String = map.member.Description
-
-                If val_str.StringEmpty Then
-                    Call ini.WriteComment(maps.Name, $"{key}=<{map.Type.FullName}>", key)
                 Else
-                    Call ini.WriteValue(maps.Name, key, val_str, comment)
+                    Dim val_str As String = any.ToString(value)
+                    Dim comment As String = map.member.Description
+
+                    If val_str.StringEmpty Then
+                        Call ini.WriteComment(maps.name, $"{key}=<{map.Type.FullName}>", key)
+                    Else
+                        Call ini.WriteValue(maps.name, key, val_str, comment)
+                    End If
                 End If
             Next
         End Sub
