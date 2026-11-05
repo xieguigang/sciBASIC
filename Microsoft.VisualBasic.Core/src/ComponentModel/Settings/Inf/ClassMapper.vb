@@ -58,7 +58,12 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My.JavaScript.ES6
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.Settings.Inf
@@ -131,13 +136,13 @@ Namespace ComponentModel.Settings.Inf
             Dim maps = MapParser(type)
             Dim o As Object
 
-            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.value
                 Dim key As String = map.field.Name
 
                 If Not DataFramework.IsPrimitive(map.Type) Then
                     o = ClassWriter(ini, map.Type)
                 Else
-                    o = any.CTypeDynamic(ini.ReadValue(maps.Name, key), map.Type)
+                    o = any.CTypeDynamic(ini.ReadValue(maps.name, key), map.Type)
                 End If
 
                 Call map.SetValue(obj, o)
@@ -161,24 +166,67 @@ Namespace ComponentModel.Settings.Inf
         <Extension>
         Public Sub ClassDumper(type As Type, x As Object, ini As IniFile)
             Dim maps As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) = MapParser(type)
+            Dim section As String = maps.name
 
-            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps
-                Dim key As String = map.field.Name
+            Call ClassDumper(section, maps, x, ini)
+        End Sub
+
+        <Extension>
+        Public Sub ClassDumper(section As String, fields As IEnumerable(Of BindProperty(Of DataFrameColumnAttribute)), x As Object, ini As IniFile)
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In fields
                 Dim value As Object = map.GetValue(x)
+                Dim type As Type = Nothing
 
-                If value IsNot Nothing AndAlso Not DataFramework.IsPrimitive(value.GetType) Then
-                    Call ClassDumper(value.GetType, value, ini)
+                If value Is Nothing Then
+                    If DataFramework.IsPrimitive(map.Type) Then
+                        Call ini.WritePrimitiveValue(Nothing, section, map)
+                    End If
+
+                    Continue For
                 Else
-                    Dim val_str As String = any.ToString(value)
-                    Dim comment As String = map.member.Description
+                    type = value.GetType
+                End If
 
-                    If val_str.StringEmpty Then
-                        Call ini.WriteComment(maps.name, $"{key}=<{map.Type.FullName}>", key)
-                    Else
-                        Call ini.WriteValue(maps.name, key, val_str, comment)
+                If type.IsArray Then
+                    ' 20261105 required of the array string contains no comma symbol
+                    If DataFramework.IsPrimitive(type.GetElementType) Then
+                        type = type.GetElementType
+                        value = DirectCast(value, Array).AsObjectEnumerator.AsCharacter.JoinBy(", ")
                     End If
                 End If
+
+                If Not DataFramework.IsPrimitive(type) Then
+                    If type.IsArray Then
+                        Dim vec As Array = DirectCast(value, Array)
+                        Dim maps As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) = MapParser(type.GetElementType)
+
+                        For i As Integer = 0 To vec.Length - 1
+                            ' [xxx #1]
+                            Call ClassDumper(maps.name & " #" & (i + 1), maps, vec.GetValue(i), ini)
+                        Next
+                    ElseIf type.ImplementInterface(GetType(IDictionary)) Then
+                        Call ini.WritePrimitiveValue(JsonContract.GetObjectJson(value, indent:=False), section, map)
+                    Else
+                        Call ClassDumper(type, value, ini)
+                    End If
+                Else
+                    Call ini.WritePrimitiveValue(value, section, map)
+                End If
             Next
+        End Sub
+
+        <Extension>
+        Private Sub WritePrimitiveValue(ini As IniFile, value As Object, section As String, map As BindProperty(Of DataFrameColumnAttribute))
+            Dim key As String = map.field.Name
+            ' nothing mapping as empty string
+            Dim val_str As String = any.ToString(value, null:="")
+            Dim comment As String = map.member.Description
+
+            If val_str.StringEmpty Then
+                Call ini.WriteComment(section, $"{key}=<{map.Type.FullName}>", key)
+            Else
+                Call ini.WriteValue(section, key, val_str, comment)
+            End If
         End Sub
 
         ''' <summary>
