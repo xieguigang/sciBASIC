@@ -70,7 +70,8 @@ Public Module AnonymousTypeHelper
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CreateEmptyList(Of TAnonymousType As Class)(typedef As IEnumerable(Of TAnonymousType)) As List(Of TAnonymousType)
+    <Extension>
+    Public Function CreateEmptyList(Of TAnonymousType As Class)(typedef As IEnumerable(Of TAnonymousType)) As List(Of TAnonymousType)
         Return New List(Of TAnonymousType)
     End Function
 #Enable Warning
@@ -82,8 +83,24 @@ Public Module AnonymousTypeHelper
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="source">仅仅是起到类型复制的作用</param>
     ''' <returns></returns>
-    <Extension> Public Function CopyTypeDef(Of TKey, TValue)(source As Dictionary(Of TKey, TValue)) As Dictionary(Of TKey, TValue)
+    <Extension>
+    Public Function CopyTypeDef(Of TKey, TValue)(source As Dictionary(Of TKey, TValue)) As Dictionary(Of TKey, TValue)
         Dim table As New Dictionary(Of TKey, TValue)
         Return table
+    End Function
+
+    <Extension>
+    Public Function MakeArray(list As System.Collections.Generic.List(Of Object), type As Type) As Array
+        Dim vec As Array = Array.CreateInstance(type, list.TryCount)
+
+        If list Is Nothing Then
+            Return vec
+        End If
+
+        For i As Integer = 0 To list.Count - 1
+            Call vec.SetValue(list(i), i)
+        Next
+
+        Return vec
     End Function
 End Module

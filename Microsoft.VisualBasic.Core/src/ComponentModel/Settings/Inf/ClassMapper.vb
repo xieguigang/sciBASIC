@@ -59,9 +59,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Emit.Delegates
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.My.JavaScript.ES6
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
@@ -132,17 +131,63 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="type"></param>
         ''' <returns></returns>
         Public Function ClassWriter(ini As IniFile, type As Type) As Object
+            Dim maps As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) = MapParser(type)
+            Dim sectionName As String = maps.name
+            Dim obj As Object = ClassWriter(ini, type, sectionName, maps)
+            Return obj
+        End Function
+
+        ''' <summary>
+        ''' Load data from ini file onto a clr object with specific type
+        ''' </summary>
+        ''' <param name="ini"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Private Function ClassWriter(ini As IniFile, type As Type, sectionName As String, fields As BindProperty(Of DataFrameColumnAttribute)()) As Object
             Dim obj As Object = Activator.CreateInstance(type)
-            Dim maps = MapParser(type)
             Dim o As Object
 
-            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.value
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In fields
                 Dim key As String = map.field.Name
 
                 If Not DataFramework.IsPrimitive(map.Type) Then
-                    o = ClassWriter(ini, map.Type)
+                    If map.Type.IsArray Then
+                        type = map.Type.GetElementType
+
+                        If DataFramework.IsPrimitive(type) Then
+                            ' split by comma
+                            Dim vals As String() = ini.ReadValue(sectionName, key).StringSplit(ArraySep)
+                            Dim objs As Array = vals.CTypeDynamic(type)
+
+                            o = objs
+                        Else
+                            Dim list As New List(Of Object)
+                            Dim maps = MapParser(type)
+
+                            For i As Integer = 0 To Integer.MaxValue
+                                Dim keyIdx As String = $"{maps.name} #{i + 1}"
+                                Dim section As Section = ini(keyIdx)
+
+                                If section Is Nothing Then
+                                    Exit For
+                                Else
+                                    Call list.Add(ini.ClassWriter(type, keyIdx, maps))
+                                End If
+                            Next
+
+                            o = list.MakeArray(type)
+                        End If
+                    ElseIf map.type.ImplementInterface(GetType(IDictionary)) Then
+                        Dim json As String = ini.ReadValue(sectionName, key)
+                        Dim dict As Object = JsonContract.LoadObject(json, map.Type, throwEx:=False)
+
+                        o = dict
+                    Else
+                        o = ClassWriter(ini, map.Type)
+                    End If
                 Else
-                    o = any.CTypeDynamic(ini.ReadValue(maps.name, key), map.Type)
+                    o = any.CTypeDynamic(ini.ReadValue(sectionName, key), map.Type)
                 End If
 
                 Call map.SetValue(obj, o)
@@ -171,6 +216,8 @@ Namespace ComponentModel.Settings.Inf
             Call ClassDumper(section, maps, x, ini)
         End Sub
 
+        Const ArraySep As String = ", "
+
         <Extension>
         Public Sub ClassDumper(section As String, fields As IEnumerable(Of BindProperty(Of DataFrameColumnAttribute)), x As Object, ini As IniFile)
             For Each map As BindProperty(Of DataFrameColumnAttribute) In fields
@@ -191,7 +238,7 @@ Namespace ComponentModel.Settings.Inf
                     ' 20261105 required of the array string contains no comma symbol
                     If DataFramework.IsPrimitive(type.GetElementType) Then
                         type = type.GetElementType
-                        value = DirectCast(value, Array).AsObjectEnumerator.AsCharacter.JoinBy(", ")
+                        value = DirectCast(value, Array).AsObjectEnumerator.AsCharacter.JoinBy(ArraySep)
                     End If
                 End If
 
