@@ -1,59 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::ab00a99e8d49a425b35339f455296714, Data\DataFrame\Extensions\ProfileStreams.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 54
-    '    Code Lines: 30 (55.56%)
-    ' Comment Lines: 18 (33.33%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 6 (11.11%)
-    '     File Size: 2.11 KB
+' Summaries:
 
 
-    ' Module ProfileStreams
-    ' 
-    '     Function: GenerateProfiles, LoadProfiles, WriteProfiles
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 54
+'    Code Lines: 30 (55.56%)
+' Comment Lines: 18 (33.33%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 6 (11.11%)
+'     File Size: 2.11 KB
+
+
+' Module ProfileStreams
+' 
+'     Function: GenerateProfiles, LoadProfiles, WriteProfiles
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Settings
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
@@ -103,5 +105,29 @@ Public Module ProfileStreams
         Next
 
         Return config.SettingsData
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function LoadKeyValueProfiles(path As String, Optional key As String = "key", Optional value As String = "value") As Dictionary(Of String, String)
+        Return DataFrameResolver.Load(path).LoadKeyValueProfiles(key, value)
+    End Function
+
+    <Extension>
+    Public Function LoadKeyValueProfiles(df As DataFrameResolver, Optional key As String = "key", Optional value As String = "value") As Dictionary(Of String, String)
+        Dim keyIdx = df.GetOrdinal(key)
+        Dim valIdx = df.GetOrdinal(value)
+        Dim profile As New Dictionary(Of String, String)
+
+        If keyIdx < 0 Then
+            Throw New InvalidDataException($"missing the key(field: {key}) inside your csv data file!")
+        ElseIf valIdx < 0 Then
+            Throw New InvalidDataException($"missing the value(field: {value}) inside your csv data file!")
+        End If
+
+        Do While df.Read
+            profile(df.GetString(keyIdx)) = df.GetString(valIdx)
+        Loop
+
+        Return profile
     End Function
 End Module
