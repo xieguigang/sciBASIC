@@ -1,8 +1,6 @@
 Option Strict On
 Option Explicit On
 Option Infer On
-
-Imports System.Linq
 Imports System.Text
 Imports DataFrameModel = Microsoft.VisualBasic.Data.Framework.DataFrame
 Imports FeatureVectorModel = Microsoft.VisualBasic.Data.Framework.FeatureVector
