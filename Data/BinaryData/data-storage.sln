@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12328.437 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "datastorage-netcore5", "DataStorage\datastorage-netcore5.vbproj", "{581ED230-3020-6363-ED96-8EEBD8E8AD58}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "HDF5", "HDF5\HDF5.vbproj", "{7FA00A31-5039-EF2F-1CCF-1171208EDC93}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SQLite3", "SQLite3\SQLite3.vbproj", "{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Parquet", "Parquet\Parquet.vbproj", "{B0F994DE-1B72-4913-BB8A-CD542404B8F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -323,6 +325,34 @@ Global
 		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.gcmodeller_desktop|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.gcmodeller_desktop|Any CPU.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.gcmodeller_desktop|x64.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.gcmodeller_desktop|x64.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit_win32|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit_win32|Any CPU.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit_win32|x64.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit_win32|x64.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit|Any CPU.Build.0 = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit|x64.ActiveCfg = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.mzkit|x64.Build.0 = Debug|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.nuget_release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.nuget_release|Any CPU.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.nuget_release|x64.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.nuget_release|x64.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Release|x64.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Rsharp_app_release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Rsharp_app_release|x64.ActiveCfg = Release|Any CPU
+		{B0F994DE-1B72-4913-BB8A-CD542404B8F4}.Rsharp_app_release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

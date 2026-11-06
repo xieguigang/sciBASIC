@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Parquet/Parquet.vbproj" />
+  <Project Path="Parquet/test/test.vbproj" />
+</Solution>
