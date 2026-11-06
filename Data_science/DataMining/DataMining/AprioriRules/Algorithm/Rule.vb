@@ -71,17 +71,17 @@ Namespace AprioriRules.Entities
         ''' combination 
         ''' </summary>
         ''' <returns></returns>
-        <Column(Name:="rule.X")> Public ReadOnly Property X As ItemSet
+        <Column("rule.X")> Public ReadOnly Property X As ItemSet
 
         ''' <summary>
         ''' remaining
         ''' </summary>
         ''' <returns></returns>
-        <Column(Name:="rule.Y")> Public ReadOnly Property Y As ItemSet
+        <Column("rule.Y")> Public ReadOnly Property Y As ItemSet
 
-        <Column(Name:="support(XY)")>
+        <Column("support(XY)")>
         Public ReadOnly Property SupportXY As Double
-        <Column(Name:="support(X)")>
+        <Column("support(X)")>
         Public ReadOnly Property SupportX As Double
 
         Public ReadOnly Property length As Integer
@@ -96,7 +96,7 @@ Namespace AprioriRules.Entities
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Column(Name:="confidence")> Public ReadOnly Property Confidence As Double
+        <Column("confidence")> Public ReadOnly Property Confidence As Double
 
         Public Sub New(combination As ItemSet, remaining As ItemSet, confidence#, supports As (XY#, X#))
             Me.X = combination

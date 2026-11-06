@@ -359,6 +359,18 @@ Namespace ComponentModel.DataSourceModel
             Return False
         End Function
 
+        Public Function IsCollection(type As Type) As Boolean
+            If type Is Nothing Then
+                Return False
+            ElseIf type.IsArray Then
+                Return True
+            ElseIf type.ImplementAnyInterfaces({GetType(IList), GetType(ICollection), GetType(IEnumerable)}) Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
         ''' <summary>
         ''' Does the given type is any kind of numeric collection type?
         ''' </summary>

@@ -7,12 +7,16 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Version>1.0.9753.4776</Version>
     <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <!-- 入口固定为 GCN 测试入口；Demo.vb 里的时序图 demo 仍保留，可手动调用 -->
+    <StartupObject>test.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\GCN\GCN.vbproj" />
     <ProjectReference Include="..\..\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\GNN.vbproj" />
   </ItemGroup>

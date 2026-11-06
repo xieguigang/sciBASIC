@@ -159,7 +159,7 @@ Namespace Net.Http
             Dim lastmod$ = $"{DateTime.UtcNow.Year}-{FillDateZero(DateTime.UtcNow.Month)}-{FillDateZero(DateTime.UtcNow.Day)}"
 
             wwwroot = wwwroot.GetDirectoryFullPath
-            host = host.TrimDIR
+            host = host.TrimDirSep
 
             For Each file$ In ls - l - r - (fileTypes Or htmlFiles) <= wwwroot
                 file = file.Replace("\", "/").Replace(wwwroot, "")

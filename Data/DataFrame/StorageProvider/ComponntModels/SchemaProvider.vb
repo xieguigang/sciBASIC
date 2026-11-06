@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::8964bc91dacf8a9025672864128f198b, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 539
-    '    Code Lines: 384 (71.24%)
-    ' Comment Lines: 86 (15.96%)
-    '    - Xml Docs: 97.67%
-    ' 
-    '   Blank Lines: 69 (12.80%)
-    '     File Size: 22.85 KB
+' Summaries:
 
 
-    '     Class SchemaProvider
-    ' 
-    '         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
-    '                     KeyValuePairColumns, MetaAttributes, Raw
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, CheckFieldMissing, ContainsField
-    '                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal
-    '                   GetCollectionColumns, GetColumns, GetEnumColumns, GetEnumerator, GetField
-    '                   GetKeyValuePairColumn, getMeta, GetMetaAttributeColumn, gets, getWriteProvider
-    '                   IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: Remove
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 539
+'    Code Lines: 384 (71.24%)
+' Comment Lines: 86 (15.96%)
+'    - Xml Docs: 97.67%
+' 
+'   Blank Lines: 69 (12.80%)
+'     File Size: 22.85 KB
+
+
+'     Class SchemaProvider
+' 
+'         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
+'                     KeyValuePairColumns, MetaAttributes, Raw
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, CheckFieldMissing, ContainsField
+'                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal
+'                   GetCollectionColumns, GetColumns, GetEnumColumns, GetEnumerator, GetField
+'                   GetKeyValuePairColumn, getMeta, GetMetaAttributeColumn, gets, getWriteProvider
+'                   IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: Remove
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +68,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
@@ -470,7 +471,7 @@ Namespace StorageProvider.ComponentModels
             End If
 
             LQuery = LinqAPI.DefaultFirst(Of CollectionColumn) <=
- _
+                                                                 _
                 From p As CollectionColumn
                 In Me.CollectionColumns
                 Where [Property].Equals(p.BindProperty)
@@ -564,7 +565,7 @@ Namespace StorageProvider.ComponentModels
                 If (+type).IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
                     Dim metaProp As PropertyInfo = (type = (+type).BaseType).GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties), PublicProperty)
                     type = (+type).GetGenericArguments.First
-                    MetaAttributes = New MetaAttribute(New Reflection.MetaAttribute(+type), metaProp)
+                    MetaAttributes = New MetaAttribute(New SchemaMaps.MetaAttribute(+type), metaProp)
                 End If
             End If
 
@@ -588,7 +589,7 @@ Namespace StorageProvider.ComponentModels
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function __columnType(type As ProviderIds) As Boolean
-            Return type = Reflection.ProviderIds.Column OrElse type = Reflection.ProviderIds.NullMask
+            Return type = ProviderIds.Column OrElse type = ProviderIds.NullMask
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of StorageProvider) Implements IEnumerable(Of StorageProvider).GetEnumerator

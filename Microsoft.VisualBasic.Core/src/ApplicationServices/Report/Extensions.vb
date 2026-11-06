@@ -13,8 +13,8 @@ Namespace ApplicationServices.Report
         End Function
 
         <Extension>
-        Public Function ToHtml(docBlocks As IEnumerable(Of Block)) As String
-            Dim render As New HtmlRender
+        Public Function ToHtml(docBlocks As IEnumerable(Of Block), Optional title As String = Nothing) As String
+            Dim render As New HtmlRender With {.title = title}
             Call render.Render(docBlocks)
 
             Return render.Output

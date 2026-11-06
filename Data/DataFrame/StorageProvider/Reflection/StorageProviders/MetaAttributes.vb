@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::070ae830566ae8dd763b2959b59f62e5, Data\DataFrame\StorageProvider\Reflection\StorageProviders\MetaAttributes.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 81
-    '    Code Lines: 53 (65.43%)
-    ' Comment Lines: 16 (19.75%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 12 (14.81%)
-    '     File Size: 3.66 KB
+' Summaries:
 
 
-    '     Module MetaAttributeParser
-    ' 
-    '         Function: GetEntry, LoadData, MakeDictionaryType
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 81
+'    Code Lines: 53 (65.43%)
+' Comment Lines: 16 (19.75%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 12 (14.81%)
+'     File Size: 3.66 KB
+
+
+'     Module MetaAttributeParser
+' 
+'         Function: GetEntry, LoadData, MakeDictionaryType
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -65,14 +66,14 @@ Namespace StorageProvider.Reflection
     Public Module MetaAttributeParser
 
         Public Function GetEntry(type As Type) As ComponentModels.MetaAttribute
-            Dim attrEntry As Type = GetType(Reflection.MetaAttribute)
+            Dim attrEntry As Type = GetType(SchemaMaps.MetaAttribute)
             Dim metaAttr = LinqAPI.DefaultFirst(Of ComponentModels.MetaAttribute) _
- _
+                                                                                  _
                 () <= From prop As PropertyInfo
                       In type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
                       Let attrs As Object() = prop.GetCustomAttributes(attrEntry, inherit:=True)
                       Where Not attrs.IsNullOrEmpty
-                      Let mattr As MetaAttribute = DirectCast(attrs.First, MetaAttribute)
+                      Let mattr As SchemaMaps.MetaAttribute = DirectCast(attrs.First, SchemaMaps.MetaAttribute)
                       Select New ComponentModels.MetaAttribute(mattr, prop)
 
             Return metaAttr
@@ -95,7 +96,7 @@ Namespace StorageProvider.Reflection
             Dim type As Type = MetaEntry.MetaAttribute.TypeId
             Dim typeCast As Scripting.LoadObject = Scripting.CasterString(type)
             Dim attrs = LinqAPI.Exec(Of KeyValuePair(Of String, Integer)) _
- _
+                                                                          _
                 () <= From Name As KeyValuePair(Of String, Integer)
                       In DataSource.First.Schema
                       Where Not String.IsNullOrEmpty(Name.Key) AndAlso

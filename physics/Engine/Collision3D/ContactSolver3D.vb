@@ -79,8 +79,11 @@ Namespace Collision3D
                 ' ---------- 法向 ----------
                 Dim rv As Vector3 = m.RelativeVelocity(c.rA, c.rB)
                 Dim vn As Double = Vector3Math.Dot(rv, n)
-                Dim deltaVn As Double = c.restitutionBias + c.bias - vn
-                Dim jn As Double = deltaVn * c.normalMass
+
+                ' gamma 是软约束的软化项：已经累积的冲量要被扣掉，否则每一轮迭代都
+                ' 会把它再加一遍。刚性接触的 gamma 为 0，这一项自动消失。
+                Dim deltaVn As Double = c.restitutionBias + c.bias - vn - c.gamma * c.NormalImpulse
+                Dim jn As Double = deltaVn * c.softMass
 
                 ' 法向冲量只能"推"不能"拉"
                 Dim oldNormal As Double = c.NormalImpulse
@@ -90,31 +93,52 @@ Namespace Collision3D
                 Dim Pn As Vector3 = n * jn
                 Call ApplyPair(m, Pn, c.rA, c.rB)
 
-                ' ---------- 摩擦（两条正交切线） ----------
+                ' ---------- 摩擦（两条正交切线，合起来按库仑锥裁剪） ----------
                 Dim maxFriction As Double = m.Friction * c.NormalImpulse
 
                 If maxFriction > 0.0 Then
-                    Call SolveFriction(m, c, c.tangent1, c.tangentMass1, maxFriction, c.TangentImpulse1)
-                    Call SolveFriction(m, c, c.tangent2, c.tangentMass2, maxFriction, c.TangentImpulse2)
+                    Call SolveFriction(m, c, maxFriction)
                 End If
             Next
         End Sub
 
-        ''' <summary>沿单条切线求解摩擦冲量，并按库仑锥裁剪。</summary>
-        Private Sub SolveFriction(m As Manifold3D, c As ContactPoint3D,
-                                  tangent As Vector3, tangentMass As Double,
-                                  maxFriction As Double,
-                                  ByRef accumulated As Double)
+        ''' <summary>
+        ''' 在两条切线上同时求解摩擦冲量，并把合成冲量裁剪到库仑锥
+        ''' <c>|λt| ≤ μ·λn</c> 之内。
+        ''' </summary>
+        ''' <remarks>
+        ''' 两条切线各自独立地裁剪到 μλn（box friction）会让斜向滑动的等效摩擦
+        ''' 系数最多偏大 √2 倍，脚掌在斜向蹬地时会被"粘"住，步态因此变得不可控。
+        ''' </remarks>
+        Private Sub SolveFriction(m As Manifold3D, c As ContactPoint3D, maxFriction As Double)
             Dim rv As Vector3 = m.RelativeVelocity(c.rA, c.rB)
-            Dim vt As Double = Vector3Math.Dot(rv, tangent)
-            Dim jt As Double = -vt * tangentMass
-            Dim old As Double = accumulated
-            Dim clamped As Double = std.Min(std.Max(old + jt, -maxFriction), maxFriction)
+            Dim vt1 As Double = Vector3Math.Dot(rv, c.tangent1)
+            Dim vt2 As Double = Vector3Math.Dot(rv, c.tangent2)
 
-            accumulated = clamped
-            jt = clamped - old
+            Dim t1 As Double = c.TangentImpulse1 - vt1 * c.tangentMass1
+            Dim t2 As Double = c.TangentImpulse2 - vt2 * c.tangentMass2
 
-            Call ApplyPair(m, tangent * jt, c.rA, c.rB)
+            ' the cone is an ellipse when impratio <> 1: the second tangent is
+            ' scaled before the length is measured, exactly like the reference solver
+            ' scales the cone dimension of the constraint
+            Dim ratio As Double = If(m.Impratio > 0, m.Impratio, 1.0)
+            Dim scaled As Double = t2 / ratio
+            Dim length As Double = std.Sqrt(t1 * t1 + scaled * scaled)
+
+            If length > maxFriction Then
+                Dim scale As Double = maxFriction / length
+
+                t1 *= scale
+                t2 *= scale
+            End If
+
+            Dim d1 As Double = t1 - c.TangentImpulse1
+            Dim d2 As Double = t2 - c.TangentImpulse2
+
+            c.TangentImpulse1 = t1
+            c.TangentImpulse2 = t2
+
+            Call ApplyPair(m, c.tangent1 * d1 + c.tangent2 * d2, c.rA, c.rB)
         End Sub
 
         ''' <summary>把冲量 P 施加到 B、把 -P 施加到 A。</summary>

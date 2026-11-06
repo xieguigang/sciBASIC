@@ -239,6 +239,183 @@ Namespace TSK
             Return fwd
         End Function
 
+        ''' <summary>
+        ''' 单样本、单输出前向（零分配）：归一化触发强度写入 <paramref name="scratch"/>，
+        ''' 直接返回网络输出。
+        ''' </summary>
+        ''' <param name="x">一行特征（长度不得小于 <see cref="TskNetwork.InputCount"/>，多余的列会被忽略）</param>
+        ''' <param name="scratch">
+        ''' 调用方持有的缓冲，长度不得小于 <see cref="ScalarScratchLength"/>；
+        ''' 布局是「前 <c>totalMf</c> 个元素放隶属度对数，其后 <c>R</c> 个元素放归一化触发强度」
+        ''' （散射划分不使用前一段）。由调用方保证线程独占。
+        ''' </param>
+        ''' <returns>第一个输出的值；该样本的规则全部失活时返回 <c>0</c></returns>
+        ''' <remarks>
+        ''' <para>
+        ''' <see cref="ForwardCore"/> 为「逐基因稳态迭代」服务时，绝大部分中间量是纯浪费：
+        ''' <c>X</c> / <c>Mu</c> / <c>LogMu</c> / <c>Pt</c> / <c>Prod</c> / <c>F</c> 都只是把
+        ''' 一个标量结论绕一圈算出来，而 <c>ClearForwardState</c> 每次还要清四个数组。
+        ''' 这里直接在寄存器/局部变量上完成同一套五层计算。
+        ''' </para>
+        ''' <para>
+        ''' <b>为什么不复用 <see cref="TskForwardWorkspace"/></b>：稳态迭代会为上万个靶基因各调用一次，
+        ''' 而工作区是「每网络 × 每线程」一份。若走工作区，每个网络都要创建自己的
+        ''' <see cref="Threading.ThreadLocal(Of T)"/>，三万个网络 × 二十几个线程会把每个线程的
+        ''' <c>LinkedSlot</c> 槽位表撑到数万项，逐次访问全部落在不同的 cache line 上——
+        ''' 实测这让逐基因并行从 9.5 倍退化成 0.5 倍。改用调用方传入的一块扁平缓冲后，
+        ''' 网络对象本身不再持有任何线程局部状态。
+        ''' </para>
+        ''' <para>
+        ''' <b>数值等价性是硬约束</b>：本方法的累加顺序与 <see cref="ForwardCore"/> 逐项对齐——
+        ''' 前件在 log 域按输入升序（散射按 <c>active(r)</c> 的顺序）累加，
+        ''' 结论 <c>f = Σ_k x_k·θ + θ_n</c> 按 <c>k</c> 升序，第 5 层按规则升序累加，
+        ''' 并且同样复刻 <c>MatrixOps.Multiply</c> 中「<c>x_k = 0</c> 时跳过该项」的行为。
+        ''' 因此结果与批量前向<b>逐位相同</b>，不依赖任何容差。
+        ''' </para>
+        ''' </remarks>
+        Public Function ForwardScalar(x As Double(), scratch As Double()) As Double
+            If x Is Nothing Then
+                Throw New ArgumentNullException(NameOf(x))
+            End If
+
+            Dim n As Integer = _net.Inputs.Length
+            Dim rCount As Integer = _net.Rules.RuleCount
+            Dim needed As Integer = ScalarScratchLength()
+
+            If x.Length < n Then
+                Throw New ArgumentException(
+                    $"the sample has {x.Length} features but the network expects at least {n}", NameOf(x))
+            End If
+            If scratch Is Nothing OrElse scratch.Length < needed Then
+                Throw New ArgumentException($"the scratch buffer must have at least {needed} elements", NameOf(scratch))
+            End If
+
+            Dim rules As FuzzyRuleBase = _net.Rules
+            ' 网格划分下 wbar 放在隶属度对数之后；散射划分直接占用前 R 个元素
+            Dim wbarBase As Integer = needed - rCount
+            Dim total As Double = 0.0
+
+            ' ---- 第 1~3 层：模糊化 + 乘积 T-范数 ----
+            If rules.IsScatter Then
+                Dim active As Integer()() = rules.ActiveInputTable()
+                Dim centers As Double(,) = rules.RuleCenters
+                Dim sigmas As Double(,) = rules.RuleSigmas
+
+                For r As Integer = 0 To rCount - 1
+                    Dim indices As Integer() = active(r)
+                    Dim logW As Double = 0.0
+
+                    For k As Integer = 0 To indices.Length - 1
+                        Dim i As Integer = indices(k)
+                        Dim sigma As Double = sigmas(r, i)
+                        Dim z As Double = (x(i) - centers(r, i)) / sigma
+
+                        logW += -0.5 * z * z
+                    Next
+
+                    Dim wv As Double
+
+                    If logW < LogUnderflow Then
+                        wv = 0.0
+                    Else
+                        wv = std.Exp(logW)
+                    End If
+
+                    scratch(wbarBase + r) = wv
+                    total += wv
+                Next
+            Else
+                Dim offsets As Integer() = _net.MfOffsets
+
+                ' 先把每个输入的隶属度对数算进 scratch 的前段（与 ForwardCore 的 LogMu 同构）
+                For i As Integer = 0 To n - 1
+                    Dim mfs As IMembershipFunction() = _net.Inputs(i).Functions
+                    Dim offset As Integer = offsets(i)
+                    Dim xi As Double = x(i)
+
+                    For k As Integer = 0 To mfs.Length - 1
+                        Dim mu As Double = mfs(k).Evaluate(xi)
+
+                        scratch(offset + k) = If(mu > 0.0, std.Log(mu), Double.NegativeInfinity)
+                    Next
+                Next
+
+                For r As Integer = 0 To rCount - 1
+                    Dim logW As Double = 0.0
+
+                    For i As Integer = 0 To n - 1
+                        logW += scratch(offsets(i) + rules.Antecedent(r, i))
+                    Next
+
+                    Dim wv As Double
+
+                    If Double.IsNegativeInfinity(logW) OrElse logW < LogUnderflow Then
+                        wv = 0.0
+                    Else
+                        wv = std.Exp(logW)
+                    End If
+
+                    scratch(wbarBase + r) = wv
+                    total += wv
+                Next
+            End If
+
+            ' 与 ForwardCore 的 valid(t) 判定一致：NaN 也视为失活（此时 Z 保持 0）
+            If Not (total > MinimumActivationSum) Then
+                Return 0.0
+            End If
+
+            For r As Integer = 0 To rCount - 1
+                scratch(wbarBase + r) = scratch(wbarBase + r) / total
+            Next
+
+            ' ---- 第 4、5 层：一阶 Sugeno 结论 + 加权求和 ----
+            Dim theta As Double(,) = _net.Theta
+            Dim acc As Double = 0.0
+
+            For r As Integer = 0 To rCount - 1
+                Dim offset As Integer = r * (n + 1)
+                Dim f As Double = 0.0
+
+                For k As Integer = 0 To n - 1
+                    Dim xk As Double = x(k)
+
+                    ' 复刻 MatrixOps.Multiply 的 "aik = 0 时整项跳过"（避免 0 * Inf -> NaN 的差异）
+                    If xk = 0.0 Then
+                        Continue For
+                    End If
+
+                    f += xk * theta(offset + k, 0)
+                Next
+
+                f += theta(offset + n, 0)
+                acc += scratch(wbarBase + r) * f
+            Next
+
+            Return acc
+        End Function
+
+        ''' <summary>
+        ''' <see cref="ForwardScalar"/> 所需的最小缓冲长度：<c>totalMf + R</c>（散射划分只需 <c>R</c>）。
+        ''' </summary>
+        Public ReadOnly Property ScalarScratchLength As Integer
+            Get
+                Dim rCount As Integer = _net.Rules.RuleCount
+
+                If _net.Rules.IsScatter Then
+                    Return rCount
+                End If
+
+                Dim totalMf As Integer = 0
+
+                For i As Integer = 0 To _net.Inputs.Length - 1
+                    totalMf += _net.Inputs(i).FunctionCount
+                Next
+
+                Return totalMf + rCount
+            End Get
+        End Property
+
 #End Region
 
 #Region "设计矩阵与反向"

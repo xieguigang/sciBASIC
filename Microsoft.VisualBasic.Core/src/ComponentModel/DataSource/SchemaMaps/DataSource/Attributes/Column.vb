@@ -58,7 +58,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-Namespace StorageProvider.Reflection
+Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
     ''' This is a column(or Field) in the csv document. The <see cref="ColumnAttribute.CustomParser"/> should implements the 
@@ -81,6 +81,16 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property CustomParser As Type
+
+        Public ReadOnly Property [alias] As String()
+
+        Sub New()
+        End Sub
+
+        Sub New(name As String, ParamArray [alias] As String())
+            Me.Name = name
+            Me.alias = [alias]
+        End Sub
 
         ''' <summary>
         ''' 构建一个列的别名属性值，也可以在这个构造函数之中指定自定义的解析器用来存储非基本类型

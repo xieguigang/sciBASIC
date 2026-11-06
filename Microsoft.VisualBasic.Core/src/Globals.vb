@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::477f0ee6c1c23aeec468aa955b14008c, Microsoft.VisualBasic.Core\src\Globals.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 51
-    '    Code Lines: 16 (31.37%)
-    ' Comment Lines: 27 (52.94%)
-    '    - Xml Docs: 77.78%
-    ' 
-    '   Blank Lines: 8 (15.69%)
-    '     File Size: 1.51 KB
+' Summaries:
 
 
-    ' Module Globals
-    ' 
-    '     Sub: message
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 51
+'    Code Lines: 16 (31.37%)
+' Comment Lines: 27 (52.94%)
+'    - Xml Docs: 77.78%
+' 
+'   Blank Lines: 8 (15.69%)
+'     File Size: 1.51 KB
+
+
+' Module Globals
+' 
+'     Sub: message
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
@@ -100,5 +101,9 @@ Partial Public Module Globals
             .JoinBy("")
 
         Call strMsg.info
+    End Sub
+
+    Public Sub PrintTable(Of T As Class)(table As IReadOnlyCollection(Of T))
+        Call Console.WriteLine(ConsoleTableBuilder.From(table).WithFormat(Flags.ConsoleTableBuilderFormat.Minimal).Export.ToString)
     End Sub
 End Module

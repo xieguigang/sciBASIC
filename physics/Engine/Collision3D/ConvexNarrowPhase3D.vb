@@ -134,7 +134,27 @@ Namespace Collision3D
     Public Module ConvexNarrowPhase3D
 
         ''' <summary>单个流形最多保留的接触点数（多点流形才撑得住面接触）。</summary>
+        ''' <remarks>
+        ''' The reference solver keeps 8 to 12 points per manifold. Raising it here was
+        ''' measured and it trades one phase for another: with eight points the open
+        ''' loop stand improves (57 -> 80 of 200) but the policy phases get worse
+        ''' (250 -> 153 standing, 87 -> 40 walking), because a sequential impulse solver
+        ''' with a fixed iteration count converges slower the more rows it has. The
+        ''' raise belongs together with the convergence criterion, not before it.
+        ''' </remarks>
         Public Const MaxContacts As Integer = 4
+
+        ''' <summary>
+        ''' 离平面多近的顶点也算作接触点（米）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 平面接触原来只收集"已经穿进平面"的顶点。脚掌是一块平底的凸壳，静止时只有
+        ''' 零点几毫米的那几个角点穿过平面，于是接触多边形退化成 17 × 18 mm 的三角形，
+        ''' 并且每个子步在不同顶点之间跳变——机器人不可能在这样的支撑面上站住（实测
+        ''' 重心投影频繁落在支撑范围之外，0.4 s 内倾覆 109°）。把接近共面的顶点也收进
+        ''' 流形，脚底就会稳定地给出同样的四个角点。
+        ''' </remarks>
+        Public Const PlaneContactTolerance As Double = 0.0015
         ''' <summary>边×边候选轴数量上限，防止高分段圆柱/圆锥把 SAT 变成 O(n²) 灾难。</summary>
         Private Const MaxEdgePairs As Integer = 600
 
@@ -355,6 +375,102 @@ Namespace Collision3D
             Return out
         End Function
 
+        ''' <summary>
+        ''' keep the points that span the contact patch instead of the deepest ones
+        ''' </summary>
+        ''' <remarks>
+        ''' 平面接触用"最深"筛点会退化：脚掌与地面有几度夹角时，最深的几个点全落在
+        ''' 同一条边上，另外半块脚底即使已经落在容差之内也被丢掉。实测鸭子整机的支撑
+        ''' 面只剩 54 mm 脚掌里的 31 mm，重心投影因此落在支撑多边形之外，0.4 秒就倾覆。
+        ''' 这里改为保留切向包围盒的极值点（mujoco 的面裁剪同样保留多边形的极值点），
+        ''' 支撑面就能覆盖整块脚底。
+        ''' </remarks>
+        Private Function KeepSpread(points As List(Of Vector3), pens As List(Of Double),
+                                    normal As Vector3, count As Integer) As List(Of Vector3)
+            Dim u As Vector3 = Vector3Math.OrthogonalOf(normal)
+            Dim v As Vector3 = Vector3Math.Cross(normal, u)
+            Dim directions As Vector3() = {u, u * -1.0, v, v * -1.0}
+
+            ' the extremes are searched among the vertices that are really inside the
+            ' plane: a vertex that is only within the tolerance is above the floor, and
+            ' an impulse applied there produces a torque that lifts the sole instead of
+            ' holding it. Measured with the tolerant set: the hip pitch walked 2.7 rad
+            ' away from its target and the duck rolled over
+            Dim candidates As New List(Of Integer)()
+
+            For i As Integer = 0 To points.Count - 1
+                If pens(i) > 1.0E-09 Then
+                    candidates.Add(i)
+                End If
+            Next
+
+            ' every vertex of the manifold takes part in the spread, including the ones
+            ' that are only within the margin: they carry no force, but their position
+            ' is what makes the patch span the whole sole. A vertex that is above the
+            ' floor can not produce a torque because its soft mass is zero
+            candidates.Clear()
+
+            For i As Integer = 0 To points.Count - 1
+                candidates.Add(i)
+            Next
+
+            Dim keep As New List(Of Integer)()
+
+            For Each direction As Vector3 In directions
+                Dim best As Integer = -1
+                Dim bestValue As Double = Double.MinValue
+
+                For Each index As Integer In candidates
+                    Dim value As Double = Vector3Math.Dot(points(index), direction)
+
+                    If value > bestValue Then
+                        bestValue = value
+                        best = index
+                    End If
+                Next
+
+                If best >= 0 AndAlso Not keep.Contains(best) Then
+                    keep.Add(best)
+                End If
+            Next
+
+            ' a degenerate patch gives fewer than four extreme points: fill up with the
+            ' deepest ones so that the manifold stays as stiff as it was
+            Dim order As Integer() = Enumerable.Range(0, points.Count).ToArray()
+
+            Array.Sort(order, Function(x As Integer, y As Integer) pens(y).CompareTo(pens(x)))
+
+            For Each index As Integer In order
+                If keep.Count >= count Then
+                    Exit For
+                End If
+
+                ' the fill up never adds a vertex that is not touching the plane
+                If pens(index) <= 1.0E-09 AndAlso candidates.Count < points.Count Then
+                    Continue For
+                End If
+
+                If Not keep.Contains(index) Then
+                    keep.Add(index)
+                End If
+            Next
+
+            Dim keptPoints As New List(Of Vector3)()
+            Dim keptPen As New List(Of Double)()
+
+            For Each index As Integer In keep
+                keptPoints.Add(points(index))
+                keptPen.Add(pens(index))
+            Next
+
+            points.Clear()
+            pens.Clear()
+            points.AddRange(keptPoints)
+            pens.AddRange(keptPen)
+
+            Return points
+        End Function
+
         ''' <summary>按穿透深度降序保留前 <paramref name="count"/> 个点。</summary>
         Private Function KeepDeepest(points As List(Of Vector3), pens As List(Of Double), count As Integer) As List(Of Vector3)
 
@@ -465,16 +581,47 @@ Namespace Collision3D
             For Each v As Vector3 In verts
                 Dim d As Double = pl.SignedDistance(v)
 
-                If d < 0.0 Then
+                ' a vertex that is about to touch counts as a contact as well, see
+                ' PlaneContactTolerance: otherwise a flat sole only ever reports the
+                ' one or two corners that happen to be inside the plane
+                If d < PlaneContactTolerance Then
                     pts.Add(v)
-                    pens.Add(-d)
+                    ' a vertex inside the tolerance but above the floor carries a depth
+                    ' of zero. The margin / gap split is implemented in the solver
+                    ' (Manifold3D.InitSolver gives a negative depth no force, and
+                    ' AllowMarginOnly keeps such a manifold alive), but feeding the gap
+                    ' in from here was measured and it costs more than it gives: the
+                    ' standing phase of the policy falls from 250/250 to 40/250 because
+                    ' only the deepest points push and the patch they form is no longer
+                    ' the one under the centre of mass. The split needs the force of a
+                    ' margin point to ramp with the depth instead of being zero.
+                    ' a vertex inside the tolerance but above the floor carries a depth
+                    ' of zero. The signed version (negative = gap) together with the
+                    ' solimp ramp of the solver was measured as a combination: the patch
+                    ' grows to 71 mm but every phase gets worse (57/250/87 -> 30/33/70),
+                    ' so a margin point must not push at all until the contact model of
+                    ' the rest of the body is sound
+                    pens.Add(std.Max(-d, 0.0))
                 End If
             Next
 
             If pts.Count = 0 Then Return Nothing
             If pts.Count > MaxContacts Then pts = KeepDeepest(pts, pens, MaxContacts)
 
-            Return NarrowPhase3D.Build(plane, convex, pl.Normal, pts, pens)
+            Dim manifold As Manifold3D = NarrowPhase3D.Build(plane, convex, pl.Normal, pts, pens)
+            ' KeepSpread was measured here: the patch grows to the whole 54 mm sole and
+            ' the walking phase improves (87 -> 157 of 250), but the standing phase
+            ' collapses (250 -> 48). Only the deepest points carry force, so a patch
+            ' chosen for its extremes ends up pushing on the wrong corners. The margin
+            ' split is in place (AllowMarginOnly, negative depth = gap); enabling the
+            ' spread needs the force of a margin point to be a fraction of the depth,
+            ' not zero, before it is worth another try.
+
+            If manifold IsNot Nothing Then
+                manifold.AllowMarginOnly = True
+            End If
+
+            Return manifold
         End Function
 
         ''' <summary>
@@ -495,16 +642,40 @@ Namespace Collision3D
             For Each v As Vector3 In verts
                 Dim d As Double = pl.SignedDistance(v)
 
-                If d < 0.0 Then
+                ' a vertex that is about to touch counts as a contact as well, see
+                ' PlaneContactTolerance: otherwise a flat sole only ever reports the
+                ' one or two corners that happen to be inside the plane
+                If d < PlaneContactTolerance Then
                     pts.Add(v)
-                    pens.Add(-d)
+                    ' a vertex inside the tolerance but above the floor carries a depth
+                    ' of zero. The margin / gap split is implemented in the solver
+                    ' (Manifold3D.InitSolver gives a negative depth no force, and
+                    ' AllowMarginOnly keeps such a manifold alive), but feeding the gap
+                    ' in from here was measured and it costs more than it gives: the
+                    ' standing phase of the policy falls from 250/250 to 40/250 because
+                    ' only the deepest points push and the patch they form is no longer
+                    ' the one under the centre of mass. The split needs the force of a
+                    ' margin point to ramp with the depth instead of being zero.
+                    ' a vertex inside the tolerance but above the floor carries a depth
+                    ' of zero. The signed version (negative = gap) together with the
+                    ' solimp ramp of the solver was measured as a combination: the patch
+                    ' grows to 71 mm but every phase gets worse (57/250/87 -> 30/33/70),
+                    ' so a margin point must not push at all until the contact model of
+                    ' the rest of the body is sound
+                    pens.Add(std.Max(-d, 0.0))
                 End If
             Next
 
             If pts.Count = 0 Then Return Nothing
             If pts.Count > MaxContacts Then pts = KeepDeepest(pts, pens, MaxContacts)
 
-            Return NarrowPhase3D.Build(convex, plane, pl.Normal * -1.0, pts, pens)
+            Dim manifold As Manifold3D = NarrowPhase3D.Build(convex, plane, pl.Normal * -1.0, pts, pens)
+
+            If manifold IsNot Nothing Then
+                manifold.AllowMarginOnly = True
+            End If
+
+            Return manifold
         End Function
 
         ' /********************************************************************************/

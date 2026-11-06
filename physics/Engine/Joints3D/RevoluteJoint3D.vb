@@ -197,6 +197,20 @@ Namespace Joints3D
         '  约束求解
         ' /********************************************************************************/
 
+        ''' <summary>
+        ''' the viscous damping of the hinge about its own axis, N·m·s/rad
+        ''' </summary>
+        ''' <remarks>
+        ''' Applied as an implicit decay of the relative spin instead of a torque that
+        ''' is subtracted from the force budget: the reference solver folds
+        ''' ``dof_damping`` into the mass matrix of the step (``engine_forward.c``,
+        ''' the implicit Euler branch), which stays stable no matter how small the link
+        ''' inertia is. An explicit ``ω -= d·ω·dt/I`` term on a six gram link with an
+        ''' armature of 1.8e-3 oscillates as soon as the damping is large enough to
+        ''' matter.
+        ''' </remarks>
+        Public Property Damping As Double = 0.0
+
         Public Sub SolveVelocity(dt As Double) Implements IConstraint3D.SolveVelocity
             Call Point.SolveVelocity(dt)
 
@@ -232,6 +246,34 @@ Namespace Joints3D
             If EnableLimit Then
                 Call SolveLimit(rbA, rbB, invIA, invIB, dt)
             End If
+
+            If Damping > 0 AndAlso dt > 0 Then
+                Call SolveAxisDamping(rbA, rbB, invIA, invIB, dt)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' implicit euler damping about the hinge axis: the relative spin is scaled
+        ''' by <c>1/(1 + d·dt/I)</c> instead of having a torque subtracted
+        ''' </summary>
+        Private Sub SolveAxisDamping(rbA As RigidBody3D, rbB As RigidBody3D,
+                                     invIA As Matrix3x3, invIB As Matrix3x3, dt As Double)
+            Dim u As Vector3 = WorldAxisA
+            Dim k As Double = Vector3Math.Dot(u, invIA.MultiplyLeft(u)) +
+                              Vector3Math.Dot(u, invIB.MultiplyLeft(u))
+
+            If k < 1.0E-12 Then
+                Return
+            End If
+
+            Dim inertia As Double = 1.0 / k
+            Dim ratio As Double = Damping * dt / inertia
+            Dim wRel As Double = Vector3Math.Dot(rbB.AngularVelocity - rbA.AngularVelocity, u)
+            Dim delta As Double = -wRel * ratio / (1.0 + ratio)
+            Dim j As Double = delta / k
+
+            rbB.AngularVelocity = rbB.AngularVelocity + invIB.MultiplyLeft(u * j)
+            rbA.AngularVelocity = rbA.AngularVelocity - invIA.MultiplyLeft(u * j)
         End Sub
 
         ''' <summary>角度限位：越过行程时沿轴施加一个拉回目标速度。</summary>

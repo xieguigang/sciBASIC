@@ -58,6 +58,24 @@ Namespace TSK
         ''' <summary>单样本推理用的 1 元素行批次容器（线程局部，避免每次调用新建数组）。</summary>
         Private _rowBatch As ThreadLocal(Of Double()())
 
+        ''' <summary>
+        ''' 单样本标量推理的缓冲（<b>每线程一份、且所有网络共用</b>）。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 这里刻意不用 <see cref="ThreadLocal(Of T)"/>（每个网络一个实例）：逐基因稳态迭代会为
+        ''' 上万个靶基因各调用一次 <see cref="PredictScalar"/>，而每个 <see cref="ThreadLocal(Of T)"/>
+        ''' 都要在每条线程上占一个槽位。三万个网络 × 二十几条线程之后，线程的槽位表会膨胀到
+        ''' 数万项，每次取值都命中不同的 cache line——实测让逐基因并行从 9.5 倍退化成 0.5 倍。
+        ''' </para>
+        ''' <para>
+        ''' <see cref="ThreadStaticAttribute"/> 字段是「每线程 × 每类型」一份，与网络实例数量无关，
+        ''' 因此无论多少个基因共用同一条线程，缓冲都只有一份；按需增长即可。
+        ''' </para>
+        ''' </remarks>
+        <ThreadStatic>
+        Private Shared _scalarBuffer As Double()
+
         ''' <summary>按结构创建模型（结论参数初始化为 0，即输出恒为 0）。</summary>
         ''' <param name="inputs">输入变量（顺序即特征列顺序）</param>
         ''' <param name="rules">规则库</param>
@@ -365,17 +383,21 @@ Namespace TSK
         ''' <param name="x">一行特征（长度不得小于 <see cref="InputCount"/>）</param>
         ''' <returns>第一个输出的值</returns>
         ''' <remarks>
+        ''' <para>
         ''' 逐基因稳态迭代（<c>FuzzyGeneNetwork.SteadyState</c>）是这条路径的重度使用者：
         ''' 几万基因 × 上百步迭代，每次调用若还要分配结果数组就会产生 GB 级垃圾。
+        ''' </para>
+        ''' <para>
+        ''' 统一走 <see cref="TskLayers.ForwardScalar"/> 的单行快路径（不物化任何中间矩阵、
+        ''' 不碰 <see cref="TskForwardWorkspace"/>），因此同一实例可以安全地被多条线程并发调用。
+        ''' </para>
         ''' </remarks>
         Public Function PredictScalar(x As Double()) As Double
             If x Is Nothing Then
                 Throw New ArgumentNullException(NameOf(x))
             End If
 
-            Dim fwd As TskInferenceTrace = _layers.Forward(RowBatch(x), 0, 1, RowWorkspace())
-
-            Return fwd.Z(0, 0)
+            Return _layers.ForwardScalar(x, ScalarScratch())
         End Function
 
         ''' <summary>
@@ -439,6 +461,62 @@ Namespace TSK
 
             Return _rowWorkspace.Value
         End Function
+
+        ''' <summary>
+        ''' 取当前线程的标量推理缓冲（每线程一份、所有网络共用；按需增长）。
+        ''' </summary>
+        Private Function ScalarScratch() As Double()
+            ' 缓冲长度只与网络结构有关，缓存一次即可（省掉每次推理都遍历输入）
+            Dim needed As Integer = _scalarBufferLength
+
+            If needed <= 0 Then
+                needed = _layers.ScalarScratchLength
+                _scalarBufferLength = needed
+            End If
+
+            Dim buffer As Double() = _scalarBuffer
+
+            If buffer Is Nothing OrElse buffer.Length < needed Then
+                buffer = New Double(needed - 1) {}
+                _scalarBuffer = buffer
+            End If
+
+            Return buffer
+        End Function
+
+        ''' <summary><see cref="ScalarScratch"/> 需要的缓冲长度缓存（&lt;= 0 表示尚未计算）。</summary>
+        Private _scalarBufferLength As Integer
+
+        ''' <summary>
+        ''' 每个输入在扁平隶属度列里的起始下标（网格划分的前向需要）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这是网络结构的一部分、在推理期不变，因此用普通字段缓存即可；
+        ''' 并发首次访问时可能被重复计算一次，但结果相同，无需加锁。
+        ''' </remarks>
+        Friend ReadOnly Property MfOffsets As Integer()
+            Get
+                Dim cached As Integer() = _mfOffsets
+
+                If cached IsNot Nothing AndAlso cached.Length = Inputs.Length Then
+                    Return cached
+                End If
+
+                Dim offsets(Inputs.Length - 1) As Integer
+                Dim cursor As Integer = 0
+
+                For i As Integer = 0 To Inputs.Length - 1
+                    offsets(i) = cursor
+                    cursor += Inputs(i).FunctionCount
+                Next
+
+                _mfOffsets = offsets
+
+                Return offsets
+            End Get
+        End Property
+
+        Private _mfOffsets As Integer()
 
         ''' <summary>把单行包装成 1 元素批次（线程局部容器，避免每次调用新建数组）。</summary>
         Private Function RowBatch(row As Double()) As Double()()

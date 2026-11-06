@@ -58,7 +58,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace StorageProvider.Reflection
+Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
     ''' This property is a array data type object.
@@ -116,7 +116,7 @@ Namespace StorageProvider.Reflection
             End If
 
             Dim values$() = LinqAPI.Exec(Of String) _
- _
+                                                    _
                 () <= From x As T
                       In source
                       Where Not x Is Nothing

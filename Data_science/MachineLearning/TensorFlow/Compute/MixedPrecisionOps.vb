@@ -98,7 +98,14 @@ Namespace Compute
             If b.Length \ (kmax * jmax) <> blocks Then Return Nothing
 
             ' ---- 逐 block ----
-            Dim result = New Tensor(CType(a.Shape.Clone(), Integer()))
+            ' 输出形状的最后一维是 jmax（右乘矩阵的列数），不能直接用 a.Shape：
+            ' 注意力里 a=(batch, tq, dk)、b=(batch, tk, dv)，输出是 (batch, tq, tk)，
+            ' dk 与 tk 一般不相等。
+            Dim blockOutShape = CType(a.Shape.Clone(), Integer())
+            blockOutShape(rank - 2) = imax
+            blockOutShape(rank - 1) = jmax
+
+            Dim result = New Tensor(blockOutShape)
 
             Dim bsA = imax * kmax
             Dim bsB = kmax * jmax

@@ -8,6 +8,8 @@ Namespace ApplicationServices.Report
     ''' </summary>
     Public Class HtmlRender : Inherits TextReportRender
 
+        Public Property title As String
+
         ''' <summary>
         ''' render the given <see cref="Block"/> document into html text, the generated html
         ''' text can be read from the <see cref="TextReportRender.Output"/> property.
@@ -15,7 +17,33 @@ Namespace ApplicationServices.Report
         ''' <param name="report">the markdown content blocks of the target document</param>
         Public Overrides Sub Render(report As IEnumerable(Of Block))
             Call buffer.Clear()
+
+            Call buffer.AppendLine("<!DOCTYPE html>")
+            Call buffer.AppendLine("<html lang=""en"">")
+            Call buffer.AppendLine("<head>")
+            Call buffer.AppendLine("<meta charset=""utf-8"" />")
+            Call buffer.AppendLine($"<title>{If(title, "data report")}</title>")
+            Call buffer.AppendLine("<style>")
+            Call buffer.AppendLine("body{max-width:960px;margin:2.5rem auto;padding:0 1.25rem;font-family:""Segoe UI"",Helvetica,Arial,sans-serif;line-height:1.65;color:#1f2933;}")
+            Call buffer.AppendLine("h1,h2,h3,h4{line-height:1.25;margin-top:2rem;}")
+            Call buffer.AppendLine("h1{border-bottom:2px solid #e4e7eb;padding-bottom:.5rem;}")
+            Call buffer.AppendLine("table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem;}")
+            Call buffer.AppendLine("th,td{border:1px solid #cbd2d9;padding:.35rem .6rem;}")
+            Call buffer.AppendLine("th{background:#f5f7fa;text-align:left;}")
+            Call buffer.AppendLine("tr:nth-child(even){background:#fafbfc;}")
+            Call buffer.AppendLine("pre{background:#0f172a;color:#e2e8f0;padding:1rem;border-radius:6px;overflow:auto;}")
+            Call buffer.AppendLine("code{font-family:Consolas,monospace;}")
+            Call buffer.AppendLine("img{max-width:100%;height:auto;}")
+            Call buffer.AppendLine("blockquote{border-left:4px solid #cbd2d9;margin-left:0;padding-left:1rem;color:#52606d;}")
+            Call buffer.AppendLine("hr{border:none;border-top:1px solid #e4e7eb;margin:2rem 0;}")
+            Call buffer.AppendLine("</style>")
+            Call buffer.AppendLine("</head>")
+            Call buffer.AppendLine("<body>")
+
             Call AppendBlocks(report.SafeQuery.Select(AddressOf RenderBlock))
+
+            Call buffer.AppendLine("</body>")
+            Call buffer.AppendLine("</html>")
         End Sub
 
         ''' <summary>

@@ -107,13 +107,84 @@ Public Class PhysicsWorld3D
     Public Property Slop As Double = 0.01
 
     ''' <summary>
+    ''' 软接触的时间常数（秒），等价于 mujoco ``solref`` 的第一个参数。
+    ''' </summary>
+    ''' <remarks>
+    ''' 大于 0 时接触按"刚度 + 阻尼"求解（见 <see cref="Manifold3D.InitSolver(Double, Double, Double, Double, Double)"/>），
+    ''' 位置误差只以有限的力被推回；为 0 时退回原来的刚性 Baumgarte 行为。
+    ''' 小尺度机器人（单节 6 g、惯量 1e-6 量级）只有软接触才能站稳：刚性接触把
+    ''' 1 cm 的穿透换算成 3 m/s 的弹开速度，接触一发生就把整机弹飞。
+    ''' </remarks>
+    Public Property ContactTimeConstant As Double = 0.0
+
+    ''' <summary>
+    ''' 软接触的阻尼比（``solref`` 的第二个参数），1 = 临界阻尼。
+    ''' </summary>
+    Public Property ContactDampingRatio As Double = 1.0
+
+    ''' <summary>
     ''' 跨帧热启动：把上一子步同一接触点上累积的法向/摩擦冲量继承下来并立即施加。
     ''' 堆叠与静止接触的收敛速度完全依赖它，关闭后物体会持续抖动。
     ''' </summary>
     Public Property WarmStarting As Boolean = True
 
+    ''' <summary>
+    ''' 丢弃上一子步的接触流形缓存。
+    ''' </summary>
+    ''' <remarks>
+    ''' 热启动会按刚体对和接触点位置把上一帧的累积冲量重新施加到速度上。谁把
+    ''' 刚体瞬移了（复位、重新生成、切换形态），谁就必须把它清掉：否则一落地的
+    ''' 机器人被"传送"回起始位姿时，上一帧那份支撑冲量会原样作用在新位置上，
+    ''' 连重力都还没参与，整机就凭空获得速度和角动量飞出去。
+    ''' </remarks>
+    Public Sub ClearContactCache()
+        contactCache.Clear()
+    End Sub
+
     ''' <summary>热启动时匹配上一帧接触点的位置容差（米）。</summary>
     Public Property WarmStartRadius As Double = 0.08
+
+    ''' <summary>
+    ''' run the sub step hooks after the gravity and the force fields instead of
+    ''' before them
+    ''' </summary>
+    ''' <remarks>
+    ''' The reference solver evaluates the actuators in the same acceleration
+    ''' equation as the bias force, so a controller that writes a velocity has to see
+    ''' the gravity of that sub step already applied. Off by default: the old order
+    ''' is what every existing scene of this library was tuned on.
+    ''' </remarks>
+    Public Property HooksAfterGravity As Boolean = False
+
+    ''' <summary>
+    ''' stop the constraint iterations once the largest velocity change of a body
+    ''' between two rounds is below this value
+    ''' </summary>
+    ''' <remarks>
+    ''' 0 keeps the old behaviour of a fixed number of iterations. The reference solver
+    ''' reports the state of every constraint after each round; this is the cheap
+    ''' equivalent: a fixed point iteration that no longer changes any velocity has
+    ''' converged, and the number of rounds it needed is the number that says whether
+    ''' the scene is well conditioned.
+    ''' </remarks>
+    ''' <summary>
+    ''' keep a plane contact that is still entirely inside the margin
+    ''' </summary>
+    ''' <remarks>
+    ''' The manifold carries no force in that case (every point has a negative depth,
+    ''' see Manifold3D.InitSolver), it only describes the patch before the first
+    ''' vertex touches. Off by default: enabling it changed nothing in the bench until
+    ''' the force of a margin point ramps with its depth, which is not implemented.
+    ''' </remarks>
+    Public Property MarginOnlyContacts As Boolean = False
+
+    Public Property SolverTolerance As Double = 0.0
+
+    ''' <summary>the rounds the last sub step actually used</summary>
+    Public Property SolverIterations As Integer = 0
+
+    ''' <summary>the residual of the last round of the last sub step</summary>
+    Public Property LastResidual As Double = 0
 
     ''' <summary>是否允许刚体休眠（低速持续一段时间后冻结，既防抖又省 CPU）。</summary>
     Public Property AllowSleep As Boolean = True
@@ -272,9 +343,16 @@ Public Class PhysicsWorld3D
         Next
 
         ' 1.5 子步钩子：外部控制器补充持续力
-        For Each h In Hooks
-            Call h.BeforeSubstep(dt)
-        Next
+        '
+        ' 参考实现里执行器写在 qfrc_actuator 上，与重力一起进入同一个加速度方程
+        ' （engine_forward.c: mj_fwdActuation 在 mj_fwdAcceleration 之前）。钩子放在
+        ' 重力之前时，控制器对速度的修正会被随后的重力再改一次，顺序与参考不一致；
+        ' HooksAfterGravity 把钩子移到重力之后，默认关闭以保持旧行为。
+        If Not HooksAfterGravity Then
+            For Each h In Hooks
+                Call h.BeforeSubstep(dt)
+            Next
+        End If
 
         ' 2. 全局重力 + 力场
         For Each b In Bodies
@@ -290,6 +368,16 @@ Public Class PhysicsWorld3D
             Call b.IntegrateVelocity(dt)
         Next
 
+        ' 3.5 速度层控制器：放在积分之后，重力已经进入速度，此时设定的速度才不会被
+        ' 下一步的重力覆盖。放在重力之前时，一个写入关节速度的伺服每个子步都会被
+        ' 它刚摆好的连杆的重力改回来（实测髋俯仰在十步内从 0.02 漂到 0.78 rad，
+        ' 增益提到 300 也一样，因为漂移与增益无关）
+        If HooksAfterGravity Then
+            For Each h In Hooks
+                Call h.BeforeSubstep(dt)
+            Next
+        End If
+
         ' 4. 宽相位
         Dim pairs = BroadPhase3D.ComputePairs(Bodies)
 
@@ -299,13 +387,18 @@ Public Class PhysicsWorld3D
         For Each pr In pairs
             Dim m = NarrowPhase3D.Collide(pr.A, pr.B)
 
-            If m IsNot Nothing AndAlso m.HasContacts AndAlso m.Penetration > 0 Then
+            ' a manifold whose points are all inside the margin (no penetration yet) is
+            ' still worth keeping when it comes from a plane: the solver gives those
+            ' points no force, but the patch they describe is what lets the body land on
+            ' the whole sole instead of on the single edge that happens to be the deepest
+            If m IsNot Nothing AndAlso m.HasContacts AndAlso
+               (m.Penetration > 0 OrElse (m.AllowMarginOnly AndAlso MarginOnlyContacts)) Then
                 ' 运动物体会撞醒与之接触的休眠物体：必须在热启动之前唤醒，
                 ' 否则继承下来的冲量施加到一个不参与积分的物体上没有意义
                 If pr.A.IsSleeping AndAlso Not pr.B.IsSleeping Then Call MaybeWake(pr.A, pr.B)
                 If pr.B.IsSleeping AndAlso Not pr.A.IsSleeping Then Call MaybeWake(pr.B, pr.A)
 
-                Call m.InitSolver(dt, Baumgarte, Slop)
+                Call m.InitSolver(dt, Baumgarte, Slop, ContactTimeConstant, ContactDampingRatio)
 
                 If WarmStarting Then
                     Call ApplyWarmStart(m)
@@ -327,6 +420,21 @@ Public Class PhysicsWorld3D
         End If
 
         ' 6. 速度约束求解（接触 + 关节），多次迭代
+        '
+        ' 参考实现把约束分轮求解并检查残差（mj_projectConstraint 之后的
+        ' mj_constraintUpdate 给出 efc_state），而这里原来是固定轮数、看不到收敛。
+        ' SolverTolerance > 0 时按"相邻两轮之间刚体速度的最大变化"早停，
+        ' LastResidual / SolverIterations 把收敛情况暴露给上层诊断；默认 0 保持旧行为。
+        Dim watched As Double() = Nothing
+
+        If SolverTolerance > 0 Then
+            watched = New Double(Bodies.Count * 6 - 1) {}
+            Call CaptureSpeeds(watched)
+        End If
+
+        SolverIterations = 0
+        LastResidual = 0
+
         For i As Integer = 1 To Iterations
             For Each m In Contacts
                 Call ContactSolver3D.Solve(m, dt)
@@ -334,6 +442,19 @@ Public Class PhysicsWorld3D
             For Each j In Constraints
                 Call j.SolveVelocity(dt)
             Next
+
+            SolverIterations = i
+
+            If watched IsNot Nothing Then
+                Dim residual As Double = SpeedChange(watched)
+
+                LastResidual = residual
+                Call CaptureSpeeds(watched)
+
+                If residual < SolverTolerance Then
+                    Exit For
+                End If
+            End If
         Next
 
         ' 7. 由速度积分位置
@@ -351,6 +472,43 @@ Public Class PhysicsWorld3D
             Call b.ClearForces()
         Next
     End Sub
+
+    ''' <summary>
+    ''' copy the velocities of every body into a flat buffer
+    ''' </summary>
+    Private Function CaptureSpeeds(buffer As Double()) As Integer
+        Dim index As Integer = 0
+
+        For Each b In Bodies
+            buffer(index) = b.Velocity.x
+            buffer(index + 1) = b.Velocity.y
+            buffer(index + 2) = b.Velocity.z
+            buffer(index + 3) = b.AngularVelocity.x
+            buffer(index + 4) = b.AngularVelocity.y
+            buffer(index + 5) = b.AngularVelocity.z
+            index += 6
+        Next
+
+        Return index
+    End Function
+
+    ''' <summary>the largest change of any velocity component since the snapshot</summary>
+    Private Function SpeedChange(buffer As Double()) As Double
+        Dim index As Integer = 0
+        Dim worst As Double = 0
+
+        For Each b In Bodies
+            worst = System.Math.Max(worst, System.Math.Abs(b.Velocity.x - buffer(index)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.Velocity.y - buffer(index + 1)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.Velocity.z - buffer(index + 2)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.AngularVelocity.x - buffer(index + 3)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.AngularVelocity.y - buffer(index + 4)))
+            worst = System.Math.Max(worst, System.Math.Abs(b.AngularVelocity.z - buffer(index + 5)))
+            index += 6
+        Next
+
+        Return worst
+    End Function
 
     ' ---------------- 热启动与休眠 ----------------
 

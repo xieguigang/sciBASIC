@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::ad60ed42416abdb7ee7bc7d25633a7ac, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 348
-    '    Code Lines: 226 (64.94%)
-    ' Comment Lines: 83 (23.85%)
-    '    - Xml Docs: 86.75%
-    ' 
-    '   Blank Lines: 39 (11.21%)
-    '     File Size: 16.71 KB
+' Summaries:
 
 
-    '     Module Reflector
-    ' 
-    '         Function: Convert, CreateRowBuilder, doSave, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
-    '                   GetsRowData, Load, LoadDataToObject, Save
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 348
+'    Code Lines: 226 (64.94%)
+' Comment Lines: 83 (23.85%)
+'    - Xml Docs: 86.75%
+' 
+'   Blank Lines: 39 (11.21%)
+'     File Size: 16.71 KB
+
+
+'     Module Reflector
+' 
+'         Function: Convert, CreateRowBuilder, doSave, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
+'                   GetsRowData, Load, LoadDataToObject, Save
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.PipeStream
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
@@ -85,7 +86,7 @@ Namespace StorageProvider.Reflection
         <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
             Dim Schema As TableSchema = TableSchema.CreateObjectInternal(type, Explicit).CopyReadDataFromObject
             Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) _
- _
+                                                            _
                 () <= From columAttr As Column
                       In Schema.Columns
                       Let ptype As Type = columAttr.BindProperty.PropertyType
@@ -190,7 +191,7 @@ Namespace StorageProvider.Reflection
         ''' <typeparam name="T"></typeparam>
         ''' <param name="Explicit">
         ''' 当本参数值为False的时候，所有的简单属性值都将被解析出来，而忽略掉其是否带有
-        ''' <see cref="StorageProvider.Reflection.ColumnAttribute"></see>自定义属性
+        ''' <see cref="ColumnAttribute"></see>自定义属性
         ''' </param>
         ''' <param name="path"></param>
         ''' <returns></returns>
@@ -207,7 +208,7 @@ Namespace StorageProvider.Reflection
                                             Optional tsv As Boolean = False) As IEnumerable(Of T)
             If Not path.FileExists Then
                 ' 空文件
-                Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
+                Call $"Csv file ""{path.ToFileURL}"" is empty!".warning
                 Return {}
             Else
                 Call "Load data from filestream....".debug(mute:=mute)

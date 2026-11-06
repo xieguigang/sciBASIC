@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.DeepLearning.GCN</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>Microsoft.VisualBasic.DeepLearning.GCN</AssemblyName>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.9797.1</Version>
+    <Title>Graph Convolutional Networks (Kipf &amp; Welling)</Title>
+    <Description>Kipf &amp; Welling graph convolutional network for semi-supervised node classification, with symmetric normalized adjacency in both dense and CSR form, fp64 master weights and fp32 (CUDA-friendly) GEMM/SpMM hot spots, AdamW with decoupled weight decay and early stopping.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.GCN</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;graph-neural-network;gcn;graph-convolution;semi-supervised;node-classification</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="readme.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\DeepLearning\DeepLearning.NET6.vbproj" />
+    <ProjectReference Include="..\GNN\GNN.vbproj" />
+    <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+  </ItemGroup>
+
+</Project>

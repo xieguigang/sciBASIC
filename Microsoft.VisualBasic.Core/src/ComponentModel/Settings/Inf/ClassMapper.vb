@@ -1,63 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::c52953d3b5f2337a7cc033457a2f2fe8, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\ClassMapper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 159
-    '    Code Lines: 96 (60.38%)
-    ' Comment Lines: 40 (25.16%)
-    '    - Xml Docs: 97.50%
-    ' 
-    '   Blank Lines: 23 (14.47%)
-    '     File Size: 5.98 KB
+' Summaries:
 
 
-    '     Module ClassMapper
-    ' 
-    '         Function: (+2 Overloads) ClassWriter, LoadIni, (+2 Overloads) MapParser, WriteClass
-    ' 
-    '         Sub: (+2 Overloads) ClassDumper
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 159
+'    Code Lines: 96 (60.38%)
+' Comment Lines: 40 (25.16%)
+'    - Xml Docs: 97.50%
+' 
+'   Blank Lines: 23 (14.47%)
+'     File Size: 5.98 KB
+
+
+'     Module ClassMapper
+' 
+'         Function: (+2 Overloads) ClassWriter, LoadIni, (+2 Overloads) MapParser, WriteClass
+' 
+'         Sub: (+2 Overloads) ClassDumper
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.Settings.Inf
@@ -68,7 +73,7 @@ Namespace ComponentModel.Settings.Inf
     Public Module ClassMapper
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function MapParser(Of T As Class)() As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)())
+        Public Function MapParser(Of T As Class)() As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute))
             Return GetType(T).MapParser
         End Function
 
@@ -78,7 +83,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="type"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function MapParser(type As Type) As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)())
+        Public Function MapParser(type As Type) As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute))
             Dim nameCLS As ClassName = type.GetAttribute(Of ClassName)
             Dim name As String
 
@@ -89,11 +94,21 @@ Namespace ComponentModel.Settings.Inf
             End If
 
             Dim source = DataFrameColumnAttribute.LoadMapping(type, mapsAll:=True)
-            Dim binds = source.Values.ToArray
+            Dim binds As BindProperty(Of DataFrameColumnAttribute)() = source.Values _
+                .Where(Function(f)
+                           If TypeOf f.member Is PropertyInfo Then
+                               Return DirectCast(f.member, PropertyInfo) _
+                                   .GetIndexParameters _
+                                   .IsNullOrEmpty
+                           Else
+                               Return True
+                           End If
+                       End Function) _
+                .ToArray
 
-            Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
-                .Name = name,
-                .Value = binds
+            Return New NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) With {
+                .name = name,
+                .value = binds
             }
         End Function
 
@@ -116,17 +131,63 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="type"></param>
         ''' <returns></returns>
         Public Function ClassWriter(ini As IniFile, type As Type) As Object
+            Dim maps As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) = MapParser(type)
+            Dim sectionName As String = maps.name
+            Dim obj As Object = ClassWriter(ini, type, sectionName, maps)
+            Return obj
+        End Function
+
+        ''' <summary>
+        ''' Load data from ini file onto a clr object with specific type
+        ''' </summary>
+        ''' <param name="ini"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Private Function ClassWriter(ini As IniFile, type As Type, sectionName As String, fields As BindProperty(Of DataFrameColumnAttribute)()) As Object
             Dim obj As Object = Activator.CreateInstance(type)
-            Dim maps = MapParser(type)
             Dim o As Object
 
-            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In fields
                 Dim key As String = map.field.Name
 
                 If Not DataFramework.IsPrimitive(map.Type) Then
-                    o = ClassWriter(ini, map.Type)
+                    If map.Type.IsArray Then
+                        type = map.Type.GetElementType
+
+                        If DataFramework.IsPrimitive(type) Then
+                            ' split by comma
+                            Dim vals As String() = ini.ReadValue(sectionName, key).StringSplit(ArraySep)
+                            Dim objs As Array = vals.CTypeDynamic(type)
+
+                            o = objs
+                        Else
+                            Dim list As New List(Of Object)
+                            Dim maps = MapParser(type)
+
+                            For i As Integer = 0 To Integer.MaxValue
+                                Dim keyIdx As String = $"{maps.name} #{i + 1}"
+                                Dim section As Section = ini(keyIdx)
+
+                                If section Is Nothing Then
+                                    Exit For
+                                Else
+                                    Call list.Add(ini.ClassWriter(type, keyIdx, maps))
+                                End If
+                            Next
+
+                            o = list.MakeArray(type)
+                        End If
+                    ElseIf map.type.ImplementInterface(GetType(IDictionary)) Then
+                        Dim json As String = ini.ReadValue(sectionName, key)
+                        Dim dict As Object = JsonContract.LoadObject(json, map.Type, throwEx:=False)
+
+                        o = dict
+                    Else
+                        o = ClassWriter(ini, map.Type)
+                    End If
                 Else
-                    o = any.CTypeDynamic(ini.ReadValue(maps.Name, key), map.Type)
+                    o = any.CTypeDynamic(ini.ReadValue(sectionName, key), map.Type)
                 End If
 
                 Call map.SetValue(obj, o)
@@ -149,26 +210,70 @@ Namespace ComponentModel.Settings.Inf
 
         <Extension>
         Public Sub ClassDumper(type As Type, x As Object, ini As IniFile)
-            Dim maps = MapParser(type)
+            Dim maps As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) = MapParser(type)
+            Dim section As String = maps.name
 
-            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
-                Dim key As String = map.field.Name
+            Call ClassDumper(section, maps, x, ini)
+        End Sub
+
+        Const ArraySep As String = ", "
+
+        <Extension>
+        Public Sub ClassDumper(section As String, fields As IEnumerable(Of BindProperty(Of DataFrameColumnAttribute)), x As Object, ini As IniFile)
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In fields
                 Dim value As Object = map.GetValue(x)
+                Dim type As Type = Nothing
 
-                If value IsNot Nothing AndAlso Not DataFramework.IsPrimitive(value.GetType) Then
-                    Call ClassDumper(value.GetType, value, ini)
+                If value Is Nothing Then
+                    If DataFramework.IsPrimitive(map.Type) Then
+                        Call ini.WritePrimitiveValue(Nothing, section, map)
+                    End If
+
                     Continue For
+                Else
+                    type = value.GetType
                 End If
 
-                Dim val_str As String = any.ToString(value)
-                Dim comment As String = map.member.Description
+                If type.IsArray Then
+                    ' 20261105 required of the array string contains no comma symbol
+                    If DataFramework.IsPrimitive(type.GetElementType) Then
+                        type = type.GetElementType
+                        value = DirectCast(value, Array).AsObjectEnumerator.AsCharacter.JoinBy(ArraySep)
+                    End If
+                End If
 
-                If val_str.StringEmpty Then
-                    Call ini.WriteComment(maps.Name, $"{key}=<{map.Type.FullName}>", key)
+                If Not DataFramework.IsPrimitive(type) Then
+                    If type.IsArray Then
+                        Dim vec As Array = DirectCast(value, Array)
+                        Dim maps As NamedCollection(Of BindProperty(Of DataFrameColumnAttribute)) = MapParser(type.GetElementType)
+
+                        For i As Integer = 0 To vec.Length - 1
+                            ' [xxx #1]
+                            Call ClassDumper(maps.name & " #" & (i + 1), maps, vec.GetValue(i), ini)
+                        Next
+                    ElseIf type.ImplementInterface(GetType(IDictionary)) Then
+                        Call ini.WritePrimitiveValue(JsonContract.GetObjectJson(value, indent:=False), section, map)
+                    Else
+                        Call ClassDumper(type, value, ini)
+                    End If
                 Else
-                    Call ini.WriteValue(maps.Name, key, val_str, comment)
+                    Call ini.WritePrimitiveValue(value, section, map)
                 End If
             Next
+        End Sub
+
+        <Extension>
+        Private Sub WritePrimitiveValue(ini As IniFile, value As Object, section As String, map As BindProperty(Of DataFrameColumnAttribute))
+            Dim key As String = map.field.Name
+            ' nothing mapping as empty string
+            Dim val_str As String = any.ToString(value, null:="")
+            Dim comment As String = map.member.Description
+
+            If val_str.StringEmpty Then
+                Call ini.WriteComment(section, $"{key}=<{map.Type.FullName}>", key)
+            Else
+                Call ini.WriteValue(section, key, val_str, comment)
+            End If
         End Sub
 
         ''' <summary>

@@ -230,8 +230,15 @@ Namespace CommandLine.Reflection.EntryPoints
             End If
 
             name = args.Keys _
-                .Where(Function(name2)
-                           Return name2.TrimParamPrefix.TextEquals(name)
+                .Where(Function(cli_name)
+                           ' 20261105 cli_name is the commandline argument name, may be in format
+                           ' of --aa-bb, '-' is not a valid symbol name inside vb language
+                           ' so we use _ for the symbol name in vb source: aa_bb.
+                           ' replace - as _ for make matches of the cli argument name '--aa-bb' with the vb symbol name 'aa_bb'
+                           Return cli_name _
+                               .TrimParamPrefix _
+                               .Replace("-", "_") _
+                               .TextEquals(name)
                        End Function) _
                 .FirstOrDefault
 

@@ -379,11 +379,6 @@ Namespace Serialization.JSON
         End Function
 
         ''' <summary>
-        ''' Cached options for the common case (no polymorphic known types).
-        ''' </summary>
-        Private ReadOnly defaultOptions As JsonSerializerOptions = CreateDefaultOptions()
-
-        ''' <summary>
         ''' Build the <see cref="JsonSerializerOptions"/> used for (de)serialization. When
         ''' <paramref name="knownTypes"/> is supplied, polymorphic (de)serialization is enabled
         ''' using the DataContract convention of a ``__type`` discriminator so that JSON
@@ -398,10 +393,6 @@ Namespace Serialization.JSON
                 types = knownTypes.Where(Function(t) t IsNot Nothing).ToArray()
             End If
 
-            If types.Length = 0 Then
-                Return defaultOptions
-            End If
-
             Dim options As New JsonSerializerOptions() With {
                 .IncludeFields = True,
                 .DefaultIgnoreCondition = JsonIgnoreCondition.Never,
@@ -413,7 +404,9 @@ Namespace Serialization.JSON
 
             Dim resolver As New DefaultJsonTypeInfoResolver()
             resolver.Modifiers.Add(AddressOf IgnoreUnwantedMembers)
-            resolver.Modifiers.Add(Sub(info) RegisterKnownTypes(info, types))
+            If Not types.IsNullOrEmpty Then
+                resolver.Modifiers.Add(Sub(info) RegisterKnownTypes(info, types))
+            End If
             options.TypeInfoResolver = resolver
 
             Return options
