@@ -1,60 +1,70 @@
-﻿#Region "Microsoft.VisualBasic::19c6f16169b6934d58fa984a4091162e, Data\BinaryData\BinaryData\test\Program.vb"
+﻿Option Strict On
+Option Explicit On
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 7
-    '    Code Lines: 6 (85.71%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 1 (14.29%)
-    '     File Size: 132 B
-
-
-    ' Module Program
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
-
-#End Region
+' /********************************************************************************/
+'  Microsoft.VisualBasic.Data.IO.Snappy demo
+'  Data\BinaryData\BinaryData\test\Program.vb
+' /********************************************************************************/
 
 Imports System
+Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 
+''' <summary>
+''' Snappy 库的控制台测试入口：依次运行原始块与分块流用例，
+''' 使用 <see cref="DebugAudit"/> 记录结果并输出 JSON 报告。
+''' </summary>
 Module Program
+
     Sub Main(args As String())
-        Console.WriteLine("Hello World!")
+        Call DebugAudit.Reset()
+        Call TestSupport.ResetChecks()
+
+        Dim reportPath As String = Path.Combine(AppContext.BaseDirectory, "snappy-test-report.json")
+
+        Console.WriteLine("Microsoft.VisualBasic.Data.IO.Snappy demo")
+        Console.WriteLine($"运行目录：{AppContext.BaseDirectory}")
+        Console.WriteLine()
+
+        Try
+            Call RunSuite("suite:raw-vectors", AddressOf SnappyRawTests.Vectors)
+            Call RunSuite("suite:raw-roundtrip", AddressOf SnappyRawTests.RoundTrip)
+            Call RunSuite("suite:raw-errors", AddressOf SnappyRawTests.Errors)
+            Call RunSuite("suite:framed", AddressOf SnappyFramedTests.RoundTripAndChunks)
+            Call RunSuite("suite:framed-errors", AddressOf SnappyFramedTests.Errors)
+        Catch ex As Exception
+            Call DebugAudit.Mark("fatal", ex.ToString())
+            Call Console.WriteLine(ex.ToString())
+        End Try
+
+        Call DebugAudit.Mark("assertions:total", TestSupport.Checks)
+
+        Console.WriteLine()
+        Console.WriteLine(DebugAudit.Dump())
+
+        Call DebugAudit.SaveReport(reportPath)
+        Console.WriteLine($"测试报告：{reportPath}")
+        Console.WriteLine($"断言总数：{TestSupport.Checks}")
+
+        If DebugAudit.FailureCount > 0 Then
+            Console.WriteLine($"共 {DebugAudit.FailureCount} 项断言失败。")
+            Environment.ExitCode = 1
+        Else
+            Console.WriteLine("全部断言通过。")
+        End If
     End Sub
+
+    ''' <summary>
+    ''' 运行一组用例，并把该组的断言数量记录到审计报告中。
+    ''' </summary>
+    Private Sub RunSuite(name As String, body As Action)
+        Dim baseline As Integer = TestSupport.Checks
+
+        Using DebugAudit.Watch(name)
+            Call body()
+        End Using
+
+        Call DebugAudit.Mark(name & ":assertions", TestSupport.Checks - baseline)
+    End Sub
+
 End Module

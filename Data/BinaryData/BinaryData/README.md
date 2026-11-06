@@ -6,7 +6,7 @@
 
 - **字节序**：同一份 spec 在大小端机器上读出来完全不同；
 - **字符串长度前缀**：1 字节 / 2 字节 / 4 字节 / 零结尾，各不相同；
-- **压缩**：BZip2、LZW 是常见的内嵌压缩；
+- **压缩**：BZip2、LZW、Snappy 是常见的内嵌压缩；
 - **偏移回填**：写文件时先占位、最后再回填长度或偏移；
 - **异构载荷**：XDR、Python pickle、Java 风格的缓冲区语义。
 
@@ -15,13 +15,14 @@
 ## 设计目标
 
 - **格式可切换**：字节序、字符串格式、日期格式都是**运行时可切换的属性**，而不是编译期分支；
-- **零原生依赖**：BZip2 与 LZW 均为纯托管实现；
+- **零原生依赖**：BZip2、LZW、LZ4、LZMA 与 Snappy 均为纯托管实现；
 - **可回填**：写入器支持先保留偏移、写完后再回填，这是生成「长度未知的块」的关键能力。
 
 ## 核心特性
 
 - `BinaryDataReader` / `BinaryDataWriter` 扩展了 `BinaryReader` / `BinaryWriter`：可切换的 `ByteOrder`、`BinaryStringFormat` 字符串编码（`ByteLengthPrefix`、`WordLengthPrefix`、`DwordLengthPrefix`、`UInt32LengthPrefix`、`ZeroTerminated`）与 `BinaryDateTimeFormat` 日期编码；
 - **纯托管 BZip2**：块压缩 / 解压、Huffman 阶段、MTF+RLE2、DivSufSort 与 CRC32，配合 LZW `Encoder` / `Decoder`；
+- **纯托管 Snappy**：原始块（raw block）压缩 / 解压，以及带 stream identifier、压缩 / 未压缩 / 可跳过分块与 masked CRC32C 校验的 framed 流式格式；
 - **Python pickle 编解码**：`MinimalPicklePickler` / `MinimalPickleUnpickler` 把 Python 的 tuple、set、复数与通用对象图映射到 .NET 类型，并且支持 **.NET CLR 对象的往返**（`Pickle` 保存后再 `Unpickle` 得到原始类型而不是 `PythonObject` 包装器）；
 - **Java 风格 `ByteBuffer`**：position / limit / flip / compact 语义；XDR 打包辅助；以及特性驱动的结构映射（`BindAttribute`、`FieldAttribute`、`ReaderProvider`）。
 
@@ -33,6 +34,9 @@
 - `Microsoft.VisualBasic.Data.IO.ByteBuffer` —— 类 Java 字节缓冲，支持相对与绝对 get / put；
 - `Microsoft.VisualBasic.Data.IO.Bzip2.BZip2OutputStream` / `BZip2InputStream` —— 托管 BZip2 压缩流；
 - `Microsoft.VisualBasic.Data.IO.LZW.Encoder` / `Decoder` —— LZW 压缩与解压；
+- `Microsoft.VisualBasic.Data.IO.Snappy.Snappy` —— Snappy 原始块压缩 / 解压、长度查询与合法性检查；
+- `Microsoft.VisualBasic.Data.IO.Snappy.SnappyOutputStream` / `SnappyInputStream` —— Snappy framed 分块流读写；
+- `Microsoft.VisualBasic.Data.IO.Snappy.Crc32C` —— CRC32C（Castagnoli）计算与 framed 流掩码；
 - `Microsoft.VisualBasic.Data.IO.Pickle.MinimalPickleUnpickler` / `MinimalPicklePickler` —— Python pickle 解码 / 编码；
 - `Microsoft.VisualBasic.Data.IO.Xdr.XdrEncoding` —— XDR（RFC 4506）编码辅助。
 
@@ -58,6 +62,40 @@ Using bin As New BinaryDataReader("demo.bin".Open(FileMode.Open, doClear:=False,
     End With
 End Using
 ```
+
+## Snappy 压缩
+
+Snappy 提供两种相互独立的格式，按使用场景选择：
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.IO.Snappy
+
+' 1) 原始块：适合 Parquet / Hadoop 等格式内部的独立压缩字段
+Dim raw As Byte() = Snappy.Compress(payload)
+Dim original As Byte() = Snappy.Uncompress(raw)
+Dim size As Integer = Snappy.UncompressedLength(raw)
+
+' 2) framed 分块流：适合顺序读写大文件，带 stream identifier 与 CRC32C 校验
+Using output As New MemoryStream()
+    Using compressor As New SnappyOutputStream(output, leaveOpen:=True)
+        compressor.Write(payload, 0, payload.Length)
+    End Using
+
+    Using input As New MemoryStream(output.ToArray())
+        Using decompressor As New SnappyInputStream(input, leaveOpen:=True)
+            Using restored As New MemoryStream()
+                decompressor.CopyTo(restored)
+                ' restored.ToArray() 即原始 payload
+            End Using
+        End Using
+    End Using
+End Using
+```
+
+- 原始块与 framed 流均与标准 Snappy 实现（python-snappy、snzip、Hadoop）兼容；
+- framed 流的分块未压缩数据上限为 65536 字节，压缩后没有变小时自动写作未压缩分块；
+- CRC32C 使用 Castagnoli 多项式 `0x82F63B78`，与 BZip2 的 IEEE CRC32 不同，`Crc32C` 公开了计算、掩码与反掩码方法；
+- 控制台测试位于 `test/`，运行后会在输出目录生成 `snappy-test-report.json`。
 
 ## 实现要点
 
@@ -119,5 +157,5 @@ EMPTY_TUPLE / REDUCE          # 构造一个"未填充"的实例
 
 - Assembly：`Microsoft.VisualBasic.Data.BinaryData`
 - TargetFramework：`net10.0`
-- Tags：`scibasic;binary-data;binary-reader;endianness;bzip2;lzw;xdr;pickle;byte-buffer`
+- Tags：`scibasic;binary-data;binary-reader;endianness;bzip2;lzw;snappy;xdr;pickle;byte-buffer`
 - 许可：GPL-3.0-or-later
