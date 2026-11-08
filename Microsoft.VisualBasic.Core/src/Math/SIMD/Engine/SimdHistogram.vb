@@ -312,11 +312,11 @@ Namespace Math.SIMD
         ''' </summary>
         Public Shared Function MaxBin(hist As Double()) As Integer
             Dim minValue As Double, maxValue As Double
-            Dim minBin As Integer, maxBin As Integer
+            Dim minIndex As Integer, maxIndex As Integer
 
-            Call Extrema(hist, minValue, maxValue, minBin, maxBin)
+            Call Extrema(hist, minValue, maxValue, minIndex, maxIndex)
 
-            Return maxBin
+            Return maxIndex
         End Function
 
         ''' <summary>

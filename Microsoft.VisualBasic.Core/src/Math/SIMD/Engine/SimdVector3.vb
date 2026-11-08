@@ -555,10 +555,13 @@ Namespace Math.SIMD
                     Dim vx As New Vector(Of Double)(x, i)
                     Dim vy As New Vector(Of Double)(y, i)
                     Dim vz As New Vector(Of Double)(z, i)
+                    Dim rx As Vector(Of Double) = v00 * vx + v01 * vy + v02 * vz + vtx
+                    Dim ry As Vector(Of Double) = v10 * vx + v11 * vy + v12 * vz + vty
+                    Dim rz As Vector(Of Double) = v20 * vx + v21 * vy + v22 * vz + vtz
 
-                    (v00 * vx + v01 * vy + v02 * vz + vtx).CopyTo(outX, i)
-                    (v10 * vx + v11 * vy + v12 * vz + vty).CopyTo(outY, i)
-                    (v20 * vx + v21 * vy + v22 * vz + vtz).CopyTo(outZ, i)
+                    Call rx.CopyTo(outX, i)
+                    Call ry.CopyTo(outY, i)
+                    Call rz.CopyTo(outZ, i)
                     i += count
                 Loop
             End If
@@ -600,10 +603,13 @@ Namespace Math.SIMD
                     Dim vx As New Vector(Of Double)(x, i)
                     Dim vy As New Vector(Of Double)(y, i)
                     Dim vz As New Vector(Of Double)(z, i)
+                    Dim rx As Vector(Of Double) = v00 * vx + v01 * vy + v02 * vz + vtx
+                    Dim ry As Vector(Of Double) = v10 * vx + v11 * vy + v12 * vz + vty
+                    Dim rz As Vector(Of Double) = v20 * vx + v21 * vy + v22 * vz + vtz
 
-                    (v00 * vx + v01 * vy + v02 * vz + vtx).CopyTo(x, i)
-                    (v10 * vx + v11 * vy + v12 * vz + vty).CopyTo(y, i)
-                    (v20 * vx + v21 * vy + v22 * vz + vtz).CopyTo(z, i)
+                    Call rx.CopyTo(x, i)
+                    Call ry.CopyTo(y, i)
+                    Call rz.CopyTo(z, i)
                     i += count
                 Loop
             End If
@@ -1044,9 +1050,9 @@ Namespace Math.SIMD
         ''' </summary>
         Public Function ToMatrix() As Double()()
             Return {
-                {Cxx, Cxy, Cxz},
-                {Cxy, Cyy, Cyz},
-                {Cxz, Cyz, Czz}
+                New Double() {Cxx, Cxy, Cxz},
+                New Double() {Cxy, Cyy, Cyz},
+                New Double() {Cxz, Cyz, Czz}
             }
         End Function
 
