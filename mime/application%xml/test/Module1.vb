@@ -51,28 +51,13 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MIME.application.xml.MathML
-
 Module Module1
 
-    Sub Main()
-        ' Call genericParsertest2()
-
-
-        Dim test = "E:\GCModeller\src\runtime\sciBASIC#\mime\etc\math4.xml"
-        Dim xml = Microsoft.VisualBasic.MIME.application.xml.XmlParser.ParseXml(test.ReadAllText)
-        Dim exp As LambdaExpression = LambdaExpression.FromMathML(test.ReadAllText)
-
-        Console.WriteLine(exp.ToString)
-
-        Pause()
-    End Sub
-
-    Sub genericParsertest2()
-        Dim xml = Microsoft.VisualBasic.MIME.application.xml.XmlParser.ParseXml("<cn type=""rational"">
-            1 <sep/> 2
-          </cn>")
-
-        Pause()
-    End Sub
+    ''' <summary>
+    ''' Entry point of the XSD toolkit self test. The exit code is the number of
+    ''' failed DebugAudit assertions (0 means success).
+    ''' </summary>
+    Public Function Main(args As String()) As Integer
+        Return XsdSelfTest.Run()
+    End Function
 End Module
