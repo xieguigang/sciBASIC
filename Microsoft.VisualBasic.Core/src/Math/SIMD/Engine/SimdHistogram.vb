@@ -19,7 +19,7 @@ Namespace Math.SIMD
     ''' </para>
     ''' <list type="bullet">
     ''' <item><description>无分支的分箱计算 <see cref="BinIndex(Double, Double, Double, Integer)"/>（越界/NaN 统一返回 -1，调用方只需判断一次）。</description></item>
-    ''' <item><description>把“逐观测累加”与“归一化/极值”分离，后者可以向量化（<see cref="Normalize(Double())"/>、<see cref="Extrema(Double(), Double, Double, Integer, Integer)"/>）。</description></item>
+    ''' <item><description>把“逐观测累加”与“归一化/极值”分离，后者可以向量化（<see cref="Normalize(Double())"/>、<see cref="Extrema"/>）。</description></item>
     ''' <item><description>加权累加重载，供距离/法向夹角加权投票（SHOT、FPFH 邻域加权）复用。</description></item>
     ''' </list>
     ''' <para>
@@ -308,7 +308,7 @@ Namespace Math.SIMD
         End Sub
 
         ''' <summary>
-        ''' 直方图的最大值所在桶（等价于 <see cref="Extrema(Double(), Double, Double, Integer, Integer)"/> 的第二个输出）。
+        ''' 直方图的最大值所在桶（等价于 <see cref="Extrema"/> 的第二个输出）。
         ''' </summary>
         Public Shared Function MaxBin(hist As Double()) As Integer
             Dim minValue As Double, maxValue As Double

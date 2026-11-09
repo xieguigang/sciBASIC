@@ -28,7 +28,7 @@ Namespace Math.SIMD
     ''' </item>
     ''' <item>
     ''' <description>
-    ''' <b>后续可向量化</b>：<see cref="Gather3(Double(), Double(), Double(), Integer(), Integer(), Integer(), Double(), Double(), Double())"/>
+    ''' <b>后续可向量化</b>：<see cref="Gather3"/>
     ''' 把邻域数据<b>压实</b>到连续缓冲后，后续的协方差/直方图计算就能整块走 SIMD；
     ''' 这是“gather 一次 + 向量化多次”的经典折衷。
     ''' </description>
@@ -41,7 +41,7 @@ Namespace Math.SIMD
     ''' </item>
     ''' </list>
     ''' <para>
-    ''' <b>线程安全</b>：<see cref="ScatterAdd(Double(), Integer(), Integer(), Integer(), Double())"/>
+    ''' <b>线程安全</b>：<see cref="ScatterAdd"/>
     ''' 的累加不是原子操作，同一目标下标只能被同一个线程写入；
     ''' 多线程场景请按“每个线程独立的直方图/累加器，最后合并”的方式使用。
     ''' </para>
