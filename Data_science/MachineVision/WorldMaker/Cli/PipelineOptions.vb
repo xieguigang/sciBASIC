@@ -74,6 +74,12 @@ Namespace Cli
         ''' <summary>表面点云过滤：高斯不透明度下限。</summary>
         Public Property MinOpacity As Double = 0.05
 
+        ''' <summary>
+        ''' 高斯的初始不透明度（0..1）。库默认初值是 0.1（90% 透明），在几百步预算下
+        ''' 优化来不及把它推上去，渲染会整体发糊；这里默认从 0.85 起步。
+        ''' </summary>
+        Public Property InitOpacity As Double = 0.85
+
         ''' <summary>表面点云过滤：高斯尺度上限倍数（相对中位尺度）。</summary>
         Public Property MaxScaleFactor As Double = 3.0
 
@@ -116,6 +122,7 @@ Namespace Cli
             options.BpaMaxPoints = cli.GetInt("bpa-max-points", options.BpaMaxPoints)
             options.SimplifyTarget = cli.GetInt("simplify", options.SimplifyTarget)
             options.MinOpacity = cli.GetDouble("min-opacity", options.MinOpacity)
+            options.InitOpacity = cli.GetDouble("init-opacity", options.InitOpacity)
             options.MaxScaleFactor = cli.GetDouble("max-scale-factor", options.MaxScaleFactor)
             options.RenderCount = cli.GetInt("render-count", options.RenderCount)
             options.Seed = cli.GetInt("seed", options.Seed)
@@ -275,7 +282,8 @@ Namespace Cli
             Call sb.AppendLine("  --no-bpa               跳过 BPA 备选重建")
             Call sb.AppendLine("  --simplify <n>         网格简化目标三角面数（0 = 不简化）")
             Call sb.AppendLine("  --remove-ground        用 RANSAC 移除最大平面（地面/背景）")
-            Call sb.AppendLine("  --min-opacity <v>      表面点云不透明度下限（默认 0.1）")
+            Call sb.AppendLine("  --min-opacity <v>      表面点云不透明度下限（默认 0.05）")
+            Call sb.AppendLine("  --init-opacity <v>     高斯初始不透明度（默认 0.85）")
             Call sb.AppendLine("  --max-scale-factor <v> 表面点云尺度上限倍数（默认 3.0）")
             Call sb.AppendLine("  --render-count <n>     训练后渲染对照视图数量")
             Call sb.AppendLine("  --reuse-ply <path>     复用已有表面点云，跳过训练直接重建")

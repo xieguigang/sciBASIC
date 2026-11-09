@@ -33,6 +33,9 @@ Namespace Pipeline
             ' 复用模式：直接拿上一次导出的表面点云跑重建，跳过训练。
             ' 这样调泊松分辨率/BPA 半径/简化预算时不必重新训练（训练是整条链路里最贵的一段）。
             Dim surfacePly As String = Nothing
+            ' 计时器必须在分支外声明：复用模式下阶段 1-4 整体被跳过，
+            ' 但阶段 5 及以后仍要用它计时。
+            Dim t0 As Stopwatch = Stopwatch.StartNew()
 
             Try
                 If String.IsNullOrEmpty(options.ReusePly) Then
@@ -41,7 +44,8 @@ Namespace Pipeline
                 ' ================================================================
                 Call Stage($"[1/6] 读取 COLMAP 稀疏模型: {options.SparseDir}")
 
-                Dim t0 As Stopwatch = Stopwatch.StartNew()
+                t0 = Stopwatch.StartNew()
+
                 Dim scene As Colmap.ColmapScene = Colmap.ColmapSparse.Read(options.SparseDir)
 
                 t0.Stop()
@@ -128,6 +132,7 @@ Namespace Pipeline
                 Call report.Add("pointcloud", "surface_points", surface.KeptPoints)
                 Call report.Add("pointcloud", "median_scale", surface.MedianScale)
                 Call report.Add("pointcloud", "bbox_diagonal", surface.Diagonal)
+                Call report.Add("pointcloud", "bbox_robust_diagonal", surface.RobustDiagonal)
                 Call report.Add("pointcloud", "full_ply", surface.GaussianPly)
                 Call report.Add("pointcloud", "surface_ply", surface.SurfacePly)
                 Call report.Add("pointcloud", "seconds", t0.Elapsed.TotalSeconds, "F2")

@@ -81,7 +81,20 @@ Namespace Splatting
                     std.Max(20000, dataset.Count * 200), bounds, CSng(std.Max(spacing * 3, 1.0E-4)), options.Seed)
             End If
 
-            Call Report(log, $"初始高斯数量: {model.Count:N0}")
+            ' 初始不透明度：GaussianModel.FromPointCloud 把不透明度初值固定为 sigmoid(-2.197)=0.1，
+            ' 也就是“90% 透明”。在只有几百步预算的情况下，优化几乎没时间把它推上去，
+            ' 渲染结果会是一片半透明的糊状。这里直接把初值抬到 sigmoid(1.73)=0.85，
+            ' 让初始高斯就是“实心”的，颜色由 COLMAP 的 RGB 给出，几百步就能出可辨认结果。
+            Dim opacityLogit As Double = Logit(options.InitOpacity)
+            Dim opacities As Double() = model.OpacitiesData
+
+            For i As Integer = 0 To model.Count - 1
+                opacities(i) = opacityLogit
+            Next
+
+            Call model.MarkModified()
+
+            Call Report(log, $"初始高斯数量: {model.Count:N0}，初始不透明度 {options.InitOpacity:F2}")
 
             ' ---- 2) 训练配置 ----
             ' 注意：EvaluateEvery 必须为 0。每步评估会渲染“全部”视图
@@ -167,7 +180,9 @@ Namespace Splatting
             result.Model = model
             result.Seconds = watch.Elapsed.TotalSeconds
             result.Cancelled = cancelled
-            result.CompletedIterations = If(result.Training Is Nothing, 0, result.Training.Iterations)
+            ' TrainingResult.Iterations 表示“计划迭代数”，实际执行步数要看 History：
+            ' 达到墙钟时限时训练会被提前中断，两者会不一致（报告里必须区分开）。
+            result.CompletedIterations = If(result.Training Is Nothing, 0, result.Training.History.Count)
             result.LogPath = csvPath
 
             Call Report(log, $"训练完成: {model.Count:N0} 个高斯，{result.Seconds:F1}s，" &
@@ -230,6 +245,13 @@ Namespace Splatting
             Next
 
             Return bounds
+        End Function
+
+        ''' <summary>概率 → logit（高斯的不透明度以 logit 形式存储）。</summary>
+        Private Shared Function Logit(p As Double) As Double
+            Dim clamped As Double = std.Max(1.0E-4, std.Min(1.0 - 1.0E-4, p))
+
+            Return std.Log(clamped / (1.0 - clamped))
         End Function
 
         Private Shared Sub Report(log As Action(Of String), message As String)
