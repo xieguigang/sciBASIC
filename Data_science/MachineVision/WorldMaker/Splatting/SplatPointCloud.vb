@@ -34,6 +34,15 @@ Namespace Splatting
         Public Property SurfacePly As String
         Public Property GaussianPly As String
 
+        ''' <summary>
+        ''' 稳健包围盒对角线（各轴截掉 0.5% 尾部）。
+        ''' </summary>
+        ''' <remarks>
+        ''' SFM 出来的点云总有几个“飞到天边”的点，全量包围盒的对角线会被它们撑大一个量级
+        ''' （本项目实测 132 → 545），用它判断尺度会得到完全错误的结论，因此报告里以稳健值为主。
+        ''' </remarks>
+        Public Property RobustDiagonal As Double
+
         Public ReadOnly Property Diagonal As Double
             Get
                 Dim dx As Double = MaxX - MinX
@@ -134,6 +143,8 @@ Namespace Splatting
                 .MaxX = maxX, .MaxY = maxY, .MaxZ = maxZ
             }
 
+            stats.RobustDiagonal = RobustDiagonalOf(xs, ys, zs)
+
             Call Report(log, $"表面点云过滤: {count:N0} → {stats.KeptPoints:N0} " &
                              $"(不透明度 ≥ {options.MinOpacity:F2}，尺度 ≤ {scaleLimit:G4} = {options.MaxScaleFactor:F1}× 中位 {medianScale:G4})")
 
@@ -168,6 +179,34 @@ Namespace Splatting
                              $"包围盒对角线 {stats.Diagonal:F3}）")
 
             Return stats
+        End Function
+
+        ''' <summary>
+        ''' 各轴截掉 0.5% 尾部后的包围盒对角线。
+        ''' </summary>
+        Private Shared Function RobustDiagonalOf(xs As List(Of Double),
+                                                 ys As List(Of Double),
+                                                 zs As List(Of Double)) As Double
+            Dim count As Integer = xs.Count
+
+            If count = 0 Then Return 0.0
+
+            Dim copyX As Double() = xs.ToArray()
+            Dim copyY As Double() = ys.ToArray()
+            Dim copyZ As Double() = zs.ToArray()
+
+            Array.Sort(copyX)
+            Array.Sort(copyY)
+            Array.Sort(copyZ)
+
+            Dim lo As Integer = CInt(std.Floor(count * 0.005))
+            Dim hi As Integer = count - 1 - lo
+
+            Dim dx As Double = copyX(hi) - copyX(lo)
+            Dim dy As Double = copyY(hi) - copyY(lo)
+            Dim dz As Double = copyZ(hi) - copyZ(lo)
+
+            Return std.Sqrt(dx * dx + dy * dy + dz * dz)
         End Function
 
         Private Shared Sub Report(log As Action(Of String), message As String)
