@@ -141,6 +141,36 @@ Namespace Cloudy
         End Function
 
         ''' <summary>
+        ''' 把点云颜色迁移到网格顶点（最近邻），使导出的 PLY 网格带真实颜色。
+        ''' </summary>
+        ''' <remarks>
+        ''' 泊松重建只输出几何，不带颜色；而 STL 本身不支持顶点色，所以颜色只能进 PLY。
+        ''' 顶点数在几万量级、点云几万量级，KD 树最近邻足够快（毫秒级）。
+        ''' </remarks>
+        Public Shared Function TransferVertexColors(mesh As CR.MeshData,
+                                                    cloud As CC.PointCloudBuffer,
+                                                    Optional log As Action(Of String) = Nothing) As CR.MeshData
+            If mesh Is Nothing OrElse mesh.VertexCount = 0 Then Return mesh
+            If cloud Is Nothing OrElse cloud.Color Is Nothing OrElse cloud.Count = 0 Then Return mesh
+
+            Dim tree As New CC.KdTree3D(cloud)
+            Dim colors(mesh.VertexCount - 1) As Integer
+            Dim vertices As CC.Vector3d() = mesh.Vertices
+
+            For i As Integer = 0 To vertices.Length - 1
+                Dim hit = tree.Nearest(vertices(i).X, vertices(i).Y, vertices(i).Z)
+
+                colors(i) = If(hit.index >= 0, cloud.Color(hit.index), &HFFC8C8C8)
+            Next
+
+            Call mesh.SetColors(colors)
+
+            Call Report(log, $"顶点着色: {vertices.Length:N0} 顶点从点云迁移颜色")
+
+            Return mesh
+        End Function
+
+        ''' <summary>
         ''' 统一后处理：补洞 → Taubin 平滑（不收缩）→ 按预算简化 → 重算法向。
         ''' </summary>
         Public Shared Function PostProcess(mesh As CR.MeshData,

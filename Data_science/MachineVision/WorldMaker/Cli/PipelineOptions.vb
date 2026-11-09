@@ -83,6 +83,12 @@ Namespace Cli
         ''' <summary>随机种子（视图采样/兜底初始化）。</summary>
         Public Property Seed As Integer = 20260101
 
+        ''' <summary>
+        ''' 复用已有的表面点云 PLY，跳过“读取 COLMAP + 训练 + 导出”三个阶段，直接做重建。
+        ''' 调整泊松分辨率/简化预算时用它，可以把一轮迭代从十几分钟压到一分钟。
+        ''' </summary>
+        Public Property ReusePly As String = ""
+
         ''' <summary>训练张量总像素预算，超出时自动减少视图数（默认 4 亿像素 ≈ 3.2 GB）。</summary>
         Public Property PixelBudget As Long = 400000000L
 
@@ -114,6 +120,8 @@ Namespace Cli
             options.RenderCount = cli.GetInt("render-count", options.RenderCount)
             options.Seed = cli.GetInt("seed", options.Seed)
             options.PixelBudget = CLng(cli.GetDouble("pixel-budget", CDbl(options.PixelBudget)))
+
+            options.ReusePly = If(cli.GetValue("reuse-ply"), "")
 
             If cli.Has("remove-ground") Then options.RemoveGround = True
             If cli.Has("no-bpa") Then options.EnableBpa = False
@@ -270,6 +278,7 @@ Namespace Cli
             Call sb.AppendLine("  --min-opacity <v>      表面点云不透明度下限（默认 0.1）")
             Call sb.AppendLine("  --max-scale-factor <v> 表面点云尺度上限倍数（默认 3.0）")
             Call sb.AppendLine("  --render-count <n>     训练后渲染对照视图数量")
+            Call sb.AppendLine("  --reuse-ply <path>     复用已有表面点云，跳过训练直接重建")
             Call sb.AppendLine("  --seed <n>             随机种子")
             Call sb.AppendLine("  --help                 显示本帮助")
 

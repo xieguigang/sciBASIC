@@ -30,7 +30,12 @@ Namespace Pipeline
             Call Banner(options, paths)
             Call FillParameters(report, options)
 
+            ' 复用模式：直接拿上一次导出的表面点云跑重建，跳过训练。
+            ' 这样调泊松分辨率/BPA 半径/简化预算时不必重新训练（训练是整条链路里最贵的一段）。
+            Dim surfacePly As String = Nothing
+
             Try
+                If String.IsNullOrEmpty(options.ReusePly) Then
                 ' ================================================================
                 ' 阶段 1：COLMAP 稀疏模型
                 ' ================================================================
@@ -130,6 +135,19 @@ Namespace Pipeline
                 Call DebugAudit.Check(surface.KeptPoints > 0, "surface point cloud should not be empty")
                 Call DebugAudit.Capture($"{surface.KeptPoints:N0}", "surface points")
 
+                surfacePly = surface.SurfacePly
+                Else
+                    Call Stage("[1-4/6] 复用已有点云（跳过训练）: " & options.ReusePly)
+
+                    If Not File.Exists(options.ReusePly) Then
+                        Throw New FileNotFoundException($"--reuse-ply 指定的点云不存在: {options.ReusePly}")
+                    End If
+
+                    surfacePly = options.ReusePly
+
+                    Call report.Add("pointcloud", "reused_ply", surfacePly)
+                End If
+
                 ' ================================================================
                 ' 阶段 5：Cloudy 预处理（降采样 / 去噪 / 法向 / 定向）
                 ' ================================================================
@@ -138,7 +156,7 @@ Namespace Pipeline
                 t0.Restart()
 
                 Dim prepared As Cloudy.PreparedCloud =
-                    Cloudy.CloudPrep.Run(surface.SurfacePly, options, paths, AddressOf Log)
+                    Cloudy.CloudPrep.Run(surfacePly, options, paths, AddressOf Log)
 
                 t0.Stop()
 
@@ -163,6 +181,9 @@ Namespace Pipeline
                     prepared.Cloud, options.PoissonResolution, AddressOf Log)
 
                 Dim poissonMesh = Cloudy.MeshReconstruct.PostProcess(poisson.Mesh, options.SimplifyTarget, AddressOf Log)
+
+                Call Cloudy.MeshReconstruct.TransferVertexColors(poissonMesh, prepared.Cloud, AddressOf Log)
+
                 Dim poissonStat As Cloudy.MeshStat = Cloudy.MeshMetrics.Measure(
                     "poisson", poissonMesh, prepared.Cloud, poisson.Seconds, poisson.Note, AddressOf Log)
 
@@ -172,7 +193,7 @@ Namespace Pipeline
                 Dim poissonPly As String = paths.Mesh("scene_poisson.ply")
                 Dim stlTriangles As Integer = Io.MeshWriter.SaveStl(poissonMesh, poissonStl,
                     $"WorldMaker poisson reconstruction (run {options.RunTag})")
-                Call Io.MeshWriter.SavePly(poissonMesh, poissonPly, False)
+                Call Io.MeshWriter.SavePly(poissonMesh, poissonPly, True)
 
                 Call Log($"  泊松模型: {poissonStl}（{stlTriangles:N0} 三角面）")
                 Call Log($"  泊松网格 PLY: {poissonPly}")
@@ -203,6 +224,8 @@ Namespace Pipeline
                     If bpa.Mesh IsNot Nothing AndAlso bpa.Mesh.TriangleCount > 0 Then
                         Dim bpaMesh = Cloudy.MeshReconstruct.PostProcess(bpa.Mesh, options.SimplifyTarget, AddressOf Log)
 
+                        Call Cloudy.MeshReconstruct.TransferVertexColors(bpaMesh, prepared.Cloud, AddressOf Log)
+
                         bpaStat = Cloudy.MeshMetrics.Measure(
                             "bpa", bpaMesh, prepared.Cloud, bpa.Seconds, bpa.Note, AddressOf Log)
                         bpaStat.Algorithm = "bpa"
@@ -211,7 +234,7 @@ Namespace Pipeline
                         bpaPly = paths.Mesh("scene_bpa.ply")
 
                         Call Io.MeshWriter.SaveStl(bpaMesh, bpaStl, $"WorldMaker BPA reconstruction (run {options.RunTag})")
-                        Call Io.MeshWriter.SavePly(bpaMesh, bpaPly, False)
+                        Call Io.MeshWriter.SavePly(bpaMesh, bpaPly, True)
 
                         Call Log($"  BPA 模型: {bpaStl}（{bpaMesh.TriangleCount:N0} 三角面）")
                         Call Log($"  BPA 网格 PLY: {bpaPly}")
