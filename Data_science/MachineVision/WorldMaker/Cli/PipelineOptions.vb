@@ -75,10 +75,14 @@ Namespace Cli
         Public Property MinOpacity As Double = 0.05
 
         ''' <summary>
-        ''' 高斯的初始不透明度（0..1）。库默认初值是 0.1（90% 透明），在几百步预算下
-        ''' 优化来不及把它推上去，渲染会整体发糊；这里默认从 0.85 起步。
+        ''' 高斯的初始不透明度（0..1），默认沿用库的 0.1。
         ''' </summary>
-        Public Property InitOpacity As Double = 0.85
+        ''' <remarks>
+        ''' 实测：把初值抬到 0.85 并不会让几百步训练的渲染变清晰，反而因为
+        ''' 18 万个近乎不透明的高斯在同一像素上层层叠加，渲染结果被压成场景平均色（一片灰）。
+        ''' 因此保留默认值，仅把参数暴露出来供有 GPU/长训练预算的场合调整。
+        ''' </remarks>
+        Public Property InitOpacity As Double = 0.1
 
         ''' <summary>表面点云过滤：高斯尺度上限倍数（相对中位尺度）。</summary>
         Public Property MaxScaleFactor As Double = 3.0
