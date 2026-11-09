@@ -8,14 +8,46 @@
 '      高频混叠，高斯在优化时会去拟合混叠噪声，重建表面出现颗粒感；
 '   3. Tensor 是 Double 类型：980×545×3 单视图 12.8 MB，301 视图约 3.9 GB 会 OOM，
 '      因此按 --width 降分辨率并按 --views 抽帧，另有像素预算兜底。
+'
+' 关于解码器：Core 自带一个“依赖无关”的 JPEG 解码器（Microsoft.VisualBasic.Imaging.JpegImage），
+' 但实测它在 Tanks&Temples 这类由视频帧转出的 JPEG 上会把 MCU 网格误当成像素尺寸
+' （980×545 解码成 215×35 的一条蓝色渐变带，逐段剥离 APPn/EXIF 后依旧如此）。
+' 因此生产路径改用 GDI+（System.Drawing.Common，Windows 桌面环境可用），
+' 只在输出（渲染对照图、数据集抽样图）继续使用 Core 的 PNG 编码器。
 ' ---------------------------------------------------------------------------
 
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports GS = Microsoft.VisualBasic.MachineVision.GaussianSplatting3D
 Imports TF = Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 Namespace Photos
+
+    ''' <summary>
+    ''' 解码后的 8 位 RGB 图像（行优先，BGR→RGB 已转换）。
+    ''' </summary>
+    Public Class RgbImage
+
+        Public Property Width As Integer
+        Public Property Height As Integer
+
+        ''' <summary>长度 = Width × Height × 3，通道顺序 R/G/B。</summary>
+        Public Property Pixels As Byte()
+
+        Public Function Red(x As Integer, y As Integer) As Integer
+            Return Pixels((y * Width + x) * 3)
+        End Function
+
+        Public Function Green(x As Integer, y As Integer) As Integer
+            Return Pixels((y * Width + x) * 3 + 1)
+        End Function
+
+        Public Function Blue(x As Integer, y As Integer) As Integer
+            Return Pixels((y * Width + x) * 3 + 2)
+        End Function
+
+    End Class
 
     ''' <summary>
     ''' 训练用图像 + 相机集合。
@@ -117,15 +149,13 @@ Namespace Photos
 
             Call ProbeSize(Path.Combine(imagesDir, sample.Name), sourceWidth, sourceHeight)
 
-            ' 用第一张图确定“COLMAP 尺寸 → 目标尺寸”的缩放系数
             Dim primaryCamera As Colmap.ColmapCamera = GetCamera(scene, sample)
 
             Call Report(log, $"第一张图像实际尺寸: {sourceWidth}×{sourceHeight}；" &
                              $"COLMAP 标定尺寸: {primaryCamera.Width}×{primaryCamera.Height}")
 
             ' 目标高度按 COLMAP 标定的宽高比推导：标定尺寸定义的是投影几何，
-            ' 而磁盘上的 JPEG 可能是它的等比缩小版（本例正好是 1/2），
-            ' 用标定宽高比可以避免“图像尺寸读取异常”直接毁掉整个训练集。
+            ' 而磁盘上的 JPEG 可能是它的等比缩小版（本例正好是 1/2）。
             Dim targetHeight As Integer = std.Max(2, CInt(std.Round(targetWidth * primaryCamera.Height / CDbl(primaryCamera.Width))))
             Dim viewCount As Integer = std.Min(options.MaxViews, available.Count)
 
@@ -149,25 +179,24 @@ Namespace Photos
 
             Call Report(log, $"抽帧: {available.Count} → {viewCount}（均匀抽稀），渲染尺寸 {targetWidth}×{targetHeight}")
 
-            ' 3) 用第一张图确定“COLMAP 尺寸 → 目标尺寸”的缩放系数
-            Dim camera As Colmap.ColmapCamera = GetCamera(scene, selected(0))
-            Dim sx As Double = targetWidth / CDbl(camera.Width)
-            Dim sy As Double = targetHeight / CDbl(camera.Height)
+            ' 3) 用第一张图的相机确定“COLMAP 尺寸 → 目标尺寸”的缩放系数
+            Dim sx As Double = targetWidth / CDbl(primaryCamera.Width)
+            Dim sy As Double = targetHeight / CDbl(primaryCamera.Height)
             Dim intrinsics As New GS.CameraIntrinsics(
-                camera.Fx * sx, camera.Fy * sy,
-                (camera.Cx + 0.5) * sx - 0.5,
-                (camera.Cy + 0.5) * sy - 0.5,
+                primaryCamera.Fx * sx, primaryCamera.Fy * sy,
+                (primaryCamera.Cx + 0.5) * sx - 0.5,
+                (primaryCamera.Cy + 0.5) * sy - 0.5,
                 targetWidth, targetHeight)
 
-            Call Report(log, $"内参缩放: COLMAP {camera.Width}×{camera.Height} (fx={camera.Fx:F2}) → " &
+            Call Report(log, $"内参缩放: COLMAP {primaryCamera.Width}×{primaryCamera.Height} (fx={primaryCamera.Fx:F2}) → " &
                              $"渲染 {targetWidth}×{targetHeight} (fx={intrinsics.Fx:F2}, fy={intrinsics.Fy:F2}, " &
                              $"cx={intrinsics.Cx:F2}, cy={intrinsics.Cy:F2})")
 
             ' 4) 逐视图解码 + 降采样 + 组装相机
             Dim dataset As New ImageDataset With {
                 .Intrinsics = intrinsics,
-                .SourceWidth = camera.Width,
-                .SourceHeight = camera.Height,
+                .SourceWidth = primaryCamera.Width,
+                .SourceHeight = primaryCamera.Height,
                 .TargetWidth = targetWidth,
                 .TargetHeight = targetHeight
             }
@@ -211,87 +240,58 @@ Namespace Photos
         End Function
 
         ''' <summary>
-        ''' 解码 JPEG：先剥掉 APPn/COM 段再用 Core 的依赖无关解码器解码。
+        ''' 用 GDI+ 解码 JPEG 为 8 位 RGB（BGR 会在这里转成 RGB）。
         ''' </summary>
-        ''' <remarks>
-        ''' Tanks&amp;Temples 的照片带 EXIF 缩略图（APP1）。Core 的 <c>JpegReader</c> 在扫描
-        ''' 标记时会进入 APP1 的载荷内部，把缩略图的 SOF 当成主图尺寸（实测得到 215×35 的
-        ''' 一条蓝色渐变带）。这里在解码前把 APPn/COM 段整段删掉，让解码器只看主图；
-        ''' 段结构（长度字段、SOS 之后到 EOI 的熵编码数据）保持原样。
-        ''' </remarks>
-        Public Shared Function DecodeJpeg(path As String) As Microsoft.VisualBasic.Imaging.BitmapImage.BitmapBuffer
-            Dim bytes As Byte() = File.ReadAllBytes(path)
-            Dim cleaned As Byte() = StripMetadataSegments(bytes)
-            Dim jpeg As Microsoft.VisualBasic.Imaging.JpegImage = Microsoft.VisualBasic.Imaging.JpegImage.Decode(cleaned)
+        Public Shared Function DecodeJpeg(path As String) As RgbImage
+            Using source As New System.Drawing.Bitmap(path)
+                Dim width As Integer = source.Width
+                Dim height As Integer = source.Height
 
-            Return jpeg.GetMemoryBitmap()
-        End Function
+                ' 统一转成 24bpp：源图可能是 32bpp/灰度/带 alpha，LockBits 无法跨格式直接访问
+                Using converted As New System.Drawing.Bitmap(width, height,
+                                                             System.Drawing.Imaging.PixelFormat.Format24bppRgb)
+                    Using graphics As System.Drawing.Graphics = System.Drawing.Graphics.FromImage(converted)
+                        Call graphics.DrawImage(source, New System.Drawing.Rectangle(0, 0, width, height))
+                    End Using
 
-        ''' <summary>
-        ''' 删除 JPEG 中的 APPn（0xE0..0xEF）与 COM（0xFE）段。
-        ''' </summary>
-        Private Shared Function StripMetadataSegments(bytes As Byte()) As Byte()
-            If bytes Is Nothing OrElse bytes.Length < 4 Then Return bytes
-            If bytes(0) <> &HFF OrElse bytes(1) <> &HD8 Then Return bytes
+                    Dim rectangle As New System.Drawing.Rectangle(0, 0, width, height)
+                    Dim bits As System.Drawing.Imaging.BitmapData = converted.LockBits(
+                        rectangle, System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                        System.Drawing.Imaging.PixelFormat.Format24bppRgb)
 
-            Using output As New MemoryStream(bytes.Length)
-                ' SOI
-                Call output.WriteByte(&HFF)
-                Call output.WriteByte(&HD8)
+                    Try
+                        Dim stride As Integer = bits.Stride
+                        Dim raw(stride * height - 1) As Byte
 
-                Dim pos As Integer = 2
+                        Call Marshal.Copy(bits.Scan0, raw, 0, raw.Length)
 
-                While pos + 1 < bytes.Length
-                    If bytes(pos) <> &HFF Then
-                        ' 不是标记：说明已经进入熵编码数据（理论上不会走到这里）
-                        Call output.Write(bytes, pos, bytes.Length - pos)
+                        Dim pixels(width * height * 3 - 1) As Byte
 
-                        Exit While
-                    End If
+                        ' 24bpp 在内存里是 BGR 顺序，而且每行有 stride 对齐填充，必须逐行处理
+                        System.Threading.Tasks.Parallel.For(0, height,
+                            Sub(y)
+                                Dim src As Integer = y * stride
+                                Dim dst As Integer = y * width * 3
 
-                    Dim marker As Integer = bytes(pos + 1)
+                                For x As Integer = 0 To width - 1
+                                    pixels(dst) = raw(src + 2)
+                                    pixels(dst + 1) = raw(src + 1)
+                                    pixels(dst + 2) = raw(src)
 
-                    ' 填充字节（FF FF ...）
-                    If marker = &HFF Then
-                        pos += 1
+                                    src += 3
+                                    dst += 3
+                                Next
+                            End Sub)
 
-                        Continue While
-                    End If
-
-                    ' 无载荷的独立标记
-                    If marker = &H01 OrElse (marker >= &HD0 AndAlso marker <= &HD7) Then
-                        Call output.WriteByte(&HFF)
-                        Call output.WriteByte(CByte(marker))
-
-                        pos += 2
-
-                        Continue While
-                    End If
-
-                    If pos + 3 >= bytes.Length Then Exit While
-
-                    Dim length As Integer = (CInt(bytes(pos + 2)) << 8) Or CInt(bytes(pos + 3))
-                    Dim endPos As Integer = pos + 2 + length
-
-                    If length < 2 OrElse endPos > bytes.Length Then Exit While
-
-                    Dim isMetadata As Boolean = (marker >= &HE0 AndAlso marker <= &HEF) OrElse marker = &HFE
-
-                    If marker = &HDA Then
-                        ' SOS：之后是熵编码数据，一直拷贝到文件尾（含 EOI）
-                        Call output.Write(bytes, pos, bytes.Length - pos)
-
-                        Exit While
-                    End If
-
-                    If Not isMetadata Then
-                        Call output.Write(bytes, pos, endPos - pos)
-                    End If
-
-                    pos = endPos
-                End While
-
-                Return output.ToArray()
+                        Return New RgbImage With {
+                            .Width = width,
+                            .Height = height,
+                            .Pixels = pixels
+                        }
+                    Finally
+                        Call converted.UnlockBits(bits)
+                    End Try
+                End Using
             End Using
         End Function
 
@@ -299,7 +299,7 @@ Namespace Photos
         ''' 解码 JPEG 并用盒式滤波降到目标尺寸。
         ''' </summary>
         Public Shared Function LoadAndDownscale(path As String, targetWidth As Integer, targetHeight As Integer) As TF.Tensor
-            Dim buffer = DecodeJpeg(path)
+            Dim buffer As RgbImage = DecodeJpeg(path)
 
             Dim sourceWidth As Integer = buffer.Width
             Dim sourceHeight As Integer = buffer.Height
@@ -325,9 +325,9 @@ Namespace Photos
 
                         For sy As Integer = y0 To y1 - 1
                             For sx As Integer = x0 To x1 - 1
-                                sumR += buffer.GetRed(sx, sy)
-                                sumG += buffer.GetGreen(sx, sy)
-                                sumB += buffer.GetBlue(sx, sy)
+                                sumR += buffer.Red(sx, sy)
+                                sumG += buffer.Green(sx, sy)
+                                sumB += buffer.Blue(sx, sy)
                             Next
                         Next
 
@@ -344,10 +344,10 @@ Namespace Photos
         End Function
 
         Private Shared Sub ProbeSize(path As String, ByRef width As Integer, ByRef height As Integer)
-            Dim buffer = DecodeJpeg(path)
-
-            width = buffer.Width
-            height = buffer.Height
+            Using image As System.Drawing.Image = System.Drawing.Image.FromFile(path)
+                width = image.Width
+                height = image.Height
+            End Using
         End Sub
 
         Private Shared Function GetCamera(scene As Colmap.ColmapScene, view As Colmap.ColmapImage) As Colmap.ColmapCamera

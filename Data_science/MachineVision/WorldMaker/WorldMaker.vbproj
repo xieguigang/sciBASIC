@@ -11,9 +11,16 @@
     <OptionInfer>On</OptionInfer>
     <OptionStrict>Off</OptionStrict>
     <LangVersion>latest</LangVersion>
+    <UseSystemDrawing>true</UseSystemDrawing>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);BC42024;BC42030;BC42104;BC42105;BC42353</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- JPEG 解码：Core 的依赖无关 JpegReader 在 Tanks&Temples 这类“视频帧导出的 JPEG”
+         上会把 MCU 网格当成像素尺寸（实测 980×545 → 215×35），因此生产路径改用 GDI+。 -->
+    <PackageReference Include="System.Drawing.Common" Version="10.0.14" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\cuda\ILCuda\ILCuda.vbproj" />
