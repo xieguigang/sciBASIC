@@ -72,7 +72,7 @@ Namespace Cli
         Public Property EnableBpa As Boolean = True
 
         ''' <summary>表面点云过滤：高斯不透明度下限。</summary>
-        Public Property MinOpacity As Double = 0.1
+        Public Property MinOpacity As Double = 0.05
 
         ''' <summary>表面点云过滤：高斯尺度上限倍数（相对中位尺度）。</summary>
         Public Property MaxScaleFactor As Double = 3.0
@@ -138,7 +138,7 @@ Namespace Cli
                     Me.Iterations = 500
                     Me.ViewsPerStep = 4
                     Me.BudgetMinutes = 25.0
-                    Me.PoissonResolution = 128
+                    Me.PoissonResolution = 160
                     Me.DensifyInterval = 0
                 Case "standard"
                     Me.Preset = "standard"
@@ -147,7 +147,7 @@ Namespace Cli
                     Me.Iterations = 2000
                     Me.ViewsPerStep = 8
                     Me.BudgetMinutes = 180.0
-                    Me.PoissonResolution = 160
+                    Me.PoissonResolution = 192
                     Me.DensifyInterval = 100
                 Case "high"
                     Me.Preset = "high"
@@ -156,7 +156,7 @@ Namespace Cli
                     Me.Iterations = 5000
                     Me.ViewsPerStep = 16
                     Me.BudgetMinutes = 0.0
-                    Me.PoissonResolution = 192
+                    Me.PoissonResolution = 256
                     Me.DensifyInterval = 100
                 Case Else
                     Throw New ArgumentException($"未知的预设档位: {name}（可选 fast / standard / high）")

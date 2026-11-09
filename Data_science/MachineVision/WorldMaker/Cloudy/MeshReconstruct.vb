@@ -109,12 +109,22 @@ Namespace Cloudy
                 Call Report(log, $"BPA 采样: {cloud.Count:N0} → {sampled.Count:N0}（上限 {maxPoints:N0}）")
             End If
 
-            Dim spacing As Double = sampled.EstimateAverageSpacing()
+            ' 滚球半径必须按“邻近距离中位数”给：体积法会高估一个数量级，
+            ' 半径过大时滚球法几乎找不到合法空球，会退化成极慢且几乎无面的结果。
+            Dim spacing As Double = Pipeline.PointSpacing.MedianNeighborSpacing(sampled, 8)
             Dim radius As Double = std.Max(spacing * 2.5, 1.0E-6)
 
-            Call Report(log, $"BPA 滚球半径: {radius:G4}（平均点距 {spacing:G4}）")
+            Call Report(log, $"BPA 滚球半径: {radius:G4}（邻近距离中位数 {spacing:G4}）")
 
-            Dim mesh As CR.MeshData = CR.BallPivoting.Reconstruct(sampled, radius, 24)
+            Dim mesh As CR.MeshData
+
+            Try
+                mesh = CR.BallPivoting.Reconstruct(sampled, radius, 24)
+            Catch ex As Exception
+                Call Report(log, $"[warn] BPA 重建失败，跳过（{ex.Message}）")
+
+                mesh = New CR.MeshData(New CC.Vector3d() {}, New Integer() {})
+            End Try
 
             watch.Stop()
 

@@ -72,7 +72,9 @@ Namespace Cloudy
 
             result.Spacing = spacing
 
-            Dim voxel As Double = std.Max(spacing * 1.5, 1.0E-6)
+            ' 体素取 1.2 × 中位点距：1.5 会把 15 万点的表面压到 2 万点以下，
+            ' 对泊松来说过于稀疏（细节被抹平）；1.2 在点数与耗时之间更平衡。
+            Dim voxel As Double = std.Max(spacing * 1.2, 1.0E-6)
             Dim downsampled As CC.PointCloudBuffer = CP.VoxelGridFilter.Downsample(cloud, voxel)
 
             result.VoxelSize = voxel
