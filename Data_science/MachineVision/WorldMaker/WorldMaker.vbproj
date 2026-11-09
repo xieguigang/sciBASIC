@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WorldMaker</RootNamespace>
+    <AssemblyName>WorldMaker</AssemblyName>
+    <AssemblyTitle>Photos to 3D scene model: 3D gaussian splatting + point cloud reconstruction</AssemblyTitle>
+    <TargetFramework>net10.0</TargetFramework>
+    <StartupObject>WorldMaker.Program</StartupObject>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
+    <OptionStrict>Off</OptionStrict>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);BC42024;BC42030;BC42104;BC42105;BC42353</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\cuda\ILCuda\ILCuda.vbproj" />
+    <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\gr\Landscape\Landscape.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\Cloudy\Cloudy.vbproj" />
+    <ProjectReference Include="..\GaussianSplatting3D\GaussianSplatting\GaussianSplatting.vbproj" />
+    <ProjectReference Include="..\UNet\UNet.vbproj" />
+  </ItemGroup>
+
+</Project>
