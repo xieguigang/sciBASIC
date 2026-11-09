@@ -123,8 +123,15 @@ Namespace Pipeline
 
                 t0.Restart()
 
+                ' 未做致密化时，高斯与稀疏点一一对应 ⇒ 用 COLMAP 的真彩色
+                Dim trueColors As Double() = Nothing
+
+                If fit.Model.Count = scene.PointCount Then
+                    trueColors = scene.Colors
+                End If
+
                 Dim surface As Splatting.SurfaceCloudStats =
-                    Splatting.SplatPointCloud.Export(fit.Model, options, paths, AddressOf Log)
+                    Splatting.SplatPointCloud.Export(fit.Model, options, paths, AddressOf Log, trueColors)
 
                 t0.Stop()
 

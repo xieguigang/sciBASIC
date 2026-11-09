@@ -47,6 +47,13 @@ Namespace Cli
         ''' <summary>训练迭代次数（高斯优化步数）。</summary>
         Public Property Iterations As Integer = 500
 
+        ''' <summary>
+        ''' 初始学习率。默认 0.006（低于库默认的 0.015）：在只有一两百步的预算下，
+        ''' 0.015 会让颜色快速漂向白色（优化器用“变亮”来补偿低不透明度），
+        ''' 0.006 在“能收敛”和“不漂移”之间更稳。
+        ''' </summary>
+        Public Property LearningRate As Double = 0.006
+
         ''' <summary>每步参与优化的视图数（0 = 全部视图；默认取 min(8, MaxViews)）。</summary>
         Public Property ViewsPerStep As Integer = 4
 
@@ -119,6 +126,7 @@ Namespace Cli
             options.MaxViews = cli.GetInt("views", options.MaxViews)
             options.TargetWidth = cli.GetInt("width", options.TargetWidth)
             options.Iterations = cli.GetInt("iterations", options.Iterations)
+            options.LearningRate = cli.GetDouble("lr", options.LearningRate)
             options.ViewsPerStep = cli.GetInt("views-per-step", options.ViewsPerStep)
             options.BudgetMinutes = cli.GetDouble("budget-minutes", options.BudgetMinutes)
             options.DensifyInterval = cli.GetInt("densify", options.DensifyInterval)
@@ -241,6 +249,7 @@ Namespace Cli
             Call sb.AppendLine($"views             = {MaxViews}")
             Call sb.AppendLine($"width             = {TargetWidth}")
             Call sb.AppendLine($"iterations        = {Iterations}")
+            Call sb.AppendLine($"learning-rate     = {LearningRate}")
             Call sb.AppendLine($"views-per-step    = {ViewsPerStep}")
             Call sb.AppendLine($"budget-minutes    = {If(BudgetMinutes <= 0, "unlimited", BudgetMinutes.ToString("F1"))}")
             Call sb.AppendLine($"densify-interval  = {DensifyInterval}")
@@ -276,6 +285,7 @@ Namespace Cli
             Call sb.AppendLine("  --views <n>            参与训练的视图数上限")
             Call sb.AppendLine("  --width <px>           训练渲染宽度（高度按原比例）")
             Call sb.AppendLine("  --iterations <n>       训练迭代次数")
+            Call sb.AppendLine("  --lr <v>               初始学习率（默认 0.006）")
             Call sb.AppendLine("  --views-per-step <n>   每步使用多少个视图")
             Call sb.AppendLine("  --budget-minutes <m>   训练墙钟时限（0 = 不限；到点保留当前模型继续）")
             Call sb.AppendLine("  --densify <n>          致密化间隔（0 = 关闭）")

@@ -102,6 +102,7 @@ Namespace Splatting
             ' 因此只在训练结束后做一次全量评估。
             Dim training As New GS.TrainingOptions With {
                 .Iterations = options.Iterations,
+                .InitialLr = options.LearningRate,
                 .ViewsPerStep = options.ViewsPerStep,
                 .EvaluateEvery = 0,
                 .DensifyInterval = options.DensifyInterval,

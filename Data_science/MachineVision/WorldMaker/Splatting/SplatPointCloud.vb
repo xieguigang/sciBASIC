@@ -63,14 +63,27 @@ Namespace Splatting
         Private Sub New()
         End Sub
 
+        ''' <param name="sourceColors">
+        ''' 可选的“真彩色”来源（COLMAP 稀疏点的 RGB，0..1）。当高斯数量与稀疏点数量一致
+        ''' （未开启致密化）时，两者一一对应，此时用稀疏点颜色比用优化后的颜色更忠实：
+        ''' 在只有一百多步的预算下，优化器为了让半透明渲染变亮会把颜色推向白色，
+        ''' 而 COLMAP 的颜色直接来自多视图三角化，没有这种偏置。
+        ''' </param>
         Public Shared Function Export(model As GS.GaussianModel,
                                       options As Cli.PipelineOptions,
                                       paths As Pipeline.RunPaths,
-                                      Optional log As Action(Of String) = Nothing) As SurfaceCloudStats
+                                      Optional log As Action(Of String) = Nothing,
+                                      Optional sourceColors As Double() = Nothing) As SurfaceCloudStats
             Dim count As Integer = model.Count
             Dim positions As Double() = model.PositionsData
             Dim colors As Double() = model.ColorsData
             Dim scalesRaw As Double() = model.ScalesData
+
+            If sourceColors IsNot Nothing AndAlso sourceColors.Length = colors.Length Then
+                colors = sourceColors
+
+                Call Report(log, "点云颜色使用 COLMAP 稀疏点真彩色（与高斯数量一一对应）")
+            End If
 
             ' 1) 中位尺度（用于识别“跨物体”的巨型高斯）
             Dim maxScales(count - 1) As Double
