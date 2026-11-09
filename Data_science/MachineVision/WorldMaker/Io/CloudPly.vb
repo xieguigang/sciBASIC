@@ -48,8 +48,9 @@ Namespace Io
                 Call writer.WriteLine("end_header")
 
                 For i As Integer = 0 To count - 1
+                    ' 高斯颜色是 0..1 的归一化值，PLY 的 uchar 通道要 0..255
                     Call writer.WriteLine($"{x(i):F6} {y(i):F6} {z(i):F6} " &
-                                          $"{ToByte(red(i))} {ToByte(green(i))} {ToByte(blue(i))} " &
+                                          $"{ToByte255(red(i))} {ToByte255(green(i))} {ToByte255(blue(i))} " &
                                           $"{opacity(i):F4} {scale(i):F6}")
                 Next
             End Using
@@ -158,7 +159,8 @@ Namespace Io
                             Case "green"
                                 color(i) = color(i) Or (ToByte(ParseDouble(valueText)) << 8)
                             Case "blue"
-                                color(i) = color(i) Or (ToByte(ParseDouble(valueText)) << 16)
+                                ' ARGB 布局：R 在高字节、G 次之、B 在最低字节
+                                color(i) = color(i) Or ToByte(ParseDouble(valueText))
                         End Select
                     Next
                 Next
@@ -233,6 +235,13 @@ Namespace Io
             If Double.IsNaN(value) Then Return 0
 
             Return CInt(std.Max(0.0, std.Min(255.0, value)))
+        End Function
+
+        ''' <summary>把 0..1 的归一化颜色分量转成 0..255。</summary>
+        Private Shared Function ToByte255(value As Double) As Integer
+            If Double.IsNaN(value) Then Return 0
+
+            Return CInt(std.Max(0.0, std.Min(255.0, value * 255.0)))
         End Function
 
         Private Shared Function ParseDouble(text As String) As Double
