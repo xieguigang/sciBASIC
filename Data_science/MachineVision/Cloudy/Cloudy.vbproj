@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.MachineVision.Cloudy</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.MachineVision.Cloudy</AssemblyName>
+    <AssemblyTitle>3D point cloud processing</AssemblyTitle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+  </ItemGroup>
+
+  <!--
+    验证工程位于本目录之下，SDK 风格的“自动包含所有 .vb”会把它一起编译进来；
+    这里显式排除，让 Cloudy 只编译算法库本身。
+  -->
+  <ItemGroup>
+    <Compile Remove="Cloudy.Test\**" />
+    <EmbeddedResource Remove="Cloudy.Test\**" />
+    <None Remove="Cloudy.Test\**" />
+  </ItemGroup>
+
+</Project>

@@ -5,6 +5,7 @@
 node_modules
 
 gr/App
+Data_science/MachineVision/WorldMaker/output
 
 .nuget/
 

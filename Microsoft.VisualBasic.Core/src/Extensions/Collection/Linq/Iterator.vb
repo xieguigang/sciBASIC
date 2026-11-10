@@ -96,6 +96,10 @@ Namespace Linq
             Next
         End Function
 
+        Public Function c(Of T)(list As IEnumerable(Of T), x As T) As T()
+            Return list.JoinIterates(x).ToArray
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         <DebuggerStepThrough>
