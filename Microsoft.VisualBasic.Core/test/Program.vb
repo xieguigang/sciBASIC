@@ -52,6 +52,7 @@
 #End Region
 
 Imports System
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Module Program
     Sub Main(args As String())
@@ -83,21 +84,33 @@ Module Program
             Call DebugAuditSelfTest.Run()
             Return
         End If
+    End Sub
 
-        ' runs the SIMD math module correctness regression and benchmark only:
-        '   test.exe --simd
-        If args.Length > 0 AndAlso args(0) = "--simd" Then
-            Call SIMDTest.Run()
-            Return
-        End If
+    ''' <summary>
+    ''' runs the SIMD math module correctness regression and benchmark only: test.exe --simd
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("--simd")>
+    Public Function test_simd() As Integer
+        Call SIMDTest.Run()
+        Return 0
+    End Function
 
-        ' runs the NumericTable dataframe(...) builder regression checks only:
-        '   test.exe --numeric-table
-        If args.Length > 0 AndAlso args(0) = "--numeric-table" Then
-            Call NumericTableExtensionsTest.Run()
-            Return
-        End If
+    ''' <summary>
+    ''' runs the NumericTable dataframe(...) builder regression checks only: test.exe --numeric-table
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("--numeric-table")>
+    Public Function test_numericTable() As Integer
+        Call NumericTableExtensionsTest.Run()
+        Return 0
+    End Function
 
+    ''' <summary>
+    ''' other test
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function test() As Integer
         Call qgramTestSearch.Run()
         Call progrsssBarTest.testLoop()
         Call streamTest.dataUriStreamtest()
@@ -117,5 +130,8 @@ Module Program
         Call markdownRenderVerify.Run()
 
         Call streamTest.Main1()
-    End Sub
+
+        Return 0
+    End Function
+
 End Module
