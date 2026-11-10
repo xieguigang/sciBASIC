@@ -95,6 +95,86 @@ Namespace Compute
         ''' </summary>
         Public Const MatrixDotThreshold As Integer = 10000
 
+#Region "矩阵乘的 jagged 视图缓存"
+
+    ''' <summary>
+    ''' 一个稠密矩阵的 jagged 视图缓存条目。
+    ''' </summary>
+    Private NotInheritable Class JaggedRows
+
+        Public ReadOnly Rows As Integer
+        Public ReadOnly Cols As Integer
+        Public ReadOnly Version As Long
+        Public ReadOnly Jagged As Double()()
+
+        Public Sub New(rows As Integer, cols As Integer, version As Long, jagged As Double()())
+            Me.Rows = rows
+            Me.Cols = cols
+            Me.Version = version
+            Me.Jagged = jagged
+        End Sub
+
+    End Class
+
+    ' 键是底层 Double() 数组的引用：推理期权重数组是长命对象，
+    ' 因此即使上层每次用新的 Tensor 实例包装同一个数组，缓存依然命中。
+    Private Shared ReadOnly _jaggedCache As New Runtime.CompilerServices.ConditionalWeakTable(Of Double(), JaggedRows)
+
+    Private Shared _cacheHits As Long = 0L
+    Private Shared _cacheMisses As Long = 0L
+
+    ''' <summary>jagged 视图缓存的命中次数（用于性能报告自证）</summary>
+    Public Shared ReadOnly Property JaggedCacheHits As Long
+        Get
+            Return System.Threading.Interlocked.Read(_cacheHits)
+        End Get
+    End Property
+
+    ''' <summary>jagged 视图缓存的重建次数</summary>
+    Public Shared ReadOnly Property JaggedCacheMisses As Long
+        Get
+            Return System.Threading.Interlocked.Read(_cacheMisses)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 取矩阵的 jagged 视图：命中缓存时零分配，未命中时按行复制一次。
+    ''' 
+    ''' 版本号来自 <see cref="Tensor"/> 的写入计数，原地写入后自动失效，
+    ''' 因此与"每次重新展开"的结果逐位一致。
+    ''' </summary>
+    Private Shared Function GetJagged(t As Tensor, rows As Integer, cols As Integer) As Double()()
+        Dim key As Double() = t.Data
+        Dim version As Long = t.Version
+        Dim entry As JaggedRows = Nothing
+
+        If _jaggedCache.TryGetValue(key, entry) Then
+            If entry.Rows = rows AndAlso entry.Cols = cols AndAlso entry.Version = version Then
+                Call System.Threading.Interlocked.Increment(_cacheHits)
+
+                Return entry.Jagged
+            End If
+        End If
+
+        Call System.Threading.Interlocked.Increment(_cacheMisses)
+
+        Dim jagged(rows - 1)() As Double
+
+        For i As Integer = 0 To rows - 1
+            Dim row(cols - 1) As Double
+
+            Call Array.Copy(key, i * cols, row, 0, cols)
+            jagged(i) = row
+        Next
+
+        Call _jaggedCache.Remove(key)
+        Call _jaggedCache.Add(key, New JaggedRows(rows, cols, version, jagged))
+
+        Return jagged
+    End Function
+
+#End Region
+
         ''' <summary>全局默认实例（<see cref="Tensor.computeKernel"/> 的初始值）</summary>
         Public Shared ReadOnly Property [Default] As SIMDTensor = New SIMDTensor()
 
@@ -222,8 +302,10 @@ Namespace Compute
                 Return MyBase.MatMul(a, b)
             End If
 
-            Dim rowsA = ToJagged(a.Data, m, k)
-            Dim rowsB = ToJagged(b.Data, k, n)
+            ' 权重矩阵在推理期是常量：jagged 视图按底层数组缓存，
+            ' 避免每次乘法都把 H×H 权重整体复制一遍（这是分配爆炸的主因）
+            Dim rowsA = GetJagged(a, m, k)
+            Dim rowsB = GetJagged(b, k, n)
             Dim product = SimdParallel.MatrixDot(rowsA, rowsB)
 
             ' 输出元素数必须用 64 位校验（见 Tensor.MatrixSize 的说明）
