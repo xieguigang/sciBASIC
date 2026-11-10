@@ -2,7 +2,7 @@
   "profiles": {
     "test": {
       "commandName": "Project",
-      "commandLineArgs": "--help"
+      "commandLineArgs": "--help \"--test-arguments\""
     }
   }
 }

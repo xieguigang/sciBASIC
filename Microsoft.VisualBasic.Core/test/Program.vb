@@ -1,90 +1,123 @@
 ﻿#Region "Microsoft.VisualBasic::cd712ccc91a7097feada336b404a3e39, Microsoft.VisualBasic.Core\test\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 61
-    '    Code Lines: 39 (63.93%)
-    ' Comment Lines: 10 (16.39%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 12 (19.67%)
-    '     File Size: 1.98 KB
+' Summaries:
 
 
-    ' Module Program
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 61
+'    Code Lines: 39 (63.93%)
+' Comment Lines: 10 (16.39%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 12 (19.67%)
+'     File Size: 1.98 KB
+
+
+' Module Program
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Module Program
+    ''' <summary>
+    ''' dispatches the commandline to the ExportAPI test entry points
+    ''' </summary>
+    ''' <returns></returns>
     Public Function Main(args As String()) As Integer
-        Return GetType(Program).RunCLI(App.CommandLine)
-        ' FTP 客户端命令行测试入口:
-        '   test.exe --ftp <host> <remotePath> [localPath] [user] [password] [--port N] [--ssl]
-        If args.Length > 0 AndAlso args(0) = "--ftp" Then
-            Call FtpTest.Run(args.Skip(1).ToArray()).GetAwaiter().GetResult()
-            Return 0
-        End If
+        Return GetType(Program).RunCLI(App.CommandLine, AddressOf test)
+    End Function
 
-        ' runs the markdown console renderer regression checks only:
-        '   test.exe --markdown
-        If args.Length > 0 AndAlso args(0) = "--markdown" Then
-            Call markdownRenderVerify.Run()
-            Call markdownDisplayTest.Main1()
-            Return 0
-        End If
+    ''' <summary>
+    ''' runs the FTP client commandline demo only:
+    ''' test.exe --ftp [host] [remotePath] [localPath] [user] [password] [--port N] [--ssl]
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("--ftp")>
+    Public Function test_ftp() As Integer
+        Call FtpTest.Run(App.CommandLine.Parameters).GetAwaiter().GetResult()
+        Return 0
+    End Function
 
-        ' runs the jsonl store / WAL (Data.Repository.TextStore) demo checks only:
-        '   test.exe --jsonl
-        If args.Length > 0 AndAlso args(0) = "--jsonl" Then
-            Call jsonlStoreTest.Run()
-            Return 0
-        End If
+    ''' <summary>
+    ''' runs the markdown console renderer regression checks only: test.exe --markdown
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("--markdown")>
+    <Description("runs the markdown console renderer regression checks only: test.exe --markdown")>
+    Public Function test_markdown() As Integer
+        Call markdownRenderVerify.Run()
+        Call markdownDisplayTest.Main1()
+        Return 0
+    End Function
 
-        ' runs the runtime debug audit module (DebugAudit) regression checks only:
-        '   test.exe --debugaudit
-        If args.Length > 0 AndAlso args(0) = "--debugaudit" Then
-            Call DebugAuditSelfTest.Run()
-            Return 0
-        End If
+    ''' <summary>
+    ''' test commandline arguments
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <param name="c"></param>
+    ''' <returns></returns>
+    <ExportAPI("--test-arguments")>
+    <Argument("number 1", False, CLITypes.Integer, AcceptTypes:={GetType(Integer)}, Description:="the first number")>
+    Public Function test_arguments(a As Integer, b As Integer, Optional c As Double = -100) As Integer
+        Call Console.WriteLine((a + b) * c)
+        Return 0
+    End Function
+
+    ''' <summary>
+    ''' runs the jsonl store / WAL (Data.Repository.TextStore) demo checks only: test.exe --jsonl
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("--jsonl")>
+    Public Function test_jsonl() As Integer
+        Call jsonlStoreTest.Run()
+        Return 0
+    End Function
+
+    ''' <summary>
+    ''' runs the runtime debug audit module (DebugAudit) regression checks only: test.exe --debugaudit
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("--debugaudit")>
+    Public Function test_debugaudit() As Integer
+        Call DebugAuditSelfTest.Run()
+        Return 0
     End Function
 
     ''' <summary>
