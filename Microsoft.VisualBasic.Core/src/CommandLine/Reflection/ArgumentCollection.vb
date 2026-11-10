@@ -192,10 +192,133 @@ Namespace CommandLine.Reflection
                       Select parameter
                       Order By parameter.Optional, parameter.TokenType Ascending ' 必须参数都在前面，可选参数都在后面
 
+            Dim declared As New System.Collections.Generic.List(Of ArgumentAttribute)
+
             For Each param As ArgumentAttribute In LQuery
-                Call _params.Add(param.Name, param)
+                If FindByName(declared, param.Name) Is Nothing Then
+                    Call declared.Add(param)
+                End If
+            Next
+
+            ' 从 .net xml 注释文档与方法的签名之中自动补全参数的帮助信息
+            Call CompleteFromXmlDocs(methodInfo, declared)
+
+            ' 重建字典，保持「必须参数在前，可选参数在后」的稳定枚举顺序
+            Dim ordered = From param As ArgumentAttribute
+                          In declared
+                          Order By param.Optional, param.TokenType Ascending
+                          Select param
+
+            For Each param As ArgumentAttribute In ordered
+                _params(param.Name) = param
             Next
         End Sub
+
+        ''' <summary>
+        ''' 属性优先，xml 补全：手写的 Argument 属性只补充缺失的描述文本，
+        ''' 没有手写属性的参数则由方法签名反射推导出开关的帮助信息。
+        ''' </summary>
+        Private Sub CompleteFromXmlDocs(methodInfo As MethodInfo, declared As System.Collections.Generic.List(Of ArgumentAttribute))
+            Dim parameters As ParameterInfo() = methodInfo.GetParameters()
+
+            If parameters.Length = 0 Then
+                Return
+            End If
+
+            Dim needDocs As Boolean = False
+
+            ' 仅在有参数缺少帮助信息的时候才加载 xml 文档（程序集的文档可能很大）
+            For Each parameter As ParameterInfo In parameters
+                If XmlDocHelp.IsInjectedParameter(parameter) Then
+                    Continue For
+                End If
+
+                Dim known As ArgumentAttribute = FindDeclared(declared, parameter.Name)
+
+                If known Is Nothing OrElse String.IsNullOrEmpty(known.Description) Then
+                    needDocs = True
+                    Exit For
+                End If
+            Next
+
+            Dim doc As XmlMethodDoc = If(needDocs,
+                                         XmlDocHelp.ForMethod(methodInfo),
+                                         XmlMethodDoc.Empty)
+
+            For Each parameter As ParameterInfo In parameters
+                If XmlDocHelp.IsInjectedParameter(parameter) Then
+                    Continue For
+                End If
+
+                Dim known As ArgumentAttribute = FindDeclared(declared, parameter.Name)
+                Dim text As String = doc.ParameterDocument(parameter.Name)
+
+                If known Is Nothing Then
+                    Dim switchName As String = "--" & parameter.Name
+
+                    If FindByName(declared, switchName) Is Nothing Then
+                        Dim arg As New ArgumentAttribute(
+                            switchName,
+                            parameter.IsOptional,
+                            XmlDocHelp.ToCLITypes(parameter.ParameterType)) With {
+                                .AcceptTypes = {parameter.ParameterType}
+                            }
+
+                        If text.Length > 0 Then
+                            arg.Description = text
+                        End If
+
+                        Call declared.Add(arg)
+                    End If
+                ElseIf String.IsNullOrEmpty(known.Description) AndAlso text.Length > 0 Then
+                    known.Description = text
+                End If
+            Next
+        End Sub
+
+        Private Shared Function FindByName(declared As System.Collections.Generic.List(Of ArgumentAttribute), name As String) As ArgumentAttribute
+            For Each attr As ArgumentAttribute In declared
+                If String.Equals(attr.Name, name, StringComparison.OrdinalIgnoreCase) Then
+                    Return attr
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' 查找与反射参数对应的手写 Argument 属性，名称规则与
+        ''' ``APIDelegate.MatchArgumentName`` 保持一致：忽略 --/-// 前缀并把 - 视为 _
+        ''' </summary>
+        Private Shared Function FindDeclared(declared As System.Collections.Generic.List(Of ArgumentAttribute), parameterName As String) As ArgumentAttribute
+            If String.IsNullOrEmpty(parameterName) Then
+                Return Nothing
+            End If
+
+            Dim symbol As String = NormalizeSwitchName(parameterName)
+
+            For Each attr As ArgumentAttribute In declared
+                If NormalizeSwitchName(attr.Name).Equals(symbol, StringComparison.OrdinalIgnoreCase) Then
+                    Return attr
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Private Shared Function NormalizeSwitchName(name As String) As String
+            If String.IsNullOrEmpty(name) Then
+                Return ""
+            End If
+
+            If name.StartsWith("--") Then
+                name = name.Substring(2)
+            ElseIf name.StartsWith("-") OrElse name.StartsWith("/") OrElse name.StartsWith("\") Then
+                name = name.Substring(1)
+            End If
+
+            Return name.Replace("-"c, "_"c)
+        End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of ArgumentAttribute)) Implements IEnumerable(Of NamedValue(Of ArgumentAttribute)).GetEnumerator
             For Each obj In _params

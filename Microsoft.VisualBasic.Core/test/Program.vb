@@ -51,7 +51,6 @@
 
 #End Region
 
-Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Module Program
@@ -79,7 +78,6 @@ Module Program
     ''' </summary>
     ''' <returns></returns>
     <ExportAPI("--markdown")>
-    <Description("runs the markdown console renderer regression checks only: test.exe --markdown")>
     Public Function test_markdown() As Integer
         Call markdownRenderVerify.Run()
         Call markdownDisplayTest.Main1()
@@ -89,12 +87,11 @@ Module Program
     ''' <summary>
     ''' test commandline arguments
     ''' </summary>
-    ''' <param name="a"></param>
-    ''' <param name="b"></param>
-    ''' <param name="c"></param>
+    ''' <param name="a">the first required integer number</param>
+    ''' <param name="b">the second required integer number</param>
+    ''' <param name="c">an optional scale factor of the expression, defaults to -100</param>
     ''' <returns></returns>
     <ExportAPI("--test-arguments")>
-    <Argument("number 1", False, CLITypes.Integer, AcceptTypes:={GetType(Integer)}, Description:="the first number")>
     Public Function test_arguments(a As Integer, b As Integer, Optional c As Double = -100) As Integer
         Call Console.WriteLine((a + b) * c)
         Return 0

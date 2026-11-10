@@ -544,8 +544,13 @@ Namespace CommandLine
             Dim cmdModel As New ExportApiModel(cmdAttr)
             Dim commandInfo As New APIEntryPoint(cmdModel, methodInfo, [throw])
 
-            ' 帮助信息的获取兼容系统的Description方法
+            ' 帮助信息的获取兼容系统的Description方法；
+            ' 没有手写属性的时候，回退到程序集 xml 注释文档之中的 summary 文本
             cmdModel.Info = methodInfo.Description([default]:="")
+
+            If String.IsNullOrWhiteSpace(cmdModel.Info) Then
+                cmdModel.Info = XmlDocHelp.ForMethod(methodInfo).Summary
+            End If
             ' 20240417
             '
             ' trim multiple line of the commandline usage text
