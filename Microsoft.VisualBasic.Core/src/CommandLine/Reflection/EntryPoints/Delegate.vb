@@ -207,8 +207,21 @@ Namespace CommandLine.Reflection.EntryPoints
                         Throw New MissingMemberException($"missing the required argument({name}) inside your commandline input!")
                     End If
                 Else
-                    Dim val_str As String = args(name)
-                    Dim value As Object = Scripting.CTypeDynamic(val_str, type)
+                    Dim value As Object
+
+                    If type Is GetType(Boolean) Then
+                        ' 20261110 A bare switch such as `--no-passive` carries no value:
+                        ' GetEnumerator() exposes it with the placeholder value "true" so that
+                        ' MatchArgumentName can find it, but the indexer still yields an empty
+                        ' string. CTypeDynamic("") returns Nothing, which the CLR then coerces
+                        ' to False - the switch would be silently ignored. Boolean parameters
+                        ' must therefore consult BoolFlags through CommandLine.GetValue.
+                        value = args.GetValue(Of Boolean)(name, True)
+                    Else
+                        Dim val_str As String = args(name)
+
+                        value = Scripting.CTypeDynamic(val_str, type)
+                    End If
 
                     callParameters(i) = value
                 End If
