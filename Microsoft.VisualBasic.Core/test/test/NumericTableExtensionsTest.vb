@@ -65,7 +65,7 @@ Imports System.Data
 Imports Microsoft.VisualBasic.Data
 
 ''' <summary>
-''' <see cref="NumericTableExtensions.dataframe(ArgumentReference())"/> 的回归测试。
+''' <see cref="NumericTableExtensions.dataframe"/> 的回归测试。
 ''' 
 ''' 直接运行：
 ''' 

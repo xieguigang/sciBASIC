@@ -55,12 +55,13 @@ Imports System
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Module Program
-    Sub Main(args As String())
+    Public Function Main(args As String()) As Integer
+        Return GetType(Program).RunCLI(App.CommandLine)
         ' FTP 客户端命令行测试入口:
         '   test.exe --ftp <host> <remotePath> [localPath] [user] [password] [--port N] [--ssl]
         If args.Length > 0 AndAlso args(0) = "--ftp" Then
             Call FtpTest.Run(args.Skip(1).ToArray()).GetAwaiter().GetResult()
-            Return
+            Return 0
         End If
 
         ' runs the markdown console renderer regression checks only:
@@ -68,23 +69,23 @@ Module Program
         If args.Length > 0 AndAlso args(0) = "--markdown" Then
             Call markdownRenderVerify.Run()
             Call markdownDisplayTest.Main1()
-            Return
+            Return 0
         End If
 
         ' runs the jsonl store / WAL (Data.Repository.TextStore) demo checks only:
         '   test.exe --jsonl
         If args.Length > 0 AndAlso args(0) = "--jsonl" Then
             Call jsonlStoreTest.Run()
-            Return
+            Return 0
         End If
 
         ' runs the runtime debug audit module (DebugAudit) regression checks only:
         '   test.exe --debugaudit
         If args.Length > 0 AndAlso args(0) = "--debugaudit" Then
             Call DebugAuditSelfTest.Run()
-            Return
+            Return 0
         End If
-    End Sub
+    End Function
 
     ''' <summary>
     ''' runs the SIMD math module correctness regression and benchmark only: test.exe --simd
