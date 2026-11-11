@@ -6,6 +6,7 @@ node_modules
 
 gr/App
 Data_science/MachineVision/WorldMaker/output
+Data_science/MachineLearning/GLMNet/test/data
 
 .nuget/
 
