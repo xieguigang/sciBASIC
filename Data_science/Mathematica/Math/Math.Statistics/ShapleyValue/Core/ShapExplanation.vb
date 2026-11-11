@@ -1,61 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::560e0023fce0ec8391fc71736d2cc863, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\ShapExplanation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 110
-    '    Code Lines: 45 (40.91%)
-    ' Comment Lines: 46 (41.82%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 19 (17.27%)
-    '     File Size: 3.68 KB
+' Summaries:
 
 
-    '     Class ShapExplanation
-    ' 
-    '         Properties: AdditiveValue, Baseline, Contributions, FeatureNames, ID
-    '                     Output, Size
-    ' 
-    '         Function: FeatureName, GetContribution, Ranked
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 110
+'    Code Lines: 45 (40.91%)
+' Comment Lines: 46 (41.82%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 19 (17.27%)
+'     File Size: 3.68 KB
+
+
+'     Class ShapExplanation
+' 
+'         Properties: AdditiveValue, Baseline, Contributions, FeatureNames, ID
+'                     Output, Size
+' 
+'         Function: FeatureName, GetContribution, Ranked
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
-Imports System.Linq
 
 Namespace ShapleyValue
 
@@ -117,7 +115,7 @@ Namespace ShapleyValue
         ''' <returns></returns>
         Public Function Ranked() As (name As String, value As Double)()
             If Contributions Is Nothing Then
-                Return New (name As String, value As Double)() {}
+                Return New(name As String, value As Double)() {}
             End If
 
             Dim items As New List(Of (name As String, value As Double))()

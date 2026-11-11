@@ -42,6 +42,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Remove="XGBoostInfoLogging5e0421b21327381ad81c0861bb49062b.log" />
+    <None Remove="XGBoostInfoLogging83d7337829144d001c36de7814570cc3.log" />
+    <None Remove="XGBoostInfoLogging9f890800ceca0d165e116d1ae87b9600.log" />
+    <None Remove="XGBoostInfoLoggingdad46e6eeb3ff4e36329e6b6ba200f22.log" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
