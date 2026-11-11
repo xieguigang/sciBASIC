@@ -138,25 +138,16 @@ Namespace Ensemble.Persistence
             Dim header As String() = Nothing
 
             Using reader As New StreamReader(path, Encoding.UTF8, detectEncodingFromByteOrderMarks:=True)
-                Dim record As List(Of String) = Nothing
-
+                ' StreamReader.ReadLine 对「最后一行没有换行符」同样会返回内容，
+                ' 因此这里逐行提交即可；不要在 EOF 处重复提交最后一条记录。
                 Do While True
                     Dim line As String = reader.ReadLine()
 
                     If line Is Nothing Then
-                        ' 文件末尾可能缺少换行符，最后一条记录仍需提交
-                        If record IsNot Nothing AndAlso record.Count > 0 Then
-                            If header Is Nothing Then
-                                header = record.ToArray()
-                            Else
-                                Call rows.Add(record.ToArray())
-                            End If
-                        End If
-
                         Exit Do
                     End If
 
-                    record = ParseRecord(line)
+                    Dim record As List(Of String) = ParseRecord(line)
 
                     If record Is Nothing Then
                         Continue Do

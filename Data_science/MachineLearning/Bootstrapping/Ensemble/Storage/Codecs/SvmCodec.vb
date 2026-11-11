@@ -1,6 +1,5 @@
 Imports System
 Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SvmModelType = Microsoft.VisualBasic.MachineLearning.SVM.Model
 Imports SvmNode = Microsoft.VisualBasic.MachineLearning.SVM.Node
 Imports SvmParameter = Microsoft.VisualBasic.MachineLearning.SVM.Parameter
@@ -20,8 +19,16 @@ Namespace Ensemble.Persistence
     ''' 支持向量天然稀疏，且数量可达数千，因此按
     ''' <c>(vector, index, value)</c> 三元组落 CSV，只写非零分量；
     ''' <c>supportVectorCoefficients</c>（类别数 × 支持向量数）同样落 CSV。
-    ''' 超参数 <c>Parameter</c> 是整个对象里唯一的嵌套结构，
-    ''' 直接以 JSON 文本内联在清单里（字段少、可读性反而更好）。
+    ''' </para>
+    ''' <para>
+    ''' <b>超参数必须逐项落盘</b>：<c>svmType</c> 决定预测走 <c>svr_predict</c> 还是
+    ''' <c>svc_predict</c>，<c>kernelType</c> / <c>gamma</c> / <c>degree</c> /
+    ''' <c>coefficient0</c> 决定核函数取值——任何一个丢失都会让恢复后的模型
+    ''' 「能跑但算错」。因此这里把预测相关的每一项都以显式字段写进清单，
+    ''' 而不依赖对整个 <c>Parameter</c> 对象做通用序列化。
+    ''' </para>
+    ''' <para>
+    ''' 训练期专用的 <c>weights</c>（类别惩罚权重）不参与预测，不予持久化。
     ''' </para>
     ''' </remarks>
     Public NotInheritable Class SvmCodec
@@ -29,8 +36,6 @@ Namespace Ensemble.Persistence
 
         ''' <summary>算法标识</summary>
         Public Const AlgorithmName As String = "svm"
-
-        Private Const ParameterKey As String = "svmParameter"
 
         Public ReadOnly Property Algorithm As String Implements IModelCodec.Algorithm
             Get
@@ -86,8 +91,23 @@ Namespace Ensemble.Persistence
             If fitted.dimensionNames IsNot Nothing Then
                 manifest.SetText("dimensionNames", fitted.dimensionNames)
             End If
-            If fitted.parameter IsNot Nothing Then
-                manifest.SetParameter(ParameterKey, fitted.parameter.GetJson())
+
+            ' 预测相关的超参数必须逐项持久化，见类型备注
+            Dim parameter As SvmParameter = fitted.parameter
+
+            If parameter IsNot Nothing Then
+                manifest.SetParameter("svmType", parameter.svmType.ToString())
+                manifest.SetParameter("kernelType", parameter.kernelType.ToString())
+                manifest.SetInteger("degree", parameter.degree)
+                manifest.SetScalar("gamma", parameter.gamma)
+                manifest.SetScalar("coefficient0", parameter.coefficient0)
+                manifest.SetScalar("c", parameter.c)
+                manifest.SetScalar("nu", parameter.nu)
+                manifest.SetScalar("svrEpsilon", parameter.P)
+                manifest.SetScalar("tolerance", parameter.EPS)
+                manifest.SetScalar("cacheSize", parameter.cacheSize)
+                manifest.SetInteger("shrinking", If(parameter.shrinking, 1, 0))
+                manifest.SetInteger("probability", If(parameter.probability, 1, 0))
             End If
 
             Call bundle.WriteCsv(manifest, "support-vectors", folder,
@@ -101,13 +121,7 @@ Namespace Ensemble.Persistence
         End Function
 
         Public Function LoadModel(manifest As ModelManifest, bundle As ModelBundle) As Object Implements IModelCodec.LoadModel
-            Dim parameter As SvmParameter = Nothing
-            Dim parameterJson As String = Nothing
-
-            If manifest.parameters IsNot Nothing AndAlso manifest.parameters.TryGetValue(ParameterKey, parameterJson) Then
-                parameter = parameterJson.LoadJSON(Of SvmParameter)()
-            End If
-
+            Dim parameter As SvmParameter = RestoreParameter(manifest)
             Dim names As String() = Nothing
 
             If manifest.texts IsNot Nothing Then
@@ -134,6 +148,10 @@ Namespace Ensemble.Persistence
             Dim width As Integer = manifest.featureWidth
 
             If String.Equals(manifest.kind, "classifier", StringComparison.OrdinalIgnoreCase) Then
+                If manifest.classes Is Nothing OrElse manifest.classes.Length = 0 Then
+                    Throw New System.IO.InvalidDataException("the svm manifest carries no class labels!")
+                End If
+
                 Return New SvmClassifier(restored, manifest.classes, labelOffset, width)
             End If
 
@@ -271,6 +289,69 @@ Namespace Ensemble.Persistence
             Next
 
             Return matrix
+        End Function
+
+        ''' <summary>
+        ''' 从清单逐项还原 LibSVM 超参数；缺失项回退到 <see cref="SvmParameter"/> 的默认值。
+        ''' </summary>
+        ''' <param name="manifest">SVM 模型的清单</param>
+        Private Shared Function RestoreParameter(manifest As ModelManifest) As SvmParameter
+            Dim parameter As New SvmParameter()
+
+            Dim svmType As Microsoft.VisualBasic.MachineLearning.SVM.SvmType
+            Dim kernelType As Microsoft.VisualBasic.MachineLearning.SVM.KernelType
+            Dim text As String = Nothing
+
+            If manifest.parameters IsNot Nothing AndAlso manifest.parameters.TryGetValue("svmType", text) Then
+                If Not [Enum].TryParse(text, svmType) Then
+                    Throw New System.IO.InvalidDataException(
+                        $"the svm manifest has an invalid svmType ('{text}')!")
+                End If
+
+                parameter.svmType = svmType
+            End If
+
+            If manifest.parameters IsNot Nothing AndAlso manifest.parameters.TryGetValue("kernelType", text) Then
+                If Not [Enum].TryParse(text, kernelType) Then
+                    Throw New System.IO.InvalidDataException(
+                        $"the svm manifest has an invalid kernelType ('{text}')!")
+                End If
+
+                parameter.kernelType = kernelType
+            End If
+
+            parameter.degree = GetOptionalInteger(manifest, "degree", parameter.degree)
+            parameter.gamma = GetOptionalScalar(manifest, "gamma", parameter.gamma)
+            parameter.coefficient0 = GetOptionalScalar(manifest, "coefficient0", parameter.coefficient0)
+            parameter.c = GetOptionalScalar(manifest, "c", parameter.c)
+            parameter.nu = GetOptionalScalar(manifest, "nu", parameter.nu)
+            parameter.P = GetOptionalScalar(manifest, "svrEpsilon", parameter.P)
+            parameter.EPS = GetOptionalScalar(manifest, "tolerance", parameter.EPS)
+            parameter.cacheSize = GetOptionalScalar(manifest, "cacheSize", parameter.cacheSize)
+            parameter.shrinking = GetOptionalInteger(manifest, "shrinking", 1) <> 0
+            parameter.probability = GetOptionalInteger(manifest, "probability", 0) <> 0
+
+            Return parameter
+        End Function
+
+        Private Shared Function GetOptionalScalar(manifest As ModelManifest, name As String, fallback As Double) As Double
+            Dim value As Double
+
+            If manifest.scalars IsNot Nothing AndAlso manifest.scalars.TryGetValue(name, value) Then
+                Return value
+            End If
+
+            Return fallback
+        End Function
+
+        Private Shared Function GetOptionalInteger(manifest As ModelManifest, name As String, fallback As Integer) As Integer
+            Dim value As Integer
+
+            If manifest.integers IsNot Nothing AndAlso manifest.integers.TryGetValue(name, value) Then
+                Return value
+            End If
+
+            Return fallback
         End Function
 
         Private Shared Function GetOptionalVector(manifest As ModelManifest, name As String) As Double()

@@ -50,7 +50,7 @@ node2vec 通过两个参数（`p` 返回概率、`q` 前进概率）**连续调�
 | `....Bootstrapping.GraphEmbedding`（+ `.complex` / `.complex_NNE` / `.complex_NNE_AER` / `.complex_R` / `.struct` / `.util`） | 图与知识图谱嵌入 |
 | `....Bootstrapping.node2vec` | node2vec 有偏随机游走 + word2vec |
 | `....Bootstrapping.Ensemble`（`.Abstractions` / `.Core` / `.Adapters` / `.Voting` / `.Bagging` / `.Stacking`） | 集成学习：统一分类/回归契约与 Voting / Bagging / Stacking |
-| `....Bootstrapping.Ensemble.Persistence`（`.Codecs`） | 模型持久化：JSON 清单 + CSV 数值附表，零重训加载 |
+| `....Bootstrapping.Ensemble.Persistence` | 模型持久化：JSON 清单 + CSV 数值附表，零重训加载 |
 
 ## 快速上手
 
@@ -154,11 +154,11 @@ Dim again = EnsembleModelStore.LoadRegressor("D:\models\ridge")
 
 ```
 <model-bundle>/
-├── model.json                       # 类型、超参数、类别顺序、特征维度、子模型树
-├── base/0-naive-bayes/tables.csv    # 条件频率表（class, feature, key, count）
-├── base/1-svm/support-vectors.csv   # 支持向量的稀疏三元组
-├── base/1-svm/coefficients.csv
-└── meta/logistic/…                  # 堆叠的元学习器
+├── model.json                  # 类型、超参数、类别顺序、特征维度、子模型树
+├── base/0/tables.csv           # 朴素贝叶斯条件频率表（class, feature, key, count）
+├── base/1/support-vectors.csv  # SVM 支持向量的稀疏三元组（vector, index, value）
+├── base/1/coefficients.csv
+└── meta/…                      # 堆叠的元学习器
 ```
 
 设计要点：

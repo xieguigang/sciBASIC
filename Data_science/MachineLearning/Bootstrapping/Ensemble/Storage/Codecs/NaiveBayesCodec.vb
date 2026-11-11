@@ -64,6 +64,11 @@ Namespace Ensemble.Persistence
         End Function
 
         Public Function LoadModel(manifest As ModelManifest, bundle As ModelBundle) As Object Implements IModelCodec.LoadModel
+            If manifest.classes Is Nothing OrElse manifest.classes.Length = 0 Then
+                Throw New System.IO.InvalidDataException(
+                    "the naive bayes manifest carries no class labels!")
+            End If
+
             Dim modelClasses As Integer() = manifest.GetIntegerVector("modelClasses")
             Dim width As Integer = manifest.featureWidth
             Dim classCount As Integer = modelClasses.Length
@@ -286,6 +291,17 @@ Namespace Ensemble.Persistence
                     Dim counts As Integer() = table.Integers("count", "bayesian-regression/posterior-tables")
 
                     For i As Integer = 0 To table.RowCount - 1
+                        If classes(i) < 0 OrElse classes(i) >= classCount Then
+                            Throw New System.IO.InvalidDataException(
+                                $"the bayesian regression posterior table row[{i}] " &
+                                $"has an out-of-range class index ({classes(i)})!")
+                        End If
+                        If features(i) < 0 OrElse features(i) >= width Then
+                            Throw New System.IO.InvalidDataException(
+                                $"the bayesian regression posterior table row[{i}] " &
+                                $"has an out-of-range feature index ({features(i)})!")
+                        End If
+
                         Dim key As Long = CLng(ModelFormat.ParseNumber(
                             keys(i), $"bayesian-regression/posterior-tables row[{i}] key"))
 
@@ -319,6 +335,17 @@ Namespace Ensemble.Persistence
                     Dim cellVariances As Double() = table.Doubles("variance", "bayesian-regression/posterior-gaussian")
 
                     For i As Integer = 0 To table.RowCount - 1
+                        If classes(i) < 0 OrElse classes(i) >= classCount Then
+                            Throw New System.IO.InvalidDataException(
+                                $"the bayesian regression gaussian table row[{i}] " &
+                                $"has an out-of-range class index ({classes(i)})!")
+                        End If
+                        If features(i) < 0 OrElse features(i) >= width Then
+                            Throw New System.IO.InvalidDataException(
+                                $"the bayesian regression gaussian table row[{i}] " &
+                                $"has an out-of-range feature index ({features(i)})!")
+                        End If
+
                         means(classes(i))(features(i)) = cellMeans(i)
                         variances(classes(i))(features(i)) = cellVariances(i)
                     Next

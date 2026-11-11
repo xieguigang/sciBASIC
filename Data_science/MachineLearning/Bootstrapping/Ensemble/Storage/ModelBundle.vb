@@ -14,10 +14,10 @@ Namespace Ensemble.Persistence
     ''' 目录布局示例：
     ''' <code>
     ''' &lt;model-bundle&gt;/
-    ''' ├── model.json                       ' 清单：类型、超参数、类别、特征维度、子模型
-    ''' ├── base/0-naive-bayes/tables.csv    ' 条件频率表（长表）
-    ''' ├── base/1-svm/support-vectors.csv   ' 支持向量的稀疏三元组
-    ''' └── meta/logistic/…                  ' 堆叠的元学习器
+    ''' ├── model.json                 ' 清单：类型、超参数、类别、特征维度、子模型
+    ''' ├── base/0/tables.csv          ' 条件频率表（长表）
+    ''' ├── base/1/support-vectors.csv ' 支持向量的稀疏三元组
+    ''' └── meta/…                     ' 堆叠的元学习器
     ''' </code>
     ''' 清单中的 <see cref="ModelManifest.data"/> 只保存**相对于包根目录**的 CSV 路径，
     ''' 加载时统一经过 <see cref="ResolvePath"/> 规范化，拒绝绝对路径与 <c>..</c>

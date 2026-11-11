@@ -91,6 +91,10 @@ Namespace Ensemble.Persistence
             Dim restored As New XGBoostModel(booster, manifest.featureWidth)
 
             If String.Equals(manifest.kind, "classifier", StringComparison.OrdinalIgnoreCase) Then
+                If manifest.classes Is Nothing OrElse manifest.classes.Length = 0 Then
+                    Throw New System.IO.InvalidDataException("the xgboost manifest carries no class labels!")
+                End If
+
                 Return New XGBoostClassifier(restored, manifest.classes)
             End If
 

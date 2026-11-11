@@ -31,6 +31,8 @@ Namespace Ensemble
 
         Private ReadOnly learners As IClassifierLearner()
         Private ReadOnly modelWeights As Double()
+        ''' <summary>调用方提供的原始权重（归一化之前）；<c>Nothing</c> 表示等权</summary>
+        Private ReadOnly sourceWeights As Double()
         Private ReadOnly votingMode As VotingMode
         Private ReadOnly trained As IClassifier()
         Private classesArray As Double()
@@ -57,6 +59,7 @@ Namespace Ensemble
 
             Me.learners = items
             Me.modelWeights = ProbabilityMath.NormalizeWeights(weights, items.Length)
+            Me.sourceWeights = If(weights Is Nothing OrElse weights.Length = 0, Nothing, CType(weights.Clone(), Double()))
             Me.votingMode = mode
             Me.trained = New IClassifier(items.Length - 1) {}
         End Sub
@@ -86,6 +89,7 @@ Namespace Ensemble
 
             Me.learners = New IClassifierLearner() {}
             Me.modelWeights = ProbabilityMath.NormalizeWeights(weights, trained.Length)
+            Me.sourceWeights = If(weights Is Nothing OrElse weights.Length = 0, Nothing, CType(weights.Clone(), Double()))
             Me.votingMode = mode
             Me.trained = CType(trained.Clone(), IClassifier())
             Me.classesArray = CType(classes.Clone(), Double())
@@ -136,6 +140,16 @@ Namespace Ensemble
         Public ReadOnly Property Weights As Double()
             Get
                 Return modelWeights
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 调用方提供的原始权重（归一化之前）；<c>Nothing</c> 表示构造时未指定、按等权处理。
+        ''' 模型持久化保存的正是这份原始值。
+        ''' </summary>
+        Public ReadOnly Property OriginalWeights As Double()
+            Get
+                Return sourceWeights
             End Get
         End Property
 
@@ -241,18 +255,17 @@ Namespace Ensemble
             Call RequireTrained()
 
             Dim manifest As ModelManifest = ModelManifest.Create(ModelCategory, ModelKind, "")
-            Dim weights As Double() = New Double(trained.Length - 1) {}
-
-            ' 清单里保存的是「实际生效的归一化权重」，因此恢复后无需重新归一化
-            For i As Integer = 0 To trained.Length - 1
-                weights(i) = modelWeights(i)
-            Next
 
             manifest.featureWidth = FeatureWidth
             manifest.classes = CType(classesArray.Clone(), Double())
-            manifest.SetVector("weights", weights)
             manifest.SetParameter("votingMode", votingMode.ToString())
             manifest.SetInteger("modelCount", trained.Length)
+
+            ' 保存「归一化之前的原始权重」：恢复时再归一化一次即可逐位复现，
+            ' 若改存归一化后的值，二次归一化会引入最后一位浮点漂移。
+            If sourceWeights IsNot Nothing AndAlso sourceWeights.Length > 0 Then
+                manifest.SetVector("weights", sourceWeights)
+            End If
 
             For i As Integer = 0 To trained.Length - 1
                 Dim childFolder As String = ModelBundle.CombineRelative(folder, $"base/{i}")

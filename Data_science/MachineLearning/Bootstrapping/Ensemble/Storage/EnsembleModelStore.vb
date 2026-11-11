@@ -128,9 +128,11 @@ Namespace Ensemble.Persistence
             Dim manifest As ModelManifest
 
             If TypeOf model Is IPersistableModel Then
+                ' 集成器自身没有大块数值，CSV 都挂在子模型目录下
                 manifest = DirectCast(model, IPersistableModel).SaveModel(bundle, "")
             Else
-                manifest = SaveChild(model, bundle, "base")
+                ' 单独保存的基学习器：CSV 统一放在 data/ 下
+                manifest = SaveChild(model, bundle, "data")
             End If
 
             Call bundle.WriteManifest(manifest)

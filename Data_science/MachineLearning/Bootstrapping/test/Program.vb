@@ -491,8 +491,10 @@ Module Program
             Call RoundTripRegressor(root, "base/random-forest",
                 New RandomForestRegressorLearner With {.TreeCount = 6, .MaxBranch = 200}.Fit(regression.x, regression.y),
                 FirstRows(regression.x, 4))
-            Call RoundTripRegressor(root, "base/svr",
-                New SvmRegressorLearner().Fit(regression.x, regression.y), FirstRows(regression.x, 4))
+            Dim svr As IRegressor = New SvmRegressorLearner().Fit(regression.x, regression.y)
+
+            Call RoundTripRegressor(root, "base/svr", svr, FirstRows(regression.x, 4))
+            Call CheckSvmState(svr, Path.Combine(root, "base", "svr"))
             Call RoundTripRegressor(root, "base/xgboost",
                 New XGBoostRegressorLearner With {.Rounds = 5, .MaxDepth = 3}.Fit(regression.x, regression.y),
                 FirstRows(regression.x, 4))
@@ -503,6 +505,13 @@ Module Program
                 Nothing, VotingMode.Soft).Train(binary.x, binary.y)
 
             Call RoundTripClassifier(root, "voting-classifier", voting, FirstRows(binary.x, 4))
+
+            ' 非等权 + 硬投票：验证原始权重被原样持久化（而不是二次归一化后的值）
+            Dim weighted As VotingClassifier = New VotingClassifier(
+                New IClassifierLearner() {New NaiveBayesClassifierLearner(), New LogisticClassifierLearner()},
+                New Double() {1.0R, 3.0R}, VotingMode.Hard).Train(binary.x, binary.y)
+
+            Call RoundTripClassifier(root, "voting-classifier-weighted", weighted, FirstRows(binary.x, 4))
 
             Dim votingReg As VotingRegressor = New VotingRegressor(
                 New IRegressorLearner() {New MlrRegressorLearner(), New RidgeRegressorLearner()}
@@ -642,6 +651,80 @@ Module Program
                                 $"{name}: 样本 {i} 预测值逐位一致 ({before(i):R} vs {after:R})")
         Next
     End Sub
+
+    ''' <summary>
+    ''' 逐项比对 SVR 的底层结构，定位「预测值不等」究竟丢失了哪一项状态。
+    ''' </summary>
+    Private Sub CheckSvmState(original As IRegressor, directory As String)
+        Dim before As SvmRegressor = DirectCast(original, SvmRegressor)
+        Dim after As SvmRegressor = DirectCast(EnsembleModelStore.LoadRegressor(directory), SvmRegressor)
+        Dim a = before.FittedModel
+        Dim b = after.FittedModel
+
+        Call DebugAudit.Test(a.supportVectorCount = b.supportVectorCount,
+                             $"svr: 支持向量数 {a.supportVectorCount} vs {b.supportVectorCount}")
+        Call DebugAudit.Test(a.supportVectors.Length = b.supportVectors.Length,
+                             $"svr: 支持向量数组长度 {a.supportVectors.Length} vs {b.supportVectors.Length}")
+        Call DebugAudit.Test(a.rho(0) = b.rho(0), $"svr: rho {a.rho(0):R} vs {b.rho(0):R}")
+        Call DebugAudit.Test(a.parameter.svmType = b.parameter.svmType,
+                             $"svr: svmType {a.parameter.svmType} vs {b.parameter.svmType}")
+        Call DebugAudit.Test(a.parameter.kernelType = b.parameter.kernelType,
+                             $"svr: kernelType {a.parameter.kernelType} vs {b.parameter.kernelType}")
+        Call DebugAudit.Test(a.parameter.gamma = b.parameter.gamma,
+                             $"svr: gamma {a.parameter.gamma:R} vs {b.parameter.gamma:R}")
+
+        Dim coefA As Double() = a.supportVectorCoefficients(0)
+        Dim coefB As Double() = b.supportVectorCoefficients(0)
+
+        Call DebugAudit.Test(coefA.Length = coefB.Length,
+                             $"svr: 系数长度 {coefA.Length} vs {coefB.Length}")
+        Call DebugAudit.Test(SameValues(coefA, coefB), "svr: 支持向量系数逐位一致")
+
+        Dim nodesA As Integer = 0
+        Dim nodesB As Integer = 0
+
+        For i As Integer = 0 To a.supportVectors.Length - 1
+            nodesA += If(a.supportVectors(i) Is Nothing, 0, a.supportVectors(i).Length)
+        Next
+        For i As Integer = 0 To b.supportVectors.Length - 1
+            nodesB += If(b.supportVectors(i) Is Nothing, 0, b.supportVectors(i).Length)
+        Next
+
+        Call DebugAudit.Test(nodesA = nodesB,
+                             $"svr: 支持向量节点总数 {nodesA} vs {nodesB}; " &
+                             $"orig={DescribeDistribution(a.supportVectors)}; " &
+                             $"restored={DescribeDistribution(b.supportVectors)}")
+
+        Dim firstA As String = DescribeNodes(a.supportVectors(0))
+        Dim firstB As String = DescribeNodes(b.supportVectors(0))
+
+        Call DebugAudit.Test(firstA = firstB, $"svr: 首个支持向量 {firstA} vs {firstB}")
+    End Sub
+
+    Private Function DescribeNodes(nodes As Object()) As String
+        If nodes Is Nothing Then
+            Return "null"
+        End If
+
+        Return String.Join(";", nodes.Select(Function(n) n.ToString()))
+    End Function
+
+    Private Function DescribeDistribution(vectors As Object()) As String
+        If vectors Is Nothing Then
+            Return "null"
+        End If
+
+        Dim counts As New List(Of String)()
+
+        For i As Integer = 0 To vectors.Length - 1
+            ' 元素是 Node()，直接按数组长度统计
+            Dim nodes As Array = TryCast(vectors(i), Array)
+
+            Call counts.Add(If(nodes Is Nothing, "null", CStr(nodes.Length)))
+        Next
+
+        Return $"[{vectors.Length}] " & String.Join(",", counts)
+    End Function
 
     ''' <summary>读取模型声明的特征维度；未实现 <see cref="IFeatureSchema"/> 时返回 -1</summary>
     Private Function WidthOf(model As Object) As Integer

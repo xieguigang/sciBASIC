@@ -54,7 +54,7 @@ Namespace Ensemble.Persistence
 
         Private Shared Function LoadVoting(manifest As ModelManifest, bundle As ModelBundle) As Object
             Dim baseCount As Integer = RequireBaseCount(manifest)
-            Dim weights As Double() = manifest.GetVector("weights")
+            Dim weights As Double() = GetOptionalVector(manifest, "weights")
             Dim featureWidth As Integer = manifest.featureWidth
 
             If String.Equals(manifest.kind, "classifier", StringComparison.OrdinalIgnoreCase) Then
@@ -208,6 +208,17 @@ Namespace Ensemble.Persistence
             End If
 
             Return fallback
+        End Function
+
+        ''' <summary>读取可选的浮点向量；缺失时返回 <c>Nothing</c>（与「等权」语义一致）</summary>
+        Private Shared Function GetOptionalVector(manifest As ModelManifest, name As String) As Double()
+            Dim value As Double() = Nothing
+
+            If manifest.vectors IsNot Nothing AndAlso manifest.vectors.TryGetValue(name, value) Then
+                Return value
+            End If
+
+            Return Nothing
         End Function
 
     End Class
