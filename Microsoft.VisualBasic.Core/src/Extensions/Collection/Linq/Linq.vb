@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::89020f6891503323624f2ab12443e39f, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 535
-    '    Code Lines: 303 (56.64%)
-    ' Comment Lines: 176 (32.90%)
-    '    - Xml Docs: 95.45%
-    ' 
-    '   Blank Lines: 56 (10.47%)
-    '     File Size: 19.99 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: AtWhich, DATA, Populate, (+2 Overloads) SafeQuery, (+2 Overloads) ToArray
-    '         Delegate Sub
-    ' 
-    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, LastOrDefault
-    '                       MaxInd, (+2 Overloads) Read, RemoveLeft, (+2 Overloads) Removes, (+2 Overloads) Repeats
-    '                       (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray, ToVector, TryCatch
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 535
+'    Code Lines: 303 (56.64%)
+' Comment Lines: 176 (32.90%)
+'    - Xml Docs: 95.45%
+' 
+'   Blank Lines: 56 (10.47%)
+'     File Size: 19.99 KB
+
+
+'     Module Extensions
+' 
+'         Function: AtWhich, DATA, Populate, (+2 Overloads) SafeQuery, (+2 Overloads) ToArray
+'         Delegate Sub
+' 
+'             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, LastOrDefault
+'                       MaxInd, (+2 Overloads) Read, RemoveLeft, (+2 Overloads) Removes, (+2 Overloads) Repeats
+'                       (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray, ToVector, TryCatch
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
@@ -170,13 +171,17 @@ Namespace Linq
         ''' 
         <DebuggerStepThrough>
         <Extension>
-        Public Function SafeQuery(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional trace$ = Nothing) As IEnumerable(Of T)
+        Public Function SafeQuery(Of T)(source As IEnumerable(Of T),
+                                        <CallerArgumentExpression("source")> Optional expr As String = Nothing,
+                                        <CallerFilePath> Optional sourceFile As String = Nothing,
+                                        <CallerLineNumber> Optional line As Integer = -1,
+                                        <CallerMemberName> Optional callee As String = Nothing) As IEnumerable(Of T)
+
+            Call DebugAudit.Check(source Is Nothing, $"target source sequence '{expr}' is nothing, empty collection will be generated...", expr, sourceFile, line, callee)
+
             If Not source Is Nothing Then
                 Return source
             Else
-#If DEBUG Then
-                Call $"Target source sequence is nothing...[{trace}]".Warning
-#End If
                 Return {}
             End If
         End Function
