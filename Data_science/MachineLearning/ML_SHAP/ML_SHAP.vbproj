@@ -42,6 +42,7 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Remove="XGBoostInfoLogging505d9d397cedc9fd2819edc9b12a9fef.log" />
     <None Remove="XGBoostInfoLogging5e0421b21327381ad81c0861bb49062b.log" />
     <None Remove="XGBoostInfoLogging83d7337829144d001c36de7814570cc3.log" />
     <None Remove="XGBoostInfoLogging9f890800ceca0d165e116d1ae87b9600.log" />
