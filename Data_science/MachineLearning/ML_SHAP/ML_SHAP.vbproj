@@ -9,9 +9,9 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <Title>SHAP Model Interpretation and Feature Importance Analysis</Title>
-    <Description>A SHAP (SHapley Additive exPlanations) analysis facade for sciBASIC# machine learning: runs linear, random forest and XGBoost explainers over sample datasets to produce per-sample contribution matrices, global feature importance rankings and CSV report export.</Description>
+    <Description>A SHAP (SHapley Additive exPlanations) analysis facade for sciBASIC# machine learning: runs linear, random forest, XGBoost and glmnet (gaussian / binomial / poisson / multinomial / mgaussian / cox) explainers over sample datasets to produce per-sample contribution matrices, global feature importance rankings and CSV report export.</Description>
     <PackageTags>scibasic;shap;shapley-value;model-interpretation;explainable-ai;feature-importance</PackageTags>
-    <PackageReleaseNotes>Expands the linear, random forest and XGBoost explainers together with the sample dataset model, prediction evaluation and CSV report writer.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds the GLMNet (glmnet) explainer: analytic SHAP for all six glmnet families, lambda step / lambda value selection and cv.glmnet lambda.min / lambda.1se support. Expands the linear, random forest and XGBoost explainers together with the sample dataset model, prediction evaluation and CSV report writer.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>10.8.9797.36764</Version>
     <AssemblyVersion>1.0.9797.36764</AssemblyVersion>

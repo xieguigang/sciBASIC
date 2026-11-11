@@ -134,6 +134,7 @@
 	  <EmbeddedResource Remove="test\**" />
 	  <None Remove="Testing\**" />
 	  <None Remove="test\**" />
+	  <EmbeddedResource Include="ShapPlot\readme.md" />
 	  <None Include="..\..\..\LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
@@ -153,6 +154,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
     <ProjectReference Include="..\..\..\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
@@ -163,6 +165,7 @@
     <ProjectReference Include="..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj" />
     <ProjectReference Include="..\..\DataMining\UMAP\UMAP.NET5.vbproj" />
     <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj" />
     <ProjectReference Include="..\DataPlot\DataPlot.vbproj" />
