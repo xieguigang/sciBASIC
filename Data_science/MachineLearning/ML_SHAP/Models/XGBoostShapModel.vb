@@ -95,8 +95,11 @@ Public Class XGBoostShapModel
                                  Optional maxDepth As Integer = 4,
                                  Optional eta As Double = 0.3) As XGBoostShapModel
 
+        ' dataset.Labels 是派生视图（每次访问都会新建数组），必须在 lambda 之外取出到局部变量，
+        ' 否则在 lambda 内逐行访问会退化为 O(n^2) 的数组分配
+        Dim responses As Double() = dataset.Labels
         Dim matrix As DoubleTagged(Of Single())() = dataset.Features _
-            .Select(Function(f, i) New DoubleTagged(Of Single())(dataset.Labels(i), f.Select(Function(d) CSng(d)).ToArray)) _
+            .Select(Function(f, i) New DoubleTagged(Of Single())(responses(i), f.Select(Function(d) CSng(d)).ToArray)) _
             .ToArray
 
         ' 所有特征均按数值特征处理（该数据集不包含类别型特征，也不含缺失值）

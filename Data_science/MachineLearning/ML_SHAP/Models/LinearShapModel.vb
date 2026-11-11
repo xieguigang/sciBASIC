@@ -115,10 +115,8 @@ Public Class LinearShapModel
                                  Optional iterations As Integer = 1500,
                                  Optional rate As Double = 0.1) As LinearShapModel
 
-        Dim table As New NumericTable(dataset.Features, dataset.IDs, dataset.FeatureNames) With {
-            .labels = dataset.Labels.Select(Function(y) New Double() {y}).ToArray,
-            .labelNames = New String() {"Y"}
-        }
+        ' 数据集内部已经持有一张满足回归输入要求的数值表（响应位于第一列标签列），直接复用
+        Dim table As NumericTable = dataset.Table
 
         If isClassification Then
             Dim fit As LogisticFit = table.LogisticRegression(rate:=rate, iterations:=iterations, Silent:=True)

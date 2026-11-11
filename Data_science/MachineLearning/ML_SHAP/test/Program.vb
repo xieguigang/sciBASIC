@@ -60,6 +60,9 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.MachineLearning.GLMNet
 Imports Microsoft.VisualBasic.Math.Statistics.ShapleyValue
 Imports Microsoft.VisualBasic.MachineLearning.SHAP
+Imports NumericTable = Microsoft.VisualBasic.Data.NumericTable
+Imports INumericMatrix = Microsoft.VisualBasic.Math.INumericMatrix
+Imports ILabeledMatrix = Microsoft.VisualBasic.ComponentModel.DataSourceModel.ILabeledMatrix
 
 ''' <summary>
 ''' 四种模型（随机森林 / XGBoost / 线性-逻辑回归 / glmnet 正则化路径）在
@@ -139,6 +142,8 @@ Module Program
         Console.WriteLine(line)
 
         Dim dataset As ShapDataset = ShapDataset.LoadFile(file, isClassification, name)
+
+        Call AuditDatasetView(dataset)
 
         Console.WriteLine($"样本数量: {dataset.Size}, 特征维度: {dataset.Width}")
         Console.WriteLine()
@@ -385,6 +390,35 @@ Module Program
         Console.WriteLine($"  glmnet(multinomial) 多分类模型: 响应={multi.ResponseName}, lambda={multi.Lambda.ToString("G6", invariant)}")
         Console.WriteLine($"  预测: {multiPrediction}")
         Call RunShap(datasetName, $"{multi.Name}-{multi.ResponseName}", multi.BuildExplainer(), dataset, AddressOf multi.Output)
+    End Sub
+
+    ''' <summary>
+    ''' 校验 <see cref="ShapDataset"/> 的只读转发视图与其内部持有的
+    ''' <see cref="NumericTable"/> 完全一致（组合改造之后的等价性断言）。
+    ''' </summary>
+    ''' <param name="dataset"></param>
+    Private Sub AuditDatasetView(dataset As ShapDataset)
+        Dim table As NumericTable = dataset.Table
+        Dim matrix As INumericMatrix = dataset
+        Dim rows As ILabeledMatrix = dataset
+
+        Call DebugAudit.Check(table IsNot Nothing, "数据集没有持有底层数值表!")
+        Call DebugAudit.Check(dataset.Size = table.nsamples, $"{dataset.Name}: Size={dataset.Size} 与 Table.nsamples={table.nsamples} 不一致!")
+        Call DebugAudit.Check(dataset.Width = table.nfeatures, $"{dataset.Name}: Width={dataset.Width} 与 Table.nfeatures={table.nfeatures} 不一致!")
+        Call DebugAudit.Check(table.nlabels = 1, $"{dataset.Name}: 响应列数量应当为 1，实际为 {table.nlabels}!")
+        Call DebugAudit.Check(table.labelNames IsNot Nothing AndAlso table.labelNames.Length = 1 AndAlso table.labelNames(0) = "Y",
+                              $"{dataset.Name}: 响应列名应当为 'Y'（回归与 glmnet 依赖缺省的第一个标签列）!")
+        Call DebugAudit.Check(dataset.IDs Is table.rowNames, $"{dataset.Name}: IDs 未指向 Table.rowNames!")
+        Call DebugAudit.Check(dataset.Features Is table.features, $"{dataset.Name}: Features 未指向 Table.features!")
+        Call DebugAudit.Check(dataset.FeatureNames Is table.featureNames, $"{dataset.Name}: FeatureNames 未指向 Table.featureNames!")
+        Call DebugAudit.Check(dataset.Name = table.name, $"{dataset.Name}: Name 与 Table.name 不一致!")
+        Call DebugAudit.Check(dataset.Labels.SequenceEqual(table.GetLabel(0)), $"{dataset.Name}: Labels 与标签矩阵第 0 列不一致!")
+        Call DebugAudit.Check(dataset.ClassLabels.SequenceEqual(table.GetClassLabel(0)), $"{dataset.Name}: ClassLabels 与标签矩阵第 0 列不一致!")
+        Call DebugAudit.Check(matrix.ArrayPack() Is table.features, $"{dataset.Name}: INumericMatrix.ArrayPack 未转发到 Table.features!")
+        Call DebugAudit.Check(rows.GetLabels().SequenceEqual(table.RowNamesOrDefault()), $"{dataset.Name}: ILabeledMatrix.GetLabels 未转发到 Table 的行名!")
+
+        ' 维度一致性由基类校验，加载阶段已经调用过一次，这里确认对象可以再次通过校验
+        Call table.Validate()
     End Sub
 
     Private Sub WritePredictions(datasetName As String, evaluations As List(Of ModelPrediction))
