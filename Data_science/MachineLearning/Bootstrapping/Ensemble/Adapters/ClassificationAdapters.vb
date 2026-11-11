@@ -16,7 +16,9 @@ Namespace Ensemble
     ''' 而 Bagging 子集可能缺失某些类别，因此这里始终通过
     ''' <c>ProbabilityMath.AlignTo</c> 对齐到集成层的全局 <c>Classes</c>。
     ''' </remarks>
-    Public NotInheritable Class NaiveBayesClassifier : Implements IClassifier
+    Public NotInheritable Class NaiveBayesClassifier
+        Implements IClassifier
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As Bayesian
         Private ReadOnly classesArray As Double()
@@ -36,6 +38,13 @@ Namespace Ensemble
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
                 Return classesArray
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return If(fitted Is Nothing, 0, fitted.FeatureWidth)
             End Get
         End Property
 
@@ -76,7 +85,9 @@ Namespace Ensemble
     ''' <c>LogisticFit.GetY</c> 返回 <c>P(y=1|x)</c>，这里展开成
     ''' <c>[1-p, p]</c> 以符合集成层的概率向量契约。
     ''' </remarks>
-    Public NotInheritable Class LogisticClassifier : Implements IClassifier
+    Public NotInheritable Class LogisticClassifier
+        Implements IClassifier
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As LogisticNS.LogisticFit
         Private ReadOnly classesArray As Double()
@@ -96,6 +107,17 @@ Namespace Ensemble
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
                 Return classesArray
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度（等于标准化空间中的系数个数）</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                If fitted Is Nothing OrElse fitted.Polynomial Is Nothing OrElse fitted.Polynomial.Factors Is Nothing Then
+                    Return 0
+                End If
+
+                Return fitted.Polynomial.Factors.Length
             End Get
         End Property
 
@@ -157,16 +179,25 @@ Namespace Ensemble
     ''' SVM 分类适配器（<c>C_SVC</c>），概率来自
     ''' <c>svm_predict_probability</c>，顺序由 <c>model.classLabels</c> 决定。
     ''' </summary>
-    Public NotInheritable Class SvmClassifier : Implements IClassifier
+    Public NotInheritable Class SvmClassifier
+        Implements IClassifier
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As SvmModelType
         Private ReadOnly classesArray As Double()
         Private ReadOnly labelOffset As Integer
+        Private ReadOnly featureWidthValue As Integer
 
-        Public Sub New(fitted As SvmModelType, classes As Double(), labelOffset As Integer)
+        ''' <param name="fitted">已训练的 SVM 模型</param>
+        ''' <param name="classes">全局类别顺序</param>
+        ''' <param name="labelOffset">特征与标签的索引基</param>
+        ''' <param name="featureWidth">训练期的特征维度，<c>0</c> 表示未知</param>
+        Public Sub New(fitted As SvmModelType, classes As Double(), labelOffset As Integer,
+                       Optional featureWidth As Integer = 0)
             Me.fitted = fitted
             Me.classesArray = classes
             Me.labelOffset = labelOffset
+            Me.featureWidthValue = System.Math.Max(0, featureWidth)
         End Sub
 
         ''' <summary>底层已训练的 SVM 模型（供持久化/诊断）</summary>
@@ -180,6 +211,13 @@ Namespace Ensemble
         Public ReadOnly Property IndexOffset As Integer
             Get
                 Return labelOffset
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度；<c>0</c> 表示未知</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return featureWidthValue
             End Get
         End Property
 
@@ -303,7 +341,7 @@ Namespace Ensemble
             }
             Dim fitted As SvmModelType = Training.Train(problem, parameter)
 
-            Return New SvmClassifier(fitted, classes, offset)
+            Return New SvmClassifier(fitted, classes, offset, x(0).Length)
         End Function
 
     End Class
@@ -311,7 +349,9 @@ Namespace Ensemble
     ''' <summary>
     ''' XGBoost 分类适配器（仅二分类，<c>binary:logistic</c> 输出单值概率）。
     ''' </summary>
-    Public NotInheritable Class XGBoostClassifier : Implements IClassifier
+    Public NotInheritable Class XGBoostClassifier
+        Implements IClassifier
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As XGBoostModel
         Private ReadOnly classesArray As Double()
@@ -331,6 +371,13 @@ Namespace Ensemble
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
                 Return classesArray
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return If(fitted Is Nothing, 0, fitted.FeatureWidth)
             End Get
         End Property
 
