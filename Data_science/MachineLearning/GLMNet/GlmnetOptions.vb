@@ -84,8 +84,11 @@ Public NotInheritable Class GlmnetOptions
     ''' <summary>仅 mgaussian 有效：是否把响应各列标准化。</summary>
     Public Property StandardizeResponse As Boolean = False
 
-    ''' <summary>仅 cox 有效：平局处理方式，glmnet 5.1 默认 Efron。</summary>
-    Public Property CoxTies As CoxTiesMode = CoxTiesMode.Efron
+    ''' <summary>
+    ''' 仅 cox 有效：平局处理方式。R 5.1 实测 <c>formals(glmnet)$cox.ties</c>
+    ''' 为 <c>c("breslow","efron")</c>，因此默认仍是 Breslow。
+    ''' </summary>
+    Public Property CoxTies As CoxTiesMode = CoxTiesMode.Breslow
 
     ''' <summary>是否计算 relaxed lasso（gamma 网格上的无惩罚重拟合）。</summary>
     Public Property Relax As Boolean = False

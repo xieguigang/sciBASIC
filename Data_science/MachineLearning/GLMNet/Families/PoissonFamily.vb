@@ -18,8 +18,8 @@ Friend NotInheritable Class PoissonFamily : Implements IGlmnetFamily
         Return SingleResponsePath.Fit(data, options, FamilyKind.Poisson)
     End Function
 
-    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, measure As CVMeasure) As Double() Implements IGlmnetFamily.Measure
-        Return TypeMeasure.EvaluateSingle(linkPredictions, truth, measure, FamilyKind.Poisson)
+    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, metric As CVMeasure) As Double() Implements IGlmnetFamily.Measure
+        Return TypeMeasure.EvaluateSingle(linkPredictions, truth, metric, FamilyKind.Poisson)
     End Function
 
     Public Function LinkToResponse(link As Double()()) As Double()() Implements IGlmnetFamily.LinkToResponse

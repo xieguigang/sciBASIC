@@ -155,7 +155,9 @@ Friend Module SingleResponsePath
             lambdaPrevious = lambda
 
             ' glmnet.control() 的 fdev 早停：偏差解释度连续几步几乎不再改善
-            Dim improvement As Double = allDevRatio(k) - previousDevRatio
+            Dim improvement As Double = If(previousDevRatio > 0.0000001R,
+                                           (allDevRatio(k) - previousDevRatio) / previousDevRatio,
+                                           1.0R)
             If k > 0 AndAlso improvement < 0.00001R Then
                 stalled += 1
             Else
@@ -166,7 +168,7 @@ Friend Module SingleResponsePath
             If allDevRatio(k) >= GlmnetControl.DefaultDevMax OrElse
                nonzero >= dfMax OrElse
                CountActive(mask, p, beta) > pMax OrElse
-               stalled >= 3 Then
+               (options.Lambda Is Nothing AndAlso stalled >= 3) Then
                 Exit For
             End If
         Next
@@ -288,7 +290,7 @@ Friend Module SingleResponsePath
             For j As Integer = 0 To p - 1
                 If beta(j) <> 0.0R Then
                     v += beta(j) * columns(j)(i)
-                Next
+                End If
             Next
             eta(i) = v
         Next

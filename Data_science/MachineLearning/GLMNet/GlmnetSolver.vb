@@ -51,7 +51,13 @@ Public Module GlmnetSolver
         Call options.Validate(data.N, data.P, data.K, family)
         Dim solver As IGlmnetFamily = FamilyRegistry.Create(family)
         Dim path As FamilyPath = solver.Fit(data, options)
-        Return New GlmnetFit(path)
+        Dim result As New GlmnetFit(path)
+
+        If options.Relax Then
+            result.RelaxedModel = RelaxedFitting.Fit(result, options)
+        End If
+
+        Return result
     End Function
 
     ''' <summary>

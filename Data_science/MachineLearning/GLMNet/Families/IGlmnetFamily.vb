@@ -16,9 +16,9 @@ Friend Interface IGlmnetFamily
     ''' <c>(lambda step)(sample)(response)</c> 的 link scale 预测
     ''' </param>
     ''' <param name="truth">留出集的真实响应</param>
-    ''' <param name="measure">评估指标</param>
+    ''' <param name="metric">评估指标</param>
     ''' <returns>每个 lambda 步骤的指标值</returns>
-    Function Measure(linkPredictions As Double()()(), truth As GlmnetData, measure As CVMeasure) As Double()
+    Function Measure(linkPredictions As Double()()(), truth As GlmnetData, metric As CVMeasure) As Double()
 
     ''' <summary>把 link scale 预测转换为响应尺度。</summary>
     Function LinkToResponse(link As Double()()) As Double()()

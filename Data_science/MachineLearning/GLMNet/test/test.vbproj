@@ -16,4 +16,9 @@
     <ProjectReference Include="..\GLMNet.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="R\**" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="data\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

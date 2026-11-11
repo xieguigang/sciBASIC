@@ -72,16 +72,16 @@ Friend NotInheritable Class WeightedStandardizer
             End If
 
             Dim inv As Double = 1.0R / scale
-            Dim curvature As Double = 0.0R
+            Dim columnCurvature As Double = 0.0R
 
             For i As Integer = 0 To n - 1
                 col(i) = (col(i) - mean) * inv
-                curvature += weights(i) * col(i) * col(i)
+                columnCurvature += weights(i) * col(i) * col(i)
             Next
 
             Means(j) = mean
             Scales(j) = scale
-            Curvature(j) = curvature / CDbl(n)
+            Curvature(j) = columnCurvature / CDbl(n)
             Columns(j) = col
         Next
     End Sub

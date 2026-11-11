@@ -57,7 +57,7 @@ Friend NotInheritable Class MGaussianFamily : Implements IGlmnetFamily
             allBeta(s) = matrix
             allDf(s) = model.df(s)
             allNZero(s) = model.df(s) * k
-            allDev(s) = model.trainMse(s) * CDbl(data.N)
+            allDev(s) = model.trainMse(s) * CDbl(data.N * k)
             allDevRatio(s) = If(nullMse > 0.0R, std.Max(0.0R, 1.0R - model.trainMse(s) / nullMse), 0.0R)
             allConverged(s) = model.converged(s)
             allIterations(s) = model.iterations(s)
@@ -71,7 +71,7 @@ Friend NotInheritable Class MGaussianFamily : Implements IGlmnetFamily
             .NZero = allNZero,
             .Deviance = allDev,
             .DevRatio = allDevRatio,
-            .NullDev = nullMse * CDbl(data.N),
+            .NullDev = nullMse * CDbl(data.N * k),
             .Converged = allConverged,
             .Iterations = allIterations,
             .Jerr = GlmnetError.None,
@@ -108,8 +108,8 @@ Friend NotInheritable Class MGaussianFamily : Implements IGlmnetFamily
         Return total / CDbl(n * k)
     End Function
 
-    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, measure As CVMeasure) As Double() Implements IGlmnetFamily.Measure
-        Return TypeMeasure.EvaluateMulti(linkPredictions, truth, measure, FamilyKind.MGaussian)
+    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, metric As CVMeasure) As Double() Implements IGlmnetFamily.Measure
+        Return TypeMeasure.EvaluateMulti(linkPredictions, truth, metric, FamilyKind.MGaussian)
     End Function
 
     Public Function LinkToResponse(link As Double()()) As Double()() Implements IGlmnetFamily.LinkToResponse

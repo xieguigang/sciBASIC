@@ -2,7 +2,7 @@
 ''' family 求解器的内部输出：一条 lambda 路径上的全部解。
 ''' </summary>
 ''' <remarks>
-''' 所有系数与截距都已还原到< b >原始量纲</b>，与 R 端 <c>coef(fit)</c> 一致；
+''' 所有系数与截距都已还原到 <b>原始量纲</b>，与 R 端 <c>coef(fit)</c> 一致；
 ''' <c>Beta(step)(feature)(response)</c> 为三维锯齿数组，单响应 family 的最后一维长度为 1。
 ''' </remarks>
 Friend NotInheritable Class FamilyPath

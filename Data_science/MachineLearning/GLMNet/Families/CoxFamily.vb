@@ -82,7 +82,7 @@ Friend NotInheritable Class CoxFamily : Implements IGlmnetFamily
         }
     End Function
 
-    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, measure As CVMeasure) As Double() Implements IGlmnetFamily.Measure
+    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, metric As CVMeasure) As Double() Implements IGlmnetFamily.Measure
         Dim steps As Integer = linkPredictions.Length
         Dim n As Integer = truth.N
         Dim time As Double() = New Double(n - 1) {}
@@ -99,7 +99,7 @@ Friend NotInheritable Class CoxFamily : Implements IGlmnetFamily
                 risk(i) = linkPredictions(s)(i)(0)
             Next
 
-            If measure = CVMeasure.CIndex Then
+            If metric = CVMeasure.CIndex Then
                 result(s) = TypeMeasure.CIndex(risk, time, status)
             Else
                 result(s) = -2.0R * PartialLogLikelihood(time, status, risk) / CDbl(n)

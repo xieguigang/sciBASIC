@@ -14,6 +14,9 @@ Public NotInheritable Class GlmnetFit
     ''' <summary>内核输出的原始路径（供适配器与 exact 重拟合使用）</summary>
     Friend Property Path As FamilyPath
 
+    ''' <summary><c>relax = TRUE</c> 时的 relaxed lasso 结果；未开启时为空。</summary>
+    Public Property RelaxedModel As RelaxedFit
+
     ''' <summary>模型家族</summary>
     Public ReadOnly Property Family As FamilyKind
         Get

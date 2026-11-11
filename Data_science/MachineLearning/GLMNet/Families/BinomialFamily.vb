@@ -17,8 +17,8 @@ Friend NotInheritable Class BinomialFamily : Implements IGlmnetFamily
         Return SingleResponsePath.Fit(data, options, FamilyKind.Binomial)
     End Function
 
-    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, measure As CVMeasure) As Double() Implements IGlmnetFamily.Measure
-        Return TypeMeasure.EvaluateSingle(linkPredictions, truth, measure, FamilyKind.Binomial)
+    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, metric As CVMeasure) As Double() Implements IGlmnetFamily.Measure
+        Return TypeMeasure.EvaluateSingle(linkPredictions, truth, metric, FamilyKind.Binomial)
     End Function
 
     Public Function LinkToResponse(link As Double()()) As Double()() Implements IGlmnetFamily.LinkToResponse

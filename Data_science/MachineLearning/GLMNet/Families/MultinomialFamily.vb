@@ -352,7 +352,7 @@ Friend NotInheritable Class MultinomialFamily : Implements IGlmnetFamily
         Next
     End Sub
 
-    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, measure As CVMeasure) As Double() Implements IGlmnetFamily.Measure
+    Public Function Measure(linkPredictions As Double()()(), truth As GlmnetData, metric As CVMeasure) As Double() Implements IGlmnetFamily.Measure
         Dim steps As Integer = linkPredictions.Length
         Dim result As Double() = New Double(steps - 1) {}
 
@@ -360,10 +360,10 @@ Friend NotInheritable Class MultinomialFamily : Implements IGlmnetFamily
             Dim probs As Double()() = Nothing
             Call IrlsKernel.Softmax(linkPredictions(s), probs)
 
-            If measure = CVMeasure.Deviance Then
+            If metric = CVMeasure.Deviance Then
                 result(s) = IrlsKernel.MultinomialDeviance(truth.Y, probs, truth.Weights) / CDbl(truth.N)
             Else
-                result(s) = TypeMeasure.EvaluateMulti(New Double()()() {linkPredictions(s)}, truth, measure, FamilyKind.Multinomial)(0)
+                result(s) = TypeMeasure.EvaluateMulti(New Double()()() {linkPredictions(s)}, truth, metric, FamilyKind.Multinomial)(0)
             End If
         Next
 
