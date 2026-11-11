@@ -42,13 +42,19 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\nlp\word2vec\word2vec.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj" />
     <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="..\xgboost\xgboost.vbproj" />
+    <!-- XGBoost 的训练数据构造（Conversion.ToTrainingSet）位于独立的 DataSet 项目 -->
+    <ProjectReference Include="..\XGBoostDataSet\XGBoostDataSet.vbproj" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -57,5 +63,12 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <!-- 审计测试是独立的 console 项目，不参与主库编译 -->
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
   </ItemGroup>
 </Project>

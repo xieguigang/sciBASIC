@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>EnsembleAudit</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <WarningLevel>0</WarningLevel>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- DebugAudit 位于 Core 程序集，显式声明以便审计程序稳定可用 -->
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\Bootstrapping.vbproj" />
+  </ItemGroup>
+</Project>
