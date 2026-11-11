@@ -6,7 +6,6 @@
 
 Imports System
 Imports System.Collections.Generic
-Imports System.Linq
 Imports Microsoft.VisualBasic.Data
 ' 项目内存在 Microsoft.VisualBasic.Math 命名空间，会遮蔽 System.Math，
 ' 因此数值函数一律使用完全限定名 System.Math.*。

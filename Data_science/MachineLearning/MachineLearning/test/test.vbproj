@@ -18,7 +18,9 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<AssemblyTitle>test</AssemblyTitle>
 		<OutputType>Exe</OutputType>
-		<StartupObject>test.SVMDemo.SVMDemoProgram</StartupObject>
+		<!-- Default entry: the naive bayes regression verification program.
+		     The original SVM demo stays reachable via the svm command line switch. -->
+		<StartupObject>test.BayesianRegressionTest.Program</StartupObject>
 		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
 	</PropertyGroup>
 
