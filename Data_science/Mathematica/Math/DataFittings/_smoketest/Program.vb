@@ -309,6 +309,16 @@ Module Program
         Dim logistic = ltable.LogisticRegression(iterations:=3000, y:="class")
 
         Call Check(logistic IsNot Nothing, "LogisticRegression returns a fitted model")
+        Call Check(logistic.ErrorTest IsNot Nothing AndAlso logistic.ErrorTest.Length = n,
+                   "LogisticRegression records one fit error per sample")
+        Call Check(logistic.ErrorTest.All(Function(e) e.Yfit >= 0.0 AndAlso e.Yfit <= 1.0),
+                   "fitted values are probabilities in [0,1]")
+        Call Check(logistic.R2 >= 0.0 AndAlso logistic.R2 <= 1.0,
+                   $"fitted R2 is a real metric in [0,1]: R2 = {logistic.R2:F6}")
+        Call Check(logistic.LogLoss > 0.0, $"fitted LogLoss is finite and positive: {logistic.LogLoss:F6}")
+
+        Call Section("logistic audit")
+        failures += LogisticAudit.Run()
 
         Call Section("prediction")
         Dim predicted As NumericTable = multi.SetPrediction(mlr, withResidual:=True)
