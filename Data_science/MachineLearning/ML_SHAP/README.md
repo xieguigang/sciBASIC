@@ -16,15 +16,17 @@
 
 | 命名空间 | 职责 |
 |---|---|
-| `Microsoft.VisualBasic.MachineLearning.SHAP` | 本包：分析门面 `ShapAnalyzer` 与结果模型 `ShapAnalysisResult` |
-| `Microsoft.VisualBasic.Math.Statistics.ShapleyValue` | 归因算法：`IShapExplainer`、`ShapExplanation`、`ShapDataset`、`TreeShap` |
+| `Microsoft.VisualBasic.MachineLearning.SHAP` | 本包：分析门面 `ShapAnalyzer`、结果模型 `ShapAnalysisResult`、样本集 `ShapDataset` |
+| `Microsoft.VisualBasic.Math.Statistics.ShapleyValue` | 归因算法：`IShapExplainer`、`ShapExplanation`、`TreeShap` |
+| `Microsoft.VisualBasic.Data` | 统一数值载体 `NumericTable`：`ShapDataset` 以**组合**方式持有它，作为唯一的数据来源 |
 | `Microsoft.VisualBasic.MachineLearning.XGBoost` | 树模型集成，可提供 SHAP 解释器 |
 | `Microsoft.VisualBasic.MachineLearning.GLMNet` | glmnet 正则化路径拟合（六个 family），可提供解析式 SHAP 解释器 |
 
-本包只有两个公开类型，刻意保持「薄」：
+分析门面刻意保持「薄」：
 
+- `Module ShapAnalyzer` —— 唯一的分析入口 `Analyze`；
 - `ShapAnalysisResult` —— 分析结果模型；
-- `Module ShapAnalyzer` —— 唯一的分析入口 `Analyze`。
+- `ShapDataset` —— 样本集：一张 `NumericTable` + 一个「是否为分类」标记 + 文本装载器。
 
 ## 四、关键类型与 API
 
@@ -56,12 +58,41 @@ Public Function Analyze(explainer As IShapExplainer,
 参数说明：
 
 - `explainer` —— 已经针对某个模型构建好的 SHAP 解释器；
-- `dataset` —— 参与计算的样本集合（提供 `Size`、`Width`、`Features`、`IDs`、`FeatureNames`、`IsCategorical`、`Name`）；
+- `dataset` —— 参与计算的样本集合（提供 `Size`、`Width`、`Features`、`IDs`、`FeatureNames`、`IsCategorical`、`Name`，这些成员都是其内部 `Table` 的只读转发视图）；
 - `modelName` —— 报告用的模型名；
 - `maxSamples` —— 最多解释的样本数量，小于等于 `0` 表示解释全部样本；
 - `output` —— 可选的模型原始输出函数（例如逻辑回归的类别概率）。为空时报告加性值 `baseline + Σ contribution`。
 
 内部逻辑：逐样本调用 `explainer.Explain(x)` 取得贡献向量，累加得到绝对和与有符号和；循环结束后按实际解释的样本数取均值，从而同时得到 `MeanAbsShap` 与 `MeanShap`；每个样本的 `AdditiveValue` 由 `Baseline` 逐项累加贡献得到。
+
+### `ShapDataset`
+
+`ShapDataset` 采用**组合**而不是继承的方式复用框架的统一数值载体：数值数据全部保存在只读成员 `Table As NumericTable` 之中，自身只保留「标签是否为类别编号」这一元信息与文本装载逻辑。
+
+| 成员 | 来源（`Table` 的视图） | 说明 |
+|---|---|---|
+| `Table` | —— | 唯一数据来源：`rowNames` = 样本 ID、`features` = 特征矩阵、`labels` = 响应（n×1，列名 `Y`） |
+| `Size` / `Width` | `nsamples` / `nfeatures` | 样本数 / 特征数 |
+| `IDs` | `rowNames` | 样本 ID |
+| `Features` / `FeatureNames` | `features` / `featureNames` | 引用同一份数据，零拷贝 |
+| `Name` | `name` | 数据集名 |
+| `Labels` | `GetLabel(0)` | 单列响应向量；**每次访问都会新建数组**，循环内请先取到局部变量 |
+| `ClassLabels` | `GetClassLabel(0)` | 响应的整数化视图，用于混淆矩阵 |
+| `IsCategorical` | —— | 分类任务标记，参与报告输出 |
+
+加载入口：
+
+```vbnet
+Dim dataset As ShapDataset = ShapDataset.LoadFile("training_categorical.txt", isCategorical:=True)
+' 也可以直接消费底层数值表（任何接受 NumericTable 的算法都可直接使用）
+Dim table As NumericTable = dataset.Table
+```
+
+文本格式为 `label id feature1 feature2 ... featureN`（空格或制表符分隔，`#` 开头为注释行）；
+解析后会构造 `NumericTable` 并调用其 `Validate()` 完成维度一致性校验。
+
+为了方便与算法层互操作，`ShapDataset` 同时实现了 `INumericMatrix`（`ArrayPack`）与
+`ILabeledMatrix`（`GetLabels`，返回行名）两个接口，并把调用转发给内部的 `Table`。
 
 ## 五、GLMNet（glmnet）模型适配
 
