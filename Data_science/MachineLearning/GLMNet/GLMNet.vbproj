@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>GLMNet</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.GLMNet</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyTitle>Lasso and Elastic-Net Regularized Generalized Linear Models</AssemblyTitle>
@@ -40,6 +40,7 @@ Tibshirani, Robert, Jacob Bien, Jerome Friedman, Trevor Hastie, Noah Simon, Jona
 Kenneth Tay, J, Narasimhan, Balasubramanian, Hastie, Trevor. 2023. “Elastic Net Regularization Paths for All Generalized Linear Models.” Journal of Statistical Software, Articles 106 (1): 1–31. https://doi.org/10.18637/jss.v106.i01.</Description>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.GLMNet</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
