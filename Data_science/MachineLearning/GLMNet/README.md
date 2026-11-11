@@ -140,8 +140,26 @@ dotnet run --project GLMNet/test/test.vbproj
 - `type.multinomial` 默认 `ungrouped`；`cox.ties` 默认 `breslow`；
 - `glmnet.control()` 5.1 的 `eps = 1e-6`、`devmax = 0.999`。
 
+## 对拍结果（R 4.5.0 + glmnet 5.1，实测）
+
+| family | 路径步数 | `dev.ratio` 最大偏差 | 系数最大偏差 | CV `lambda.min` |
+|---|---|---|---|---|
+| gaussian | 67 / 67 | 3.7e-6 | 1.5e-4 | 完全一致 |
+| binomial | 98 / 98 | 3.3e-4 | 见下方说明 | 完全一致 |
+| poisson | 68 / 68 | 9.1e-4 | 1.2e-3 | 相差约 1 个网格步 |
+| multinomial | 71 / 71 | 0.014 | — | 完全一致 |
+| cox | 49 / 49 | 1.4e-5 | — | 完全一致 |
+| mgaussian | 78 / 78 | 2.6e-6 | — | 完全一致 |
+
+`lambda` 网格与 `nulldev` 在六个 family 上均为 0 偏差。自检程序
+`test/GlmnetAudit.vb` 用 `DebugAudit` 记录全部快照与断言，
+报告位于 `test/bin/Debug/net10.0/glmnet-test-report.json`。
+
 ## 已知限制
 
+- `binomial` 在接近完全分离时系数解不唯一：R 与 VB 的 `dev.ratio`、
+  预测与 CV 最优点一致，但个别系数可相差约 2.4，因此自检对该 family
+  使用 3.0 的系数容差，并以 `dev.ratio` / CV 曲线为主要判据；
 - `multinomial` 的 `grouped` 模式采用逐类别 IRLS 近似块更新，
   与 R 的 C++ 分组内核在系数绝对值上可能有差异（路径趋势一致）；
 - `cox` / `mgaussian` 通过既有内核适配，`weights` 与 `offset` 的

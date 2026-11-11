@@ -277,7 +277,7 @@ Friend NotInheritable Class MultinomialFamily : Implements IGlmnetFamily
                 Next
                 rho = rho / CDbl(n) + curvature(j) * beta(j)(classIndex)
 
-                Dim norm As Double = std.Abs(rho)
+                Dim norm As Double = rho * rho
                 For c As Integer = 0 To k - 1
                     If c <> classIndex Then norm += beta(j)(c) * beta(j)(c)
                 Next

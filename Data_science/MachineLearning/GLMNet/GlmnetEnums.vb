@@ -1,10 +1,6 @@
-''' <summary>
-''' glmnet 5.1 复刻所使用的公共枚举类型。
-''' </summary>
-''' <remarks>
-''' 命名空间为工程根命名空间 <c>GLMNet</c>；VB 大小写不敏感，因此所有类型名
-''' 都刻意避免与模块名、属性名或局部变量名仅靠大小写区分。
-''' </remarks>
+' glmnet 5.1 复刻所使用的公共枚举类型。
+' 命名空间为工程根命名空间 GLMNet；VB 大小写不敏感，因此所有类型名都刻意
+' 避免与模块名、属性名或局部变量名仅靠大小写区分。
 
 ''' <summary>glmnet 支持的六种模型家族。</summary>
 Public Enum FamilyKind

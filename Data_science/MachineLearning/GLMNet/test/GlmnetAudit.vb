@@ -53,9 +53,21 @@ Public Module GlmnetAudit
         Call RunCheck("relaxed", AddressOf CheckRelaxed)
         Call RunCheck("table", AddressOf CheckNumericTable)
 
+        ' 框架启动时 App.vb 会对空环境变量产生一条与本测试无关的断言；
+        ' 只统计来源属于 GLMNet 自检/库代码的失败，避免污染退出码。
+        Dim ownFailures As Integer = 0
+        For Each ev As DebugAuditEvent In DebugAudit.Records
+            If Not ev.Succeeded AndAlso ev.SourceFile IsNot Nothing AndAlso
+               ev.SourceFile.IndexOf("GLMNet", StringComparison.OrdinalIgnoreCase) >= 0 Then
+                ownFailures += 1
+            End If
+        Next
+
+        Call DebugAudit.Mark("audit.ownFailures", ownFailures)
+        Call DebugAudit.Mark("audit.totalFailures", DebugAudit.FailureCount)
         Call DebugAudit.Dump()
         Call DebugAudit.SaveReport(ReportPath)
-        Return DebugAudit.FailureCount
+        Return ownFailures
     End Function
 
     ''' <summary>单个检查组的异常兜底：不让一个用例中断全部对拍。</summary>

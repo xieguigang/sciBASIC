@@ -36,7 +36,6 @@ Friend Module TypeMeasure
                 Case CVMeasure.Mae
                     result(s) = WeightedAverage(scores, y, truth.Weights, Function(a, b) std.Abs(a - b))
                 Case CVMeasure.Deviance
-                    Dim eta As Double()() = Wrap(scores)
                     Select Case kind
                         Case FamilyKind.Gaussian
                             result(s) = IrlsKernel.GaussianDeviance(y, scores, truth.Weights) / CDbl(n)
@@ -115,14 +114,6 @@ Friend Module TypeMeasure
             total += weights(i) * loss(pred(i), y(i))
         Next
         Return total / CDbl(n)
-    End Function
-
-    Private Function Wrap(v As Double()) As Double()()
-        Dim rows As Double()() = New Double(v.Length - 1)() {}
-        For i As Integer = 0 To v.Length - 1
-            rows(i) = New Double() {v(i)}
-        Next
-        Return rows
     End Function
 
     ''' <summary>
