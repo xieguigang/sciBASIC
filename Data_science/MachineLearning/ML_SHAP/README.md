@@ -166,8 +166,9 @@ Console.WriteLine(cls2.ResponseName)   ' class_1
 
 ### 显式响应矩阵
 
-`cox` 需要 `(time, status)` 两列响应、`mgaussian` 需要 K 列响应，而 `ShapDataset` 只有单列
-`Labels`；此时使用接受响应矩阵的重载，单列标签路径会给出明确的错误提示：
+`cox` 需要 `(time, status)` 两列响应、`mgaussian` 需要 K 列响应，而 `ShapDataset` 只提供单列
+响应（`Table.labels` 的第一列，见 `Labels` 转发视图）；此时使用接受响应矩阵的重载，
+单列标签路径会给出明确的错误提示：
 
 ```vbnet
 Dim y As Double()() = ...    ' n x 2：(time, status)
