@@ -94,6 +94,70 @@ Namespace BayesianRegression
             Next
         End Sub
 
+        ''' <summary>
+        ''' 从已持久化的均值/方差矩阵直接恢复高斯分类器，不做任何训练数据扫描。
+        ''' </summary>
+        Private Sub New(classes As Integer(), logPriors As Double(), classCounts As Integer(),
+                        width As Integer, sampleSize As Integer,
+                        means As Double()(), variances As Double()(),
+                        varianceFloor As Double)
+            MyBase.New(classes, logPriors, classCounts, width, sampleSize)
+
+            If Double.IsNaN(varianceFloor) OrElse Double.IsInfinity(varianceFloor) OrElse varianceFloor <= 0.0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(varianceFloor),
+                    "the variance floor must be a positive finite number.")
+            End If
+            If means Is Nothing OrElse means.Length <> classes.Length Then
+                Throw New ArgumentException(
+                    $"the restored mean matrix ({If(means Is Nothing, 0, means.Length)}) " &
+                    $"does not match the class count ({classes.Length})!", NameOf(means))
+            End If
+            If variances Is Nothing OrElse variances.Length <> classes.Length Then
+                Throw New ArgumentException(
+                    $"the restored variance matrix ({If(variances Is Nothing, 0, variances.Length)}) " &
+                    $"does not match the class count ({classes.Length})!", NameOf(variances))
+            End If
+
+            For k As Integer = 0 To classes.Length - 1
+                If means(k) Is Nothing OrElse means(k).Length <> width Then
+                    Throw New ArgumentException(
+                        $"the restored mean row [{k}] has {If(means(k) Is Nothing, 0, means(k).Length)} " &
+                        $"value(s), expected {width}!", NameOf(means))
+                End If
+                If variances(k) Is Nothing OrElse variances(k).Length <> width Then
+                    Throw New ArgumentException(
+                        $"the restored variance row [{k}] has {If(variances(k) Is Nothing, 0, variances(k).Length)} " &
+                        $"value(s), expected {width}!", NameOf(variances))
+                End If
+            Next
+
+            ' 深拷贝：调用方随后可以安全释放原数组
+            _means = New Double(classes.Length - 1)() {}
+            _variances = New Double(classes.Length - 1)() {}
+
+            For k As Integer = 0 To classes.Length - 1
+                _means(k) = CType(means(k).Clone(), Double())
+                _variances(k) = CType(variances(k).Clone(), Double())
+            Next
+
+            _varianceFloor = varianceFloor
+        End Sub
+
+        ''' <summary>
+        ''' 从已保存的模型状态恢复高斯朴素贝叶斯分类器（用于模型持久化加载）。
+        ''' </summary>
+        Public Shared Function Restore(classes As Integer(),
+                                       logPriors As Double(),
+                                       classCounts As Integer(),
+                                       width As Integer,
+                                       sampleSize As Integer,
+                                       means As Double()(),
+                                       variances As Double()(),
+                                       Optional varianceFloor As Double = DefaultVarianceFloor) As GaussianBayes
+            Return New GaussianBayes(classes, logPriors, classCounts, width, sampleSize,
+                                     means, variances, varianceFloor)
+        End Function
+
         ''' <summary>方差下限</summary>
         Public ReadOnly Property VarianceFloor As Double
             Get

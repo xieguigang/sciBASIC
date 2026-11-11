@@ -107,6 +107,70 @@ Namespace Kernel.Classifier
             Next
         End Sub
 
+        ''' <summary>
+        ''' 从已持久化的统计量恢复推断内核，不做任何训练数据统计。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 该构造仅供模型反序列化使用：推断路径只依赖
+        ''' <c>_classes</c> / <c>_logPriors</c> / <c>_classCounts</c> / <c>_width</c>，
+        ''' 因此 <c>_features</c> / <c>_labels</c> / <c>_classIndex</c> 被置为空数组，
+        ''' 恢复后的模型<b>不再支持</b>重新训练或增量统计，但预测结果与保存前逐位一致。
+        ''' </para>
+        ''' <para>
+        ''' 校验规则：类别标签必须严格升序（与训练期的 <c>Distinct().OrderBy()</c> 一致）、
+        ''' 先验与类别计数长度必须等于类别数、<c>logPriors</c> 不得为 NaN。
+        ''' </para>
+        ''' </remarks>
+        ''' <param name="classes">升序排列的类别标签</param>
+        ''' <param name="logPriors">各类别的 log 先验</param>
+        ''' <param name="classCounts">各类别的训练样本数</param>
+        ''' <param name="width">特征维度</param>
+        ''' <param name="sampleSize">训练样本总数（仅用于诊断输出）</param>
+        Protected Sub New(classes As Integer(), logPriors As Double(), classCounts As Integer(),
+                          width As Integer, sampleSize As Integer)
+            If classes Is Nothing OrElse classes.Length = 0 Then
+                Throw New ArgumentException("the restored class labels can not be empty!", NameOf(classes))
+            End If
+            If logPriors Is Nothing OrElse logPriors.Length <> classes.Length Then
+                Throw New ArgumentException(
+                    $"the restored log priors ({If(logPriors Is Nothing, 0, logPriors.Length)}) " &
+                    $"do not match the class count ({classes.Length})!", NameOf(logPriors))
+            End If
+            If classCounts Is Nothing OrElse classCounts.Length <> classes.Length Then
+                Throw New ArgumentException(
+                    $"the restored class counts ({If(classCounts Is Nothing, 0, classCounts.Length)}) " &
+                    $"do not match the class count ({classes.Length})!", NameOf(classCounts))
+            End If
+            If width <= 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(width), $"the feature width must be positive, but got {width}!")
+            End If
+
+            For k As Integer = 1 To classes.Length - 1
+                If classes(k) <= classes(k - 1) Then
+                    Throw New ArgumentException(
+                        $"the restored class labels must be in strictly ascending order, " &
+                        $"but class[{k - 1}] = {classes(k - 1)} and class[{k}] = {classes(k)}!", NameOf(classes))
+                End If
+            Next
+
+            For k As Integer = 0 To logPriors.Length - 1
+                If Double.IsNaN(logPriors(k)) Then
+                    Throw New ArgumentException($"the restored log prior at index {k} is NaN!", NameOf(logPriors))
+                End If
+            Next
+
+            _classes = CType(classes.Clone(), Integer())
+            _logPriors = CType(logPriors.Clone(), Double())
+            _classCounts = CType(classCounts.Clone(), Integer())
+            _width = width
+            _sampleSize = sampleSize
+            ' 以下三个成员只参与训练期统计，恢复后置为空数组以避免下游出现 Nothing
+            _classIndex = Array.Empty(Of Integer)()
+            _features = Array.Empty(Of Double())()
+            _labels = Array.Empty(Of Integer)()
+        End Sub
+
         ''' <summary>升序排列的类别标签数组，请勿修改返回的数组。</summary>
         Public ReadOnly Property Classes As Integer()
             Get

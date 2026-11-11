@@ -30,6 +30,26 @@ Namespace Ensemble
     End Interface
 
     ''' <summary>
+    ''' 可报告训练特征维度的模型契约。
+    ''' </summary>
+    ''' <remarks>
+    ''' <para>
+    ''' 集成框架在 <c>Train</c> 时记录特征维度，预测时逐样本校验，从而把
+    ''' 「维度错位」从静默产出错误结果变成显式异常。
+    ''' </para>
+    ''' <para>
+    ''' 返回 <c>0</c> 表示维度未知（例如由外部二进制模型包装、无法确知输入宽度的情形），
+    ''' 此时调用方应跳过维度校验而不是把 <c>0</c> 当作合法维度。
+    ''' </para>
+    ''' </remarks>
+    Public Interface IFeatureSchema
+
+        ''' <summary>训练期使用的特征维度；<c>0</c> 表示未知</summary>
+        ReadOnly Property FeatureWidth As Integer
+
+    End Interface
+
+    ''' <summary>
     ''' 可训练的分类基学习器。
     ''' </summary>
     ''' <remarks>

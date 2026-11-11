@@ -1,6 +1,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble.Persistence
 
 Namespace Ensemble
 
@@ -17,14 +18,23 @@ Namespace Ensemble
     ''' 每个基模型的概率向量都会先通过 <c>ProbabilityMath.AlignTo</c> 对齐到
     ''' 全局 <c>Classes</c>，因此基模型的类别顺序不同也不会互相污染。
     ''' </para>
+    ''' <para>
+    ''' 可持久化：<see cref="Save"/> 把基模型、归一化权重与投票模式写入模型包，
+    ''' <see cref="EnsembleModelStore.LoadClassifier"/> 用
+    ''' <c>Sub New(trained, classes, weights, mode, featureWidth)</c> 零重训恢复。
+    ''' </para>
     ''' </remarks>
-    Public NotInheritable Class VotingClassifier : Implements IClassifier
+    Public NotInheritable Class VotingClassifier
+        Implements IClassifier
+        Implements IFeatureSchema
+        Implements IPersistableModel
 
         Private ReadOnly learners As IClassifierLearner()
         Private ReadOnly modelWeights As Double()
         Private ReadOnly votingMode As VotingMode
         Private ReadOnly trained As IClassifier()
         Private classesArray As Double()
+        Private featureWidthValue As Integer
 
         ''' <param name="learners">基学习器，至少两个才有多样性</param>
         ''' <param name="weights">非负权重，为空时等权；内部会归一化</param>
@@ -58,10 +68,12 @@ Namespace Ensemble
         ''' <param name="classes">全局类别顺序</param>
         ''' <param name="weights">非负权重，为空时等权；内部会归一化</param>
         ''' <param name="mode">硬投票或软投票</param>
+        ''' <param name="featureWidth">训练期的特征维度，<c>0</c> 表示未知（跳过维度校验）</param>
         Public Sub New(trained As IClassifier(),
                        classes As Double(),
                        Optional weights As Double() = Nothing,
-                       Optional mode As VotingMode = VotingMode.Soft)
+                       Optional mode As VotingMode = VotingMode.Soft,
+                       Optional featureWidth As Integer = 0)
             If trained Is Nothing OrElse trained.Length = 0 Then
                 Throw New ArgumentException("the trained classifier list can not be empty!", NameOf(trained))
             End If
@@ -77,11 +89,32 @@ Namespace Ensemble
             Me.votingMode = mode
             Me.trained = CType(trained.Clone(), IClassifier())
             Me.classesArray = CType(classes.Clone(), Double())
+            Me.featureWidthValue = System.Math.Max(0, featureWidth)
         End Sub
 
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
                 Return classesArray
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度；<c>0</c> 表示未知</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                If featureWidthValue > 0 Then
+                    Return featureWidthValue
+                End If
+
+                ' 恢复旧模型包时可能没有记录维度，退化为「取第一个能报告维度的基模型」
+                For i As Integer = 0 To trained.Length - 1
+                    Dim schema As IFeatureSchema = TryCast(trained(i), IFeatureSchema)
+
+                    If schema IsNot Nothing AndAlso schema.FeatureWidth > 0 Then
+                        Return schema.FeatureWidth
+                    End If
+                Next
+
+                Return 0
             End Get
         End Property
 
@@ -123,36 +156,25 @@ Namespace Ensemble
         ''' 训练全部基模型；标签编码只在这里做一次。
         ''' </summary>
         Public Function Train(x As Double()(), y As Double()) As VotingClassifier
-            If x Is Nothing OrElse x.Length = 0 Then
-                Throw New ArgumentException("the feature matrix can not be empty!", NameOf(x))
-            End If
-            If y Is Nothing OrElse y.Length <> x.Length Then
-                Throw New ArgumentException(
-                    $"the feature rows ({x.Length}) and labels ({If(y Is Nothing, 0, y.Length)}) do not agree!",
-                    NameOf(y))
-            End If
+            Call EnsembleValidation.ValidateTrainingData(x, y, "VotingClassifier.Train")
 
             Dim encoder As LabelEncoder = LabelEncoder.Fit(y)
             Dim yIndex As Integer() = encoder.Encode(y)
 
-            If Parallel AndAlso trained.Length > 1 Then
-                Call System.Threading.Tasks.Parallel.For(0, trained.Length,
-                    Sub(i)
-                        trained(i) = learners(i).Fit(x, yIndex, encoder.Classes)
-                    End Sub)
-            Else
-                For i As Integer = 0 To learners.Length - 1
+            Call EnsembleParallel.FitAll(trained.Length, Parallel,
+                Sub(i)
                     trained(i) = learners(i).Fit(x, yIndex, encoder.Classes)
-                Next
-            End If
+                End Sub)
 
             classesArray = encoder.Classes
+            featureWidthValue = x(0).Length
 
             Return Me
         End Function
 
         Public Function PredictProbability(x As Double()) As Double() Implements IClassifier.PredictProbability
-            RequireTrained()
+            Call RequireTrained()
+            Call x.ValidateFeatureVector(FeatureWidth, "VotingClassifier.PredictProbability")
 
             Dim size As Integer = classesArray.Length
             Dim aggregate As Double() = New Double(size - 1) {}
@@ -185,22 +207,15 @@ Namespace Ensemble
 
         ''' <summary>批量预测类别标签（<see cref="Parallel"/> 打开时按样本维并行）</summary>
         Public Function PredictBatch(x As Double()()) As Double()
-            If x Is Nothing Then
-                Throw New ArgumentNullException(NameOf(x))
-            End If
+            Call RequireTrained()
+            Call x.ValidateFeatureMatrix(FeatureWidth, "VotingClassifier.PredictBatch")
 
             Dim result As Double() = New Double(x.Length - 1) {}
 
-            If Parallel AndAlso x.Length > 1 Then
-                Call System.Threading.Tasks.Parallel.For(0, x.Length,
-                    Sub(i)
-                        result(i) = ProbabilityMath.PredictClass(Me, x(i))
-                    End Sub)
-            Else
-                For i As Integer = 0 To x.Length - 1
+            Call EnsembleParallel.PredictAll(x.Length, Parallel,
+                Sub(i)
                     result(i) = ProbabilityMath.PredictClass(Me, x(i))
-                Next
-            End If
+                End Sub)
 
             Return result
         End Function
@@ -210,12 +225,56 @@ Namespace Ensemble
             Return ProbabilityMath.PredictClass(Me, x)
         End Function
 
+        Public ReadOnly Property ModelKind As String Implements IPersistableModel.ModelKind
+            Get
+                Return "voting"
+            End Get
+        End Property
+
+        Public ReadOnly Property ModelCategory As String Implements IPersistableModel.ModelCategory
+            Get
+                Return "classifier"
+            End Get
+        End Property
+
+        Public Function SaveModel(bundle As ModelBundle, folder As String) As ModelManifest Implements IPersistableModel.SaveModel
+            Call RequireTrained()
+
+            Dim manifest As ModelManifest = ModelManifest.Create(ModelCategory, ModelKind, "")
+            Dim weights As Double() = New Double(trained.Length - 1) {}
+
+            ' 清单里保存的是「实际生效的归一化权重」，因此恢复后无需重新归一化
+            For i As Integer = 0 To trained.Length - 1
+                weights(i) = modelWeights(i)
+            Next
+
+            manifest.featureWidth = FeatureWidth
+            manifest.classes = CType(classesArray.Clone(), Double())
+            manifest.SetVector("weights", weights)
+            manifest.SetParameter("votingMode", votingMode.ToString())
+            manifest.SetInteger("modelCount", trained.Length)
+
+            For i As Integer = 0 To trained.Length - 1
+                Dim childFolder As String = ModelBundle.CombineRelative(folder, $"base/{i}")
+
+                Call manifest.children.Add(EnsembleModelStore.SaveChild(trained(i), bundle, childFolder))
+            Next
+
+            Return manifest
+        End Function
+
+        Public Function Save(directory As String) As ModelManifest Implements IPersistableModel.Save
+            Return EnsembleModelStore.Save(Me, directory)
+        End Function
+
         Private Sub RequireTrained()
-            If classesArray Is Nothing Then
-                Throw New InvalidOperationException(
-                    "the voting classifier has not been trained yet; call Train() before predicting!")
-            End If
+            Call EnsembleValidation.RequireTrained(classesArray IsNot Nothing, NameOf(VotingClassifier), "classes")
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"VotingClassifier({votingMode}): {If(trained, New IClassifier() {}).Length} base model(s), " &
+                   $"{If(classesArray, New Double() {}).Length} class(es)."
+        End Function
 
     End Class
 

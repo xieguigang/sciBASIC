@@ -145,6 +145,106 @@ Namespace LASSO
             Me.numFeatures = numFeatures
         End Sub
 
+        ''' <summary>
+        ''' 从已持久化的正则化路径恢复 LASSO 拟合结果（用于模型持久化加载），不做任何重训。
+        ''' </summary>
+        ''' <remarks>
+        ''' <c>compressedWeights(k)</c> 只在前 <c>numberOfWeights(k)</c> 列有效，
+        ''' 其余列在训练期保持为 0，因此恢复时允许行宽不一致（按最长行补齐）。
+        ''' </remarks>
+        ''' <param name="numberOfLambdas">正则化路径的步数</param>
+        ''' <param name="numFeatures">训练特征的数量</param>
+        ''' <param name="intercepts">每一步的截距</param>
+        ''' <param name="compressedWeights">每一步的压缩权重（行 = lambda 步，列 = 压缩位）</param>
+        ''' <param name="indices">压缩权重到特征下标的指针</param>
+        ''' <param name="numberOfWeights">每一步的有效压缩权重个数</param>
+        ''' <param name="nonZeroWeights">每一步的非零权重个数</param>
+        ''' <param name="lambdas">每一步的 lambda 值</param>
+        ''' <param name="rsquared">每一步的 R²</param>
+        ''' <param name="featureNames">特征名称（可选，仅用于诊断输出）</param>
+        ''' <param name="numberOfPasses">训练时对数据的总遍历次数（可选，仅用于诊断输出）</param>
+        Public Shared Function Restore(numberOfLambdas As Integer,
+                                       numFeatures As Integer,
+                                       intercepts As Double(),
+                                       compressedWeights As Double()(),
+                                       indices As Integer(),
+                                       numberOfWeights As Integer(),
+                                       nonZeroWeights As Integer(),
+                                       lambdas As Double(),
+                                       rsquared As Double(),
+                                       Optional featureNames As String() = Nothing,
+                                       Optional numberOfPasses As Integer = 0) As LassoFit
+            If numberOfLambdas < 1 Then
+                Throw New ArgumentOutOfRangeException(NameOf(numberOfLambdas),
+                    $"the lambda path must contain at least one step, but got {numberOfLambdas}!")
+            End If
+            If numFeatures < 1 Then
+                Throw New ArgumentOutOfRangeException(NameOf(numFeatures),
+                    $"the feature count must be positive, but got {numFeatures}!")
+            End If
+
+            Call CheckRestoredLength("intercepts", intercepts, numberOfLambdas)
+            Call CheckRestoredLength("compressedWeights", compressedWeights, numberOfLambdas)
+            Call CheckRestoredLength("numberOfWeights", numberOfWeights, numberOfLambdas)
+            Call CheckRestoredLength("nonZeroWeights", nonZeroWeights, numberOfLambdas)
+            Call CheckRestoredLength("lambdas", lambdas, numberOfLambdas)
+            Call CheckRestoredLength("rsquared", rsquared, numberOfLambdas)
+
+            Dim width As Integer = 0
+            Dim maxUsed As Integer = 0
+
+            For k As Integer = 0 To numberOfLambdas - 1
+                If compressedWeights(k) Is Nothing Then
+                    Throw New ArgumentException($"the compressed weights row [{k}] is NULL!", NameOf(compressedWeights))
+                End If
+                If compressedWeights(k).Length > width Then
+                    width = compressedWeights(k).Length
+                End If
+                If numberOfWeights(k) > maxUsed Then
+                    maxUsed = numberOfWeights(k)
+                End If
+                If numberOfWeights(k) < 0 OrElse numberOfWeights(k) > compressedWeights(k).Length Then
+                    Throw New ArgumentException(
+                        $"the weight count {numberOfWeights(k)} at lambda step {k} exceeds " &
+                        $"the compressed row width ({compressedWeights(k).Length})!", NameOf(numberOfWeights))
+                End If
+            Next
+
+            If indices Is Nothing Then
+                Throw New ArgumentNullException(NameOf(indices))
+            End If
+            If maxUsed > indices.Length Then
+                Throw New ArgumentException(
+                    $"the index pointer array ({indices.Length}) can not cover {maxUsed} compressed weight(s)!",
+                    NameOf(indices))
+            End If
+
+            Dim restored As New LassoFit(numberOfLambdas, System.Math.Max(1, width), numFeatures) With {
+                .numberOfLambdas = numberOfLambdas,
+                .intercepts = CType(intercepts.Clone(), Double()),
+                .compressedWeights = CType(compressedWeights.Clone(), Double()()),
+                .indices = CType(indices.Clone(), Integer()),
+                .numberOfWeights = CType(numberOfWeights.Clone(), Integer()),
+                .nonZeroWeights = CType(nonZeroWeights.Clone(), Integer()),
+                .lambdas = CType(lambdas.Clone(), Double()),
+                .rsquared = CType(rsquared.Clone(), Double()),
+                .numberOfPasses = numberOfPasses,
+                .featureNames = If(featureNames Is Nothing, Nothing, CType(featureNames.Clone(), String()))
+            }
+
+            Return restored
+        End Function
+
+        Private Shared Sub CheckRestoredLength(name As String, values As Array, expected As Integer)
+            If values Is Nothing Then
+                Throw New ArgumentNullException(name, $"the restored '{name}' array is NULL!")
+            End If
+            If values.Length <> expected Then
+                Throw New ArgumentException(
+                    $"the restored '{name}' array has {values.Length} element(s), expected {expected}!", name)
+            End If
+        End Sub
+
         Public Overridable Function getWeights(lambdaIdx As Integer) As Double()
             Dim weights = New Double(numFeatures - 1) {}
             For i = 0 To numberOfWeights(lambdaIdx) - 1

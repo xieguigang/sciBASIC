@@ -1,6 +1,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble.Persistence
 
 Namespace Ensemble
 
@@ -11,11 +12,15 @@ Namespace Ensemble
     ''' 回归没有「概率」概念，因此这里只有加权均值；若需要抗异常值的聚合，
     ''' 请使用 <see cref="BaggingRegressor"/> 的中位数聚合。
     ''' </remarks>
-    Public NotInheritable Class VotingRegressor : Implements IRegressor
+    Public NotInheritable Class VotingRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
+        Implements IPersistableModel
 
         Private ReadOnly learners As IRegressorLearner()
         Private ReadOnly modelWeights As Double()
         Private ReadOnly trained As IRegressor()
+        Private featureWidthValue As Integer
 
         Public Sub New(learners As IEnumerable(Of IRegressorLearner),
                        Optional weights As Double() = Nothing)
@@ -42,8 +47,10 @@ Namespace Ensemble
         ''' </summary>
         ''' <param name="trained">已训练的回归器，顺序与 <paramref name="weights"/> 对齐</param>
         ''' <param name="weights">非负权重，为空时等权；内部会归一化</param>
+        ''' <param name="featureWidth">训练期的特征维度，<c>0</c> 表示未知（跳过维度校验）</param>
         Public Sub New(trained As IRegressor(),
-                       Optional weights As Double() = Nothing)
+                       Optional weights As Double() = Nothing,
+                       Optional featureWidth As Integer = 0)
             If trained Is Nothing OrElse trained.Length = 0 Then
                 Throw New ArgumentException("the trained regressor list can not be empty!", NameOf(trained))
             End If
@@ -54,6 +61,7 @@ Namespace Ensemble
             Me.learners = New IRegressorLearner() {}
             Me.modelWeights = ProbabilityMath.NormalizeWeights(weights, trained.Length)
             Me.trained = CType(trained.Clone(), IRegressor())
+            Me.featureWidthValue = System.Math.Max(0, featureWidth)
         End Sub
 
         ''' <summary>基模型数量</summary>
@@ -77,48 +85,51 @@ Namespace Ensemble
             End Get
         End Property
 
+        ''' <summary>训练期的特征维度；<c>0</c> 表示未知</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                If featureWidthValue > 0 Then
+                    Return featureWidthValue
+                End If
+
+                For i As Integer = 0 To trained.Length - 1
+                    Dim schema As IFeatureSchema = TryCast(trained(i), IFeatureSchema)
+
+                    If schema IsNot Nothing AndAlso schema.FeatureWidth > 0 Then
+                        Return schema.FeatureWidth
+                    End If
+                Next
+
+                Return 0
+            End Get
+        End Property
+
         ''' <summary>是否并行训练基模型（默认关闭，避免与算法库内部并行嵌套）</summary>
         Public Property Parallel As Boolean = False
 
         ''' <summary>训练全部基模型</summary>
         Public Function Train(x As Double()(), y As Double()) As VotingRegressor
-            If x Is Nothing OrElse x.Length = 0 Then
-                Throw New ArgumentException("the feature matrix can not be empty!", NameOf(x))
-            End If
-            If y Is Nothing OrElse y.Length <> x.Length Then
-                Throw New ArgumentException(
-                    $"the feature rows ({x.Length}) and labels ({If(y Is Nothing, 0, y.Length)}) do not agree!",
-                    NameOf(y))
-            End If
+            Call EnsembleValidation.ValidateTrainingData(x, y, "VotingRegressor.Train")
 
-            If Parallel AndAlso trained.Length > 1 Then
-                Call System.Threading.Tasks.Parallel.For(0, trained.Length,
-                    Sub(i)
-                        trained(i) = learners(i).Fit(x, y)
-                    End Sub)
-            Else
-                For i As Integer = 0 To learners.Length - 1
+            Call EnsembleParallel.FitAll(trained.Length, Parallel,
+                Sub(i)
                     trained(i) = learners(i).Fit(x, y)
-                Next
-            End If
+                End Sub)
+
+            featureWidthValue = x(0).Length
 
             Return Me
         End Function
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
-            RequireTrained()
+            Call RequireTrained()
+            Call x.ValidateFeatureVector(FeatureWidth, "VotingRegressor.Predict")
 
             Dim value As Double = 0.0R
 
             For i As Integer = 0 To trained.Length - 1
-                Dim part As Double = trained(i).Predict(x)
-
-                If Double.IsNaN(part) OrElse Double.IsInfinity(part) Then
-                    Dim name As String = If(learners.Length > i AndAlso learners(i) IsNot Nothing,
-                                             learners(i).Name, $"base[{i}]")
-                    Throw New InvalidOperationException(
-                        $"the base regressor '{name}' returned an invalid prediction ({part})!")
-                End If
+                Dim part As Double = EnsembleValidation.EnsureFinite(
+                    trained(i).Predict(x), DescribeBase(i))
 
                 value += modelWeights(i) * part
             Next
@@ -128,32 +139,74 @@ Namespace Ensemble
 
         ''' <summary>批量预测（<see cref="Parallel"/> 打开时按样本维并行）</summary>
         Public Function PredictBatch(x As Double()()) As Double()
-            If x Is Nothing Then
-                Throw New ArgumentNullException(NameOf(x))
-            End If
+            Call RequireTrained()
+            Call x.ValidateFeatureMatrix(FeatureWidth, "VotingRegressor.PredictBatch")
 
             Dim result As Double() = New Double(x.Length - 1) {}
 
-            If Parallel AndAlso x.Length > 1 Then
-                Call System.Threading.Tasks.Parallel.For(0, x.Length,
-                    Sub(i)
-                        result(i) = Predict(x(i))
-                    End Sub)
-            Else
-                For i As Integer = 0 To x.Length - 1
+            Call EnsembleParallel.PredictAll(x.Length, Parallel,
+                Sub(i)
                     result(i) = Predict(x(i))
-                Next
-            End If
+                End Sub)
 
             Return result
         End Function
 
-        Private Sub RequireTrained()
-            If trained.Length = 0 OrElse trained(0) Is Nothing Then
-                Throw New InvalidOperationException(
-                    "the voting regressor has not been trained yet; call Train() before predicting!")
+        Public ReadOnly Property ModelKind As String Implements IPersistableModel.ModelKind
+            Get
+                Return "voting"
+            End Get
+        End Property
+
+        Public ReadOnly Property ModelCategory As String Implements IPersistableModel.ModelCategory
+            Get
+                Return "regressor"
+            End Get
+        End Property
+
+        Public Function SaveModel(bundle As ModelBundle, folder As String) As ModelManifest Implements IPersistableModel.SaveModel
+            Call RequireTrained()
+
+            Dim manifest As ModelManifest = ModelManifest.Create(ModelCategory, ModelKind, "")
+            Dim weights As Double() = New Double(trained.Length - 1) {}
+
+            For i As Integer = 0 To trained.Length - 1
+                weights(i) = modelWeights(i)
+            Next
+
+            manifest.featureWidth = FeatureWidth
+            manifest.SetVector("weights", weights)
+            manifest.SetInteger("modelCount", trained.Length)
+
+            For i As Integer = 0 To trained.Length - 1
+                Dim childFolder As String = ModelBundle.CombineRelative(folder, $"base/{i}")
+
+                Call manifest.children.Add(EnsembleModelStore.SaveChild(trained(i), bundle, childFolder))
+            Next
+
+            Return manifest
+        End Function
+
+        Public Function Save(directory As String) As ModelManifest Implements IPersistableModel.Save
+            Return EnsembleModelStore.Save(Me, directory)
+        End Function
+
+        Private Function DescribeBase(index As Integer) As String
+            If learners IsNot Nothing AndAlso learners.Length > index AndAlso learners(index) IsNot Nothing Then
+                Return $"the base regressor '{learners(index).Name}' (index {index})"
             End If
+
+            Return $"the base regressor at index {index}"
+        End Function
+
+        Private Sub RequireTrained()
+            Call EnsembleValidation.RequireTrained(
+                trained.Length > 0 AndAlso trained(0) IsNot Nothing, NameOf(VotingRegressor), "trained(base[0])")
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"VotingRegressor: {If(trained, New IRegressor() {}).Length} base model(s)."
+        End Function
 
     End Class
 
