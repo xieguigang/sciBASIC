@@ -7,6 +7,9 @@
     <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../DataMining/DataMining/DataMining.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../Mathematica/Math/DataFittings/linear-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -17,6 +20,9 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../Mathematica/Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="MachineLearning/machine_learning-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
