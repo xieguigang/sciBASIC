@@ -51,6 +51,34 @@ Namespace Ensemble
             Me.trained = New IClassifier(items.Length - 1) {}
         End Sub
 
+        ''' <summary>
+        ''' 用已经训练好的基模型直接构造集成器（用于从持久化模型恢复，不会再次训练）。
+        ''' </summary>
+        ''' <param name="trained">已训练的分类器，顺序与 <paramref name="weights"/> 对齐</param>
+        ''' <param name="classes">全局类别顺序</param>
+        ''' <param name="weights">非负权重，为空时等权；内部会归一化</param>
+        ''' <param name="mode">硬投票或软投票</param>
+        Public Sub New(trained As IClassifier(),
+                       classes As Double(),
+                       Optional weights As Double() = Nothing,
+                       Optional mode As VotingMode = VotingMode.Soft)
+            If trained Is Nothing OrElse trained.Length = 0 Then
+                Throw New ArgumentException("the trained classifier list can not be empty!", NameOf(trained))
+            End If
+            If trained.Any(Function(m) m Is Nothing) Then
+                Throw New ArgumentException("the trained classifier list contains a NULL entry!", NameOf(trained))
+            End If
+            If classes Is Nothing OrElse classes.Length = 0 Then
+                Throw New ArgumentException("the classes array can not be empty!", NameOf(classes))
+            End If
+
+            Me.learners = New IClassifierLearner() {}
+            Me.modelWeights = ProbabilityMath.NormalizeWeights(weights, trained.Length)
+            Me.votingMode = mode
+            Me.trained = CType(trained.Clone(), IClassifier())
+            Me.classesArray = CType(classes.Clone(), Double())
+        End Sub
+
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
                 Return classesArray
@@ -86,6 +114,12 @@ Namespace Ensemble
         End Property
 
         ''' <summary>
+        ''' 是否并行训练基模型（与 <see cref="VotingRegressor.Parallel"/> 对称）。
+        ''' 默认关闭，避免与算法库内部的并行实现相互嵌套。
+        ''' </summary>
+        Public Property Parallel As Boolean = False
+
+        ''' <summary>
         ''' 训练全部基模型；标签编码只在这里做一次。
         ''' </summary>
         Public Function Train(x As Double()(), y As Double()) As VotingClassifier
@@ -101,9 +135,16 @@ Namespace Ensemble
             Dim encoder As LabelEncoder = LabelEncoder.Fit(y)
             Dim yIndex As Integer() = encoder.Encode(y)
 
-            For i As Integer = 0 To learners.Length - 1
-                trained(i) = learners(i).Fit(x, yIndex, encoder.Classes)
-            Next
+            If Parallel AndAlso trained.Length > 1 Then
+                Call System.Threading.Tasks.Parallel.For(0, trained.Length,
+                    Sub(i)
+                        trained(i) = learners(i).Fit(x, yIndex, encoder.Classes)
+                    End Sub)
+            Else
+                For i As Integer = 0 To learners.Length - 1
+                    trained(i) = learners(i).Fit(x, yIndex, encoder.Classes)
+                Next
+            End If
 
             classesArray = encoder.Classes
 
@@ -142,7 +183,7 @@ Namespace Ensemble
             Return ProbabilityMath.Normalize(aggregate)
         End Function
 
-        ''' <summary>批量预测类别标签</summary>
+        ''' <summary>批量预测类别标签（<see cref="Parallel"/> 打开时按样本维并行）</summary>
         Public Function PredictBatch(x As Double()()) As Double()
             If x Is Nothing Then
                 Throw New ArgumentNullException(NameOf(x))
@@ -150,9 +191,16 @@ Namespace Ensemble
 
             Dim result As Double() = New Double(x.Length - 1) {}
 
-            For i As Integer = 0 To x.Length - 1
-                result(i) = ProbabilityMath.PredictClass(Me, x(i))
-            Next
+            If Parallel AndAlso x.Length > 1 Then
+                Call System.Threading.Tasks.Parallel.For(0, x.Length,
+                    Sub(i)
+                        result(i) = ProbabilityMath.PredictClass(Me, x(i))
+                    End Sub)
+            Else
+                For i As Integer = 0 To x.Length - 1
+                    result(i) = ProbabilityMath.PredictClass(Me, x(i))
+                Next
+            End If
 
             Return result
         End Function

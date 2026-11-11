@@ -21,10 +21,17 @@ Namespace Ensemble
         Private ReadOnly fitted As Bayesian
         Private ReadOnly classesArray As Double()
 
-        Friend Sub New(fitted As Bayesian, classes As Double())
+        Public Sub New(fitted As Bayesian, classes As Double())
             Me.fitted = fitted
             Me.classesArray = classes
         End Sub
+
+        ''' <summary>底层已训练的朴素贝叶斯模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As Bayesian
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
@@ -74,10 +81,17 @@ Namespace Ensemble
         Private ReadOnly fitted As LogisticNS.LogisticFit
         Private ReadOnly classesArray As Double()
 
-        Friend Sub New(fitted As LogisticNS.LogisticFit, classes As Double())
+        Public Sub New(fitted As LogisticNS.LogisticFit, classes As Double())
             Me.fitted = fitted
             Me.classesArray = classes
         End Sub
+
+        ''' <summary>底层已训练的逻辑回归模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As LogisticNS.LogisticFit
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
@@ -149,11 +163,25 @@ Namespace Ensemble
         Private ReadOnly classesArray As Double()
         Private ReadOnly labelOffset As Integer
 
-        Friend Sub New(fitted As SvmModelType, classes As Double(), labelOffset As Integer)
+        Public Sub New(fitted As SvmModelType, classes As Double(), labelOffset As Integer)
             Me.fitted = fitted
             Me.classesArray = classes
             Me.labelOffset = labelOffset
         End Sub
+
+        ''' <summary>底层已训练的 SVM 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As SvmModelType
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>类别标签的索引基（持久化恢复时必须一并保存）</summary>
+        Public ReadOnly Property IndexOffset As Integer
+            Get
+                Return labelOffset
+            End Get
+        End Property
 
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
@@ -288,10 +316,17 @@ Namespace Ensemble
         Private ReadOnly fitted As XGBoostModel
         Private ReadOnly classesArray As Double()
 
-        Friend Sub New(fitted As XGBoostModel, classes As Double())
+        Public Sub New(fitted As XGBoostModel, classes As Double())
             Me.fitted = fitted
             Me.classesArray = classes
         End Sub
+
+        ''' <summary>底层已训练的 XGBoost 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As XGBoostModel
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get

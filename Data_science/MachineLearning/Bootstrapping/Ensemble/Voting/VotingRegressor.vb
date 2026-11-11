@@ -37,6 +37,25 @@ Namespace Ensemble
             Me.trained = New IRegressor(items.Length - 1) {}
         End Sub
 
+        ''' <summary>
+        ''' 用已经训练好的基模型直接构造集成器（用于从持久化模型恢复，不会再次训练）。
+        ''' </summary>
+        ''' <param name="trained">已训练的回归器，顺序与 <paramref name="weights"/> 对齐</param>
+        ''' <param name="weights">非负权重，为空时等权；内部会归一化</param>
+        Public Sub New(trained As IRegressor(),
+                       Optional weights As Double() = Nothing)
+            If trained Is Nothing OrElse trained.Length = 0 Then
+                Throw New ArgumentException("the trained regressor list can not be empty!", NameOf(trained))
+            End If
+            If trained.Any(Function(m) m Is Nothing) Then
+                Throw New ArgumentException("the trained regressor list contains a NULL entry!", NameOf(trained))
+            End If
+
+            Me.learners = New IRegressorLearner() {}
+            Me.modelWeights = ProbabilityMath.NormalizeWeights(weights, trained.Length)
+            Me.trained = CType(trained.Clone(), IRegressor())
+        End Sub
+
         ''' <summary>基模型数量</summary>
         Public ReadOnly Property BaseModelCount As Integer
             Get
@@ -95,8 +114,10 @@ Namespace Ensemble
                 Dim part As Double = trained(i).Predict(x)
 
                 If Double.IsNaN(part) OrElse Double.IsInfinity(part) Then
+                    Dim name As String = If(learners.Length > i AndAlso learners(i) IsNot Nothing,
+                                             learners(i).Name, $"base[{i}]")
                     Throw New InvalidOperationException(
-                        $"the base regressor '{learners(i).Name}' returned an invalid prediction ({part})!")
+                        $"the base regressor '{name}' returned an invalid prediction ({part})!")
                 End If
 
                 value += modelWeights(i) * part
@@ -105,7 +126,7 @@ Namespace Ensemble
             Return value
         End Function
 
-        ''' <summary>批量预测</summary>
+        ''' <summary>批量预测（<see cref="Parallel"/> 打开时按样本维并行）</summary>
         Public Function PredictBatch(x As Double()()) As Double()
             If x Is Nothing Then
                 Throw New ArgumentNullException(NameOf(x))
@@ -113,9 +134,16 @@ Namespace Ensemble
 
             Dim result As Double() = New Double(x.Length - 1) {}
 
-            For i As Integer = 0 To x.Length - 1
-                result(i) = Predict(x(i))
-            Next
+            If Parallel AndAlso x.Length > 1 Then
+                Call System.Threading.Tasks.Parallel.For(0, x.Length,
+                    Sub(i)
+                        result(i) = Predict(x(i))
+                    End Sub)
+            Else
+                For i As Integer = 0 To x.Length - 1
+                    result(i) = Predict(x(i))
+                Next
+            End If
 
             Return result
         End Function

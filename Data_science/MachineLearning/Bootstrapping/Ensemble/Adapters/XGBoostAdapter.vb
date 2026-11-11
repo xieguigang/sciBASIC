@@ -24,10 +24,17 @@ Namespace Ensemble
         Private ReadOnly fitted As GBM
         Private ReadOnly width As Integer
 
-        Private Sub New(fitted As GBM, width As Integer)
+        Public Sub New(fitted As GBM, width As Integer)
             Me.fitted = fitted
             Me.width = width
         End Sub
+
+        ''' <summary>底层已训练的 TGBoost GBM 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As GBM
+            Get
+                Return fitted
+            End Get
+        End Property
 
         ''' <summary>特征维数</summary>
         Public ReadOnly Property FeatureWidth As Integer

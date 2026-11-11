@@ -26,9 +26,16 @@ Namespace Ensemble
 
         Private ReadOnly fitted As RanFog
 
-        Friend Sub New(fitted As RanFog)
+        Public Sub New(fitted As RanFog)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的随机森林模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As RanFog
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             If x Is Nothing Then
@@ -94,9 +101,16 @@ Namespace Ensemble
 
         Private ReadOnly fitted As BayesRegNS.BayesianRegression
 
-        Friend Sub New(fitted As BayesRegNS.BayesianRegression)
+        Public Sub New(fitted As BayesRegNS.BayesianRegression)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的贝叶斯回归模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As BayesRegNS.BayesianRegression
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             If x Is Nothing Then
@@ -146,10 +160,24 @@ Namespace Ensemble
         Private ReadOnly fitted As SvmModelType
         Private ReadOnly labelOffset As Integer
 
-        Friend Sub New(fitted As SvmModelType, labelOffset As Integer)
+        Public Sub New(fitted As SvmModelType, labelOffset As Integer)
             Me.fitted = fitted
             Me.labelOffset = labelOffset
         End Sub
+
+        ''' <summary>底层已训练的 SVR 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As SvmModelType
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>特征索引基（持久化恢复时必须一并保存）</summary>
+        Public ReadOnly Property IndexOffset As Integer
+            Get
+                Return labelOffset
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             If x Is Nothing Then
@@ -211,9 +239,16 @@ Namespace Ensemble
 
         Private ReadOnly fitted As RidgeNS.RidgeFit
 
-        Friend Sub New(fitted As RidgeNS.RidgeFit)
+        Public Sub New(fitted As RidgeNS.RidgeFit)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的岭回归模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As RidgeNS.RidgeFit
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             Return fitted.GetY(x)
@@ -255,9 +290,16 @@ Namespace Ensemble
 
         Private ReadOnly fitted As MultivariateNS.MLRFit
 
-        Friend Sub New(fitted As MultivariateNS.MLRFit)
+        Public Sub New(fitted As MultivariateNS.MLRFit)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的多元线性回归模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As MultivariateNS.MLRFit
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             Return fitted.GetY(x)
@@ -289,10 +331,17 @@ Namespace Ensemble
         Private ReadOnly fitted As LassoNS.LassoFit
         Private ReadOnly selectedStep As Integer
 
-        Friend Sub New(fitted As LassoNS.LassoFit, selectedStep As Integer)
+        Public Sub New(fitted As LassoNS.LassoFit, selectedStep As Integer)
             Me.fitted = fitted
             Me.selectedStep = selectedStep
         End Sub
+
+        ''' <summary>底层已训练的 LASSO 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As LassoNS.LassoFit
+            Get
+                Return fitted
+            End Get
+        End Property
 
         ''' <summary>实际使用的 lambda 下标</summary>
         Public ReadOnly Property LambdaIndex As Integer
@@ -372,9 +421,16 @@ Namespace Ensemble
 
         Private ReadOnly fitted As XGBoostModel
 
-        Friend Sub New(fitted As XGBoostModel)
+        Public Sub New(fitted As XGBoostModel)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的 XGBoost 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As XGBoostModel
+            Get
+                Return fitted
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             Return fitted.Predict(x)
