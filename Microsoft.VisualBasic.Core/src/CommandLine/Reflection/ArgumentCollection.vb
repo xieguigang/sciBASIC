@@ -311,13 +311,7 @@ Namespace CommandLine.Reflection
                 Return ""
             End If
 
-            If name.StartsWith("--") Then
-                name = name.Substring(2)
-            ElseIf name.StartsWith("-") OrElse name.StartsWith("/") OrElse name.StartsWith("\") Then
-                name = name.Substring(1)
-            End If
-
-            Return name.Replace("-"c, "_"c)
+            Return name.TrimParamPrefix.Replace("-"c, "_"c)
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of ArgumentAttribute)) Implements IEnumerable(Of NamedValue(Of ArgumentAttribute)).GetEnumerator

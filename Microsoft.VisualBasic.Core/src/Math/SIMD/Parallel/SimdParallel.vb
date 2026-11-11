@@ -629,6 +629,54 @@ Namespace Math.SIMD
             Return c
         End Function
 
+        ''' <summary>
+        ''' 与 <see cref="MatrixDot"/> 等价，但右矩阵**已经是转置形式**（形状 <c>[ncolB][n]</c>）。
+        ''' 
+        ''' 用于权重在推理期恒定、其转置结果已被上层缓存复用的场合：
+        ''' 省掉每次乘法对右矩阵的整块复制（<c>(m+nIn)×r</c> 的权重约 1.8 GB/次）。
+        ''' </summary>
+        ''' <param name="a">左矩阵，形状 <c>[nrowA][n]</c></param>
+        ''' <param name="transposed">右矩阵的转置视图，形状 <c>[ncolB][n]</c></param>
+        ''' <param name="n">内维长度（右矩阵原行数）</param>
+        ''' <param name="ncolB">右矩阵原列数（等于转置视图的行数）</param>
+        Public Shared Function MatrixDotTransposed(a As Double()(), transposed As Double()(),
+                                                   n As Integer, ncolB As Integer) As Double()()
+
+            If a Is Nothing Then Throw New ArgumentNullException(NameOf(a))
+            If transposed Is Nothing Then Throw New ArgumentNullException(NameOf(transposed))
+
+            Dim nrowA As Integer = a.Length
+            Dim c As Double()() = New Double(nrowA - 1)() {}
+
+            For i As Integer = 0 To nrowA - 1
+                c(i) = New Double(ncolB - 1) {}
+            Next
+            If nrowA = 0 OrElse n = 0 OrElse ncolB = 0 Then Return c
+
+            If ShouldParallelize(nrowA * ncolB) Then
+                System.Threading.Tasks.Parallel.For(0, nrowA,
+                    Sub(i)
+                        Dim row As Double() = a(i)
+                        Dim dst As Double() = c(i)
+
+                        For j As Integer = 0 To ncolB - 1
+                            dst(j) = SIMDIntrinsics.DotFma(row, transposed(j))
+                        Next
+                    End Sub)
+            Else
+                For i As Integer = 0 To nrowA - 1
+                    Dim row As Double() = a(i)
+                    Dim dst As Double() = c(i)
+
+                    For j As Integer = 0 To ncolB - 1
+                        dst(j) = SIMDIntrinsics.DotFma(row, transposed(j))
+                    Next
+                Next
+            End If
+
+            Return c
+        End Function
+
         Private Shared Function Transpose(b As Double()(), n As Integer, ncolB As Integer) As Double()()
             Dim t As Double()() = New Double(ncolB - 1)() {}
 

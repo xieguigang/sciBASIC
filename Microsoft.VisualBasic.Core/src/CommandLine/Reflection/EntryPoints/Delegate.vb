@@ -207,8 +207,21 @@ Namespace CommandLine.Reflection.EntryPoints
                         Throw New MissingMemberException($"missing the required argument({name}) inside your commandline input!")
                     End If
                 Else
-                    Dim val_str As String = args(name)
-                    Dim value As Object = Scripting.CTypeDynamic(val_str, type)
+                    Dim value As Object
+
+                    If type Is GetType(Boolean) Then
+                        ' 20261110 A bare switch such as `--no-passive` carries no value:
+                        ' GetEnumerator() exposes it with the placeholder value "true" so that
+                        ' MatchArgumentName can find it, but the indexer still yields an empty
+                        ' string. CTypeDynamic("") returns Nothing, which the CLR then coerces
+                        ' to False - the switch would be silently ignored. Boolean parameters
+                        ' must therefore consult BoolFlags through CommandLine.GetValue.
+                        value = args.GetValue(Of Boolean)(name, True)
+                    Else
+                        Dim val_str As String = args(name)
+
+                        value = Scripting.CTypeDynamic(val_str, type)
+                    End If
 
                     callParameters(i) = value
                 End If
@@ -229,20 +242,35 @@ Namespace CommandLine.Reflection.EntryPoints
                 name = [alias].Alias.TrimParamPrefix
             End If
 
-            name = args.Keys _
-                .Where(Function(cli_name)
-                           ' 20261105 cli_name is the commandline argument name, may be in format
-                           ' of --aa-bb, '-' is not a valid symbol name inside vb language
-                           ' so we use _ for the symbol name in vb source: aa_bb.
-                           ' replace - as _ for make matches of the cli argument name '--aa-bb' with the vb symbol name 'aa_bb'
-                           Return cli_name _
-                               .TrimParamPrefix _
-                               .Replace("-", "_") _
-                               .TextEquals(name)
-                       End Function) _
-                .FirstOrDefault
+            ' 20261105 cli_name is the commandline argument name, may be in format
+            ' of --aa-bb, '-' is not a valid symbol name inside vb language
+            ' so we use _ for the symbol name in vb source: aa_bb.
+            ' replace - as _ for make matches of the cli argument name '--aa-bb' with the vb symbol name 'aa_bb'
+            '
+            ' 20261110 A bare switch such as `--no-passive` is parsed into BoolFlags and is
+            ' therefore absent from CommandLine.Keys, so both collections have to be scanned.
+            ' Otherwise the parameter is treated as "not supplied" and keeps its default.
+            Dim matched As String = FindMatch(args.Keys, name)
 
-            Return name
+            If matched Is Nothing AndAlso args.BoolFlags IsNot Nothing AndAlso args.BoolFlags.Length > 0 Then
+                matched = FindMatch(args.BoolFlags, name)
+            End If
+
+            Return matched
+        End Function
+
+        Private Shared Function FindMatch(cli_names As String(), name As String) As String
+            If cli_names.IsNullOrEmpty Then
+                Return Nothing
+            End If
+
+            For Each cli_name As String In cli_names
+                If cli_name.TrimParamPrefix.Replace("-", "_").TextEquals(name) Then
+                    Return cli_name
+                End If
+            Next
+
+            Return Nothing
         End Function
 
         Public Overrides Function ToString() As String

@@ -95,6 +95,145 @@ Namespace Compute
         ''' </summary>
         Public Const MatrixDotThreshold As Integer = 10000
 
+#Region "矩阵乘的 jagged 视图缓存"
+
+    ''' <summary>
+    ''' 一个稠密矩阵的 jagged 视图缓存条目。
+    ''' </summary>
+    Private NotInheritable Class JaggedRows
+
+        Public ReadOnly Rows As Integer
+        Public ReadOnly Cols As Integer
+        Public ReadOnly Version As Long
+        Public ReadOnly Jagged As Double()()
+
+        ''' <summary>
+        ''' 转置后的视图（形状 <c>[Cols][Rows]</c>），惰性构建并缓存。
+        ''' 
+        ''' 为什么需要：<c>SimdParallel.MatrixDot</c> 每次调用都会先把右矩阵整体转置一遍，
+        ''' 对 <c>(m+nIn)×r</c> 的权重就是每次 1.8 GB 的复制；缓存转置后这部分降为一次性。
+        ''' </summary>
+        Public Property Transposed As Double()()
+
+        Public Sub New(rows As Integer, cols As Integer, version As Long, jagged As Double()())
+            Me.Rows = rows
+            Me.Cols = cols
+            Me.Version = version
+            Me.Jagged = jagged
+        End Sub
+
+    End Class
+
+    ' 键是底层 Double() 数组的引用：推理期权重数组是长命对象，
+    ' 因此即使上层每次用新的 Tensor 实例包装同一个数组，缓存依然命中。
+    Private Shared ReadOnly _jaggedCache As New Runtime.CompilerServices.ConditionalWeakTable(Of Double(), JaggedRows)
+
+    Private Shared _cacheHits As Long = 0L
+    Private Shared _cacheMisses As Long = 0L
+
+    ''' <summary>jagged 视图缓存的命中次数（用于性能报告自证）</summary>
+    Public Shared ReadOnly Property JaggedCacheHits As Long
+        Get
+            Return System.Threading.Interlocked.Read(_cacheHits)
+        End Get
+    End Property
+
+    ''' <summary>jagged 视图缓存的重建次数</summary>
+    Public Shared ReadOnly Property JaggedCacheMisses As Long
+        Get
+            Return System.Threading.Interlocked.Read(_cacheMisses)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 取矩阵的 jagged 视图：命中缓存时零分配，未命中时按行复制一次。
+    ''' 
+    ''' 版本号来自 <see cref="Tensor"/> 的写入计数，原地写入后自动失效，
+    ''' 因此与"每次重新展开"的结果逐位一致。
+    ''' </summary>
+    Private Shared Function GetJagged(t As Tensor, rows As Integer, cols As Integer) As Double()()
+        Dim key As Double() = t.Data
+
+        ' 只能用实例自己的 _version，不能用公开的 Version：
+        ' 后者叠加了全局 DeviceEpoch，只要引擎里有人调用 InvalidateAllDeviceCaches，
+        ' 每个张量的 Version 都会变，缓存就被整体冲掉——实测这会让每次 MatMul
+        ' 都把 (m+nIn)×r 的权重重新摊开一遍（单次 3 GB 级），是分配爆炸的真正原因。
+        Dim version As Long = t._version
+        Dim entry As JaggedRows = Nothing
+
+        If _jaggedCache.TryGetValue(key, entry) Then
+            If entry.Rows = rows AndAlso entry.Cols = cols AndAlso entry.Version = version Then
+                Call System.Threading.Interlocked.Increment(_cacheHits)
+
+                Return entry.Jagged
+            End If
+        End If
+
+        Call System.Threading.Interlocked.Increment(_cacheMisses)
+
+        Dim jagged(rows - 1)() As Double
+
+        For i As Integer = 0 To rows - 1
+            Dim row(cols - 1) As Double
+
+            Call Array.Copy(key, i * cols, row, 0, cols)
+            jagged(i) = row
+        Next
+
+        Call _jaggedCache.Remove(key)
+        Call _jaggedCache.Add(key, New JaggedRows(rows, cols, version, jagged))
+
+        Return jagged
+    End Function
+
+    ''' <summary>
+    ''' 取矩阵的**转置** jagged 视图（形状 <c>[cols][rows]</c>）：命中缓存时零分配。
+    ''' 
+    ''' <c>SimdParallel.MatrixDot</c> 内部每次都要转置右矩阵；
+    ''' 权重在推理期是常量，这里把转置结果一并缓存，避免每次乘法复制 1.8 GB。
+    ''' </summary>
+    Private Shared Function GetJaggedTransposed(t As Tensor, rows As Integer, cols As Integer) As Double()()
+        Dim key As Double() = t.Data
+        Dim version As Long = t._version
+        Dim entry As JaggedRows = Nothing
+
+        If _jaggedCache.TryGetValue(key, entry) Then
+            If entry.Rows = rows AndAlso entry.Cols = cols AndAlso entry.Version = version Then
+                If entry.Transposed IsNot Nothing Then
+                    Call System.Threading.Interlocked.Increment(_cacheHits)
+
+                    Return entry.Transposed
+                End If
+
+                ' 行视图已在缓存里，只需要补一份转置
+                Dim transposed(cols - 1)() As Double
+
+                For j As Integer = 0 To cols - 1
+                    Dim column(rows - 1) As Double
+
+                    For i As Integer = 0 To rows - 1
+                        column(i) = entry.Jagged(i)(j)
+                    Next
+
+                    transposed(j) = column
+                Next
+
+                entry.Transposed = transposed
+
+                Call System.Threading.Interlocked.Increment(_cacheMisses)
+
+                Return transposed
+            End If
+        End If
+
+        ' 未命中：先落行视图（顺带复用 GetJagged 的分配），再转置
+        Call GetJagged(t, rows, cols)
+
+        Return GetJaggedTransposed(t, rows, cols)
+    End Function
+
+#End Region
+
         ''' <summary>全局默认实例（<see cref="Tensor.computeKernel"/> 的初始值）</summary>
         Public Shared ReadOnly Property [Default] As SIMDTensor = New SIMDTensor()
 
@@ -222,9 +361,12 @@ Namespace Compute
                 Return MyBase.MatMul(a, b)
             End If
 
-            Dim rowsA = ToJagged(a.Data, m, k)
-            Dim rowsB = ToJagged(b.Data, k, n)
-            Dim product = SimdParallel.MatrixDot(rowsA, rowsB)
+            ' 权重矩阵在推理期是常量：行视图与**转置视图**都按底层数组缓存。
+            ' MatrixDot 每次都会先把右矩阵整体转置一遍（(m+nIn)×r 的权重约 1.8 GB/次），
+            ' 这里直接喂缓存好的转置视图，把这块复制降为一次性。
+            Dim rowsA = GetJagged(a, m, k)
+            Dim columnsB = GetJaggedTransposed(b, k, n)
+            Dim product = SimdParallel.MatrixDotTransposed(rowsA, columnsB, k, n)
 
             ' 输出元素数必须用 64 位校验（见 Tensor.MatrixSize 的说明）
             Dim flat(Tensor.MatrixSize(m, n) - 1) As Double

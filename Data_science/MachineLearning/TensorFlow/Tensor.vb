@@ -106,6 +106,22 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Friend _version As Long = 0
 
+    ''' <summary>
+    ''' 按行切分的 jagged 视图缓存（供矩阵乘后端使用）。
+    ''' 
+    ''' 为什么需要：<c>SIMDTensor.MatMul</c> 每次调用都会把一个稠密矩阵整体摊成
+    ''' jagged 数组；对 H×H 的权重矩阵，一份约 <c>H²×8</c> 字节（H≈8000 时约 500 MB）。
+    ''' 推理时权重是常量，每次重新摊开会让"一次前向"产生数十 GB 的临时分配，
+    ''' 进而把 GC 暂停推到墙钟的 5% 以上。
+    ''' 
+    ''' 缓存以 <see cref="_version"/> 作为失效依据：任何原地写入都会让版本号自增，
+    ''' 下次取视图时自动重建，因此数值语义与逐次重建完全一致。
+    ''' </summary>
+    Private _rowView As Double()() = Nothing
+    Private _rowViewVersion As Long = -1
+    Private _rowViewRows As Integer = 0
+    Private _rowViewCols As Integer = 0
+
 #End Region
 
 #Region "计算后端"
@@ -243,6 +259,43 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Return _version + DeviceEpoch
         End Get
     End Property
+
+    ''' <summary>
+    ''' 取按行切分的 jagged 视图，供矩阵乘后端使用；结果按 <see cref="_version"/> 缓存。
+    ''' 
+    ''' 推理时权重矩阵是常量，缓存命中后每次乘法都不再复制；
+    ''' 一旦张量被原地写入（索引器 / <see cref="InvalidateHostCache"/>），版本号变化导致缓存失效并重建，
+    ''' 因此与"每次重新展开"的结果逐位一致。
+    ''' </summary>
+    ''' <param name="rows">行数（必须与 <see cref="Shape"/> 一致）</param>
+    ''' <param name="cols">列数（必须与 <see cref="Shape"/> 一致）</param>
+    ''' <returns>长度为 <paramref name="rows"/> 的数组，每行是一个独立副本</returns>
+    Friend Function GetRowView(rows As Integer, cols As Integer) As Double()()
+        Dim version As Long = _version
+
+        SyncLock Me
+            If _rowView IsNot Nothing AndAlso _rowViewVersion = version AndAlso
+               _rowViewRows = rows AndAlso _rowViewCols = cols Then
+                Return _rowView
+            End If
+
+            Dim jagged(rows - 1)() As Double
+
+            For i As Integer = 0 To rows - 1
+                Dim row(cols - 1) As Double
+
+                Call Array.Copy(Data, i * cols, row, 0, cols)
+                jagged(i) = row
+            Next
+
+            _rowView = jagged
+            _rowViewVersion = version
+            _rowViewRows = rows
+            _rowViewCols = cols
+
+            Return jagged
+        End SyncLock
+    End Function
 
     ''' <summary>
     ''' 声明本张量的主机数据已被**绕过索引器**就地修改过，从而让设备端缓存副本失效。
