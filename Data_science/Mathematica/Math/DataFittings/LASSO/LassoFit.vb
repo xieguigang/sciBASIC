@@ -235,13 +235,22 @@ Namespace LASSO
             Return restored
         End Function
 
-        Private Shared Sub CheckRestoredLength(name As String, values As Array, expected As Integer)
+        ''' <summary>
+        ''' 校验恢复数组至少覆盖 <paramref name="steps"/> 个有效步。
+        ''' </summary>
+        ''' <remarks>
+        ''' 训练期这些数组按「请求的 lambda 步数」预分配，随后 <c>numberOfLambdas</c>
+        ''' 被改写成实际收敛的步数，因此数组长度通常**大于**步数是正常状态
+        ''' （多余位置保持 0），这里只要求覆盖，不要求等长。
+        ''' </remarks>
+        Private Shared Sub CheckRestoredLength(name As String, values As Array, steps As Integer)
             If values Is Nothing Then
                 Throw New ArgumentNullException(name, $"the restored '{name}' array is NULL!")
             End If
-            If values.Length <> expected Then
+            If values.Length < steps Then
                 Throw New ArgumentException(
-                    $"the restored '{name}' array has {values.Length} element(s), expected {expected}!", name)
+                    $"the restored '{name}' array has {values.Length} element(s), " &
+                    $"which can not cover {steps} lambda step(s)!", name)
             End If
         End Sub
 

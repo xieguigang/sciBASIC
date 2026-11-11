@@ -189,10 +189,10 @@ Namespace Ensemble.Persistence
                 Throw New ArgumentNullException(NameOf(rows))
             End If
 
-            Dim directory As String = Path.GetDirectoryName(path)
+            Dim directory As String = System.IO.Path.GetDirectoryName(path)
 
-            If Not String.IsNullOrEmpty(directory) AndAlso Not Directory.Exists(directory) Then
-                Call Directory.CreateDirectory(directory)
+            If Not String.IsNullOrEmpty(directory) AndAlso Not System.IO.Directory.Exists(directory) Then
+                Call System.IO.Directory.CreateDirectory(directory)
             End If
 
             Using writer As New StreamWriter(path, append:=False, encoding:=New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))

@@ -30,8 +30,15 @@ Namespace Ensemble.Persistence
 
         Shared Sub New()
             ' 显式注册内置编解码器：顺序无关，算法标识必须唯一
+            ' 朴素贝叶斯族
             Call Register(New NaiveBayesCodec())
-            Call Register(New GlmCodec())
+            Call Register(New BayesianRegressionCodec())
+            ' 广义线性 / 正则化回归族
+            Call Register(New LogisticCodec())
+            Call Register(New RidgeCodec())
+            Call Register(New MlrCodec())
+            Call Register(New LassoCodec())
+            ' 核方法与树模型
             Call Register(New SvmCodec())
             Call Register(New RandomForestCodec())
             Call Register(New XGBoostCodec())

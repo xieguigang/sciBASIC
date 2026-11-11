@@ -1,8 +1,10 @@
 Imports System
+Imports System.Collections.Generic
 Imports System.IO
 Imports System.Linq
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble.Persistence
 
 ''' <summary>
 ''' 集成学习框架的 console 审计程序。
@@ -29,6 +31,7 @@ Module Program
             Call CheckBagging()
             Call CheckStacking()
             Call CheckBoundary()
+            Call CheckPersistence()
         Catch ex As Exception
             Call DebugAudit.Mark("audit.crash", ex.ToString())
             Call DebugAudit.Test(False, $"审计套件不应抛出未处理异常: {ex.Message}")
@@ -439,6 +442,230 @@ Module Program
             End Sub,
             "voting: 空基学习器列表应被拒绝")
     End Sub
+
+#End Region
+
+#Region "persistence"
+
+    ''' <summary>
+    ''' 全族模型持久化往返：训练 → 保存 → 加载 → 预测值逐位比对。
+    ''' </summary>
+    ''' <remarks>
+    ''' 「逐位」而不是「近似」是刻意的：模型包里的一切数值都以 <c>"R"</c> + invariant
+    ''' culture 写出，任何一位的漂移都说明保存/恢复路径丢失了状态。
+    ''' </remarks>
+    Private Sub CheckPersistence()
+        Dim root As String = Path.Combine(Path.GetTempPath(), "ensemble-audit-" & Guid.NewGuid().ToString("N"))
+        Dim binary = MakeBinary(80, 211)
+        Dim multi = MakeMultiClass(90, 213)
+        Dim regression = MakeRegression(80, 217)
+        Dim classes As Double() = Nothing
+        Dim yBinary As Integer() = Encode(binary.y, classes)
+        Dim binaryClasses As Double() = CType(classes.Clone(), Double())
+        Dim yMulti As Integer() = Encode(multi.y, classes)
+        Dim multiClasses As Double() = CType(classes.Clone(), Double())
+
+        Call DebugAudit.Mark("persistence.root", root)
+
+        Try
+            ' --- 分类适配器 ---
+            Call RoundTripClassifier(root, "base/naive-bayes",
+                New NaiveBayesClassifierLearner().Fit(multi.x, yMulti, multiClasses), FirstRows(multi.x, 4))
+            Call RoundTripClassifier(root, "base/logistic",
+                New LogisticClassifierLearner().Fit(binary.x, yBinary, binaryClasses), FirstRows(binary.x, 4))
+            Call RoundTripClassifier(root, "base/svm",
+                New SvmClassifierLearner().Fit(binary.x, yBinary, binaryClasses), FirstRows(binary.x, 4))
+            Call RoundTripClassifier(root, "base/xgboost",
+                New XGBoostClassifierLearner With {.Rounds = 5, .MaxDepth = 3}.Fit(binary.x, yBinary, binaryClasses),
+                FirstRows(binary.x, 4))
+
+            ' --- 回归适配器 ---
+            Call RoundTripRegressor(root, "base/mlr",
+                New MlrRegressorLearner().Fit(regression.x, regression.y), FirstRows(regression.x, 4))
+            Call RoundTripRegressor(root, "base/ridge",
+                New RidgeRegressorLearner().Fit(regression.x, regression.y), FirstRows(regression.x, 4))
+            Call RoundTripRegressor(root, "base/lasso",
+                New LassoRegressorLearner().Fit(regression.x, regression.y), FirstRows(regression.x, 4))
+            Call RoundTripRegressor(root, "base/bayesian",
+                New BayesianRegressorLearner().Fit(regression.x, regression.y), FirstRows(regression.x, 4))
+            Call RoundTripRegressor(root, "base/random-forest",
+                New RandomForestRegressorLearner With {.TreeCount = 6, .MaxBranch = 200}.Fit(regression.x, regression.y),
+                FirstRows(regression.x, 4))
+            Call RoundTripRegressor(root, "base/svr",
+                New SvmRegressorLearner().Fit(regression.x, regression.y), FirstRows(regression.x, 4))
+            Call RoundTripRegressor(root, "base/xgboost",
+                New XGBoostRegressorLearner With {.Rounds = 5, .MaxDepth = 3}.Fit(regression.x, regression.y),
+                FirstRows(regression.x, 4))
+
+            ' --- 三类集成器 × 分类 / 回归 ---
+            Dim voting As VotingClassifier = New VotingClassifier(
+                New IClassifierLearner() {New NaiveBayesClassifierLearner(), New LogisticClassifierLearner()},
+                Nothing, VotingMode.Soft).Train(binary.x, binary.y)
+
+            Call RoundTripClassifier(root, "voting-classifier", voting, FirstRows(binary.x, 4))
+
+            Dim votingReg As VotingRegressor = New VotingRegressor(
+                New IRegressorLearner() {New MlrRegressorLearner(), New RidgeRegressorLearner()}
+            ).Train(regression.x, regression.y)
+
+            Call RoundTripRegressor(root, "voting-regressor", votingReg, FirstRows(regression.x, 4))
+
+            Dim bagging As BaggingClassifier = New BaggingClassifier(
+                New NaiveBayesClassifierLearner(), modelCount:=5, ratio:=1.0R, seed:=42).Train(binary.x, binary.y)
+
+            Call RoundTripClassifier(root, "bagging-classifier", bagging, FirstRows(binary.x, 4))
+
+            Dim baggingReg As BaggingRegressor = New BaggingRegressor(
+                New RidgeRegressorLearner(), modelCount:=5, ratio:=1.0R, seed:=7
+            ) With {.Aggregation = BaggingAggregation.Median}
+            Call baggingReg.Train(regression.x, regression.y)
+
+            Call RoundTripRegressor(root, "bagging-regressor", baggingReg, FirstRows(regression.x, 4))
+
+            Dim stacking As StackingClassifier = New StackingClassifier(
+                New IClassifierLearner() {New NaiveBayesClassifierLearner(), New LogisticClassifierLearner()},
+                New LogisticClassifierLearner(), folds:=5, seed:=42).Train(binary.x, binary.y)
+
+            Call RoundTripClassifier(root, "stacking-classifier", stacking, FirstRows(binary.x, 4))
+
+            Dim stackingReg As StackingRegressor = New StackingRegressor(
+                New IRegressorLearner() {New MlrRegressorLearner(), New RidgeRegressorLearner()},
+                New RidgeRegressorLearner(), folds:=5, seed:=42).Train(regression.x, regression.y)
+
+            Call RoundTripRegressor(root, "stacking-regressor", stackingReg, FirstRows(regression.x, 4))
+
+            ' --- 包结构与错误路径 ---
+            Dim votingDir As String = Path.Combine(root, "voting-classifier")
+            Dim manifest As ModelManifest = EnsembleModelStore.LoadManifest(votingDir)
+
+            Call DebugAudit.Test(manifest.modelType = "voting", $"persistence: 清单 modelType = '{manifest.modelType}'")
+            Call DebugAudit.Test(manifest.kind = "classifier", $"persistence: 清单 kind = '{manifest.kind}'")
+            Call DebugAudit.Test(manifest.children.Count = 2, $"persistence: 子模型数量 = {manifest.children.Count}")
+            Call DebugAudit.Test(manifest.featureWidth = binary.x(0).Length,
+                                $"persistence: featureWidth = {manifest.featureWidth}")
+            Call DebugAudit.Test(File.Exists(Path.Combine(votingDir, ModelBundle.ManifestFileName)),
+                                "persistence: model.json 已写出")
+            Call DebugAudit.Test(Directory.GetFiles(votingDir, "*.csv", SearchOption.AllDirectories).Length > 0,
+                                "persistence: CSV 附表已写出")
+
+            Call DebugAudit.CheckThrows(Of InvalidDataException)(
+                Sub()
+                    Dim wrong As IClassifier = EnsembleModelStore.LoadClassifier(Path.Combine(root, "base/ridge"))
+                End Sub,
+                "persistence: 回归模型不能按分类器加载")
+
+            Call DebugAudit.CheckThrows(Of NotSupportedException)(
+                Sub()
+                    Dim unknown As IModelCodec = EnsembleModelStore.GetCodec("no-such-algorithm")
+                End Sub,
+                "persistence: 未知算法应被拒绝")
+
+            Call DebugAudit.CheckThrows(Of InvalidDataException)(
+                Sub()
+                    Dim path As String = ModelBundle.Open(votingDir).ResolvePath("../escape.csv")
+                End Sub,
+                "persistence: 路径穿越应被拒绝")
+
+            Call DebugAudit.CheckThrows(Of ArgumentException)(
+                Sub()
+                    Dim loaded As IClassifier = EnsembleModelStore.LoadClassifier(votingDir)
+                    Call loaded.PredictProbability(New Double() {1.0R})
+                End Sub,
+                "persistence: 恢复后的模型仍校验特征维度")
+
+            Call DebugAudit.Mark("persistence.algorithms", EnsembleModelStore.Algorithms().Length)
+        Finally
+            Try
+                If Directory.Exists(root) Then
+                    Call Directory.Delete(root, recursive:=True)
+                End If
+            Catch ex As Exception
+                Call DebugAudit.Mark("persistence.cleanup", ex.Message)
+            End Try
+        End Try
+    End Sub
+
+    Private Function FirstRows(x As Double()(), count As Integer) As Double()()
+        Dim n As Integer = System.Math.Min(count, x.Length)
+        Dim rows As Double()() = New Double(n - 1)() {}
+
+        For i As Integer = 0 To n - 1
+            rows(i) = x(i)
+        Next
+
+        Return rows
+    End Function
+
+    Private Sub RoundTripClassifier(root As String, name As String, model As IClassifier, samples As Double()())
+        Dim directory As String = Path.Combine(root, name.Replace("/"c, Path.DirectorySeparatorChar))
+        Dim before As New List(Of Double())()
+
+        For Each row As Double() In samples
+            Call before.Add(model.PredictProbability(row))
+        Next
+
+        Dim manifest As ModelManifest = EnsembleModelStore.Save(model, directory)
+        Dim restored As IClassifier = EnsembleModelStore.LoadClassifier(directory)
+
+        Call DebugAudit.Test(restored.Classes.Length = model.Classes.Length,
+                            $"{name}: 类别数一致 ({restored.Classes.Length})")
+        Call DebugAudit.Test(manifest.kind = "classifier", $"{name}: 清单 kind = classifier")
+        Call DebugAudit.Test(WidthOf(restored) = WidthOf(model),
+                            $"{name}: featureWidth 一致 ({WidthOf(restored)})")
+
+        For i As Integer = 0 To samples.Length - 1
+            Dim after As Double() = restored.PredictProbability(samples(i))
+
+            Call DebugAudit.Test(SameValues(before(i), after), $"{name}: 样本 {i} 概率逐位一致")
+        Next
+    End Sub
+
+    Private Sub RoundTripRegressor(root As String, name As String, model As IRegressor, samples As Double()())
+        Dim directory As String = Path.Combine(root, name.Replace("/"c, Path.DirectorySeparatorChar))
+        Dim before As New List(Of Double)()
+
+        For Each row As Double() In samples
+            Call before.Add(model.Predict(row))
+        Next
+
+        Dim manifest As ModelManifest = EnsembleModelStore.Save(model, directory)
+        Dim restored As IRegressor = EnsembleModelStore.LoadRegressor(directory)
+
+        Call DebugAudit.Test(manifest.kind = "regressor", $"{name}: 清单 kind = regressor")
+        Call DebugAudit.Test(WidthOf(restored) = WidthOf(model),
+                            $"{name}: featureWidth 一致 ({WidthOf(restored)})")
+
+        For i As Integer = 0 To samples.Length - 1
+            Dim after As Double = restored.Predict(samples(i))
+
+            Call DebugAudit.Test(BitConverter.DoubleToInt64Bits(before(i)) = BitConverter.DoubleToInt64Bits(after),
+                                $"{name}: 样本 {i} 预测值逐位一致 ({before(i):R} vs {after:R})")
+        Next
+    End Sub
+
+    ''' <summary>读取模型声明的特征维度；未实现 <see cref="IFeatureSchema"/> 时返回 -1</summary>
+    Private Function WidthOf(model As Object) As Integer
+        Dim schema As IFeatureSchema = TryCast(model, IFeatureSchema)
+
+        Return If(schema Is Nothing, -1, schema.FeatureWidth)
+    End Function
+
+    Private Function SameValues(a As Double(), b As Double()) As Boolean
+        If a Is Nothing OrElse b Is Nothing Then
+            Return False
+        End If
+        If a.Length <> b.Length Then
+            Return False
+        End If
+
+        For i As Integer = 0 To a.Length - 1
+            If BitConverter.DoubleToInt64Bits(a(i)) <> BitConverter.DoubleToInt64Bits(b(i)) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
 
 #End Region
 

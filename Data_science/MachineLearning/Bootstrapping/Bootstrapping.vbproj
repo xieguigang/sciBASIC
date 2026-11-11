@@ -10,18 +10,18 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Graph and Knowledge Graph Embedding Toolkit (node2vec, graph2vec, ComplEx)</Title>
+    <Title>Graph Embedding and Ensemble Learning Toolkit (node2vec, graph2vec, ComplEx, Voting/Bagging/Stacking)</Title>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
     <Version>10.8.9797.36764</Version>
     <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
-    <Description>Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.</Description>
+    <Description>Provides graph representation learning (node2vec biased random walks with word2vec, whole-graph graph2vec vectors, ComplEx knowledge-graph embeddings) and an ensemble learning framework (Voting/Bagging/Stacking over heterogeneous sciBASIC# algorithms) with a JSON-manifest + CSV-table model bundle format for zero-retraining persistence.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Bootstrapping</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;graph-embedding;node2vec;knowledge-graph;complex</PackageTags>
-    <PackageReleaseNotes>Adds the shared parametric model abstraction used by the bootstrap samplers and fixes the missing project component references.</PackageReleaseNotes>
+    <PackageTags>scibasic;graph-embedding;node2vec;knowledge-graph;complex;ensemble-learning;voting;bagging;stacking;model-persistence</PackageTags>
+    <PackageReleaseNotes>Adds ensemble model persistence: every Voting/Bagging/Stacking ensemble (and every supported base learner) can be exported as a JSON manifest plus CSV data tables and reloaded without retraining, with bit-identical predictions. Also adds FeatureWidth guards, shared validation/parallel helpers, and the underlying Restore factories for Bayesian, GaussianBayes, TargetBinning, BayesianRegression and LassoFit.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

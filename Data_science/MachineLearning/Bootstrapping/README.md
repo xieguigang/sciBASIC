@@ -50,6 +50,7 @@ node2vec 通过两个参数（`p` 返回概率、`q` 前进概率）**连续调�
 | `....Bootstrapping.GraphEmbedding`（+ `.complex` / `.complex_NNE` / `.complex_NNE_AER` / `.complex_R` / `.struct` / `.util`） | 图与知识图谱嵌入 |
 | `....Bootstrapping.node2vec` | node2vec 有偏随机游走 + word2vec |
 | `....Bootstrapping.Ensemble`（`.Abstractions` / `.Core` / `.Adapters` / `.Voting` / `.Bagging` / `.Stacking`） | 集成学习：统一分类/回归契约与 Voting / Bagging / Stacking |
+| `....Bootstrapping.Ensemble.Persistence`（`.Codecs`） | 模型持久化：JSON 清单 + CSV 数值附表，零重训加载 |
 
 ## 快速上手
 
@@ -125,11 +126,53 @@ Dim oof = stack.OofAccuracy
 - **可复现**：Bagging 采样与 K 折划分都使用独立的 `Random(seed)`；相同种子下结果一致。
 - **并行默认关闭**：`VotingRegressor.Parallel` 与 `Bagging*.Parallel` 默认 `False`，避免与 `RanFog`、`GBM` 内部的批量并行嵌套。
 - **不静默降级**：单类别、权重为负或和为零、特征行长度不齐、未训练预测都会抛出带上下文的异常。
+- **维度守卫**：集成器与适配器都实现 `IFeatureSchema`，训练期记录 `FeatureWidth`，预测期逐样本校验输入维度。
 - **已知限制**：`RanFog.Predict` 不输出概率，因此随机森林只作为回归基学习器；`LogisticFit` 只支持二分类。
+
+### 模型持久化
+
+训练完成的集成模型（以及任意单个基学习器）可以导出为**模型包**，之后无需重训即可恢复预测能力，预测值与保存前逐位一致。
+
+```vbnet
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble.Persistence
+
+' 1. 保存：集成器自带 Save()，也可走统一入口
+Dim manifest = stack.Save("D:\models\stack-01")
+Dim report = EnsembleModelStore.Save(bag, "D:\models\bag-01")
+
+' 2. 加载：重建后可继续预测
+Dim restored = EnsembleModelStore.LoadClassifier("D:\models\stack-01")
+Console.WriteLine(restored.PredictProbability(x(0)).Sum())
+
+' 3. 也可以单独持久化一个基学习器
+Dim ridge As IRegressor = New RidgeRegressorLearner().Fit(x, y)
+Call EnsembleModelStore.Save(ridge, "D:\models\ridge")
+Dim again = EnsembleModelStore.LoadRegressor("D:\models\ridge")
+```
+
+模型包目录布局（JSON 清单 + CSV 附表，全部为可读文本）：
+
+```
+<model-bundle>/
+├── model.json                       # 类型、超参数、类别顺序、特征维度、子模型树
+├── base/0-naive-bayes/tables.csv    # 条件频率表（class, feature, key, count）
+├── base/1-svm/support-vectors.csv   # 支持向量的稀疏三元组
+├── base/1-svm/coefficients.csv
+└── meta/logistic/…                  # 堆叠的元学习器
+```
+
+设计要点：
+
+- **严格恢复**：底层库补齐了 `Restore` 工厂（`Bayesian` / `GaussianBayes` / `TargetBinning` / `BayesianRegression` / `LassoFit`），加载路径不做任何重训；XGBoost 复用 TGBoost 的 `ModelSerializer` 文本格式，整包统一为 CSV。
+- **小数点位往返**：数字一律以 `"R"` + `InvariantCulture` 写出，`Parse(Format(x)) = x` 逐位成立。
+- **大小数值分治**：标量与超参数内联在 `model.json`（便于人工阅读），条件概率表、树结构、支持向量、系数矩阵落 CSV（避免 JSON 膨胀到不可读）。
+- **安全**：清单里的 CSV 路径必须是包内相对路径；加载时规范化后校验仍在包目录内，拒绝绝对路径与 `..` 穿越。
+- **格式版本**：清单带 `formatVersion`，不匹配时直接失败，不做「尽力而为」的猜测。
+- **算法白名单**：加载按 `algorithm` 精确查表，未知算法抛出列有全部已注册标识的异常。
 
 ### 审计
 
-`test/EnsembleAudit.vbproj` 是 console 审计程序，用 `DebugAudit` 覆盖适配器、K 折 OOF 唯一性、三类集成器、基线对比与边界异常：
+`test/EnsembleAudit.vbproj` 是 console 审计程序，用 `DebugAudit` 覆盖适配器、K 折 OOF 唯一性、三类集成器、基线对比、边界异常，以及**全族模型的保存 → 加载 → 逐位比对**：
 
 ```powershell
 dotnet run --project test/EnsembleAudit.vbproj
