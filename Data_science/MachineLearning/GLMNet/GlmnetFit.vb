@@ -115,10 +115,16 @@ Public NotInheritable Class GlmnetFit
         End Get
     End Property
 
-    ''' <summary>响应列数</summary>
+    ''' <summary>
+    ''' 系数矩阵的响应维。Cox 的响应是 <c>(time, status)</c> 两列，
+    ''' 但系数只有 1 列（风险得分），因此必须以 <c>a0</c> 的宽度为准。
+    ''' </summary>
     Public ReadOnly Property nresponses As Integer
         Get
-            Return Path.TrainingData.K
+            If Path.A0 Is Nothing OrElse Path.A0.Length = 0 OrElse Path.A0(0) Is Nothing Then
+                Return 1
+            End If
+            Return Path.A0(0).Length
         End Get
     End Property
 

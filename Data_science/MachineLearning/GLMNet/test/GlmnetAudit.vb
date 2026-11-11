@@ -120,6 +120,8 @@ Public Module GlmnetAudit
         Dim steps As Integer = std.Min(fit.Count, grid.Length)
 
         Call DebugAudit.Mark($"{prefix}.steps", $"vb={fit.Count} r={grid.Length}")
+        Call DebugAudit.Mark($"{prefix}.shapes",
+                             $"beta0={fit.beta(0).Length} beta00={fit.beta(0)(0).Length} p={fit.nvars} k={fit.nresponses} a00={fit.a0(0).Length} jerr={fit.jerr} lastDev={fit.devRatio(fit.Count - 1):G4} lastDf={fit.df(fit.Count - 1)}")
         Call DebugAudit.Test(steps >= std.Max(3, CInt(grid.Length * 0.5)),
                              $"{prefix}: the fitted path must cover most of the R lambda grid")
         Call DebugAudit.Test(fit.jerr = GlmnetError.None, $"{prefix}: jerr must be 0")
