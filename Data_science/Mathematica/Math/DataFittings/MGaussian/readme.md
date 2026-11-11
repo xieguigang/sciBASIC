@@ -70,3 +70,64 @@ cv.mfit$lambda.1se
 - 预测输出为三维数组而非矩阵，编写下游代码时需注意索引方式。
 ## 小结
 mgaussian 通过组-lasso 惩罚将"多个相关响应的联合建模"和"变量选择"统一到一个框架中，相比逐响应单独拟合，它能利用响应间相关性、产生一致的变量集、并减少多重检验带来的不稳定性，是 glmnet 处理多任务回归问题的标准工具。
+## 八、本库实现与调用示例（VB.NET）
+
+`linear-netcore5.vbproj` 中的 `Microsoft.VisualBasic.Data.Bootstrapping.MGaussian` 命名空间实现了上文描述的标准 mgaussian 能力：组-lasso 块坐标下降、`alpha` 弹性网混合、自动 `lambda` 正则化路径（warm start）、`standardize.response`、单/多 lambda 预测、2-norm 系数路径导出，以及 K 折交叉验证（`mse` / `mae` 与 `lambda.min` / `lambda.1se`）。绘图属于可视化，不在库实现范围内，但路径可导出成二维表供绘图使用。
+
+```vbnet
+Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Data.Bootstrapping.MGaussian
+
+' 1) 直接以 N x K 响应矩阵拟合：x(sample)(feature)，y(sample)(response)
+Dim fit As MGaussianFit = MGaussianFitting.Fit(
+    x, y,
+    numberOfLambdas:=100,
+    alpha:=1.0,                  ' 1 = 组-lasso；0 = 岭型收缩；0.95 = 弹性网混合
+    standardizeResponse:=True)   ' 各响应量纲悬殊时建议开启
+
+Console.WriteLine(fit.ToString())
+Console.WriteLine($"K={fit.NumberOfResponses}, p={fit.NumberOfFeatures}")
+Console.WriteLine($"lambda=[{fit.MaxLambda:G4}, {fit.MinLambda:G4}]")
+
+' 2) 提取系数与 2-norm 路径（对应 R 的 coef() 与 plot(type.coef="2norm")）
+Dim coefStep As Double()() = fit.getCoefficients(50)  ' (p+1) x K，第 0 行是各响应截距
+Dim norms As Double() = fit.getGroupNorms(50)        ' p 维，每变量 K 个系数的 l2 范数
+Dim pathTable As NumericTable = fit.toNumericTable() ' 每步一行，携带 lambdas/df/mse 等标签列
+
+' 3) 预测：单 lambda 返回 N x K，多 lambda 返回 (step)(sample)(response) 三维数组
+Dim yhat As Double()() = fit.Predict(newx)
+Dim yhat3d As Double()()() = fit.PredictPath(newx, New Integer() {0, 50, 99})
+
+' 4) 多响应模型不是 IFitted（单响应契约）；取逐响应视图即可复用既有写回链路
+'    先把 x / y 装进 NumericTable：每一个标签列就是一个响应
+Dim table As New NumericTable(x, Nothing, featureNames)
+For c As Integer = 0 To y(0).Length - 1
+    Call table.SetLabel($"y{c + 1}", y.Select(Function(row) row(c)).ToArray())
+Next
+Dim view As IFitted = fit.GetResponseModel(0)
+Call table.SetPrediction(view, name:="y1_fit")
+
+' 5) 统一二维表入口：缺省把全部标签列组成 N x K 响应矩阵，也可指定列子集
+Dim model As MGaussianFit = table.MGaussianRegression(
+    y:=New String() {"y1", "y2"}, numberOfLambdas:=50)
+
+' 6) K 折交叉验证：全响应合并的 mse / mae，自动选 lambda.min 与 lambda.1se
+Dim cv As MGaussianCVFit = MGaussianCV.CrossValidate(
+    x, y, nfolds:=10, numberOfLambdas:=100, measure:=CVMeasure.Mse)
+' 或直接从表入口调用：Dim cv = table.MGaussianCV(nfolds:=10)
+
+Console.WriteLine($"lambda.min={cv.lambdaMin:G4}, lambda.1se={cv.lambda1se:G4}")
+Dim best As Double()() = cv.Predict(newx)             ' 用 lambda.min 预测
+Dim sparse As Double()() = cv.Predict(newx, use1se:=True) ' 用 lambda.1se 预测更稀疏的模型
+Dim cvCurve As NumericTable = cv.toNumericTable()     ' CV 曲线（cvMean/cvSe/df/trainMse）
+```
+
+结果解读要点：
+
+- `groupNorms(step)(j)` 是第 j 个变量在 K 个响应上的系数向量的 l2 范数；它为 0 时该变量的**全部** K 个系数同时为 0，这就是「变量同进同出」的共享支持集。
+- `alpha=1` 得到精确组稀疏；`alpha=0` 退化为对整个系数矩阵的岭型收缩，不会产生精确零；极端相关特征可取 `alpha≈0.95` 提升数值稳定性。
+- `standardize.response=True` 会先标准化各响应列，避免量纲大的响应主导损失；预测结果自动还原到原始量纲。
+- `lambda` 网格从 KKT 条件给出的 `lambda_max` 按对数间隔递减，上一步系数作为下一步初值；`df` 是每步的非零变量组数，`trainMse` 是训练数据上的全响应均方误差。
+- `lambda.min` 是折外误差最小处；`lambda.1se` 是满足 `cvMean <= cvMean(min) + cvSe(min)` 的最大 lambda，模型更稀疏、误差略高但更稳健。
+- 多响应结果不实现 `IFitted`；`PredictPath` 的索引顺序是 `(lambda 步骤)(样本)(响应)`，对应 R 中 `N x K x L` 的三维数组，但第一维换成了 lambda 步骤，方便按步骤遍历。

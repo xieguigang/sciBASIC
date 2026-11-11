@@ -129,3 +129,75 @@ plot(sf)
 - **风险比解释**：报告变量效应时应使用 $\exp(\beta_j)$（HR），而非系数本身；系数被正则化收缩后 HR 是有偏的，glmnet 输出更适合用于预测和变量筛选，若需要无偏的效应估计和置信区间，常用做法是把 glmnet 筛出的变量再交给 `coxph` 重新拟合。
 ## 小结
 glmnet 的 Cox 家族把弹性网正则化引入偏似然框架，实现了高维生存数据的自动变量选择与风险预测；配合 `cox.ties` 处理平局、`penalty.factor` 强制保留临床协变量、`cv.glmnet` 的 C 指数评估以及 `survfit` 的个体化生存曲线，构成了一个覆盖"筛选—调参—评估—可视化"完整链条的生存分析工具，是 `survival::coxph` 在高维场景下的自然延伸。
+## 九、本库实现与调用示例（VB.NET）
+
+`linear-netcore5.vbproj` 中的 `Microsoft.VisualBasic.Data.Bootstrapping.Cox` 命名空间实现了上文描述的标准 Cox 家族能力：负对数偏似然 + 弹性网惩罚的循环坐标下降、Breslow / Efron 平局、变量级惩罚因子、自动 lambda 路径（warm start）、风险比 HR、Harrell C 指数、Breslow 基线累积风险与个体化生存曲线，以及 K 折交叉验证（deviance / C 指数与 `lambda.min` / `lambda.1se`）。
+
+```vbnet
+Imports System.Linq
+Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Cox
+
+' 0) 把 x / y 装进 NumericTable：两个标签列分别是 time 与 status
+Dim p As Integer = x(0).Length
+Dim table As New NumericTable(x, Nothing, Nothing)
+Call table.SetLabel("time", y.Select(Function(r) r(0)).ToArray())
+Call table.SetLabel("status", y.Select(Function(r) r(1)).ToArray())
+
+' 1) 直接以 N x 2 响应拟合：y(i) = {time, status}，status: 1=事件、0=删失
+Dim fit As CoxFit = CoxFitting.Fit(
+    x, y,
+    numberOfLambdas:=100,
+    alpha:=1.0,                      ' 1 = lasso；0 = ridge；0<alpha<1 = 弹性网
+    ties:=CoxTies.Efron)             ' 与 survival::coxph 默认一致；Breslow 亦可
+
+Console.WriteLine(fit.ToString())
+Console.WriteLine($"events={fit.eventCount}, censored={fit.censoredCount}")
+
+' penalty.factor：设为 0 的变量永不惩罚、始终保留（如临床分期）
+Dim pf As Double() = Enumerable.Repeat(1.0, p).ToArray()
+pf(0) = 0.0R
+Dim forced As CoxFit = CoxFitting.Fit(x, y, penaltyFactor:=pf, numberOfLambdas:=50)
+
+' 2) 系数与风险比：Cox 没有截距，coef 长度就是 p
+Dim coef As Double() = fit.getCoefficients(50)     ' p 维
+Dim hr As Double() = fit.getHazardRatios(50)       ' exp(beta)
+Dim pathTable As NumericTable = fit.toNumericTable() ' 每步一行 + lambdas/df/deviance/cIndex
+
+' 3) 风险得分预测：返回 x'beta，值越大风险越高
+Dim risk As Double() = fit.Predict(newx)
+Dim riskPath As Double()() = fit.PredictPath(newx, New Integer() {0, 50, 99})
+'    CoxFit 实现 IFitted，GetY 即风险得分；写回时不要开残差列（无逐点残差）
+Call table.SetPrediction(fit, name:="risk_score")
+
+' 4) 基线风险与个体化生存曲线（Breslow 估计量，不带置信带）
+Dim baseline As SurvivalCurve = fit.BaselineHazard()
+Dim curves As SurvivalCurve() = fit.PredictSurvival(New Double()() {newx(0), newx(1)})
+Console.WriteLine($"S(t|x)={curves(0).Survival(curves(0).Survival.Length - 1):F4}")
+
+' 5) 统一二维表入口：标签列名缺省为 time / status，可覆盖
+Dim model As CoxFit = table.CoxRegression(numberOfLambdas:=50)
+Dim custom As CoxFit = table.CoxRegression(time:="followup", status:="event")
+
+' 6) K 折交叉验证：deviance 越小越好，CIndex 越大越好
+Dim cv As CoxCVFit = CoxCV.CrossValidate(
+    x, y, nfolds:=10, numberOfLambdas:=100,
+    measure:=CoxCVMeasure.CIndex, grouped:=True)
+' 或：Dim cv = table.CoxCV(nfolds:=10, measure:=CoxCVMeasure.Deviance)
+
+Console.WriteLine($"lambda.min={cv.lambdaMin:G4}, lambda.1se={cv.lambda1se:G4}")
+Dim bestRisk As Double() = cv.Predict(newx)
+Dim sparseRisk As Double() = cv.Predict(newx, use1se:=True)
+Dim cvCurve As NumericTable = cv.toNumericTable()
+```
+
+结果解读与实现约定：
+
+- **没有截距**：`getCoefficients` 长度等于 `p`，`Polynomial` 为无截距的 `MultivariatePolynomial`；`IFitted.GetY` 返回风险得分 `x'beta`，不是生存时间，`ErrorTest` 为 `Nothing`。
+- **status 语义**：`1 = 事件`、`0 = 删失`，与 `Surv()` 一致；二维表入口缺省读取名为 `time` 与 `status` 的标签列，可用 `time` / `status` 参数覆盖列名。
+- **风险比**：报告变量效应时用 `exp(beta_j)` 即 `hazardRatios`，而非系数本身；正则化收缩后的 HR 有偏，适合预测与变量筛选，需要无偏估计和置信区间时应把筛出的变量交给 `coxph` 重新拟合。
+- **平局处理**：`CoxTies.Efron`（缺省）偏差更小、与 `coxph` 一致；`CoxTies.Breslow` 计算更简单。无平局数据时两者结果相同。
+- **CV 方向不要弄反**：`CoxCVMeasure.Deviance` 取折外部分似然偏差最小处；`CoxCVMeasure.CIndex` 取 Harrell C 指数最大处。`CoxCVFit.Maximize` 会指出当前方向。`grouped=True` 用全数据对数偏似然减去训练子集对数偏似然（readme 的「减法」方式），`False` 则只在留出折内部计算。
+- **生存曲线**：`BaselineHazard()` 给出 `H0(t)` 与 `S0(t)=exp(-H0(t))`，`PredictSurvival(newx)` 给出 `S(t|x)=exp(-H0(t)*exp(x'beta))`；必须传 `newx` 才有个体化意义，且不提供标准误/置信带。
+- **未覆盖的扩展**：(start, stop] 区间/时变协变量数据、分层 Cox、稀疏矩阵输入、逐样本权重与图形绘制均不在本库实现范围内；`toNumericTable()` 导出的路径表供外部绘图使用。

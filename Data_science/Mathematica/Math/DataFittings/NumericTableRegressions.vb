@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports CoxNS = Microsoft.VisualBasic.Data.Bootstrapping.Cox
 Imports FittingExtensions = Microsoft.VisualBasic.Data.Bootstrapping.Extensions
 Imports FeatureProjectionNS = Microsoft.VisualBasic.Data.Bootstrapping.FeatureProjection
 Imports LassoNS = Microsoft.VisualBasic.Data.Bootstrapping.LASSO
@@ -90,6 +91,9 @@ Imports RidgeNS = Microsoft.VisualBasic.Data.Bootstrapping.Ridge
 ''' 5. 多响应回归（<see cref="MGaussianRegression"/>、<see cref="MGaussianCV"/>）
 '''    使用全部特征列，并把表的**全部标签列**（或 ``y As String()`` 指定的标签列子集）
 '''    组成 ``N x K`` 响应矩阵；需要至少 1 个标签列
+''' 6. 生存回归（<see cref="CoxRegression"/>、<see cref="CoxCV"/>）使用全部特征列，
+'''    响应为名为 ``time``（观测时间）与 ``status``（1=事件、0=删失）的两个标签列，
+'''    列名可由 ``time`` / ``status`` 参数覆盖；Cox 模型没有截距项
 ''' 
 ''' 所有的入口方法都直接返回既有的拟合模型对象，模型的输入/输出约定保持不变；
 ''' 若需要把模型的预测值写回到表的标签矩阵之中，请使用
@@ -203,6 +207,49 @@ Public Module NumericTableRegressions
         Next
 
         responseNames = names
+        Return response
+    End Function
+
+    ''' <summary>
+    ''' 读取 Cox 生存响应：把 ``time`` 与 ``status`` 两个标签列拼成
+    ''' ``response(sample) = {time, status}`` 的 ``N x 2`` 矩阵。
+    ''' status 的语义为 1 = 事件、0 = 删失（与 ``Surv()`` 一致）。
+    ''' </summary>
+    Private Function SurvivalResponse(table As NumericTable,
+                                      time As String,
+                                      status As String,
+                                      caller As String) As Double()()
+
+        If table Is Nothing Then
+            Throw New ArgumentNullException(NameOf(table))
+        End If
+        If table.nsamples = 0 OrElse table.labels Is Nothing OrElse table.nlabels = 0 Then
+            Throw New ArgumentException(
+                $"the '{caller}' regression requires 'time' and 'status' label columns as the survival response!",
+                NameOf(table)
+            )
+        End If
+
+        Dim timeName As String = If(String.IsNullOrEmpty(time), "time", time)
+        Dim statusName As String = If(String.IsNullOrEmpty(status), "status", status)
+
+        If Not table.HasLabel(timeName) OrElse Not table.HasLabel(statusName) Then
+            Throw New ArgumentException(
+                $"the '{caller}' regression requires label columns '{timeName}' (observed time) and '{statusName}' (1=event, 0=censored)!",
+                NameOf(table)
+            )
+        End If
+
+        Dim timeColumn As Double() = table.GetLabel(timeName)
+        Dim statusColumn As Double() = table.GetLabel(statusName)
+        Dim n As Integer = table.nsamples
+        Dim response As Double()() = RectangularArray.Matrix(Of Double)(n, 2)
+
+        For i As Integer = 0 To n - 1
+            response(i)(0) = timeColumn(i)
+            response(i)(1) = statusColumn(i)
+        Next
+
         Return response
     End Function
 
@@ -1035,6 +1082,130 @@ Public Module NumericTableRegressions
             tolerance:=tolerance,
             featureNames:=names,
             responseNames:=responseNames,
+            Silent:=Silent
+        )
+    End Function
+
+#End Region
+
+#Region "survival regression"
+
+    ''' <summary>
+    ''' Cox 比例风险回归（``family = "cox"``，负对数偏似然 + 弹性网惩罚）。
+    ''' 使用表中全部特征列作为协变量，由 ``time`` / ``status`` 两个标签列给出右删失生存响应。
+    ''' </summary>
+    ''' <remarks>
+    ''' Cox 模型**没有截距**（被吸收进基线风险）；``coef(fit)`` 长度等于特征数。
+    ''' 结果对象实现了 <see cref="IFitted"/>，但 <c>GetY</c> 返回的是风险得分
+    ''' （线性预测子 ``x'beta``）而不是时间，调用
+    ''' ``SetPrediction`` 时请勿开启残差列。
+    ''' </remarks>
+    ''' <param name="table">特征矩阵为 X、标签列含生存响应的二维表</param>
+    ''' <param name="time">观测时间所在的标签列名，缺省为 ``time``</param>
+    ''' <param name="status">事件指示所在的标签列名（1=事件、0=删失），缺省为 ``status``</param>
+    ''' <param name="lambda">自定义 lambda 网格（严格递减、全为正），缺省自动生成</param>
+    ''' <param name="alpha">弹性网混合参数，1 为 lasso、0 为 ridge</param>
+    ''' <param name="numberOfLambdas">自动 lambda 网格步数</param>
+    ''' <param name="standardize">是否标准化协变量</param>
+    ''' <param name="ties">平局处理方式，缺省 Efron</param>
+    ''' <param name="penaltyFactor">变量级惩罚乘子，0 表示永不惩罚</param>
+    ''' <param name="maxIterations">每个 lambda 步骤的坐标下降最大轮数</param>
+    ''' <param name="tolerance">收敛容差</param>
+    ''' <param name="Silent">保留参数，求解器不产生进度输出</param>
+    ''' <returns>含系数路径、HR、C 指数与基线生存估计的拟合结果</returns>
+    <Extension>
+    Public Function CoxRegression(table As NumericTable,
+                                  Optional time As String = "time",
+                                  Optional status As String = "status",
+                                  Optional lambda As Double() = Nothing,
+                                  Optional alpha As Double = 1.0,
+                                  Optional numberOfLambdas As Integer = 100,
+                                  Optional standardize As Boolean = True,
+                                  Optional ties As CoxNS.CoxTies = CoxNS.CoxTies.Efron,
+                                  Optional penaltyFactor As Double() = Nothing,
+                                  Optional maxIterations As Integer = 1000,
+                                  Optional tolerance As Double = 0.000001,
+                                  Optional Silent As Boolean = False) As CoxNS.CoxFit
+
+        Dim xm As Double()() = FeatureMatrix(table, NameOf(CoxRegression))
+        Dim ym As Double()() = SurvivalResponse(table, time, status, NameOf(CoxRegression))
+        Dim names As String() = FeatureNameList(table)
+
+        Return CoxNS.CoxFitting.Fit(
+            x:=xm,
+            y:=ym,
+            lambda:=lambda,
+            alpha:=alpha,
+            numberOfLambdas:=numberOfLambdas,
+            standardize:=standardize,
+            ties:=ties,
+            penaltyFactor:=penaltyFactor,
+            maxIterations:=maxIterations,
+            tolerance:=tolerance,
+            featureNames:=names,
+            Silent:=Silent
+        )
+    End Function
+
+    ''' <summary>
+    ''' Cox 模型的 K 折交叉验证：以部分似然偏差（deviance，越小越好）或
+    ''' Harrell C 指数（越大越好）为指标，自动选出 ``lambda.min`` 与 ``lambda.1se``。
+    ''' </summary>
+    ''' <param name="table">特征矩阵为 X、标签列含生存响应的二维表</param>
+    ''' <param name="time">观测时间所在的标签列名</param>
+    ''' <param name="status">事件指示所在的标签列名</param>
+    ''' <param name="nfolds">折数，必须在 ``[2, n]`` 之内</param>
+    ''' <param name="measure">折外指标 deviance 或 CIndex</param>
+    ''' <param name="grouped">是否用全数据减训练子集的「减法」方式计算 CV 偏似然</param>
+    ''' <param name="seed">确定性分折的随机种子</param>
+    ''' <param name="lambda">自定义 lambda 网格；缺省由完整数据自动生成</param>
+    ''' <param name="alpha">弹性网混合参数</param>
+    ''' <param name="numberOfLambdas">自动 lambda 网格步数</param>
+    ''' <param name="standardize">是否标准化协变量</param>
+    ''' <param name="ties">平局处理方式</param>
+    ''' <param name="penaltyFactor">变量级惩罚乘子</param>
+    ''' <param name="maxIterations">坐标下降最大轮数</param>
+    ''' <param name="tolerance">收敛容差</param>
+    ''' <param name="Silent">保留参数</param>
+    ''' <returns>含完整数据路径、CV 曲线与 lambda.min / lambda.1se 的结果对象</returns>
+    <Extension>
+    Public Function CoxCV(table As NumericTable,
+                          Optional time As String = "time",
+                          Optional status As String = "status",
+                          Optional nfolds As Integer = 10,
+                          Optional measure As CoxNS.CoxCVMeasure = CoxNS.CoxCVMeasure.Deviance,
+                          Optional grouped As Boolean = True,
+                          Optional seed As Integer = 1,
+                          Optional lambda As Double() = Nothing,
+                          Optional alpha As Double = 1.0,
+                          Optional numberOfLambdas As Integer = 100,
+                          Optional standardize As Boolean = True,
+                          Optional ties As CoxNS.CoxTies = CoxNS.CoxTies.Efron,
+                          Optional penaltyFactor As Double() = Nothing,
+                          Optional maxIterations As Integer = 1000,
+                          Optional tolerance As Double = 0.000001,
+                          Optional Silent As Boolean = False) As CoxNS.CoxCVFit
+
+        Dim xm As Double()() = FeatureMatrix(table, NameOf(CoxCV))
+        Dim ym As Double()() = SurvivalResponse(table, time, status, NameOf(CoxCV))
+        Dim names As String() = FeatureNameList(table)
+
+        Return CoxNS.CoxCV.CrossValidate(
+            x:=xm,
+            y:=ym,
+            nfolds:=nfolds,
+            measure:=measure,
+            grouped:=grouped,
+            seed:=seed,
+            lambda:=lambda,
+            alpha:=alpha,
+            numberOfLambdas:=numberOfLambdas,
+            standardize:=standardize,
+            ties:=ties,
+            penaltyFactor:=penaltyFactor,
+            maxIterations:=maxIterations,
+            tolerance:=tolerance,
+            featureNames:=names,
             Silent:=Silent
         )
     End Function
