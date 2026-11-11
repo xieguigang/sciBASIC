@@ -79,13 +79,17 @@ Friend Module SingleResponsePath
         Dim beta As Double() = New Double(p - 1) {}
         Dim gradients As Double() = New Double(p - 1) {}
         Dim lastWeights As Double() = data.Weights
-        Dim lambdaPrevious As Double = grid(0)
+        ' 泊松的 Fisher 权重 mu 量级远大于 1，会让坐标下降曲率放大到发散。
+        ' 用固定的零模型均值同时缩放工作权重与内部 lambda，最优解不变。
+        Dim poissonScale As Double = If(kind = FamilyKind.Poisson,
+                                        std.Max(IrlsKernel.WeightedMean(y, data.Weights), 1.0R), 1.0R)
+        Dim lambdaPrevious As Double = grid(0) / poissonScale
         Dim executed As Integer = 0
         Dim stalled As Integer = 0
         Dim previousDevRatio As Double = 0.0R
 
         For k As Integer = 0 To steps - 1
-            Dim lambda As Double = grid(k)
+            Dim lambda As Double = grid(k) / poissonScale
             Dim mask As Boolean() = Nothing
 
             If k > 0 Then
@@ -165,10 +169,12 @@ Friend Module SingleResponsePath
             End If
             previousDevRatio = allDevRatio(k)
 
-            If allDevRatio(k) >= GlmnetControl.DefaultDevMax OrElse
-               nonzero >= dfMax OrElse
+            ' 自定义 lambda 序列表示调用方（或 cv.glmnet）已确定网格，
+            ' 不应再因 fdev/devmax 截断；自动生成网格时才启用 glmnet 的早停语义。
+            If nonzero >= dfMax OrElse
                CountActive(mask, p, beta) > pMax OrElse
-               (options.Lambda Is Nothing AndAlso stalled >= 3) Then
+               (options.Lambda Is Nothing AndAlso
+                (allDevRatio(k) >= GlmnetControl.DefaultDevMax OrElse stalled >= 3)) Then
                 Exit For
             End If
         Next
@@ -236,16 +242,8 @@ Friend Module SingleResponsePath
         converged = False
 
         For irls As Integer = 0 To MaxIrlsIterations - 1
-            eta = New Double(n - 1) {}
-            For i As Integer = 0 To n - 1
-                Dim v As Double = a0 + offset(i)
-                For j As Integer = 0 To p - 1
-                    If beta(j) <> 0.0R Then
-                        v += beta(j) * columns(j)(i)
-                    End If
-                Next
-                eta(i) = v
-            Next
+            eta = BuildEta(columns, beta, a0, offset, n, p)
+            Dim devBefore As Double = Deviance(kind, y, eta, data.Weights)
 
             If kind = FamilyKind.Gaussian Then
                 For i As Integer = 0 To n - 1
@@ -255,8 +253,12 @@ Friend Module SingleResponsePath
             ElseIf kind = FamilyKind.Binomial Then
                 Call IrlsKernel.BinomialWorking(eta, y, data.Weights, offset, z, q)
             Else
-                Call IrlsKernel.PoissonWorking(eta, y, data.Weights, offset, z, q)
+                Dim weightScale As Double = std.Max(IrlsKernel.WeightedMean(y, data.Weights), 1.0R)
+                Call IrlsKernel.PoissonWorking(eta, y, data.Weights, offset, weightScale, z, q)
             End If
+
+            Dim oldBeta As Double() = CType(beta.Clone(), Double())
+            Dim oldA0 As Double = a0
 
             cd = CoordinateDescent.SolveSingle(columns, z, q, lambda, options.Alpha, pf,
                                                lower, upper, beta, a0, options.Intercept,
@@ -267,15 +269,61 @@ Friend Module SingleResponsePath
             lastWeights = q
 
             If Not Double.IsFinite(cd.Objective) Then
-                Return Nothing
+                ' 牛顿步数值失稳：回退到上一轮稳定系数，保留该 lambda 步骤并继续路径。
+                ' 直接中断会让 cv.glmnet 拿到空路径。
+                For j As Integer = 0 To p - 1
+                    beta(j) = oldBeta(j)
+                Next
+                a0 = oldA0
+                dev = devBefore
+                Exit For
             End If
 
-            dev = Deviance(kind, y, eta, data.Weights)
             If kind = FamilyKind.Gaussian Then
+                dev = Deviance(kind, y, BuildEta(columns, beta, a0, offset, n, p), data.Weights)
                 converged = cd.Converged
                 Exit For
             End If
-            If Double.IsFinite(previousDev) AndAlso std.Abs(previousDev - dev) <= options.Thresh * std.Max(std.Abs(previousDev), 1.0R) Then
+
+            ' glmnet 5.1 的 IRLS 步长折半（epsnr / mxitnr）：
+            ' 牛顿步可能让泊松/逻辑偏差上升甚至溢出，此时把系数更新折半，
+            ' 直到真实偏差不再变差；仍无法改善则回退到上一轮的稳定解。
+            Dim proposedBeta As Double() = CType(beta.Clone(), Double())
+            Dim proposedA0 As Double = a0
+            Dim candidateEta As Double() = BuildEta(columns, beta, a0, offset, n, p)
+            Dim devNew As Double = Deviance(kind, y, candidateEta, data.Weights)
+            Dim stepFactor As Double = 1.0R
+            Dim accepted As Boolean = False
+            Dim tolerance As Double = 0.000000001R * std.Max(1.0R, std.Abs(devBefore))
+
+            For half As Integer = 0 To 20
+                If Double.IsFinite(devNew) AndAlso devNew <= devBefore + tolerance Then
+                    accepted = True
+                    Exit For
+                End If
+
+                stepFactor *= 0.5R
+                For j As Integer = 0 To p - 1
+                    beta(j) = oldBeta(j) + stepFactor * (proposedBeta(j) - oldBeta(j))
+                Next
+                a0 = oldA0 + stepFactor * (proposedA0 - oldA0)
+                candidateEta = BuildEta(columns, beta, a0, offset, n, p)
+                devNew = Deviance(kind, y, candidateEta, data.Weights)
+            Next
+
+            If accepted Then
+                dev = devNew
+                eta = candidateEta
+            Else
+                For j As Integer = 0 To p - 1
+                    beta(j) = oldBeta(j)
+                Next
+                a0 = oldA0
+                dev = devBefore
+            End If
+
+            If Double.IsFinite(previousDev) AndAlso
+               std.Abs(previousDev - dev) <= options.Thresh * std.Max(std.Abs(previousDev), 1.0R) Then
                 converged = cd.Converged
                 Exit For
             End If
@@ -283,8 +331,17 @@ Friend Module SingleResponsePath
             converged = cd.Converged
         Next
 
-        ' 用最终系数重算一次 eta 与 deviance，避免返回上一次 IRLS 迭代的中间值
-        eta = New Double(n - 1) {}
+        eta = BuildEta(columns, beta, a0, offset, n, p)
+        dev = Deviance(kind, y, eta, data.Weights)
+
+        Return cd
+    End Function
+
+    ''' <summary>由标准化空间的系数重建完整线性预测子（含 offset）。</summary>
+    Private Function BuildEta(columns As Double()(), beta As Double(), a0 As Double,
+                              offset As Double(), n As Integer, p As Integer) As Double()
+        Dim eta As Double() = New Double(n - 1) {}
+
         For i As Integer = 0 To n - 1
             Dim v As Double = a0 + offset(i)
             For j As Integer = 0 To p - 1
@@ -294,9 +351,8 @@ Friend Module SingleResponsePath
             Next
             eta(i) = v
         Next
-        dev = Deviance(kind, y, eta, data.Weights)
 
-        Return cd
+        Return eta
     End Function
 
     ''' <summary>零模型截距（标准化空间）。</summary>

@@ -121,18 +121,12 @@ Friend NotInheritable Class MultinomialFamily : Implements IGlmnetFamily
                 For c As Integer = 0 To k - 1
                     Dim z As Double() = New Double(n - 1) {}
                     Dim q As Double() = New Double(n - 1) {}
-                    Dim total As Double = 0.0R
 
                     For i As Integer = 0 To n - 1
                         Dim prob As Double = probs(i)(c)
                         Dim work As Double = std.Max(prob * (1.0R - prob), GlmnetControl.MinCurvature)
                         z(i) = (eta(i)(c) - data.Offsets(i)(c)) + (data.Y(i)(c) - prob) / work
                         q(i) = data.Weights(i) * work
-                        total += q(i)
-                    Next
-                    Dim scale As Double = CDbl(n) / std.Max(total, GlmnetControl.MinCurvature)
-                    For i As Integer = 0 To n - 1
-                        q(i) *= scale
                     Next
 
                     Dim betaClass As Double() = New Double(p - 1) {}

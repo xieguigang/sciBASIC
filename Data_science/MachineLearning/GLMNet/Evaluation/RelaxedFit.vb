@@ -137,7 +137,7 @@ Public Module RelaxedFitting
             ElseIf family = FamilyKind.Binomial Then
                 Call IrlsKernel.BinomialWorking(eta, y, data.Weights, offset, z, q)
             Else
-                Call IrlsKernel.PoissonWorking(eta, y, data.Weights, offset, z, q)
+                Call IrlsKernel.PoissonWorking(eta, y, data.Weights, offset, 1.0R, z, q)
             End If
 
             Dim cd As CoordinateDescent.CDResult = CoordinateDescent.SolveSingle(

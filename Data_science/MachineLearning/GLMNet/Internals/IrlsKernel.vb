@@ -38,21 +38,17 @@ Friend Module IrlsKernel
         Dim n As Integer = y.Length
         workingResponse = New Double(n - 1) {}
         workingWeights = New Double(n - 1) {}
-        Dim total As Double = 0.0R
 
         For i As Integer = 0 To n - 1
             Dim p As Double = Sigmoid(eta(i))
             p = std.Min(std.Max(p, GlmnetControl.MinProbability), 1.0R - GlmnetControl.MinProbability)
             Dim q As Double = std.Max(p * (1.0R - p), GlmnetControl.MinCurvature)
 
+            ' 牛顿步：z = eta + (y - mu)/V，W_i = w_i*V。
+            ' W 不能再归一化到 sum(w)=n：那等价于整体放大数据项、
+            ' 相对削弱 lambda，会让系数路径收缩过快（与 R 5.1 对拍已验证）。
             workingResponse(i) = (eta(i) - offset(i)) + (y(i) - p) / q
             workingWeights(i) = baseWeights(i) * q
-            total += workingWeights(i)
-        Next
-
-        Dim scale As Double = CDbl(n) / std.Max(total, GlmnetControl.MinCurvature)
-        For i As Integer = 0 To n - 1
-            workingWeights(i) *= scale
         Next
     End Sub
 
@@ -60,24 +56,22 @@ Friend Module IrlsKernel
     ''' 泊松 IRLS：对数链接下 <c>mu = exp(eta)</c>。
     ''' </summary>
     Public Sub PoissonWorking(eta As Double(), y As Double(), baseWeights As Double(), offset As Double(),
+                              weightScale As Double,
                               ByRef workingResponse As Double(), ByRef workingWeights As Double())
         Dim n As Integer = y.Length
+        Dim scale As Double = std.Max(weightScale, GlmnetControl.MinCurvature)
         workingResponse = New Double(n - 1) {}
         workingWeights = New Double(n - 1) {}
-        Dim total As Double = 0.0R
 
         For i As Integer = 0 To n - 1
-            Dim mu As Double = std.Max(Convergence.SafeExp(eta(i)), GlmnetControl.MinProbability)
+            Dim mu As Double = std.Min(std.Max(Convergence.SafeExp(eta(i)), GlmnetControl.MinProbability), 1000000000000.0R)
             Dim q As Double = std.Max(mu, GlmnetControl.MinCurvature)
 
+            ' 把 Fisher 权重按固定常数缩放，可让坐标下降的曲率回到 1 附近；
+            ' 调用方必须同步把 lambda 除以同一个常数，二者相除后目标函数
+            ' 只差一个整体常数倍，最优解保持不变（glmnet fishnet 的数值稳定做法）。
             workingResponse(i) = (eta(i) - offset(i)) + (y(i) - mu) / q
-            workingWeights(i) = baseWeights(i) * q
-            total += workingWeights(i)
-        Next
-
-        Dim scale As Double = CDbl(n) / std.Max(total, GlmnetControl.MinCurvature)
-        For i As Integer = 0 To n - 1
-            workingWeights(i) *= scale
+            workingWeights(i) = baseWeights(i) * q / scale
         Next
     End Sub
 
@@ -107,7 +101,7 @@ Friend Module IrlsKernel
         For i As Integer = 0 To y.Length - 1
             Dim mu As Double = std.Max(Convergence.SafeExp(eta(i)), GlmnetControl.MinProbability)
             Dim yi As Double = y(i)
-            Dim ylog As Double = If(yi > 0.0R, yi * std.Log(yi / mu), 0.0R)
+            Dim ylog As Double = If(yi > 0.0R, yi * Convergence.SafeLog(yi / mu), 0.0R)
             dev += 2.0R * weights(i) * (ylog - (yi - mu))
         Next
         Return std.Max(0.0R, dev)

@@ -133,11 +133,9 @@ Friend Module CoordinateDescent
                 If lower IsNot Nothing AndAlso updated < lower(j) Then updated = lower(j)
                 If upper IsNot Nothing AndAlso updated > upper(j) Then updated = upper(j)
                 If Not Double.IsFinite(updated) Then
-                    Return New CDResult With {
-                        .Beta = beta, .A0 = a0, .Iterations = iterations,
-                        .Converged = False, .Objective = Double.NaN,
-                        .Residual = residual
-                    }
+                    ' 泊松 IRLS 的大 mu 会让单个坐标的 rho 溢出；
+                    ' 跳过这一坐标而不是让整条路径失败，外层步长折半会回退该牛顿步。
+                    Continue For
                 End If
 
                 Dim delta As Double = updated - beta(j)

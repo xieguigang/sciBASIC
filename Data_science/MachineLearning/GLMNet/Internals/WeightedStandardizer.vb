@@ -36,16 +36,18 @@ Friend NotInheritable Class WeightedStandardizer
     ''' <param name="standardize">是否缩放；False 时只做中心化</param>
     Public Sub New(x As Double()(), weights As Double(), standardize As Boolean)
         Dim n As Integer = x.Length
-        Dim p As Integer = x(0).Length
+        Dim featureCount As Integer = x(0).Length
 
-        P = p
+        ' 局部变量不能叫 p：VB 大小写不敏感，会遮蔽只读属性 P，
+        ' 使 "P = p" 变成局部自赋值、属性保持 0，进而让系数反变换产出空数组。
+        P = featureCount
         Applied = standardize
-        Means = New Double(p - 1) {}
-        Scales = New Double(p - 1) {}
-        Curvature = New Double(p - 1) {}
-        Columns = New Double(p - 1)() {}
+        Means = New Double(featureCount - 1) {}
+        Scales = New Double(featureCount - 1) {}
+        Curvature = New Double(featureCount - 1) {}
+        Columns = New Double(featureCount - 1)() {}
 
-        For j As Integer = 0 To p - 1
+        For j As Integer = 0 To featureCount - 1
             Dim col As Double() = New Double(n - 1) {}
             Dim sum As Double = 0.0R
 
