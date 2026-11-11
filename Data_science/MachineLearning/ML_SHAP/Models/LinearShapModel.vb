@@ -127,7 +127,7 @@ Public Class LinearShapModel
             Return New LinearShapModel With {
                 .Fitted = fit,
                 .Coefficients = fit.Polynomial.Factors,
-                .Intercept = 0,
+                .Intercept = fit.Intercept,
                 .Link = AddressOf LinearShapExplainer.Sigmoid,
                 .Training = dataset,
                 .IsClassification = True

@@ -9,6 +9,8 @@
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
+    <!-- DebugAudit 位于 Core 程序集：与 test/test.vbproj 保持一致，显式声明而非依赖传递编译资产 -->
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\linear-netcore5.vbproj" />
   </ItemGroup>
 </Project>

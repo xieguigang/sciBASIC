@@ -370,31 +370,68 @@ Public Module NumericTableRegressions
 #Region "classification && regularized"
 
     ''' <summary>
-    ''' 逻辑回归（梯度下降求解）。使用表中的全部特征列作为自变量。
+    ''' 逻辑回归（梯度下降求解）。使用表中的全部特征列作为自变量，返回正类概率模型。
     ''' </summary>
-    ''' <param name="table">特征矩阵为 X、指定标签列为类别编号的二维表</param>
-    ''' <param name="rate">学习率</param>
-    ''' <param name="iterations">梯度下降的迭代次数</param>
+    ''' <remarks>
+    ''' <para>
+    ''' 标签列必须是 0/1 数值；旧实现用 <c>CInt(yv(i))</c> 会把连续/概率标签
+    ''' 静默截断（银行家舍入），现在按原值传入并由训练器显式校验。
+    ''' </para>
+    ''' <para>
+    ''' 截距是模型的独立标量，不需要在表里手工加常量列；关闭
+    ''' <paramref name="fitIntercept"/> 时决策面强制过原点。
+    ''' 开启 <paramref name="standardize"/> 会让
+    ''' <c>Polynomial.Factors</c> 变成标准化空间的系数，此时若依赖
+    ''' <c>phi_i = bi * (xi - E[xi])</c> 之类的原始空间解释需自行换算。
+    ''' </para>
+    ''' </remarks>
+    ''' <param name="table">特征矩阵为 X、指定标签列为 0/1 类别的二维表</param>
+    ''' <param name="rate">学习率（自适应开启时仅作为初始步长）</param>
+    ''' <param name="iterations">梯度下降的最大迭代次数</param>
     ''' <param name="y">响应变量所在的标签列名，缺省为第一个标签列</param>
     ''' <param name="Silent">是否关闭算法内部的进度输出</param>
+    ''' <param name="fitIntercept">是否拟合独立截距项</param>
+    ''' <param name="standardize">是否先对每一列做 z-score 标准化</param>
+    ''' <param name="useParallel">是否使用分块并行计算梯度（默认关闭以保证可复现）</param>
+    ''' <param name="tolerance">成本改善的收敛容差</param>
     ''' <returns></returns>
     <Extension>
     Public Function LogisticRegression(table As NumericTable,
                                        Optional rate As Double = 0.0001,
                                        Optional iterations As Integer = 3000,
                                        Optional y As String = Nothing,
-                                       Optional Silent As Boolean = False) As LogisticNS.LogisticFit
+                                       Optional Silent As Boolean = False,
+                                       Optional fitIntercept As Boolean = True,
+                                       Optional standardize As Boolean = False,
+                                       Optional useParallel As Boolean = False,
+                                       Optional tolerance As Double = 0.0000001) As LogisticNS.LogisticFit
 
         Dim xm As Double()() = FeatureMatrix(table, NameOf(LogisticRegression))
         Dim yv As Double() = ResponseVector(table, y, NameOf(LogisticRegression))
         Dim n As Integer = table.nsamples
+
+        If yv.Length <> n Then
+            Throw New ArgumentException($"the label column has {yv.Length} value(s) but the table has {n} sample(s)!", NameOf(table))
+        End If
+
+        Dim progress As Action(Of String) = Nothing
+
+        If Not Silent Then
+            progress = Sub(msg) Console.WriteLine($"[LogisticRegression] {msg}")
+        End If
+
         Dim instances As LogisticNS.Instance() = New LogisticNS.Instance(n - 1) {}
-        Dim model As New LogisticNS.Logistic(table.nfeatures, rate, Nothing) With {
-            .ITERATIONS = iterations
+        Dim model As New LogisticNS.Logistic(table.nfeatures, rate, progress) With {
+            .ITERATIONS = iterations,
+            .FitIntercept = fitIntercept,
+            .StandardizeData = standardize,
+            .UseParallel = useParallel,
+            .Tolerance = tolerance
         }
 
         For i As Integer = 0 To n - 1
-            instances(i) = New LogisticNS.Instance(CInt(yv(i)), xm(i))
+            instances(i) = New LogisticNS.Instance(0, xm(i))
+            instances(i).label = yv(i)
         Next
 
         Return model.Train(instances)
