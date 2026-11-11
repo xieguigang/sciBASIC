@@ -5,6 +5,7 @@
 「用一条曲线描述数据」这件事，随模型复杂度不同需要完全不同的工具：
 
 - 模型对参数**线性**时 → 线性最小二乘（闭式解）；
+- 响应变量是**非负整数计数**时 → 泊松回归（对数链接 GLM）；
 - 需要**稀疏解**时 → LASSO（L1 正则）；
 - 需要**局部光滑**而非全局函数时 → LOESS / LOWESS；
 - 模型对参数**非线性**时 → Levenberg-Marquardt 迭代。
@@ -21,6 +22,7 @@
 | `...Data.Bootstrapping.LevenbergMarquardt` | 阻尼最小二乘（LM） | 任意非线性模型函数 |
 | `...Data.Bootstrapping.Multivariate` | 多元线性回归（MLR） | 多自变量线性拟合 |
 | `...Data.Bootstrapping.Logistic` | 逻辑回归 | 二分类 / S 型曲线 |
+| `...Data.Bootstrapping.Poisson` | 泊松回归（对数链接 GLM） | 非负整数计数、发生率比、暴露量 offset 与过度离散诊断 |
 
 根命名空间还包含**贝叶斯**与**高斯-牛顿**求解器，以及 LOESS / LOWESS 局部回归。
 
@@ -57,6 +59,15 @@ Dim mm = inputs.NonLinearFit(Function(p, x) p(0) * x(0) / (p(1) + x(0)), guess:=
 '    c) 给出公式字符串，自变量按列名绑定
 Dim decay = inputs.NonLinearFit("a*exp(-b*x1)", {"a", "b"})
 Console.WriteLine($"R2={decay.R2}, a={decay.Parameters("a")}, b={decay.Parameters("b")}")
+
+' 6. 泊松回归：响应变量必须是非负整数计数，截距自动拟合
+'    exposure 指定暴露量列（可省略），库内部取 log(t) 作为 offset
+Dim pois = inputs.PoissonRegression(y:="count", exposure:="person_years")
+Console.WriteLine($"IRR(x1)={pois.IncidenceRateRatios(1):F4}, D/df={pois.DispersionRatio:F4}")
+Console.WriteLine($"pseudoR2={pois.R2:F4}, converged={pois.Converged}")
+'    GetY 返回单位暴露量的事件率；Predict 才返回乘上暴露量后的期望计数
+Dim eventRate = pois.GetY(1.0, 0.5)
+Dim expectedCount = pois.Predict({1.0, 0.5}, exposure:=2.0)
 ```
 
 ## 实现要点
@@ -67,6 +78,9 @@ Console.WriteLine($"R2={decay.R2}, a={decay.Parameters("a")}, b={decay.Parameter
 - **LOESS 为什么不是「拟合一个函数」**：它对每个预测点只用邻域数据做局部加权回归，因此能刻画非常不规则的形状，代价是无法写出一个封闭的解析式。
 - **岭回归解决的是共线性**：自变量高度相关时 `X'X` 接近奇异，最小二乘的系数会剧烈震荡甚至算不出来；加上 `n·λ·I` 之后正规方程恒为正定，代价是系数被向零收缩（有偏），用 GCV 折中偏差与方差来选 λ。
 - **岭回归必须标准化**：L2 惩罚对每个系数一视同仁，量纲不同会让惩罚效果完全不同；截距则单独估计、不参与惩罚，否则模型会依赖于 y 的原点。
+- **泊松回归用对数链接，而不是对 y 取对数**：`log(y) = a + b·x` 的最小二乘要求 y>0 且隐含对数正态误差，遇到 0 计数就失效；泊松回归直接对条件均值建模 `log(mu) = Xβ`，保留计数分布「均值=方差」的结构，并用 IRLS / Newton-Raphson 求极大似然解。
+- **offset 不是普通自变量**：暴露量以 `log(t)` 作为系数固定为 1 的项进入线性预测子，模型拟合的是事件率 `mu/t`；调用方传原始暴露量 `t`（必须为正），库内部取对数。带 offset 时 `GetY` 返回单位暴露量的率，`Predict(x, exposure)` 与 `FittedValues` 才返回期望计数。
+- **离散比是模型诊断，不是拟合优度**：`Deviance / df ≈ 1` 才符合等散性；远大于 1（经验上 >1.5）时标准误被低估，应转向负二项 / 准泊松，零值过多则考虑零膨胀模型。`IFitted.R2` 在这里是基于偏差的伪 R²（`1 − D/D_null`），不是普通决定系数。
 
 ## 包信息
 

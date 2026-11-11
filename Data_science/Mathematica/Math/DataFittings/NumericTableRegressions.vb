@@ -67,7 +67,9 @@ Imports FittingExtensions = Microsoft.VisualBasic.Data.Bootstrapping.Extensions
 Imports FeatureProjectionNS = Microsoft.VisualBasic.Data.Bootstrapping.FeatureProjection
 Imports LassoNS = Microsoft.VisualBasic.Data.Bootstrapping.LASSO
 Imports LogisticNS = Microsoft.VisualBasic.Data.Bootstrapping.Logistic
+Imports MGaussianNS = Microsoft.VisualBasic.Data.Bootstrapping.MGaussian
 Imports MultivariateNS = Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
+Imports PoissonNS = Microsoft.VisualBasic.Data.Bootstrapping.Poisson
 Imports RidgeNS = Microsoft.VisualBasic.Data.Bootstrapping.Ridge
 
 ''' <summary>
@@ -83,6 +85,11 @@ Imports RidgeNS = Microsoft.VisualBasic.Data.Bootstrapping.Ridge
 '''    <see cref="Lowess"/>、<see cref="LoessFit"/>、<see cref="AutoPointDeletion"/>、
 '''    <see cref="GaussNewtonFit"/>、<see cref="BayesianCurveFit"/>）要求表
 '''    之中**有且仅有一个**特征列，否则会抛出 <see cref="ArgumentException"/>
+''' 4. 计数回归（<see cref="PoissonRegression"/>）使用全部特征列，响应变量必须是
+'''    非负整数计数；截距自动拟合，暴露量 offset 由 ``exposure`` 列名指定
+''' 5. 多响应回归（<see cref="MGaussianRegression"/>、<see cref="MGaussianCV"/>）
+'''    使用全部特征列，并把表的**全部标签列**（或 ``y As String()`` 指定的标签列子集）
+'''    组成 ``N x K`` 响应矩阵；需要至少 1 个标签列
 ''' 
 ''' 所有的入口方法都直接返回既有的拟合模型对象，模型的输入/输出约定保持不变；
 ''' 若需要把模型的预测值写回到表的标签矩阵之中，请使用
@@ -160,6 +167,43 @@ Public Module NumericTableRegressions
         End If
 
         Return Enumerable.Range(1, m).Select(Function(i) CStr(i)).ToArray
+    End Function
+
+    ''' <summary>
+    ''' 读取多响应矩阵：把表的全部标签列（或 <paramref name="y"/> 指定的标签列子集）
+    ''' 按列拼成 ``response(sample)(response)`` 的 ``N x K`` 矩阵，并返回实际用到的列名。
+    ''' </summary>
+    Private Function ResponseMatrix(table As NumericTable,
+                                    y As String(),
+                                    caller As String,
+                                    ByRef responseNames As String()) As Double()()
+
+        If table Is Nothing Then
+            Throw New ArgumentNullException(NameOf(table))
+        End If
+        If table.nsamples = 0 OrElse table.labels Is Nothing OrElse table.nlabels = 0 Then
+            Throw New ArgumentException(
+                $"the '{caller}' regression requires at least one label column as a multi-response matrix!",
+                NameOf(table)
+            )
+        End If
+
+        Dim names As String() = If(y Is Nothing OrElse y.Length = 0, table.labelNames, y)
+        Dim n As Integer = table.nsamples
+        Dim k As Integer = names.Length
+        Dim response As Double()() = RectangularArray.Matrix(Of Double)(n, k)
+
+        For c As Integer = 0 To k - 1
+            ' 指定的标签列不存在的时候，GetLabel 会给出明确的 KeyNotFoundException
+            Dim column As Double() = table.GetLabel(names(c))
+
+            For i As Integer = 0 To n - 1
+                response(i)(c) = column(i)
+            Next
+        Next
+
+        responseNames = names
+        Return response
     End Function
 
 #End Region
@@ -525,6 +569,68 @@ Public Module NumericTableRegressions
 
 #End Region
 
+#Region "count regression"
+
+    ''' <summary>
+    ''' 泊松回归（对数链接 + 极大似然 / IRLS）。使用表中的全部特征列作为自变量，
+    ''' 指定的标签列作为非负整数计数型响应变量。
+    ''' </summary>
+    ''' <remarks>
+    ''' <para>
+    ''' 模型为 ``log(mu) = b0 + b1*x1 + ... + bp*xp + log(exposure)``，
+    ''' 截距自动拟合，不需要在表中额外添加常量列。结果对象实现了
+    ''' <see cref="IFitted"/>，可以使用 ``NumericTablePrediction.SetPrediction``
+    ''' 把预测值写回表中；注意带 offset 时写回的是单位暴露量之下的事件率。
+    ''' </para>
+    ''' </remarks>
+    ''' <param name="table">特征矩阵为 X、指定标签列为计数响应变量的二维表</param>
+    ''' <param name="y">响应变量所在的标签列名，缺省为第一个标签列</param>
+    ''' <param name="exposure">
+    ''' 暴露量所在的列名（标签列或特征列均可），数值必须全部为正数；
+    ''' 缺省（Nothing）时不使用 offset。传入的是原始暴露量 ``t``，内部自动取 ``log(t)``。
+    ''' </param>
+    ''' <param name="maxIterations">IRLS 最大迭代轮数</param>
+    ''' <param name="tolerance">收敛容差</param>
+    ''' <param name="Silent">保留参数，泊松回归求解器没有进度输出</param>
+    ''' <returns>含系数、标准误、IRR 与过度离散诊断的拟合结果</returns>
+    <Extension>
+    Public Function PoissonRegression(table As NumericTable,
+                                       Optional y As String = Nothing,
+                                       Optional exposure As String = Nothing,
+                                       Optional maxIterations As Integer = 100,
+                                       Optional tolerance As Double = 0.00000001,
+                                       Optional Silent As Boolean = False) As PoissonNS.PoissonFit
+
+        Dim xm As Double()() = FeatureMatrix(table, NameOf(PoissonRegression))
+        Dim yv As Double() = ResponseVector(table, y, NameOf(PoissonRegression))
+        Dim names As String() = FeatureNameList(table)
+        Dim offsets As Double() = Nothing
+
+        If Not String.IsNullOrEmpty(exposure) Then
+            If table.HasLabel(exposure) Then
+                offsets = table.GetLabel(exposure)
+            ElseIf table.HasFeature(exposure) Then
+                offsets = table.Feature(exposure)
+            Else
+                Throw New ArgumentException(
+                    $"the '{NameOf(PoissonRegression)}' regression can not find the exposure column named '{exposure}' in the label or feature columns!",
+                    NameOf(exposure)
+                )
+            End If
+        End If
+
+        Return PoissonNS.PoissonFitting.Fit(
+            x:=xm,
+            y:=yv,
+            exposure:=offsets,
+            maxIterations:=maxIterations,
+            tolerance:=tolerance,
+            featureNames:=names
+        )
+    End Function
+
+#End Region
+
 #Region "robust && nonlinear"
 
     ''' <summary>
@@ -809,6 +915,128 @@ Public Module NumericTableRegressions
         Dim inputs As LMA.FitInput() = AsFitInputs(table, y)
 
         Return inputs.NonLinearFit(formula, parameters, guess, iterations, approxHessian)
+    End Function
+
+#End Region
+
+#Region "multi-response regression"
+
+    ''' <summary>
+    ''' 多响应高斯回归（``family = "mgaussian"``，组-lasso / 多任务学习）。
+    ''' 使用表中的全部特征列作为 X，把全部标签列（或 <paramref name="y"/> 指定的
+    ''' 标签列子集）组成 ``N x K`` 响应矩阵，沿 lambda 路径联合拟合。
+    ''' </summary>
+    ''' <remarks>
+    ''' 组-lasso 让每个变量在全部响应上「同进同出」，得到共享的变量支持集。
+    ''' 结果对象不是 <see cref="IFitted"/>（单响应契约），请使用
+    ''' ``MGaussianFit.Predict`` 做多响应预测，或用
+    ''' ``MGaussianFit.GetResponseModel`` 取得逐响应视图后再写回二维表。
+    ''' </remarks>
+    ''' <param name="table">特征矩阵为 X、标签列为多响应 Y 的二维表</param>
+    ''' <param name="y">参与建模的标签列名数组；缺省使用全部标签列</param>
+    ''' <param name="lambda">自定义 lambda 网格（严格递减、全为正），缺省自动生成</param>
+    ''' <param name="alpha">弹性网混合参数，1 为组-lasso、0 为岭型收缩</param>
+    ''' <param name="numberOfLambdas">自动 lambda 网格的步数</param>
+    ''' <param name="standardize">是否标准化特征列</param>
+    ''' <param name="standardizeResponse">是否标准化响应各列（量纲悬殊时建议开启）</param>
+    ''' <param name="intercept">是否为每个响应拟合独立截距</param>
+    ''' <param name="maxIterations">每个 lambda 步骤的坐标下降最大轮数</param>
+    ''' <param name="tolerance">收敛容差</param>
+    ''' <param name="Silent">保留参数，求解器不产生进度输出</param>
+    ''' <returns>含全部 lambda 步骤系数矩阵的正则化路径</returns>
+    <Extension>
+    Public Function MGaussianRegression(table As NumericTable,
+                                         Optional y As String() = Nothing,
+                                         Optional lambda As Double() = Nothing,
+                                         Optional alpha As Double = 1.0,
+                                         Optional numberOfLambdas As Integer = 100,
+                                         Optional standardize As Boolean = True,
+                                         Optional standardizeResponse As Boolean = False,
+                                         Optional intercept As Boolean = True,
+                                         Optional maxIterations As Integer = 1000,
+                                         Optional tolerance As Double = 0.000001,
+                                         Optional Silent As Boolean = False) As MGaussianNS.MGaussianFit
+
+        Dim xm As Double()() = FeatureMatrix(table, NameOf(MGaussianRegression))
+        Dim responseNames As String() = Nothing
+        Dim ym As Double()() = ResponseMatrix(table, y, NameOf(MGaussianRegression), responseNames)
+        Dim names As String() = FeatureNameList(table)
+
+        Return MGaussianNS.MGaussianFitting.Fit(
+            x:=xm,
+            y:=ym,
+            lambda:=lambda,
+            alpha:=alpha,
+            numberOfLambdas:=numberOfLambdas,
+            standardize:=standardize,
+            standardizeResponse:=standardizeResponse,
+            intercept:=intercept,
+            maxIterations:=maxIterations,
+            tolerance:=tolerance,
+            featureNames:=names,
+            responseNames:=responseNames,
+            Silent:=Silent
+        )
+    End Function
+
+    ''' <summary>
+    ''' 多响应高斯回归的 K 折交叉验证：在表的全部标签列（或指定的标签列子集）上
+    ''' 按全部响应合并计算 ``mse`` / ``mae``，自动选出 ``lambda.min`` 与 ``lambda.1se``。
+    ''' </summary>
+    ''' <param name="table">特征矩阵为 X、标签列为多响应 Y 的二维表</param>
+    ''' <param name="y">参与建模的标签列名数组；缺省使用全部标签列</param>
+    ''' <param name="nfolds">折数，必须在 ``[2, n]`` 之内</param>
+    ''' <param name="measure">折外误差指标 mse 或 mae</param>
+    ''' <param name="seed">确定性分折的随机种子</param>
+    ''' <param name="lambda">自定义 lambda 网格；缺省由完整数据自动生成</param>
+    ''' <param name="alpha">弹性网混合参数</param>
+    ''' <param name="numberOfLambdas">自动 lambda 网格的步数</param>
+    ''' <param name="standardize">是否标准化特征列</param>
+    ''' <param name="standardizeResponse">是否标准化响应各列</param>
+    ''' <param name="intercept">是否为每个响应拟合独立截距</param>
+    ''' <param name="maxIterations">每个 lambda 步骤的坐标下降最大轮数</param>
+    ''' <param name="tolerance">收敛容差</param>
+    ''' <param name="Silent">保留参数，交叉验证不产生进度输出</param>
+    ''' <returns>含完整数据路径、CV 曲线与 lambda.min / lambda.1se 的结果对象</returns>
+    <Extension>
+    Public Function MGaussianCV(table As NumericTable,
+                                Optional y As String() = Nothing,
+                                Optional nfolds As Integer = 10,
+                                Optional measure As MGaussianNS.CVMeasure = MGaussianNS.CVMeasure.Mse,
+                                Optional seed As Integer = 1,
+                                Optional lambda As Double() = Nothing,
+                                Optional alpha As Double = 1.0,
+                                Optional numberOfLambdas As Integer = 100,
+                                Optional standardize As Boolean = True,
+                                Optional standardizeResponse As Boolean = False,
+                                Optional intercept As Boolean = True,
+                                Optional maxIterations As Integer = 1000,
+                                Optional tolerance As Double = 0.000001,
+                                Optional Silent As Boolean = False) As MGaussianNS.MGaussianCVFit
+
+        Dim xm As Double()() = FeatureMatrix(table, NameOf(MGaussianCV))
+        Dim responseNames As String() = Nothing
+        Dim ym As Double()() = ResponseMatrix(table, y, NameOf(MGaussianCV), responseNames)
+        Dim names As String() = FeatureNameList(table)
+
+        Return MGaussianNS.MGaussianCV.CrossValidate(
+            x:=xm,
+            y:=ym,
+            nfolds:=nfolds,
+            measure:=measure,
+            seed:=seed,
+            lambda:=lambda,
+            alpha:=alpha,
+            numberOfLambdas:=numberOfLambdas,
+            standardize:=standardize,
+            standardizeResponse:=standardizeResponse,
+            intercept:=intercept,
+            maxIterations:=maxIterations,
+            tolerance:=tolerance,
+            featureNames:=names,
+            responseNames:=responseNames,
+            Silent:=Silent
+        )
     End Function
 
 #End Region

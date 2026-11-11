@@ -82,3 +82,36 @@ exp(coef(model_pois))
 以 R 内置的 `warpbreaks` 数据集为例，该数据记录织布过程中纱线断裂次数与羊毛类型、张力水平的关系，是典型的计数数据案例，适合用泊松回归或负二项回归建模。
 ## 七、简要总结
 泊松回归通过泊松分布建模计数型响应变量，借助对数链接函数将协变量与期望计数线性关联，并使用极大似然估计参数；它适用于均值近似等于方差的非负整数计数场景。实际应用中，等散性假设常被违反，需通过诊断比检验决定是否转向准泊松、负二项回归或零膨胀模型，以保证推断的可靠性。
+## 八、本库实现与调用示例（VB.NET）
+
+`linear-netcore5.vbproj` 中的 `Microsoft.VisualBasic.Data.Bootstrapping.Poisson` 命名空间实现了上文的标准泊松回归与诊断能力：对数链接、IRLS / Newton-Raphson 极大似然估计、暴露量 offset、系数标准误与 Wald Z 值、发生率比 IRR、残差偏差与离散比。结果对象 `PoissonFit` 实现了 `IFitted`，可与 `NumericTable` 的统一入口及预测写回联动。
+
+```vbnet
+Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Poisson
+
+' 1) 直接以矩阵拟合：自动补截距，y 必须为非负整数计数
+'    exposure 传入原始暴露量 t（必须全为正），库内部取 log(t) 作为 offset
+Dim fit As PoissonFit = PoissonFitting.Fit(x, y, exposure:=personYears)
+
+Console.WriteLine(fit.ToString())
+Console.WriteLine($"IRR(x1) = {fit.IncidenceRateRatios(1):F4}")   ' exp(beta_1)
+Console.WriteLine($"SE(x1)  = {fit.StandardErrors(1):F4}, Z = {fit.ZValues(1):F4}")
+Console.WriteLine($"D/df    = {fit.DispersionRatio:F4}, over-dispersed = {fit.IsOverDispersed}")
+Console.WriteLine($"pseudoR2 = {fit.PseudoR2:F4}, converged = {fit.Converged}")
+
+' 2) 或从统一的二维表入口拟合：全部特征列作为 X，y 指定计数标签列
+Dim model As PoissonFit = table.PoissonRegression(y:="count", exposure:="person_years")
+
+Console.WriteLine(model.GetY(1.0, 0.5))                    ' 单位暴露量之下的事件率
+Console.WriteLine(model.Predict({1.0, 0.5}, exposure:=2.0)) ' 乘上暴露量后的期望计数
+```
+
+结果解读要点：
+
+- `IncidenceRateRatios(j) = exp(beta_j)`：第 j 个变量每增加 1 个单位，期望计数乘以的倍数；截距对应的是基准期望计数。
+- `DispersionRatio = Deviance / ResidualDf`：接近 1 才符合等散性，远大于 1（经验上 >1.5）时 `IsOverDispersed` 为真，标准误会被低估、Z 值偏大。
+- `R2` / `PseudoR2` 是基于偏差的伪 R² `1 - Deviance / NullDeviance`（裁剪到 `[0,1]`），不是普通最小二乘的决定系数。
+- 带 offset 时 `GetY` 与 `SetPrediction` 写回的是**单位暴露量的事件率**，`FittedValues` / `Predict(x, exposure)` 才是含实际暴露量的期望计数。
+- 本库只覆盖标准泊松回归及其诊断，**不实现**准泊松、负二项回归、ZIP / ZINB 与 Hurdle 模型；诊断提示过离散或零膨胀时应改用相应的扩展模型。

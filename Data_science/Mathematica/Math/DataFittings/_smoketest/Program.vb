@@ -320,6 +320,9 @@ Module Program
         Call Section("logistic audit")
         failures += LogisticAudit.Run()
 
+        Call Section("poisson audit")
+        failures += PoissonAudit.Run()
+
         Call Section("prediction")
         Dim predicted As NumericTable = multi.SetPrediction(mlr, withResidual:=True)
 
