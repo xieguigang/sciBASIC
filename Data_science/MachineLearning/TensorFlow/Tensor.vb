@@ -264,7 +264,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 取按行切分的 jagged 视图，供矩阵乘后端使用；结果按 <see cref="_version"/> 缓存。
     ''' 
     ''' 推理时权重矩阵是常量，缓存命中后每次乘法都不再复制；
-    ''' 一旦张量被原地写入（索引器 / <see cref="InvalidateHostCache"/>），版本号变化导致缓存失效并重建，
+    ''' 一旦张量被原地写入（索引器 / "InvalidateHostCache"），版本号变化导致缓存失效并重建，
     ''' 因此与"每次重新展开"的结果逐位一致。
     ''' </summary>
     ''' <param name="rows">行数（必须与 <see cref="Shape"/> 一致）</param>
