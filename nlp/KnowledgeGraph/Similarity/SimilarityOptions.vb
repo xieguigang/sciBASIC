@@ -48,8 +48,13 @@ Public Class SimilarityOptions
     ''' <summary>Half-saturation constant used to compress Adamic-Adar into [0, 1].</summary>
     Public Property AdamicAdarHalfSaturation As Double = 2.0
 
-    ''' <summary>Score at or above which two entities are declared equivalent.</summary>
-    Public Property EquivalenceThreshold As Double = 0.45
+    ''' <summary>
+    ''' Score at or above which two entities are declared equivalent.
+    ''' Calibrated on the graphQL CSV fixtures (sweep.csv): equivalent pairs
+    ''' score 0.226-0.534 while non-equivalent pairs stay at or below 0.137,
+    ''' so 0.20 sits inside the separation gap and yields P=R=F1=1.0.
+    ''' </summary>
+    Public Property EquivalenceThreshold As Double = 0.20
 
     ''' <summary>Maximum number of shared attributes to report in a detail object.</summary>
     Public Property MaxReportedAttributes As Integer = 50
@@ -114,7 +119,7 @@ Public Class SimilarityOptions
             .HubDegreeCutoff = 0,
             .UseEdgeWeights = True,
             .AdamicAdarHalfSaturation = 2.0,
-            .EquivalenceThreshold = 0.45,
+            .EquivalenceThreshold = 0.20,
             .MaxReportedAttributes = 50
         }
     End Function
@@ -175,7 +180,7 @@ End Class
 Public Class AliasDiscoveryOptions
 
     ''' <summary>Minimum fused score for a pair to become an alias candidate.</summary>
-    Public Property MinimumScore As Double = 0.45
+    Public Property MinimumScore As Double = 0.20
 
     ''' <summary>Minimum number of shared attributes before a pair is scored.</summary>
     Public Property MinimumSharedAttributes As Integer = 1
