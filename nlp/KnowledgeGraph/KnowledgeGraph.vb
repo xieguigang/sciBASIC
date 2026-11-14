@@ -131,7 +131,7 @@ End Class
 ''' 知识图谱：管理实体节点、属性节点及其连接关系。
 ''' 内部使用邻接表存储二部图结构。
 ''' </summary>
-Public Class KnowledgeGraph
+Public Class KnowledgeGraph : Implements IBipartiteView
 
     ' --- 节点存储 ---
     Private _entities As New List(Of EntityNode)
@@ -142,6 +142,8 @@ Public Class KnowledgeGraph
     ' --- 邻接表（双向）---
     Private _entityToAttrs As New Dictionary(Of Integer, HashSet(Of Integer))
     Private _attrToEntities As New Dictionary(Of Integer, HashSet(Of Integer))
+    ' 可选的边置信度权重；未显式设置的边默认为 1.0
+    Private _edgeWeights As New Dictionary(Of Long, Double)()
 
     ''' <summary>所有实体节点（只读视图）。</summary>
     Public ReadOnly Property Entities As IReadOnlyList(Of EntityNode)
@@ -214,15 +216,30 @@ Public Class KnowledgeGraph
     ''' 在实体与属性之间添加一条边。
     ''' </summary>
     Public Sub AddEdge(entityId As Integer, attributeId As Integer)
+        Call AddWeightedEdge(entityId, attributeId, 1.0)
+    End Sub
+
+    ''' <summary>
+    ''' 添加一条带置信度权重的「实体 - 属性」边。
+    ''' 原有的 <see cref="AddEdge(Integer, Integer)"/> 行为保持不变（权重 1.0）。
+    ''' </summary>
+    Public Sub AddWeightedEdge(entityId As Integer, attributeId As Integer,
+                               Optional weight As Double = 1.0)
         If Not _entityToAttrs.ContainsKey(entityId) Then
             Throw New ArgumentOutOfRangeException(NameOf(entityId))
         End If
         If Not _attrToEntities.ContainsKey(attributeId) Then
             Throw New ArgumentOutOfRangeException(NameOf(attributeId))
         End If
+
         _entityToAttrs(entityId).Add(attributeId)
         _attrToEntities(attributeId).Add(entityId)
+        _edgeWeights(EdgeKey(entityId, attributeId)) = If(weight > 0.0, weight, 1.0)
     End Sub
+
+    Private Shared Function EdgeKey(entityId As Integer, attributeId As Integer) As Long
+        Return (CLng(entityId) << 32) Or (CLng(attributeId) And &HFFFFFFFFL)
+    End Function
 
     ''' <summary>
     ''' 便捷方法：按名称为实体添加属性（自动创建属性节点）。
@@ -377,6 +394,92 @@ Public Class KnowledgeGraph
             result(i) = GetEntityDegree(i)
         Next
         Return result
+    End Function
+
+    ' ==================================================================
+    ' IBipartiteView implementation (additive).
+    ' Distinct member names are used so that every pre-existing public
+    ' signature stays untouched; code that only knows KnowledgeGraph keeps
+    ' working exactly as before.
+    ' ==================================================================
+
+    Public ReadOnly Property ViewEntityIds As IEnumerable(Of Integer) Implements IBipartiteView.EntityIds
+        Get
+            Dim list As New List(Of Integer)(_entities.Count)
+            For i As Integer = 0 To _entities.Count - 1
+                list.Add(i)
+            Next
+            Return list
+        End Get
+    End Property
+
+    Public ReadOnly Property ViewAttributeIds As IEnumerable(Of Integer) Implements IBipartiteView.AttributeIds
+        Get
+            Dim list As New List(Of Integer)(_attributes.Count)
+            For i As Integer = 0 To _attributes.Count - 1
+                list.Add(i)
+            Next
+            Return list
+        End Get
+    End Property
+
+    Public Function ViewGetEntityAttributes(entityId As Integer) As HashSet(Of Integer) Implements IBipartiteView.GetEntityAttributes
+        Return GetEntityAttributes(entityId)
+    End Function
+
+    Public Function ViewGetAttributeEntities(attributeId As Integer) As HashSet(Of Integer) Implements IBipartiteView.GetAttributeEntities
+        Return GetAttributeEntities(attributeId)
+    End Function
+
+    Public Function ViewGetSharedAttributes(a As Integer, b As Integer) As HashSet(Of Integer) Implements IBipartiteView.GetSharedAttributes
+        Return GetSharedAttributes(a, b)
+    End Function
+
+    Public Function ViewGetEntityDegree(entityId As Integer) As Integer Implements IBipartiteView.GetEntityDegree
+        Return GetEntityDegree(entityId)
+    End Function
+
+    Public Function ViewGetAttributeDegree(attrId As Integer) As Integer Implements IBipartiteView.GetAttributeDegree
+        Return GetAttributeDegree(attrId)
+    End Function
+
+    Public Function ViewGetEdgeWeight(entityId As Integer, attrId As Integer) As Double Implements IBipartiteView.GetEdgeWeight
+        Dim value As Double = 0.0
+        If _edgeWeights.TryGetValue(EdgeKey(entityId, attrId), value) Then
+            Return value
+        End If
+        Return 1.0
+    End Function
+
+    Public Function ViewGetAttributeCategory(attrId As Integer) As String Implements IBipartiteView.GetAttributeCategory
+        If attrId >= 0 AndAlso attrId < _attributes.Count Then
+            Return If(_attributes(attrId).Category, "")
+        End If
+        Return ""
+    End Function
+
+    Public Function ViewGetAttributeName(attrId As Integer) As String Implements IBipartiteView.GetAttributeName
+        Return GetAttributeName(attrId)
+    End Function
+
+    Public Function ViewGetEntityName(entityId As Integer) As String Implements IBipartiteView.GetEntityName
+        Return GetEntityName(entityId)
+    End Function
+
+    Public Function ViewGetEntityLanguage(entityId As Integer) As String Implements IBipartiteView.GetEntityLanguage
+        If entityId >= 0 AndAlso entityId < _entities.Count Then
+            Return If(_entities(entityId).Language, "")
+        End If
+        Return ""
+    End Function
+
+    Public Function ViewFindEntityByName(name As String) As Integer Implements IBipartiteView.FindEntityByName
+        If String.IsNullOrEmpty(name) Then
+            Return -1
+        End If
+
+        Dim node As EntityNode = FindEntity(name)
+        Return If(node Is Nothing, -1, node.Id)
     End Function
 
 End Class
