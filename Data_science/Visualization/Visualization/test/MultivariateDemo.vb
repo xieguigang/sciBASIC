@@ -191,6 +191,7 @@ Module MultivariateDemo
         splot.SubTitle = "p(1) versus p(corr) of the predictive component"
         splot.HighlightCorrelation = 0.5
         splot.MaxLabels = 14
+        splot.LegendLocation = PlotEngine.LegendPos.UpperLeft
 
         Call Export(splot, Path.Combine(dir, "oplsda-splot.png"))
 
@@ -410,14 +411,26 @@ Module MultivariateDemo
         Dim effects(nVariables - 1, lastGroup) As Double
 
         For j As Integer = 0 To effectVariables - 1
+            ' 每个变量的效应量再乘一个 [0.8, 1.4] 的随机因子：
+            ' 否则同一模式的变量会在 S-plot / VIP 图里完全重合
+            Dim scale As Double = 0.8 + 0.6 * rnd.NextDouble()
+
             Select Case j Mod 3
                 Case 0
-                    effects(j, lastGroup) = 1.45
+                    effects(j, lastGroup) = 1.45 * scale
                 Case 1
-                    effects(j, lastGroup) = -1.25
+                    effects(j, lastGroup) = -1.25 * scale
                 Case 2
-                    effects(j, std.Min(1, lastGroup)) = 1.3
+                    effects(j, std.Min(1, lastGroup)) = 1.3 * scale
             End Select
+        Next
+
+        ' 每个变量的噪声水平不同：这样标准化之后各变量的效应/噪声比才会不同，
+        ' S-plot 与 VIP 图里的变量才不会全部重合成一个点
+        Dim noiseScales(nVariables - 1) As Double
+
+        For j As Integer = 0 To nVariables - 1
+            noiseScales(j) = 0.5 + 1.6 * rnd.NextDouble()
         Next
 
         Dim nSamples As Integer = groupNames.Length * replicates
@@ -434,7 +447,7 @@ Module MultivariateDemo
 
                 For j As Integer = 0 To nVariables - 1
                     Dim baseline As Double = 0.8 + 0.1 * (j Mod 5)
-                    Dim noise As Double = (rnd.NextDouble() - 0.5) * 0.55
+                    Dim noise As Double = (rnd.NextDouble() - 0.5) * 0.55 * noiseScales(j)
                     Dim value As Double = baseline + effects(j, g) + noise
 
                     If isOutlier AndAlso j >= effectVariables Then

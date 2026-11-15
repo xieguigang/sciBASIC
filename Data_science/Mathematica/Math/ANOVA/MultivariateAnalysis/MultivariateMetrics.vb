@@ -143,16 +143,29 @@ Public Module MultivariateMetrics
     End Function
 
     ''' <summary>
-    ''' 每一个建模成分对应的累积响应方差解释率（百分数），长度与 <c>SsPreds</c> 对齐。
+    ''' 每一个建模成分对应的累积响应方差解释率（0-1 的比例），长度与 <c>SsPreds</c> 对齐。
+    ''' 
+    ''' <para>
+    ''' 同样使用中心化的总平方和 <c>Σ(y - ȳ)²</c>，与 <see cref="R2Y"/> 的定义保持一致。
+    ''' </para>
     ''' </summary>
     Public Function R2YPerComponent(result As MultivariateAnalysisResult) As Double()
         Dim ss = result?.SsPreds
+        Dim y As Double() = result?.StatisticsObject?.YVariables
 
-        If ss Is Nothing OrElse ss.Count < 2 Then
+        If ss Is Nothing OrElse ss.Count < 2 OrElse y Is Nothing Then
             Return New Double() {}
         End If
 
-        Dim total As Double = ss(0)
+        Dim average As Double = 0
+
+        For i As Integer = 0 To y.Length - 1
+            average += y(i)
+        Next
+
+        average /= y.Length
+
+        Dim total As Double = ss(0) - y.Length * average * average
         Dim perComponent As Double() = New Double(ss.Count - 2) {}
 
         For i As Integer = 0 To perComponent.Length - 1

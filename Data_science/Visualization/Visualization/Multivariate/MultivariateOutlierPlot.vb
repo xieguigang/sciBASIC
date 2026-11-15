@@ -210,9 +210,12 @@ Public Class MultivariateOutlierPlot : Inherits PlotEngine
                 g.DrawLine(pen, _plotArea.Left, py, _plotArea.Right, py)
             End Using
 
+            Dim text As String = $"95% limit = {threshold.ToString("F2")}"
+            Dim textSize As SizeF = MeasureString(text, font)
+
             Using brush As New SolidBrush(Theme.SubTitleColor)
-                Call DrawLabel($"95% limit = {threshold.ToString("F2")}", font, brush,
-                               _plotArea.Left + 4, py - font.GetHeight(g) - 2, Nothing, Nothing)
+                Call DrawLabel(text, font, brush,
+                               _plotArea.Right - textSize.Width - 4, py - textSize.Height - 2, Nothing, Nothing)
             End Using
         End If
 
