@@ -832,10 +832,10 @@ Public Module MultivariatePlotHelper
     Public Function PlaceLabel(x As Single, y As Single, size As SizeF, bounds As RectangleF,
                                occupied As List(Of RectangleF)) As PointF
 
-        Dim steps As Single() = {0, 1, -1, 2, -2, 3, -3, 4, -4}
+        Dim offsets As Single() = {0, 1, -1, 2, -2, 3, -3, 4, -4}
 
-        For Each step As Single In steps
-            Dim cy As Single = y + step * (size.Height + 1)
+        For Each offset As Single In offsets
+            Dim cy As Single = y + offset * (size.Height + 1)
             Dim point As PointF = ClampLabel(x, cy, size, bounds)
             Dim rect As New RectangleF(point.X, point.Y, size.Width, size.Height)
             Dim collision As Boolean = False

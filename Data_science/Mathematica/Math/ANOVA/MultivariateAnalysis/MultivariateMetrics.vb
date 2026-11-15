@@ -210,8 +210,17 @@ Public Module MultivariateMetrics
     ''' 每一个成分对 X 的方差解释率（百分数），用作得分图/碎石图的坐标轴标题。
     ''' 
     ''' <para>
-    ''' PCA 直接使用 <see cref="MultivariateAnalysisResult.Contributions"/>（该字段本身就是百分数）；
-    ''' PLS/OPLS 则根据 <c>t p'</c> 逐个成分地从 <c>XScaled</c> 中扣除后计算累计 R2X 增量。
+    ''' PCA 结果的 <see cref="MultivariateAnalysisResult.Contributions"/> 记录的是
+    ''' <b>相对于「当前残差矩阵」</b>的百分比（见 <c>PCA.CalculateComponent</c>：
+    ''' <c>scoreVar / Σvar(当前残差) × 100</c>）。由于每个成分都会把数据扣减一次，
+    ''' 这些数字会逐级膨胀（57.5%, 37.9%, 40.2% ...），直接相加没有意义。
+    ''' 这里用 <c>剩余比例</c> 把它们还原成相对于「原始矩阵」的绝对解释率：
+    ''' <c>explained_k = c_k × Π(1 - c_j)</c>。
+    ''' </para>
+    ''' 
+    ''' <para>
+    ''' PLS 则通过 <c>t p'</c> 从缩放后的 X 矩阵中逐个成分扣除来估算 R2X 增量
+    ''' （<c>XScaled</c> 可能已被 PCA 就地破坏，因此用 <c>XTransformed + XMeans/XStdevs</c> 重建）。
     ''' </para>
     ''' </summary>
     Public Function ComponentVariance(result As MultivariateAnalysisResult) As Double()
@@ -219,10 +228,10 @@ Public Module MultivariateMetrics
             Return New Double() {}
         End If
 
-        ' 注意：ObservableCollection 同时实现了 ICollection/IList/IReadOnlyCollection，
-        ' 直接调用 IsNullOrEmpty 会导致扩展方法重载歧义（BC30521），因此这里显式判断 Count。
-        If result.Contributions IsNot Nothing AndAlso result.Contributions.Count > 0 Then
-            Return result.Contributions.Select(Function(v) SafeValue(v)).ToArray
+        Dim contributions = result.Contributions
+
+        If contributions IsNot Nothing AndAlso contributions.Count > 0 Then
+            Return ConvertRelativeVariance(contributions.ToArray)
         End If
 
         ' OPLS 的载荷是正交滤波之后的 p/po，无法用 t·p' 还原 X 的方差分解，
@@ -232,6 +241,54 @@ Public Module MultivariateMetrics
         End If
 
         Return EstimateR2X(result)
+    End Function
+
+    ''' <summary>
+    ''' 把「相对于当前残差」的百分比序列换算成「相对于原始矩阵」的百分比序列。
+    ''' </summary>
+    Private Function ConvertRelativeVariance(relative As Double()) As Double()
+        Dim absolute As Double() = New Double(relative.Length - 1) {}
+        Dim remaining As Double = 1
+
+        For i As Integer = 0 To relative.Length - 1
+            Dim ratio As Double = SafeValue(relative(i)) / 100.0
+
+            If Double.IsNaN(ratio) Then
+                ratio = 0
+            End If
+
+            ' 数值噪声可能让比例略微超出 [0, 1]
+            ratio = std.Max(0.0, std.Min(1.0, ratio))
+
+            absolute(i) = ratio * remaining * 100.0
+            remaining *= (1 - ratio)
+        Next
+
+        Return absolute
+    End Function
+
+    ''' <summary>
+    ''' 按分析时所用的缩放方法重建 X 的缩放矩阵（<c>XScaled</c> 可能已经被 PCA 破坏）。
+    ''' </summary>
+    Private Function ScaledMatrix(stat As StatisticsObject) As Double(,)
+        Dim source As Double(,) = If(stat.XTransformed, stat.XDataMatrix)
+
+        If source Is Nothing Then
+            Return Nothing
+        End If
+
+        Select Case stat.Scale
+            Case ScaleMethod.None
+                Return source
+            Case ScaleMethod.MeanCenter
+                Return StatisticsMathematics.MeanCentering(source, stat.XMeans)
+            Case ScaleMethod.ParetoScale
+                Return StatisticsMathematics.ParetoScaling(source, stat.XMeans, stat.XStdevs)
+            Case ScaleMethod.AutoScale
+                Return StatisticsMathematics.AutoScaling(source, stat.XMeans, stat.XStdevs)
+            Case Else
+                Return source
+        End Select
     End Function
 
     ''' <summary>
@@ -262,7 +319,13 @@ Public Module MultivariateMetrics
         Dim tList = result.TPreds
         Dim pList = result.PPreds
 
-        If stat Is Nothing OrElse stat.XScaled Is Nothing Then
+        If stat Is Nothing Then
+            Return New Double() {}
+        End If
+
+        Dim x As Double(,) = ScaledMatrix(stat)
+
+        If x Is Nothing Then
             Return New Double() {}
         End If
         If tList Is Nothing OrElse pList Is Nothing Then
@@ -271,8 +334,6 @@ Public Module MultivariateMetrics
         If tList.Count = 0 OrElse tList.Count <> pList.Count Then
             Return New Double() {}
         End If
-
-        Dim x As Double(,) = stat.XScaled
         Dim n As Integer = x.GetLength(0)
         Dim m As Integer = x.GetLength(1)
         Dim total As Double = 0
