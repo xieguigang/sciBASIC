@@ -51,7 +51,9 @@ Module MultivariateDemo
 
         ' ---- 合成数据 ----
         Dim pcaData As DemoData = BuildTable({"Control", "Treat-A", "Treat-B"}, 8, -1)
-        Dim plsData As DemoData = BuildTable({"Control", "Treat-A"}, 10, outlierIndex:=9)
+        Dim plsData As DemoData = BuildTable({"Control", "Treat-A"}, 10, -1)
+        ' 离群诊断单独用一份注入了异常偏差的数据：这样得分图不会被离群点撑变形
+        Dim diagData As DemoData = BuildTable({"Control", "Treat-A"}, 10, outlierIndex:=9)
 
         Call DebugAudit.Mark("pca samples", pcaData.samples.Length)
         Call DebugAudit.Mark("pls samples", plsData.samples.Length)
@@ -62,6 +64,7 @@ Module MultivariateDemo
         Dim pcaResult = pcaData.table.pca(maxPC:=5)
         Dim plsResult = plsData.table.plsda(component:=2)
         Dim oplsResult = plsData.table.oplsda(component:=1)
+        Dim diagResult = diagData.table.plsda(component:=2)
 
         Call watch.Stop()
         Call Console.WriteLine($"  analysis finished in {watch.ElapsedMilliseconds} ms")
@@ -84,7 +87,7 @@ Module MultivariateDemo
         Call RenderPermutation(dir, plsResult, oplsResult)
 
         ' ---- 模型诊断 ----
-        Call RenderDiagnostics(dir, plsData, plsResult)
+        Call RenderDiagnostics(dir, plsData, plsResult, diagData, diagResult)
 
         ' ---- 自检报告 ----
         Dim report As String = Path.Combine(dir, "multivariate-demo-audit.json")
@@ -145,7 +148,7 @@ Module MultivariateDemo
         oplsPlot.ShowPointLabels = True
         oplsPlot.Ellipses.Mode = MultivariateEllipseMode.Confidence
         oplsPlot.Ellipses.EllipseType = PCAEllipseCalculator.EllipseType.T
-        oplsPlot.LegendLocation = PlotEngine.LegendPos.LowerRight
+        oplsPlot.LegendLocation = PlotEngine.LegendPos.UpperRight
 
         Call Export(oplsPlot, Path.Combine(dir, "oplsda-score.png"))
     End Sub
@@ -171,7 +174,7 @@ Module MultivariateDemo
         loadingPlot.Title = "PCA loading plot (biplot)"
         loadingPlot.SubTitle = "loading vectors scaled into the score space"
         loadingPlot.ShowBiplot = True
-        loadingPlot.LegendLocation = PlotEngine.LegendPos.LowerRight
+        loadingPlot.LegendLocation = PlotEngine.LegendPos.UpperLeft
 
         Call Export(loadingPlot, Path.Combine(dir, "pca-loading-biplot.png"))
     End Sub
@@ -188,6 +191,7 @@ Module MultivariateDemo
         splot.SubTitle = "p(1) versus p(corr) of the predictive component"
         splot.HighlightCorrelation = 0.5
         splot.MaxLabels = 14
+        splot.LegendLocation = PlotEngine.LegendPos.UpperLeft
 
         Call Export(splot, Path.Combine(dir, "oplsda-splot.png"))
 
@@ -207,7 +211,7 @@ Module MultivariateDemo
         coefPlot.Title = "PLS-DA regression coefficients"
         coefPlot.SubTitle = "variables sorted by coefficient"
         coefPlot.MaxBars = 12
-        coefPlot.LegendLocation = PlotEngine.LegendPos.LowerRight
+        coefPlot.LegendLocation = PlotEngine.LegendPos.UpperLeft
 
         Call Export(coefPlot, Path.Combine(dir, "plsda-coefficients.png"))
 
@@ -295,7 +299,8 @@ Module MultivariateDemo
 
 #Region "模型诊断"
 
-    Private Sub RenderDiagnostics(dir As String, data As DemoData, plsResult As MultivariateAnalysisResult)
+    Private Sub RenderDiagnostics(dir As String, data As DemoData, plsResult As MultivariateAnalysisResult,
+                                  diagData As DemoData, diagResult As MultivariateAnalysisResult)
         ' 预测值对实测值
         Dim prediction As New MultivariatePredictionPlot(1100, 900, plsResult, data.groups, data.samples, PlotTheme.Light())
 
@@ -305,9 +310,9 @@ Module MultivariateDemo
 
         Call Export(prediction, Path.Combine(dir, "plsda-prediction.png"))
 
-        ' Hotelling T2
-        Dim t2Plot As New MultivariateOutlierPlot(1200, 800, plsResult, MultivariateOutlierMetric.HotellingT2,
-                                                  data.groups, data.samples, PlotTheme.Light())
+        ' Hotelling T2（离群诊断使用注入了异常偏差的那份数据）
+        Dim t2Plot As New MultivariateOutlierPlot(1200, 800, diagResult, MultivariateOutlierMetric.HotellingT2,
+                                                  diagData.groups, diagData.samples, PlotTheme.Light())
 
         t2Plot.Title = "Hotelling T2 diagnostic"
         t2Plot.SubTitle = "95% control limit from the F distribution"
@@ -315,17 +320,17 @@ Module MultivariateDemo
         Call Export(t2Plot, Path.Combine(dir, "plsda-hotelling-t2.png"))
 
         ' DModX
-        Dim dmodxPlot As New MultivariateOutlierPlot(1200, 800, plsResult, MultivariateOutlierMetric.DModX,
-                                                     data.groups, data.samples, PlotTheme.Light())
+        Dim dmodxPlot As New MultivariateOutlierPlot(1200, 800, diagResult, MultivariateOutlierMetric.DModX,
+                                                     diagData.groups, diagData.samples, PlotTheme.Light())
 
         dmodxPlot.Title = "DModX diagnostic"
         dmodxPlot.SubTitle = "residual space distance with chi-square control limit"
 
         Call Export(dmodxPlot, Path.Combine(dir, "plsda-dmodx.png"))
 
-        Dim outliers As MultivariateOutlierSeries = plsResult.ToOutlierSeries(data.groups, data.samples)
+        Dim outliers As MultivariateOutlierSeries = diagResult.ToOutlierSeries(diagData.groups, diagData.samples)
 
-        Call Assert(outliers.Size = data.samples.Length, $"outlier series size = {outliers.Size}")
+        Call Assert(outliers.Size = diagData.samples.Length, $"outlier series size = {outliers.Size}")
         Call Assert(Not Double.IsNaN(outliers.T2Threshold), $"T2 threshold = {outliers.T2Threshold.ToString("F3")}")
         Call Assert(Not Double.IsNaN(outliers.DModXThreshold), $"DModX threshold = {outliers.DModXThreshold.ToString("F3")}")
         Call Assert(outliers.DModX.All(Function(v) v >= 0), "all DModX values are non-negative")
@@ -406,14 +411,26 @@ Module MultivariateDemo
         Dim effects(nVariables - 1, lastGroup) As Double
 
         For j As Integer = 0 To effectVariables - 1
+            ' 每个变量的效应量再乘一个 [0.8, 1.4] 的随机因子：
+            ' 否则同一模式的变量会在 S-plot / VIP 图里完全重合
+            Dim scale As Double = 0.8 + 0.6 * rnd.NextDouble()
+
             Select Case j Mod 3
                 Case 0
-                    effects(j, lastGroup) = 1.45
+                    effects(j, lastGroup) = 1.45 * scale
                 Case 1
-                    effects(j, lastGroup) = -1.25
+                    effects(j, lastGroup) = -1.25 * scale
                 Case 2
-                    effects(j, std.Min(1, lastGroup)) = 1.3
+                    effects(j, std.Min(1, lastGroup)) = 1.3 * scale
             End Select
+        Next
+
+        ' 每个变量的噪声水平不同：这样标准化之后各变量的效应/噪声比才会不同，
+        ' S-plot 与 VIP 图里的变量才不会全部重合成一个点
+        Dim noiseScales(nVariables - 1) As Double
+
+        For j As Integer = 0 To nVariables - 1
+            noiseScales(j) = 0.5 + 1.6 * rnd.NextDouble()
         Next
 
         Dim nSamples As Integer = groupNames.Length * replicates
@@ -430,12 +447,13 @@ Module MultivariateDemo
 
                 For j As Integer = 0 To nVariables - 1
                     Dim baseline As Double = 0.8 + 0.1 * (j Mod 5)
-                    Dim noise As Double = (rnd.NextDouble() - 0.5) * 0.55
+                    Dim noise As Double = (rnd.NextDouble() - 0.5) * 0.55 * noiseScales(j)
                     Dim value As Double = baseline + effects(j, g) + noise
 
-                    If isOutlier AndAlso j < 6 Then
-                        ' 让离群样本在残差空间和得分空间都明显偏离：前 6 个变量整体抬高
-                        value += 2.2 + 0.4 * (j Mod 3)
+                    If isOutlier AndAlso j >= effectVariables Then
+                        ' 只在「纯噪声变量」上注入偏差：这个方向与判别方向正交，
+                        ' 因此样本会在残差空间 (DModX) 里明显偏离，却几乎不影响得分图
+                        value += 3.0 + 0.5 * (j Mod 3)
                     End If
 
                     values(j) = std.Max(0.01, value)

@@ -309,7 +309,7 @@ Public Module PermutationTest
                     Dim permutedModel As MultivariateAnalysisResult = Model(statObject.WithResponse(permutations(i)), analysis, component)
 
                     r2yValues(i) = MultivariateMetrics.R2Y(permutedModel)
-                    q2Values(i) = MultivariateMetrics.Q2(permutedModel)
+                    q2Values(i) = ClampQ2(MultivariateMetrics.Q2(permutedModel))
                 Catch ex As Exception
                     ' 单次置换失败（例如某次重排之后模型无法收敛）不应该影响整个检验
                     r2yValues(i) = Double.NaN
@@ -354,6 +354,19 @@ Public Module PermutationTest
         result.Q2PValue = If(Double.IsNaN(q2Original), Double.NaN, UpperTailPValue(q2Values, q2Original))
 
         Return result
+    End Function
+
+    ''' <summary>
+    ''' 置换模型的 Q2 会出现「残差平方和趋近于 0 导致比值爆炸」的数值伪影
+    ''' （例如 -70）。对于置换图而言，任何小于 -1 的 Q2 都只代表「完全没有预测能力」，
+    ''' 因此统一压到 -1，避免纵轴被个别伪影撑开、把 R2Y 序列压成一条贴边的直线。
+    ''' </summary>
+    Private Function ClampQ2(value As Double) As Double
+        If IsInvalid(value) Then
+            Return Double.NaN
+        End If
+
+        Return std.Max(-1.0, value)
     End Function
 
     Private Function Model(statObject As StatisticsObject, analysis As Type, component As Integer) As MultivariateAnalysisResult

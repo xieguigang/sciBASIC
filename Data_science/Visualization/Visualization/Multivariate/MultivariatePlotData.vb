@@ -825,6 +825,48 @@ Public Module MultivariatePlotHelper
     End Function
 
     ''' <summary>
+    ''' 计算一个文本标签的放置位置：默认放在 (x, y)，与已有标签重叠时上下交替避让，
+    ''' 并且始终把它夹紧在 <paramref name="bounds"/> 之内（避免标签被挤到绘图区外面）。
+    ''' </summary>
+    ''' <param name="occupied">已经占用的文本矩形（会被原地更新）</param>
+    Public Function PlaceLabel(x As Single, y As Single, size As SizeF, bounds As RectangleF,
+                               occupied As List(Of RectangleF)) As PointF
+
+        Dim offsets As Single() = {0, 1, -1, 2, -2, 3, -3, 4, -4}
+
+        For Each offset As Single In offsets
+            Dim cy As Single = y + offset * (size.Height + 1)
+            Dim point As PointF = ClampLabel(x, cy, size, bounds)
+            Dim rect As New RectangleF(point.X, point.Y, size.Width, size.Height)
+            Dim collision As Boolean = False
+
+            For Each used As RectangleF In occupied
+                If rect.IntersectsWith(used) Then
+                    collision = True
+
+                    Exit For
+                End If
+            Next
+
+            If Not collision Then
+                Call occupied.Add(rect)
+
+                Return point
+            End If
+        Next
+
+        ' 所有候选位置都被占用：仍然把标签画在夹紧之后的位置上
+        Return ClampLabel(x, y, size, bounds)
+    End Function
+
+    Private Function ClampLabel(x As Single, y As Single, size As SizeF, bounds As RectangleF) As PointF
+        Dim cx As Single = std.Max(bounds.Left, std.Min(x, bounds.Right - size.Width))
+        Dim cy As Single = std.Max(bounds.Top, std.Min(y, bounds.Bottom - size.Height))
+
+        Return New PointF(cx, cy)
+    End Function
+
+    ''' <summary>
     ''' 数据数组的最小/最大值（自动跳过非法值）。
     ''' </summary>
     Public Sub RangeOf(values As Double(), ByRef min As Double, ByRef max As Double)
@@ -967,7 +1009,12 @@ Public Module MultivariateAnalysisAdapters
             }
         Next
 
-        Return entries.OrderByDescending(Function(e) e.Value).ToArray
+        ' VIP 只关心大小，直接降序；回归系数有正负之分，按绝对值降序才有可读性
+        If useCoefficients Then
+            Return entries.OrderByDescending(Function(e) std.Abs(e.Value)).ToArray
+        Else
+            Return entries.OrderByDescending(Function(e) e.Value).ToArray
+        End If
     End Function
 
     ''' <summary>
