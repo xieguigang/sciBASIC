@@ -365,8 +365,8 @@ Module MultivariateDemo
     Private Function BuildTable() As DemoData
         Dim groupNames As String() = {"Control", "Treat-A", "Treat-B"}
         Dim replicates As Integer = 8
-        Dim nVariables As Integer = 30
-        Dim effectVariables As Integer = 18
+        Dim nVariables As Integer = 12
+        Dim effectVariables As Integer = 9
         Dim rnd As New Random(20261115)
 
         ' 每个变量在每个分组上的效应量
