@@ -1,60 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::0646f6c602d951b923d89c2f4fc0c803, Data_science\MachineLearning\ML_SHAP\Models\XGBoostShapModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 185
-    '    Code Lines: 118 (63.78%)
-    ' Comment Lines: 39 (21.08%)
-    '    - Xml Docs: 92.31%
-    ' 
-    '   Blank Lines: 28 (15.14%)
-    '     File Size: 6.87 KB
+' Summaries:
 
 
-    ' Class XGBoostShapModel
-    ' 
-    '     Properties: IsClassification, Model, Name, Training
-    ' 
-    '     Function: BuildExplainer, BuildNode, Cover, Output, Predict
-    '               PredictResult, Train
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 185
+'    Code Lines: 118 (63.78%)
+' Comment Lines: 39 (21.08%)
+'    - Xml Docs: 92.31%
+' 
+'   Blank Lines: 28 (15.14%)
+'     File Size: 6.87 KB
+
+
+' Class XGBoostShapModel
+' 
+'     Properties: IsClassification, Model, Name, Training
+' 
+'     Function: BuildExplainer, BuildNode, Cover, Output, Predict
+'               PredictResult, Train
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Linq
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.DataMining.Evaluation
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet
@@ -96,8 +95,11 @@ Public Class XGBoostShapModel
                                  Optional maxDepth As Integer = 4,
                                  Optional eta As Double = 0.3) As XGBoostShapModel
 
+        ' dataset.Labels 是派生视图（每次访问都会新建数组），必须在 lambda 之外取出到局部变量，
+        ' 否则在 lambda 内逐行访问会退化为 O(n^2) 的数组分配
+        Dim responses As Double() = dataset.Labels
         Dim matrix As DoubleTagged(Of Single())() = dataset.Features _
-            .Select(Function(f, i) New DoubleTagged(Of Single())(dataset.Labels(i), f.Select(Function(d) CSng(d)).ToArray)) _
+            .Select(Function(f, i) New DoubleTagged(Of Single())(responses(i), f.Select(Function(d) CSng(d)).ToArray)) _
             .ToArray
 
         ' 所有特征均按数值特征处理（该数据集不包含类别型特征，也不含缺失值）

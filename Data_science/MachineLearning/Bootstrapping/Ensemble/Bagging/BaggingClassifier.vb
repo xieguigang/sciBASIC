@@ -1,5 +1,6 @@
 Imports System
 Imports System.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble.Persistence
 
 Namespace Ensemble
 
@@ -17,7 +18,10 @@ Namespace Ensemble
     ''' 聚合时统一通过 <c>ProbabilityMath.AlignTo</c> 对齐到全局类别顺序。
     ''' </para>
     ''' </remarks>
-    Public NotInheritable Class BaggingClassifier : Implements IClassifier
+    Public NotInheritable Class BaggingClassifier
+        Implements IClassifier
+        Implements IFeatureSchema
+        Implements IPersistableModel
 
         Private ReadOnly learner As IClassifierLearner
         Private ReadOnly modelCount As Integer
@@ -25,6 +29,7 @@ Namespace Ensemble
         Private ReadOnly seed As Integer
         Private ReadOnly trained As IClassifier()
         Private classesArray As Double()
+        Private featureWidthValue As Integer
 
         ''' <param name="learner">同质基学习器</param>
         ''' <param name="modelCount">基模型数量</param>
@@ -52,9 +57,60 @@ Namespace Ensemble
             Me.trained = New IClassifier(modelCount - 1) {}
         End Sub
 
+        ''' <summary>
+        ''' 用已经训练好的基模型直接构造集成器（用于从持久化模型恢复，不会再次训练）。
+        ''' </summary>
+        ''' <param name="trained">已训练的分类器，顺序即基模型下标</param>
+        ''' <param name="classes">全局类别顺序</param>
+        ''' <param name="ratio">训练期的采样比例（仅用于诊断输出）</param>
+        ''' <param name="seed">训练期的随机种子（仅用于诊断输出）</param>
+        ''' <param name="featureWidth">训练期的特征维度，<c>0</c> 表示未知（跳过维度校验）</param>
+        Public Sub New(trained As IClassifier(),
+                       classes As Double(),
+                       Optional ratio As Double = 1.0R,
+                       Optional seed As Integer = 42,
+                       Optional featureWidth As Integer = 0)
+            If trained Is Nothing OrElse trained.Length = 0 Then
+                Throw New ArgumentException("the trained classifier list can not be empty!", NameOf(trained))
+            End If
+            If trained.Any(Function(m) m Is Nothing) Then
+                Throw New ArgumentException("the trained classifier list contains a NULL entry!", NameOf(trained))
+            End If
+            If classes Is Nothing OrElse classes.Length = 0 Then
+                Throw New ArgumentException("the classes array can not be empty!", NameOf(classes))
+            End If
+
+            Me.learner = Nothing
+            Me.modelCount = trained.Length
+            Me.ratio = ratio
+            Me.seed = seed
+            Me.trained = CType(trained.Clone(), IClassifier())
+            Me.classesArray = CType(classes.Clone(), Double())
+            Me.featureWidthValue = System.Math.Max(0, featureWidth)
+        End Sub
+
         Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
             Get
                 Return classesArray
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度；<c>0</c> 表示未知</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                If featureWidthValue > 0 Then
+                    Return featureWidthValue
+                End If
+
+                For i As Integer = 0 To trained.Length - 1
+                    Dim schema As IFeatureSchema = TryCast(trained(i), IFeatureSchema)
+
+                    If schema IsNot Nothing AndAlso schema.FeatureWidth > 0 Then
+                        Return schema.FeatureWidth
+                    End If
+                Next
+
+                Return 0
             End Get
         End Property
 
@@ -76,42 +132,37 @@ Namespace Ensemble
             End Get
         End Property
 
+        ''' <summary>训练使用的随机种子（从模型包恢复后仍保留原值）</summary>
+        Public ReadOnly Property RandomSeed As Integer
+            Get
+                Return seed
+            End Get
+        End Property
+
         ''' <summary>是否并行训练基模型（默认关闭，避免与算法库内部并行嵌套）</summary>
         Public Property Parallel As Boolean = False
 
         Public Function Train(x As Double()(), y As Double()) As BaggingClassifier
-            If x Is Nothing OrElse x.Length = 0 Then
-                Throw New ArgumentException("the feature matrix can not be empty!", NameOf(x))
-            End If
-            If y Is Nothing OrElse y.Length <> x.Length Then
-                Throw New ArgumentException(
-                    $"the feature rows ({x.Length}) and labels ({If(y Is Nothing, 0, y.Length)}) do not agree!",
-                    NameOf(y))
-            End If
+            Call EnsembleValidation.ValidateTrainingData(x, y, "BaggingClassifier.Train")
 
             Dim encoder As LabelEncoder = LabelEncoder.Fit(y)
             Dim yIndex As Integer() = encoder.Encode(y)
             Dim n As Integer = x.Length
             Dim size As Integer = System.Math.Max(1, CInt(System.Math.Round(n * ratio)))
 
-            If Parallel AndAlso trained.Length > 1 Then
-                Call System.Threading.Tasks.Parallel.For(0, trained.Length,
-                    Sub(m)
-                        trained(m) = FitOne(x, yIndex, encoder.Classes, n, size, m)
-                    End Sub)
-            Else
-                For m As Integer = 0 To trained.Length - 1
-                    trained(m) = FitOne(x, yIndex, encoder.Classes, n, size, m)
-                Next
-            End If
+            Call EnsembleParallel.FitAll(trained.Length, Parallel,
+                Sub(m)
+                    trained(m) = FitOne(x, yIndex, encoder.Classes, size, m)
+                End Sub)
 
             classesArray = encoder.Classes
+            featureWidthValue = x(0).Length
 
             Return Me
         End Function
 
         Private Function FitOne(x As Double()(), yIndex As Integer(), classes As Double(),
-                                n As Integer, size As Integer, modelIndex As Integer) As IClassifier
+                                size As Integer, modelIndex As Integer) As IClassifier
             Dim sampler As New BootstrapSampler(seed + modelIndex)
             Dim index As Integer() = sampler.Sample(size)
             Dim xSub As Double()() = BootstrapSampler.Resample(x, index)
@@ -121,7 +172,8 @@ Namespace Ensemble
         End Function
 
         Public Function PredictProbability(x As Double()) As Double() Implements IClassifier.PredictProbability
-            RequireTrained()
+            Call RequireTrained()
+            Call x.ValidateFeatureVector(FeatureWidth, "BaggingClassifier.PredictProbability")
 
             Dim size As Integer = classesArray.Length
             Dim aggregate As Double() = New Double(size - 1) {}
@@ -146,25 +198,63 @@ Namespace Ensemble
 
         ''' <summary>批量预测类别标签</summary>
         Public Function PredictBatch(x As Double()()) As Double()
-            If x Is Nothing Then
-                Throw New ArgumentNullException(NameOf(x))
-            End If
+            Call RequireTrained()
+            Call x.ValidateFeatureMatrix(FeatureWidth, "BaggingClassifier.PredictBatch")
 
             Dim result As Double() = New Double(x.Length - 1) {}
 
-            For i As Integer = 0 To x.Length - 1
-                result(i) = ProbabilityMath.PredictClass(Me, x(i))
-            Next
+            Call EnsembleParallel.PredictAll(x.Length, Parallel,
+                Sub(i)
+                    result(i) = ProbabilityMath.PredictClass(Me, x(i))
+                End Sub)
 
             Return result
         End Function
 
+        Public ReadOnly Property ModelKind As String Implements IPersistableModel.ModelKind
+            Get
+                Return "bagging"
+            End Get
+        End Property
+
+        Public ReadOnly Property ModelCategory As String Implements IPersistableModel.ModelCategory
+            Get
+                Return "classifier"
+            End Get
+        End Property
+
+        Public Function SaveModel(bundle As ModelBundle, folder As String) As ModelManifest Implements IPersistableModel.SaveModel
+            Call RequireTrained()
+
+            Dim manifest As ModelManifest = ModelManifest.Create(ModelCategory, ModelKind, "")
+
+            manifest.featureWidth = FeatureWidth
+            manifest.classes = CType(classesArray.Clone(), Double())
+            manifest.SetScalar("sampleRatio", ratio)
+            manifest.SetInteger("seed", seed)
+            manifest.SetInteger("modelCount", trained.Length)
+
+            For m As Integer = 0 To trained.Length - 1
+                Dim childFolder As String = ModelBundle.CombineRelative(folder, $"base/{m}")
+
+                Call manifest.children.Add(EnsembleModelStore.SaveChild(trained(m), bundle, childFolder))
+            Next
+
+            Return manifest
+        End Function
+
+        Public Function Save(directory As String) As ModelManifest Implements IPersistableModel.Save
+            Return EnsembleModelStore.Save(Me, directory)
+        End Function
+
         Private Sub RequireTrained()
-            If classesArray Is Nothing Then
-                Throw New InvalidOperationException(
-                    "the bagging classifier has not been trained yet; call Train() before predicting!")
-            End If
+            Call EnsembleValidation.RequireTrained(classesArray IsNot Nothing, NameOf(BaggingClassifier), "classes")
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"BaggingClassifier: {If(trained, New IClassifier() {}).Length} base model(s), " &
+                   $"ratio={ratio}, seed={seed}, {If(classesArray, New Double() {}).Length} class(es)."
+        End Function
 
     End Class
 

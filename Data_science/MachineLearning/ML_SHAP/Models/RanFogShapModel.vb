@@ -1,60 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::6461d4331dfaf768b305461abcaffebb, Data_science\MachineLearning\ML_SHAP\Models\RanFogShapModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 189
-    '    Code Lines: 102 (53.97%)
-    ' Comment Lines: 57 (30.16%)
-    '    - Xml Docs: 94.74%
-    ' 
-    '   Blank Lines: 30 (15.87%)
-    '     File Size: 7.62 KB
+' Summaries:
 
 
-    ' Class RanFogShapModel
-    ' 
-    '     Properties: Forest, IsClassification, Name, Training
-    ' 
-    '     Function: BuildExplainer, BuildNode, Output, Predict, PredictResult
-    '               Train
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 189
+'    Code Lines: 102 (53.97%)
+' Comment Lines: 57 (30.16%)
+'    - Xml Docs: 94.74%
+' 
+'   Blank Lines: 30 (15.87%)
+'     File Size: 7.62 KB
+
+
+' Class RanFogShapModel
+' 
+'     Properties: Forest, IsClassification, Name, Training
+' 
+'     Function: BuildExplainer, BuildNode, Output, Predict, PredictResult
+'               Train
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.ShapleyValue
 Imports Microsoft.VisualBasic.Math.Statistics.ShapleyValue.TreeShap
 Imports rf = Microsoft.VisualBasic.MachineLearning.RandomForests

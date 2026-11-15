@@ -84,12 +84,55 @@ Namespace BayesianRegression
         End Sub
 
         ''' <summary>
+        ''' 从已持久化的分箱边界与代表值恢复分箱器，不做任何目标统计。
+        ''' </summary>
+        Private Sub New(minimum As Double, maximum As Double, interval As Double,
+                        binCount As Integer, representatives As Double())
+            If binCount < 1 Then
+                Throw New ArgumentOutOfRangeException(NameOf(binCount), $"the bin count must be positive, but got {binCount}!")
+            End If
+            If representatives Is Nothing OrElse representatives.Length <> binCount Then
+                Throw New ArgumentException(
+                    $"the representative count ({If(representatives Is Nothing, 0, representatives.Length)}) " &
+                    $"does not match the bin count ({binCount})!", NameOf(representatives))
+            End If
+            If Double.IsNaN(minimum) OrElse Double.IsInfinity(minimum) Then
+                Throw New ArgumentException($"the binning minimum is not a finite number ({minimum})!", NameOf(minimum))
+            End If
+            If Double.IsNaN(maximum) OrElse Double.IsInfinity(maximum) Then
+                Throw New ArgumentException($"the binning maximum is not a finite number ({maximum})!", NameOf(maximum))
+            End If
+            If Double.IsNaN(interval) OrElse Double.IsInfinity(interval) OrElse interval < 0.0R Then
+                Throw New ArgumentException($"the bin interval is invalid ({interval})!", NameOf(interval))
+            End If
+
+            _minimum = minimum
+            _maximum = maximum
+            _interval = interval
+            _binCount = binCount
+            _representatives = CType(representatives.Clone(), Double())
+        End Sub
+
+        ''' <summary>
         ''' 由训练目标向量拟合分箱边界与代表值。
         ''' </summary>
         ''' <param name="y">连续目标向量</param>
         ''' <param name="bins">期望的箱数，小于 1 时按 1 处理</param>
         Public Shared Function Fit(y As Double(), Optional bins As Integer = DefaultBins) As TargetBinning
             Return New TargetBinning(y, bins)
+        End Function
+
+        ''' <summary>
+        ''' 从已保存的模型状态恢复分箱器（用于模型持久化加载）。
+        ''' </summary>
+        ''' <remarks>
+        ''' <c>BayesianRegression</c> 的预测路径只读取 <see cref="Representatives"/>，
+        ''' 但为了保证 <see cref="BinIndex"/> 与诊断输出在恢复后同样可用，
+        ''' 边界与箱宽也一并持久化并还原。
+        ''' </remarks>
+        Public Shared Function Restore(minimum As Double, maximum As Double, interval As Double,
+                                       binCount As Integer, representatives As Double()) As TargetBinning
+            Return New TargetBinning(minimum, maximum, interval, binCount, representatives)
         End Function
 
         ''' <summary>实际生效的箱数（目标恒定时为 1）</summary>

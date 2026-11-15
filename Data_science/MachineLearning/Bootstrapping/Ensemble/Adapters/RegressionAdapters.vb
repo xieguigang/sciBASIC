@@ -22,13 +22,33 @@ Namespace Ensemble
     ''' <c>RanFog.Predict</c> 返回各树叶值的平均，是连续回归值，不提供类别概率；
     ''' 因此该算法族只作为回归基学习器暴露（分类请使用朴素贝叶斯 / SVM / 逻辑回归）。
     ''' </remarks>
-    Public NotInheritable Class RandomForestRegressor : Implements IRegressor
+    Public NotInheritable Class RandomForestRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As RanFog
+        Private ReadOnly featureWidthValue As Integer
 
-        Friend Sub New(fitted As RanFog)
+        ''' <param name="fitted">已训练的随机森林</param>
+        ''' <param name="featureWidth">训练期的特征维度，<c>0</c> 表示未知</param>
+        Public Sub New(fitted As RanFog, Optional featureWidth As Integer = 0)
             Me.fitted = fitted
+            Me.featureWidthValue = System.Math.Max(0, featureWidth)
         End Sub
+
+        ''' <summary>底层已训练的随机森林模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As RanFog
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度；<c>0</c> 表示未知</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return featureWidthValue
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             If x Is Nothing Then
@@ -80,7 +100,7 @@ Namespace Ensemble
 
             Call forest.Run(data)
 
-            Return New RandomForestRegressor(forest)
+            Return New RandomForestRegressor(forest, width)
         End Function
 
     End Class
@@ -90,13 +110,29 @@ Namespace Ensemble
 #Region "bayesian regression"
 
     ''' <summary>高斯/离散贝叶斯回归适配器</summary>
-    Public NotInheritable Class BayesianRegressor : Implements IRegressor
+    Public NotInheritable Class BayesianRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As BayesRegNS.BayesianRegression
 
-        Friend Sub New(fitted As BayesRegNS.BayesianRegression)
+        Public Sub New(fitted As BayesRegNS.BayesianRegression)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的贝叶斯回归模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As BayesRegNS.BayesianRegression
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return If(fitted Is Nothing, 0, fitted.FeatureWidth)
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             If x Is Nothing Then
@@ -141,15 +177,43 @@ Namespace Ensemble
 #Region "svm regression"
 
     ''' <summary>SVR 回归适配器（取 <c>SVMPrediction.score</c>）</summary>
-    Public NotInheritable Class SvmRegressor : Implements IRegressor
+    Public NotInheritable Class SvmRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As SvmModelType
         Private ReadOnly labelOffset As Integer
+        Private ReadOnly featureWidthValue As Integer
 
-        Friend Sub New(fitted As SvmModelType, labelOffset As Integer)
+        ''' <param name="fitted">已训练的 SVR 模型</param>
+        ''' <param name="labelOffset">特征索引基</param>
+        ''' <param name="featureWidth">训练期的特征维度，<c>0</c> 表示未知</param>
+        Public Sub New(fitted As SvmModelType, labelOffset As Integer, Optional featureWidth As Integer = 0)
             Me.fitted = fitted
             Me.labelOffset = labelOffset
+            Me.featureWidthValue = System.Math.Max(0, featureWidth)
         End Sub
+
+        ''' <summary>底层已训练的 SVR 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As SvmModelType
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>特征索引基（持久化恢复时必须一并保存）</summary>
+        Public ReadOnly Property IndexOffset As Integer
+            Get
+                Return labelOffset
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度；<c>0</c> 表示未知</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return featureWidthValue
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             If x Is Nothing Then
@@ -197,7 +261,7 @@ Namespace Ensemble
             }
             Dim fitted As SvmModelType = Training.Train(problem, parameter)
 
-            Return New SvmRegressor(fitted, offset)
+            Return New SvmRegressor(fitted, offset, x(0).Length)
         End Function
 
     End Class
@@ -207,13 +271,36 @@ Namespace Ensemble
 #Region "data fittings"
 
     ''' <summary>岭回归适配器</summary>
-    Public NotInheritable Class RidgeRegressor : Implements IRegressor
+    Public NotInheritable Class RidgeRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As RidgeNS.RidgeFit
 
-        Friend Sub New(fitted As RidgeNS.RidgeFit)
+        Public Sub New(fitted As RidgeNS.RidgeFit)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的岭回归模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As RidgeNS.RidgeFit
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度（等于系数行宽）</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                If fitted Is Nothing OrElse fitted.coefficients Is Nothing OrElse fitted.coefficients.Length = 0 Then
+                    Return 0
+                End If
+                If fitted.coefficients(0) Is Nothing Then
+                    Return 0
+                End If
+
+                Return fitted.coefficients(0).Length
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             Return fitted.GetY(x)
@@ -251,13 +338,33 @@ Namespace Ensemble
     End Class
 
     ''' <summary>多元线性回归适配器（无截距，与既有 MLR 语义一致）</summary>
-    Public NotInheritable Class MlrRegressor : Implements IRegressor
+    Public NotInheritable Class MlrRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As MultivariateNS.MLRFit
 
-        Friend Sub New(fitted As MultivariateNS.MLRFit)
+        Public Sub New(fitted As MultivariateNS.MLRFit)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的多元线性回归模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As MultivariateNS.MLRFit
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度（等于回归系数长度；模型无截距）</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                If fitted Is Nothing OrElse fitted.beta Is Nothing Then
+                    Return 0
+                End If
+
+                Return fitted.beta.Length
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             Return fitted.GetY(x)
@@ -284,15 +391,31 @@ Namespace Ensemble
     End Class
 
     ''' <summary>LASSO 适配器（按 R² 选择正则化路径上的最优步）</summary>
-    Public NotInheritable Class LassoRegressor : Implements IRegressor
+    Public NotInheritable Class LassoRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As LassoNS.LassoFit
         Private ReadOnly selectedStep As Integer
 
-        Friend Sub New(fitted As LassoNS.LassoFit, selectedStep As Integer)
+        Public Sub New(fitted As LassoNS.LassoFit, selectedStep As Integer)
             Me.fitted = fitted
             Me.selectedStep = selectedStep
         End Sub
+
+        ''' <summary>底层已训练的 LASSO 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As LassoNS.LassoFit
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return If(fitted Is Nothing, 0, fitted.numFeatures)
+            End Get
+        End Property
 
         ''' <summary>实际使用的 lambda 下标</summary>
         Public ReadOnly Property LambdaIndex As Integer
@@ -368,13 +491,29 @@ Namespace Ensemble
 #Region "xgboost"
 
     ''' <summary>XGBoost 回归适配器（单输出）</summary>
-    Public NotInheritable Class XGBoostRegressor : Implements IRegressor
+    Public NotInheritable Class XGBoostRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
 
         Private ReadOnly fitted As XGBoostModel
 
-        Friend Sub New(fitted As XGBoostModel)
+        Public Sub New(fitted As XGBoostModel)
             Me.fitted = fitted
         End Sub
+
+        ''' <summary>底层已训练的 XGBoost 模型（供持久化/诊断）</summary>
+        Public ReadOnly Property FittedModel As XGBoostModel
+            Get
+                Return fitted
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                Return If(fitted Is Nothing, 0, fitted.FeatureWidth)
+            End Get
+        End Property
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
             Return fitted.Predict(x)

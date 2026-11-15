@@ -1,6 +1,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble.Persistence
 
 Namespace Ensemble
 
@@ -11,7 +12,10 @@ Namespace Ensemble
     ''' 回归没有类别，OOF 元特征宽度等于基模型数；元特征与最终预测都使用
     ''' 同一组基模型定义，训练完成后基模型会用全量数据重训一次。
     ''' </remarks>
-    Public NotInheritable Class StackingRegressor : Implements IRegressor
+    Public NotInheritable Class StackingRegressor
+        Implements IRegressor
+        Implements IFeatureSchema
+        Implements IPersistableModel
 
         Private ReadOnly learners As IRegressorLearner()
         Private ReadOnly meta As IRegressorLearner
@@ -20,6 +24,7 @@ Namespace Ensemble
         Private ReadOnly trained As IRegressor()
         Private metaFitted As IRegressor
         Private oofRMSEValue As Double
+        Private featureWidthValue As Integer
 
         Public Sub New(learners As IEnumerable(Of IRegressorLearner),
                        meta As IRegressorLearner,
@@ -49,6 +54,45 @@ Namespace Ensemble
             Me.folds = folds
             Me.seed = seed
             Me.trained = New IRegressor(items.Length - 1) {}
+        End Sub
+
+        ''' <summary>
+        ''' 用已经训练好的基模型与元模型直接构造集成器（用于从持久化模型恢复，不会再次训练）。
+        ''' </summary>
+        ''' <param name="trained">已训练的基回归器，顺序即元特征的列顺序</param>
+        ''' <param name="meta">已训练的元回归器</param>
+        ''' <param name="folds">训练期的折数（仅用于诊断输出）</param>
+        ''' <param name="seed">训练期的随机种子（仅用于诊断输出）</param>
+        ''' <param name="oofRMSE">训练期记录的 OOF 均方根误差</param>
+        ''' <param name="featureWidth">训练期的特征维度，<c>0</c> 表示未知（跳过维度校验）</param>
+        Public Sub New(trained As IRegressor(),
+                       meta As IRegressor,
+                       Optional folds As Integer = 5,
+                       Optional seed As Integer = 42,
+                       Optional oofRMSE As Double = Double.NaN,
+                       Optional featureWidth As Integer = 0)
+            If trained Is Nothing OrElse trained.Length = 0 Then
+                Throw New ArgumentException("the trained regressor list can not be empty!", NameOf(trained))
+            End If
+
+            For i As Integer = 0 To trained.Length - 1
+                If trained(i) Is Nothing Then
+                    Throw New ArgumentException("the trained regressor list contains a NULL entry!", NameOf(trained))
+                End If
+            Next
+
+            If meta Is Nothing Then
+                Throw New ArgumentNullException(NameOf(meta))
+            End If
+
+            Me.learners = New IRegressorLearner() {}
+            Me.meta = Nothing
+            Me.folds = folds
+            Me.seed = seed
+            Me.trained = CType(trained.Clone(), IRegressor())
+            Me.metaFitted = meta
+            Me.oofRMSEValue = oofRMSE
+            Me.featureWidthValue = System.Math.Max(0, featureWidth)
         End Sub
 
         Public ReadOnly Property BaseModelCount As Integer
@@ -83,15 +127,37 @@ Namespace Ensemble
             End Get
         End Property
 
+        ''' <summary>训练使用的随机种子（从模型包恢复后仍保留原值）</summary>
+        Public ReadOnly Property RandomSeed As Integer
+            Get
+                Return seed
+            End Get
+        End Property
+
+        ''' <summary>训练期的特征维度；<c>0</c> 表示未知</summary>
+        Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+            Get
+                If featureWidthValue > 0 Then
+                    Return featureWidthValue
+                End If
+
+                For i As Integer = 0 To trained.Length - 1
+                    Dim schema As IFeatureSchema = TryCast(trained(i), IFeatureSchema)
+
+                    If schema IsNot Nothing AndAlso schema.FeatureWidth > 0 Then
+                        Return schema.FeatureWidth
+                    End If
+                Next
+
+                Return 0
+            End Get
+        End Property
+
+        ''' <summary>是否并行训练基模型（默认关闭，避免与算法库内部并行嵌套）</summary>
+        Public Property Parallel As Boolean = False
+
         Public Function Train(x As Double()(), y As Double()) As StackingRegressor
-            If x Is Nothing OrElse x.Length = 0 Then
-                Throw New ArgumentException("the feature matrix can not be empty!", NameOf(x))
-            End If
-            If y Is Nothing OrElse y.Length <> x.Length Then
-                Throw New ArgumentException(
-                    $"the feature rows ({x.Length}) and labels ({If(y Is Nothing, 0, y.Length)}) do not agree!",
-                    NameOf(y))
-            End If
+            Call EnsembleValidation.ValidateTrainingData(x, y, "StackingRegressor.Train")
 
             Dim n As Integer = x.Length
 
@@ -119,9 +185,10 @@ Namespace Ensemble
 
             metaFitted = meta.Fit(oof, y)
 
-            For l As Integer = 0 To learners.Length - 1
-                trained(l) = learners(l).Fit(x, y)
-            Next
+            Call EnsembleParallel.FitAll(trained.Length, Parallel,
+                Sub(l)
+                    trained(l) = learners(l).Fit(x, y)
+                End Sub)
 
             Dim predicted As Double() = New Double(n - 1) {}
 
@@ -130,12 +197,14 @@ Namespace Ensemble
             Next
 
             oofRMSEValue = EnsembleMetrics.RMSE(predicted, y)
+            featureWidthValue = x(0).Length
 
             Return Me
         End Function
 
         Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
-            RequireTrained()
+            Call RequireTrained()
+            Call x.ValidateFeatureVector(FeatureWidth, "StackingRegressor.Predict")
 
             Dim metaX As Double() = New Double(trained.Length - 1) {}
 
@@ -149,36 +218,74 @@ Namespace Ensemble
                 metaX(l) = model.Predict(x)
             Next
 
-            Dim value As Double = metaFitted.Predict(metaX)
-
-            If Double.IsNaN(value) OrElse Double.IsInfinity(value) Then
-                Throw New InvalidOperationException($"the stacking meta regressor returned an invalid prediction ({value})!")
-            End If
-
-            Return value
+            Return EnsembleValidation.EnsureFinite(
+                metaFitted.Predict(metaX), "the stacking meta regressor")
         End Function
 
         ''' <summary>批量预测</summary>
         Public Function PredictBatch(x As Double()()) As Double()
-            If x Is Nothing Then
-                Throw New ArgumentNullException(NameOf(x))
-            End If
+            Call RequireTrained()
+            Call x.ValidateFeatureMatrix(FeatureWidth, "StackingRegressor.PredictBatch")
 
             Dim result As Double() = New Double(x.Length - 1) {}
 
-            For i As Integer = 0 To x.Length - 1
-                result(i) = Predict(x(i))
-            Next
+            Call EnsembleParallel.PredictAll(x.Length, Parallel,
+                Sub(i)
+                    result(i) = Predict(x(i))
+                End Sub)
 
             Return result
         End Function
 
+        Public ReadOnly Property ModelKind As String Implements IPersistableModel.ModelKind
+            Get
+                Return "stacking"
+            End Get
+        End Property
+
+        Public ReadOnly Property ModelCategory As String Implements IPersistableModel.ModelCategory
+            Get
+                Return "regressor"
+            End Get
+        End Property
+
+        Public Function SaveModel(bundle As ModelBundle, folder As String) As ModelManifest Implements IPersistableModel.SaveModel
+            Call RequireTrained()
+
+            Dim manifest As ModelManifest = ModelManifest.Create(ModelCategory, ModelKind, "")
+
+            manifest.featureWidth = FeatureWidth
+            manifest.SetInteger("folds", folds)
+            manifest.SetInteger("seed", seed)
+            manifest.SetInteger("modelCount", trained.Length)
+            manifest.SetScalar("oofRmse", oofRMSEValue)
+
+            For l As Integer = 0 To trained.Length - 1
+                Dim childFolder As String = ModelBundle.CombineRelative(folder, $"base/{l}")
+
+                Call manifest.children.Add(EnsembleModelStore.SaveChild(trained(l), bundle, childFolder))
+            Next
+
+            Dim metaFolder As String = ModelBundle.CombineRelative(folder, "meta")
+
+            Call manifest.children.Add(EnsembleModelStore.SaveChild(metaFitted, bundle, metaFolder))
+
+            Return manifest
+        End Function
+
+        Public Function Save(directory As String) As ModelManifest Implements IPersistableModel.Save
+            Return EnsembleModelStore.Save(Me, directory)
+        End Function
+
         Private Sub RequireTrained()
-            If metaFitted Is Nothing Then
-                Throw New InvalidOperationException(
-                    "the stacking regressor has not been trained yet; call Train() before predicting!")
-            End If
+            Call EnsembleValidation.RequireTrained(
+                metaFitted IsNot Nothing, NameOf(StackingRegressor), "meta")
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"StackingRegressor: {trained.Length} base model(s), folds={folds}, seed={seed}, " &
+                   $"oofRmse={oofRMSEValue:F4}."
+        End Function
 
     End Class
 

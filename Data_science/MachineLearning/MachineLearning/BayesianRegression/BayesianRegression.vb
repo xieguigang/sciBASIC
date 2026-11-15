@@ -104,6 +104,88 @@ Namespace BayesianRegression
         End Property
 
         ''' <summary>
+        ''' 目标箱编号（与 <see cref="PosteriorModel"/> 的类别顺序一致）。
+        ''' 仅供模型持久化使用，请勿修改返回的数组。
+        ''' </summary>
+        Public ReadOnly Property Classes As Integer()
+            Get
+                Return _classes
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 各目标箱的代表值（箱内训练目标的均值）。
+        ''' 仅供模型持久化使用，请勿修改返回的数组。
+        ''' </summary>
+        Public ReadOnly Property Representatives As Double()
+            Get
+                Return _representatives
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 从已保存的模型状态恢复贝叶斯回归模型（用于模型持久化加载），不做任何重训。
+        ''' </summary>
+        ''' <param name="mode">特征似然路径</param>
+        ''' <param name="bins">训练时请求的箱数</param>
+        ''' <param name="smoothing">离散路径的加性平滑系数</param>
+        ''' <param name="varianceFloor">连续路径的方差下限</param>
+        ''' <param name="binning">目标分箱器</param>
+        ''' <param name="posterior">底层的朴素贝叶斯分类器</param>
+        ''' <param name="classes">目标箱编号，必须与 <paramref name="posterior"/> 的类别顺序一致</param>
+        ''' <param name="representatives">各目标箱的代表值</param>
+        Public Shared Function Restore(mode As BayesFeatureMode,
+                                       bins As Integer,
+                                       smoothing As Double,
+                                       varianceFloor As Double,
+                                       binning As TargetBinning,
+                                       posterior As NaiveBayesModel,
+                                       classes As Integer(),
+                                       representatives As Double()) As BayesianRegression
+            If posterior Is Nothing Then
+                Throw New ArgumentNullException(NameOf(posterior))
+            End If
+            If binning Is Nothing Then
+                Throw New ArgumentNullException(NameOf(binning))
+            End If
+            If representatives Is Nothing OrElse representatives.Length = 0 Then
+                Throw New ArgumentException("the restored bin representatives can not be empty!", NameOf(representatives))
+            End If
+
+            Dim expected As Integer() = posterior.Classes
+
+            If classes Is Nothing OrElse classes.Length <> expected.Length Then
+                Throw New ArgumentException(
+                    $"the restored class codes ({If(classes Is Nothing, 0, classes.Length)}) " &
+                    $"do not match the posterior model classes ({expected.Length})!", NameOf(classes))
+            End If
+
+            For k As Integer = 0 To expected.Length - 1
+                If classes(k) <> expected(k) Then
+                    Throw New ArgumentException(
+                        $"the restored class code at index {k} ({classes(k)}) does not match " &
+                        $"the posterior model class ({expected(k)})!", NameOf(classes))
+                End If
+                If classes(k) < 0 OrElse classes(k) >= representatives.Length Then
+                    Throw New ArgumentException(
+                        $"the class code {classes(k)} is out of the representative range [0, {representatives.Length})!",
+                        NameOf(classes))
+                End If
+            Next
+
+            Return New BayesianRegression With {
+                ._model = posterior,
+                ._binning = binning,
+                ._classes = CType(classes.Clone(), Integer()),
+                ._representatives = CType(representatives.Clone(), Double()),
+                ._mode = mode,
+                ._bins = bins,
+                ._smoothing = smoothing,
+                ._varianceFloor = varianceFloor
+            }
+        End Function
+
+        ''' <summary>
         ''' 用统一数值表训练回归模型。
         ''' </summary>
         ''' <param name="table">特征矩阵 + 连续目标列的数值表</param>

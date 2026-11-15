@@ -16,14 +16,17 @@
 
 | 命名空间 | 职责 |
 |---|---|
-| `Microsoft.VisualBasic.MachineLearning.SHAP` | 本包：分析门面 `ShapAnalyzer` 与结果模型 `ShapAnalysisResult` |
-| `Microsoft.VisualBasic.Math.Statistics.ShapleyValue` | 归因算法：`IShapExplainer`、`ShapExplanation`、`ShapDataset`、`TreeShap` |
+| `Microsoft.VisualBasic.MachineLearning.SHAP` | 本包：分析门面 `ShapAnalyzer`、结果模型 `ShapAnalysisResult`、样本集 `ShapDataset` |
+| `Microsoft.VisualBasic.Math.Statistics.ShapleyValue` | 归因算法：`IShapExplainer`、`ShapExplanation`、`TreeShap` |
+| `Microsoft.VisualBasic.Data` | 统一数值载体 `NumericTable`：`ShapDataset` 以**组合**方式持有它，作为唯一的数据来源 |
 | `Microsoft.VisualBasic.MachineLearning.XGBoost` | 树模型集成，可提供 SHAP 解释器 |
+| `Microsoft.VisualBasic.MachineLearning.GLMNet` | glmnet 正则化路径拟合（六个 family），可提供解析式 SHAP 解释器 |
 
-本包只有两个公开类型，刻意保持「薄」：
+分析门面刻意保持「薄」：
 
+- `Module ShapAnalyzer` —— 唯一的分析入口 `Analyze`；
 - `ShapAnalysisResult` —— 分析结果模型；
-- `Module ShapAnalyzer` —— 唯一的分析入口 `Analyze`。
+- `ShapDataset` —— 样本集：一张 `NumericTable` + 一个「是否为分类」标记 + 文本装载器。
 
 ## 四、关键类型与 API
 
@@ -55,14 +58,125 @@ Public Function Analyze(explainer As IShapExplainer,
 参数说明：
 
 - `explainer` —— 已经针对某个模型构建好的 SHAP 解释器；
-- `dataset` —— 参与计算的样本集合（提供 `Size`、`Width`、`Features`、`IDs`、`FeatureNames`、`IsCategorical`、`Name`）；
+- `dataset` —— 参与计算的样本集合（提供 `Size`、`Width`、`Features`、`IDs`、`FeatureNames`、`IsCategorical`、`Name`，这些成员都是其内部 `Table` 的只读转发视图）；
 - `modelName` —— 报告用的模型名；
 - `maxSamples` —— 最多解释的样本数量，小于等于 `0` 表示解释全部样本；
 - `output` —— 可选的模型原始输出函数（例如逻辑回归的类别概率）。为空时报告加性值 `baseline + Σ contribution`。
 
 内部逻辑：逐样本调用 `explainer.Explain(x)` 取得贡献向量，累加得到绝对和与有符号和；循环结束后按实际解释的样本数取均值，从而同时得到 `MeanAbsShap` 与 `MeanShap`；每个样本的 `AdditiveValue` 由 `Baseline` 逐项累加贡献得到。
 
-## 五、快速上手
+### `ShapDataset`
+
+`ShapDataset` 采用**组合**而不是继承的方式复用框架的统一数值载体：数值数据全部保存在只读成员 `Table As NumericTable` 之中，自身只保留「标签是否为类别编号」这一元信息与文本装载逻辑。
+
+| 成员 | 来源（`Table` 的视图） | 说明 |
+|---|---|---|
+| `Table` | —— | 唯一数据来源：`rowNames` = 样本 ID、`features` = 特征矩阵、`labels` = 响应（n×1，列名 `Y`） |
+| `Size` / `Width` | `nsamples` / `nfeatures` | 样本数 / 特征数 |
+| `IDs` | `rowNames` | 样本 ID |
+| `Features` / `FeatureNames` | `features` / `featureNames` | 引用同一份数据，零拷贝 |
+| `Name` | `name` | 数据集名 |
+| `Labels` | `GetLabel(0)` | 单列响应向量；**每次访问都会新建数组**，循环内请先取到局部变量 |
+| `ClassLabels` | `GetClassLabel(0)` | 响应的整数化视图，用于混淆矩阵 |
+| `IsCategorical` | —— | 分类任务标记，参与报告输出 |
+
+加载入口：
+
+```vbnet
+Dim dataset As ShapDataset = ShapDataset.LoadFile("training_categorical.txt", isCategorical:=True)
+' 也可以直接消费底层数值表（任何接受 NumericTable 的算法都可直接使用）
+Dim table As NumericTable = dataset.Table
+```
+
+文本格式为 `label id feature1 feature2 ... featureN`（空格或制表符分隔，`#` 开头为注释行）；
+解析后会构造 `NumericTable` 并调用其 `Validate()` 完成维度一致性校验。
+
+为了方便与算法层互操作，`ShapDataset` 同时实现了 `INumericMatrix`（`ArrayPack`）与
+`ILabeledMatrix`（`GetLabels`，返回行名）两个接口，并把调用转发给内部的 `Table`。
+
+## 五、GLMNet（glmnet）模型适配
+
+`GlmnetShapModel` 把 R `glmnet` 5.1 的复刻实现（`GLMNet` 工程）接入同一套分析链路。
+在固定 `lambda` 上，glmnet 的六个 family 都是 **link scale 上的线性模型**：
+
+```
+eta(x)   = a0 + Σ beta_j * x_j
+phi_j    = beta_j * (x_j - E[x_j])
+baseline = a0 + Σ beta_j * E[x_j]
+```
+
+`GlmnetFit` 的系数已经是原始量纲（与 R 的 `coef()` 直接对齐），`E[x_j]` 只需取训练集特征列的均值，
+因此可以直接复用 `LinearShapExplainer`：解析求解，**O(样本数 × 特征数)**，没有子集枚举与采样开销。
+
+### 模型选择
+
+一条 glmnet 路径包含多个 lambda 步，`GlmnetShapModel` 提供三种选取方式：
+
+```vbnet
+Dim options As New GlmnetOptions With {.Alpha = 1.0}
+
+' 1) 路径末端（缺省：惩罚最弱、变量最多）
+Dim path As GlmnetShapModel = GlmnetShapModel.Train(dataset, "gaussian", options)
+
+' 2) 指定路径步下标或具体 lambda 值（后者在网格上线性插值）
+Dim step30 As GlmnetShapModel = GlmnetShapModel.Train(dataset, "gaussian", options, lambdaIndex:=30)
+Dim atS As GlmnetShapModel = GlmnetShapModel.Train(dataset, "gaussian", options, s:=0.05)
+
+' 3) 交叉验证选优：lambda.min / lambda.1se
+Dim cvOptions As GlmnetOptions = options.Clone()
+cvOptions.NFolds = 5
+Dim cvBest As GlmnetShapModel = GlmnetShapModel.TrainCV(dataset, "binomial", cvOptions, "lambda.min")
+
+' 也可以直接使用已有的 cv.glmnet 结果
+Dim fromCV As GlmnetShapModel = GlmnetShapModel.FromCV(cvFit, dataset, s:="lambda.1se")
+```
+
+分析调用与其它适配器完全一致：
+
+```vbnet
+Dim result As ShapAnalysisResult =
+    ShapAnalyzer.Analyze(model.BuildExplainer(), dataset, model.Name, maxSamples:=200, output:=AddressOf model.Output)
+```
+
+### family 与响应尺度
+
+`ShapAnalyzer` 记录的 `Output` 是**响应尺度**的值，而 `baseline + Σ phi` 始终成立在 **link scale** 上：
+
+| family | 任务 | `Output`（响应尺度） | link scale 上的加性含义 |
+|---|---|---|---|
+| `gaussian` | 回归 | 预测值 | 与响应同尺度，可直接对照 |
+| `mgaussian` | 多响应回归 | 第 `ResponseIndex` 列的预测值 | 同上 |
+| `binomial` | 二分类 | 正类概率 | log-odds（logit） |
+| `poisson` | 计数回归 | 期望计数 | log 均值 |
+| `multinomial` | 多分类 | 第 `ResponseIndex` 类的 softmax 概率 | 该类的 logit |
+| `cox` | 生存分析 | 风险得分 `exp(eta)` | 线性预测子 |
+
+> `cox` 的解释目标是风险得分，基线值在比例风险模型之外没有自然含义，
+> 解读时应以特征贡献的相对大小与方向为主。
+
+### 多响应模型
+
+`multinomial` / `mgaussian` 的系数矩阵宽度为 K，需要 `ResponseIndex` 指定要解释的响应列，
+其顺序与 `GlmnetFit.classLabels` / `responseNames` 一致（多分类时为排序后的类别标签）：
+
+```vbnet
+Dim cls2 As GlmnetShapModel = GlmnetShapModel.Train(dataset, "multinomial", options, responseIndex:=1)
+Console.WriteLine(cls2.ResponseName)   ' class_1
+```
+
+### 显式响应矩阵
+
+`cox` 需要 `(time, status)` 两列响应、`mgaussian` 需要 K 列响应，而 `ShapDataset` 只提供单列
+响应（`Table.labels` 的第一列，见 `Labels` 转发视图）；此时使用接受响应矩阵的重载，
+单列标签路径会给出明确的错误提示：
+
+```vbnet
+Dim y As Double()() = ...    ' n x 2：(time, status)
+Dim cox As GlmnetShapModel = GlmnetShapModel.Train(dataset, "cox", y, options)
+Dim coxCv As GlmnetShapModel = GlmnetShapModel.TrainCV(dataset, "cox", y, options, "lambda.min")
+```
+
+## 六、快速上手
 
 ```vbnet
 Imports Microsoft.VisualBasic.MachineLearning.SHAP
@@ -82,19 +196,20 @@ Dim one As ShapExplanation = result.Explanations(0)
 Console.WriteLine($"baseline={one.Baseline}, additive={one.AdditiveValue}")
 ```
 
-## 六、与 sciBASIC# 生态的关系
+## 七、与 sciBASIC# 生态的关系
 
-`ML_SHAP` 位于机器学习栈的「解释层」：向下依赖统计与归因算法包（`Math.Statistics`、`ShapleyValue`），并可与 `xgboost`、`MachineLearning` 中的模型配合；向上服务于报告与可视化——`MeanAbsShap` 可以直接交给 `DataPlot` / `Plots` 绘制特征重要性条形图。
+`ML_SHAP` 位于机器学习栈的「解释层」：向下依赖统计与归因算法包（`Math.Statistics`、`ShapleyValue`），并可与 `xgboost`、`GLMNet`、`MachineLearning` 中的模型配合；向上服务于报告与可视化——`MeanAbsShap` 可以直接交给 `DataPlot` / `Plots` 绘制特征重要性条形图。
 
-## 七、实现要点
+## 八、实现要点
 
 - **加性一致性**：`AdditiveValue` 恒等于 `Baseline + Σ(Contributions)`，便于与 `Output`（真实模型输出）对照，用于校验解释质量。
 - **特征名兜底**：当 `FeatureNames` 为空或长度不足时，`GlobalImportance()` 自动使用 `F1`、`F2`… 作为占位名。
 - **性能**：SHAP 的计算代价与「样本数 × 特征数 × 子集枚举」相关，`maxSamples` 是控制分析耗时的第一手段。
+- **glmnet 为解析式**：固定 lambda 上的模型在 link scale 上线性，`phi_j = beta_j * (x_j - E[x_j])` 可精确求解，复杂度为 `O(样本数 × 特征数)`；与树模型的 TreeSHAP 相比没有采样或子集枚举开销，`maxSamples` 的意义主要在于控制报告体积。
 
-## 八、包信息
+## 九、包信息
 
 - Assembly：`Microsoft.VisualBasic.MachineLearning.SHAPAnalysis`
 - TargetFramework：`net10.0`
-- 依赖：`Microsoft.VisualBasic.Core`、`binarydata`、`DataMining`、`Math.Statistics`、`Math`、`DataFittings`、`MachineLearning`、`XGBoostDataSet`、`xgboost`
+- 依赖：`Microsoft.VisualBasic.Core`、`binarydata`、`DataMining`、`Math.Statistics`、`Math`、`DataFittings`、`MachineLearning`、`GLMNet`、`XGBoostDataSet`、`xgboost`
 - 许可：GPL-3.0-or-later

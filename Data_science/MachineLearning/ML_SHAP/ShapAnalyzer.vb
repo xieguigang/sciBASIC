@@ -1,125 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::7bb3c3396ce3eefeef1ae4d5a17f57a2, Data_science\MachineLearning\ML_SHAP\ShapAnalyzer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 144
-    '    Code Lines: 73 (50.69%)
-    ' Comment Lines: 45 (31.25%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 26 (18.06%)
-    '     File Size: 5.31 KB
+' Summaries:
 
 
-    ' Class ShapAnalysisResult
-    ' 
-    '     Properties: Baseline, DatasetName, Explanations, FeatureNames, IsClassification
-    '                 MeanAbsShap, MeanShap, ModelName
-    ' 
-    '     Function: GlobalImportance
-    ' 
-    ' Module ShapAnalyzer
-    ' 
-    '     Function: Analyze
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 144
+'    Code Lines: 73 (50.69%)
+' Comment Lines: 45 (31.25%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 26 (18.06%)
+'     File Size: 5.31 KB
+
+
+' Class ShapAnalysisResult
+' 
+'     Properties: Baseline, DatasetName, Explanations, FeatureNames, IsClassification
+'                 MeanAbsShap, MeanShap, ModelName
+' 
+'     Function: GlobalImportance
+' 
+' Module ShapAnalyzer
+' 
+'     Function: Analyze
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.ShapleyValue
-
-''' <summary>
-''' 一个模型在一个数据集之上的整体 SHAP 分析结果。
-''' </summary>
-Public Class ShapAnalysisResult
-
-    Public Property ModelName As String
-    Public Property DatasetName As String
-    Public Property IsClassification As Boolean
-
-    ''' <summary>
-    ''' 特征名字。
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property FeatureNames As String()
-
-    ''' <summary>
-    ''' 基线值 / 期望值。
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Baseline As Double
-
-    ''' <summary>
-    ''' 参与 SHAP 分析的样本的解释结果。
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Explanations As List(Of ShapExplanation)
-
-    ''' <summary>
-    ''' 每一个特征的全局重要性：平均绝对 SHAP 值。
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property MeanAbsShap As Double()
-
-    ''' <summary>
-    ''' 每一个特征的平均有符号 SHAP 值（可用于判断影响的整体方向）。
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property MeanShap As Double()
-
-    ''' <summary>
-    ''' 返回按照全局重要性降序排列的 ``(特征名, 平均绝对 SHAP 值)`` 序列。
-    ''' </summary>
-    ''' <returns></returns>
-    Public Function GlobalImportance() As (name As String, importance As Double)()
-        If MeanAbsShap Is Nothing Then
-            Return New (name As String, importance As Double)() {}
-        End If
-
-        Dim items As New List(Of (name As String, importance As Double))()
-
-        For i As Integer = 0 To MeanAbsShap.Length - 1
-            Dim featureName As String = If(FeatureNames Is Nothing OrElse i >= FeatureNames.Length, $"F{i + 1}", FeatureNames(i))
-            items.Add((featureName, MeanAbsShap(i)))
-        Next
-
-        Return items.OrderByDescending(Function(t) t.importance).ToArray
-    End Function
-
-End Class
 
 ''' <summary>
 ''' SHAP 分析的门面：把任意 <see cref="IShapExplainer"/> 与数据集组合起来，

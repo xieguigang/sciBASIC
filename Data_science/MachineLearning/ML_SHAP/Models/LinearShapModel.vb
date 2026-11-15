@@ -1,61 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::78eba84e60f2f8e59cf5bf3621d88db6, Data_science\MachineLearning\ML_SHAP\Models\LinearShapModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 152
-    '    Code Lines: 84 (55.26%)
-    ' Comment Lines: 44 (28.95%)
-    '    - Xml Docs: 97.73%
-    ' 
-    '   Blank Lines: 24 (15.79%)
-    '     File Size: 5.51 KB
+' Summaries:
 
 
-    ' Class LinearShapModel
-    ' 
-    '     Properties: Coefficients, Fitted, Intercept, IsClassification, Link
-    '                 Name, Training
-    ' 
-    '     Function: BuildExplainer, ComputeFeatureMeans, Output, Predict, PredictResult
-    '               Train
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 152
+'    Code Lines: 84 (55.26%)
+' Comment Lines: 44 (28.95%)
+'    - Xml Docs: 97.73%
+' 
+'   Blank Lines: 24 (15.79%)
+'     File Size: 5.51 KB
+
+
+' Class LinearShapModel
+' 
+'     Properties: Coefficients, Fitted, Intercept, IsClassification, Link
+'                 Name, Training
+' 
+'     Function: BuildExplainer, ComputeFeatureMeans, Output, Predict, PredictResult
+'               Train
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Linq
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Logistic
@@ -116,10 +115,8 @@ Public Class LinearShapModel
                                  Optional iterations As Integer = 1500,
                                  Optional rate As Double = 0.1) As LinearShapModel
 
-        Dim table As New NumericTable(dataset.Features, dataset.IDs, dataset.FeatureNames) With {
-            .labels = dataset.Labels.Select(Function(y) New Double() {y}).ToArray,
-            .labelNames = New String() {"Y"}
-        }
+        ' 数据集内部已经持有一张满足回归输入要求的数值表（响应位于第一列标签列），直接复用
+        Dim table As NumericTable = dataset.Table
 
         If isClassification Then
             Dim fit As LogisticFit = table.LogisticRegression(rate:=rate, iterations:=iterations, Silent:=True)
