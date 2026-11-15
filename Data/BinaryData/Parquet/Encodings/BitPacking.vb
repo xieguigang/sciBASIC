@@ -134,7 +134,8 @@ Namespace Encodings
                     Dim limit As Integer = System.Math.Min(total, count - produced)
 
                     For k As Integer = 0 To limit - 1
-                        result(produced) = UnpackValue(buffer, k * bitWidth, bitWidth)
+                        ' 级别数据与词典索引的取值范围都不会超过 Integer 的上限
+                        result(produced) = CInt(UnpackValue(buffer, k * bitWidth, bitWidth))
                         produced += 1
                     Next
                 Else
@@ -251,10 +252,16 @@ Namespace Encodings
         End Sub
 
         ''' <summary>
-        ''' 从 bit-packed 缓冲区中解出指定偏移处的数值（LSB first）。
+        ''' 从 bit-packed 缓冲区中解出指定偏移处的无符号数值（LSB first）。
         ''' </summary>
-        Public Function UnpackValue(buffer As Byte(), bitOffset As Integer, bitWidth As Integer) As Integer
-            Dim value As Integer = 0
+        ''' <remarks>
+        ''' 返回值为 <see cref="Long"/>：<c>bitWidth = 32</c> 时数值最大可以达到 <c>4294967295</c>，
+        ''' 超出 <see cref="Integer"/> 的范围（常见的例子是 DELTA_BINARY_PACKED 中
+        ''' <c>delta - min_delta</c> 的结果），因此这里不能使用 <see cref="Integer"/> 累加，
+        ''' 否则会溢出成负数导致解码结果错误。
+        ''' </remarks>
+        Public Function UnpackValue(buffer As Byte(), bitOffset As Integer, bitWidth As Integer) As Long
+            Dim value As Long = 0L
 
             For b As Integer = 0 To bitWidth - 1
                 Dim position As Integer = bitOffset + b
@@ -265,7 +272,7 @@ Namespace Encodings
                 End If
 
                 If ((buffer(index) >> (position And 7)) And 1) <> 0 Then
-                    value = value Or (1 << b)
+                    value = value Or (1L << b)
                 End If
             Next
 
