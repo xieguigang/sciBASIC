@@ -38,13 +38,19 @@ Public Class ParquetOptions
     Public Shared ReadOnly Defaults As New ParquetOptions
 
     Public Function Clone() As ParquetOptions
-        Return New ParquetOptions With {
+        Dim copy As New ParquetOptions With {
             .Compression = Compression,
             .RowGroupSize = RowGroupSize,
             .WriteIndexColumn = WriteIndexColumn,
-            .WriteStatistics = WriteStatistics,
-            .NestedColumns = NestedColumns
+            .WriteStatistics = WriteStatistics
         }
+
+        If NestedColumns IsNot Nothing Then
+            ' 嵌套列的声明需要做一次字典级别的拷贝，避免修改克隆对象时污染原始选项
+            copy.NestedColumns = New Dictionary(Of String, String)(NestedColumns)
+        End If
+
+        Return copy
     End Function
 
 End Class
