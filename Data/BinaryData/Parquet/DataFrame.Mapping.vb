@@ -313,7 +313,22 @@ Public Module DataFrameMapping
 
                 nullMask = mask
 
-                Return source
+                If Not IsBinaryColumn(column) Then
+                    Return source
+                End If
+
+                ' base64 文本还原为原始的二进制字节
+                Dim bytes As Byte()() = New Byte(rowCount - 1)() {}
+
+                For i As Integer = 0 To rowCount - 1
+                    If source(i) Is Nothing Then
+                        bytes(i) = New Byte() {}
+                    Else
+                        bytes(i) = FromBase64(column.name, source(i))
+                    End If
+                Next
+
+                Return bytes
             Case GetType(Date)
                 Dim source As Date() = Adapt(Of Date)(column, rowCount)
                 Dim values As Long() = New Long(rowCount - 1) {}
@@ -357,6 +372,25 @@ Public Module DataFrameMapping
         End If
 
         Return result
+    End Function
+
+    ''' <summary>
+    ''' 该列是否承载 base64 编码的二进制数据？
+    ''' </summary>
+    Private Function IsBinaryColumn(column As FeatureVectorModel) As Boolean
+        If column Is Nothing OrElse column.attributes Is Nothing Then
+            Return False
+        End If
+
+        Return column.attributes.ContainsKey(BinaryColumnAttribute)
+    End Function
+
+    Private Function FromBase64(name As String, text As String) As Byte()
+        Try
+            Return Convert.FromBase64String(text)
+        Catch ex As Exception
+            Throw New ParquetException($"the column '{name}' contains invalid base64 text which could not be cast to a binary value!", ex)
+        End Try
     End Function
 
     ''' <summary>

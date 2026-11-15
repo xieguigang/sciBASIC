@@ -131,7 +131,7 @@ Public NotInheritable Class ParquetWriter
 
         Dim values As Array
 
-        If node.PhysicalType.Value = Format.ParquetType.BYTE_ARRAY Then
+        If node.PhysicalType.Value = Format.ParquetType.BYTE_ARRAY AndAlso TypeOf plan.Values Is String() Then
             ' 字符串列需要转换为 UTF8 字节序列
             Dim texts As String() = CType(plan.Values, String())
 

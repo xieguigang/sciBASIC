@@ -165,7 +165,7 @@ Namespace Columns
                         Dim unsigned As Long() = New Long(values.Count - 1) {}
 
                         For i As Integer = 0 To values.Count - 1
-                            unsigned(i) = AsUnsigned(32, values(i))
+                            unsigned(i) = CLng(AsUnsigned(32, values(i)))
                         Next
 
                         Return unsigned
