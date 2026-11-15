@@ -241,6 +241,18 @@ Namespace Schema
         End Property
 
         ''' <summary>
+        ''' 根据 <c>.</c> 分隔的路径查找叶子节点。
+        ''' </summary>
+        ''' <param name="path">例如 <c>__index__</c> 或者 <c>record.a</c></param>
+        Public Function FindLeaf(path As String) As ParquetSchemaNode
+            If String.IsNullOrEmpty(path) Then
+                Return Nothing
+            End If
+
+            Return FindLeaf(path.Split("."c))
+        End Function
+
+        ''' <summary>
         ''' 根据路径查找叶子节点。
         ''' </summary>
         Public Function FindLeaf(path As IEnumerable(Of String)) As ParquetSchemaNode

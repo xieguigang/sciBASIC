@@ -43,9 +43,10 @@ def main():
     schema = table.schema
 
     report(table.num_rows == 5, "rows", 5, table.num_rows)
-    report(len(schema.names) == 4, "columns", 4, len(schema.names))
+    # 4 个数据列 + 1 个 __index__ 行名列
+    report(len(schema.names) == 5, "columns", 5, len(schema.names))
 
-    for name in ("values", "attrs", "points", "record"):
+    for name in ("values", "attrs", "points", "record", "__index__"):
         report(name in schema.names, "column %s exists" % name)
 
     if "values" not in schema.names:

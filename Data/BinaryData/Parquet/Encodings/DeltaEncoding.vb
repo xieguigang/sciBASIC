@@ -49,8 +49,16 @@ Namespace Encodings
                 Dim remaining As Integer = total - index
                 Dim needed As Integer = System.Math.Min(miniBlocks, (remaining + miniSize - 1) \ miniSize)
 
-                For m As Integer = 0 To needed - 1
-                    widths(m) = CInt(reader.ReadByte())
+                ' 规格要求：即使最后一个 block 中未使用的 miniblock，其位宽字节仍然必须存在
+                ' （数值通常为 0），因此这里必须按照 miniblocks 的总数读取位宽，而不是只读取
+                ' 实际需要的个数，否则后续的 bit-packed 数据流会整体错位
+                For m As Integer = 0 To miniBlocks - 1
+                    If reader.Remaining <= 0 Then
+                        ' 少数实现会省略最后一个 block 中未使用 miniblock 的位宽字节
+                        widths(m) = 0
+                    Else
+                        widths(m) = CInt(reader.ReadByte())
+                    End If
                 Next
 
                 For m As Integer = 0 To needed - 1
@@ -64,7 +72,14 @@ Namespace Encodings
                             index += 1
                         Next
                     Else
+                        ' miniblock 的数据体按完整的 mini block 尺寸补齐（未使用的槽位为 0），
+                        ' 但外部实现可能对最后一个 miniblock 不做补齐，因此这里做一次上限保护
                         Dim bytes As Integer = (miniSize * width + 7) \ 8
+
+                        If bytes > reader.Remaining Then
+                            bytes = reader.Remaining
+                        End If
+
                         Dim buffer As Byte() = reader.ReadBytes(bytes)
 
                         For k As Integer = 0 To countInMiniBlock - 1

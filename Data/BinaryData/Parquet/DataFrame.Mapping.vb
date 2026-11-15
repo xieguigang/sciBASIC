@@ -292,9 +292,16 @@ Public Module DataFrameMapping
             Case GetType(Long)
                 Return Adapt(Of Long)(column, rowCount)
             Case GetType(Single)
-                Return Adapt(Of Single)(column, rowCount)
+                Dim source As Single() = Adapt(Of Single)(column, rowCount)
+
+                ' NaN 在 R 语言之中是缺失值（is.na(NaN) == TRUE），写出为 null 槽位
+                nullMask = NaMask(Of Single)(source, Function(v) Single.IsNaN(v))
+                Return source
             Case GetType(Double)
-                Return Adapt(Of Double)(column, rowCount)
+                Dim source As Double() = Adapt(Of Double)(column, rowCount)
+
+                nullMask = NaMask(Of Double)(source, Function(v) Double.IsNaN(v))
+                Return source
             Case GetType(Boolean)
                 Return Adapt(Of Boolean)(column, rowCount)
             Case GetType(String)
@@ -372,6 +379,25 @@ Public Module DataFrameMapping
         End If
 
         Return result
+    End Function
+
+    ''' <summary>
+    ''' 生成数值列的空值掩码：命中 <paramref name="isNa"/> 的槽位标记为缺失值。
+    ''' </summary>
+    Private Function NaMask(Of T)(values As T(), isNa As Func(Of T, Boolean)) As Boolean()
+        Dim mask As Boolean() = Nothing
+
+        For i As Integer = 0 To values.Length - 1
+            If isNa(values(i)) Then
+                If mask Is Nothing Then
+                    mask = New Boolean(values.Length - 1) {}
+                End If
+
+                mask(i) = True
+            End If
+        Next
+
+        Return mask
     End Function
 
     ''' <summary>

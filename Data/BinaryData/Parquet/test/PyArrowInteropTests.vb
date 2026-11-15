@@ -281,12 +281,16 @@ Friend Module PyArrowInteropTests
         Dim df As DataFrame = pq.read_table(file)
 
         Call TestSupport.AssertEqual(5, df.nsamples, "nested: 行数")
-        Call TestSupport.AssertEqual(4, df.nfeatures, "nested: 列数")
+        ' struct 列会被展开为 a.b 形式的点号列名
+        Call TestSupport.AssertEqual(5, df.nfeatures, "nested: 列数（struct 展开为点号列名）")
+        Call TestSupport.AssertTrue(df.features.ContainsKey("record.a"), "nested: struct 成员展开为 record.a")
+        Call TestSupport.AssertTrue(df.features.ContainsKey("record.b"), "nested: struct 成员展开为 record.b")
 
         Dim values As String() = DirectCast(TestSupport.ColumnArray(df, "values"), String())
         Dim attrs As String() = DirectCast(TestSupport.ColumnArray(df, "attrs"), String())
         Dim points As String() = DirectCast(TestSupport.ColumnArray(df, "points"), String())
-        Dim record As String() = DirectCast(TestSupport.ColumnArray(df, "record"), String())
+        Dim field_a As Double() = DirectCast(TestSupport.ColumnArray(df, "record.a"), Double())
+        Dim field_b As Double() = DirectCast(TestSupport.ColumnArray(df, "record.b"), Double())
 
         Call TestSupport.AssertEqual(3, DirectCast(JsonNode.Parse(values(0)), JsonArray).Count, "nested: 列表元素数量")
         Call TestSupport.AssertEqual(0, DirectCast(JsonNode.Parse(values(2)), JsonArray).Count, "nested: 空列表")
@@ -309,12 +313,10 @@ Friend Module PyArrowInteropTests
         Call TestSupport.AssertEqual(2, structList.Count, "nested: list<struct> 元素数量")
         Call TestSupport.AssertEqual(2.5R, DoubleOf(DirectCast(structList(1), JsonObject)("y")), "nested: list<struct> 的 y 字段")
 
-        Dim recordNode As JsonObject = DirectCast(JsonNode.Parse(record(0)), JsonObject)
-
-        Call TestSupport.AssertEqual(1L, LongOf(recordNode("a")), "nested: struct 标量字段")
-        Call TestSupport.AssertEqual(1.25R, DoubleOf(recordNode("b")), "nested: struct 浮点字段")
-        Call TestSupport.AssertTrue(DirectCast(JsonNode.Parse(record(1)), JsonObject)("b") Is Nothing,
-                                    "nested: struct 内 null 字段")
+        ' struct 整体为 null 时，其成员列降级为数值 + NaN
+        Call TestSupport.AssertArray(New Double() {1, 2, 3, Double.NaN, 5}, field_a, "nested: struct 标量字段")
+        Call TestSupport.AssertTrue(Double.IsNaN(field_b(1)), "nested: struct 内 null 字段以 NaN 表示")
+        Call TestSupport.AssertEqual(5.25R, field_b(4), "nested: struct 浮点字段")
     End Sub
 
     ' ------------------------------------------------------------------
@@ -408,7 +410,8 @@ Friend Module PyArrowInteropTests
             Dim number As Double = DirectCast(value, Double)
 
             If Double.IsNaN(number) Then
-                Return """NaN"""
+                ' R 语言的数值缺失值（NaN）在写入时会被表示为 null 槽位
+                Return "null"
             ElseIf Double.IsPositiveInfinity(number) Then
                 Return """Infinity"""
             ElseIf Double.IsNegativeInfinity(number) Then

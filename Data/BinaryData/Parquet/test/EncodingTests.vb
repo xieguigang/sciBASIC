@@ -79,7 +79,8 @@ Friend Module EncodingTests
 
     Private Sub RunDeltaBinaryPacked()
         ' block=128, miniblocks=4, total=5, first=10，minDelta=1，bitwidth=0 -> 10..14
-        Dim data As Byte() = {&H80, &H1, &H4, &H5, &H14, &H2, &H0}
+        ' 规格要求写出全部 4 个 miniblock 的位宽字节
+        Dim data As Byte() = {&H80, &H1, &H4, &H5, &H14, &H2, &H0, &H0, &H0, &H0}
         Dim reader As New Encodings.ByteReader(data)
         Dim decoded As Long() = Encodings.DeltaEncoding.ReadDeltaBinaryPacked(reader)
 
@@ -89,7 +90,7 @@ Friend Module EncodingTests
     Private Sub RunDeltaLengthByteArray()
         Dim buffer As New List(Of Byte)
 
-        Call buffer.AddRange(New Byte() {&H80, &H1, &H4, &H2, &H6, &H1, &H0}) ' 长度流: 3, 2
+        Call buffer.AddRange(New Byte() {&H80, &H1, &H4, &H2, &H6, &H1, &H0, &H0, &H0, &H0}) ' 长度流: 3, 2
         Call buffer.AddRange(System.Text.Encoding.ASCII.GetBytes("abcde"))
 
         Dim reader As New Encodings.ByteReader(buffer.ToArray())
@@ -103,8 +104,8 @@ Friend Module EncodingTests
     Private Sub RunDeltaByteArray()
         Dim buffer As New List(Of Byte)
 
-        Call buffer.AddRange(New Byte() {&H80, &H1, &H4, &H2, &H0, &H4, &H0}) ' 前缀长度: 0, 2
-        Call buffer.AddRange(New Byte() {&H80, &H1, &H4, &H2, &H6, &H3, &H0}) ' 后缀长度: 3, 1
+        Call buffer.AddRange(New Byte() {&H80, &H1, &H4, &H2, &H0, &H4, &H0, &H0, &H0, &H0}) ' 前缀长度: 0, 2
+        Call buffer.AddRange(New Byte() {&H80, &H1, &H4, &H2, &H6, &H3, &H0, &H0, &H0, &H0}) ' 后缀长度: 3, 1
         Call buffer.AddRange(System.Text.Encoding.ASCII.GetBytes("abcd"))
 
         Dim reader As New Encodings.ByteReader(buffer.ToArray())
