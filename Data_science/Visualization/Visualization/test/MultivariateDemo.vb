@@ -433,9 +433,10 @@ Module MultivariateDemo
                     Dim noise As Double = (rnd.NextDouble() - 0.5) * 0.55
                     Dim value As Double = baseline + effects(j, g) + noise
 
-                    If isOutlier AndAlso j < 6 Then
-                        ' 让离群样本在残差空间和得分空间都明显偏离：前 6 个变量整体抬高
-                        value += 2.2 + 0.4 * (j Mod 3)
+                    If isOutlier AndAlso j >= effectVariables Then
+                        ' 只在「纯噪声变量」上注入偏差：这个方向与判别方向正交，
+                        ' 因此样本会在残差空间 (DModX) 里明显偏离，却几乎不影响得分图
+                        value += 3.0 + 0.5 * (j Mod 3)
                     End If
 
                     values(j) = std.Max(0.01, value)

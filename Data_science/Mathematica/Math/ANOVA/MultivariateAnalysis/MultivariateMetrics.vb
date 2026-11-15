@@ -373,7 +373,8 @@ Public Module MultivariateMetrics
                 Next
             Next
 
-            Dim r2x As Double = PercentageOfVariance(total, ssResidual)
+            ' PercentageOfVariance 返回的是 0-1 的比例，这里统一换算成百分数
+            Dim r2x As Double = PercentageOfVariance(total, ssResidual) * 100.0
 
             variance(k) = r2x - previous
             previous = r2x
