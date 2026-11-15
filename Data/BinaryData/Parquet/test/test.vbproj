@@ -11,9 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\Parquet.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="pyarrow\gen_fixture.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="pyarrow\verify_vb_output.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -94,10 +94,26 @@ Public Module pq
     End Function
 
     ''' <summary>
+    ''' 从数据流读取完整的列式数据表（不会关闭调用方的数据流）。
+    ''' </summary>
+    Public Function read_parquet_table(input As Stream) As ParquetTable
+        Return ParquetReader.ReadTable(input)
+    End Function
+
+    ''' <summary>
     ''' 读取 Parquet 文件的 schema。
     ''' </summary>
     Public Function read_schema(fileName As String) As Schema.ParquetSchema
         Dim meta As Format.FileMetaData = read_metadata(fileName)
+
+        Return Schema.ParquetSchema.FromMetadata(meta.Schema)
+    End Function
+
+    ''' <summary>
+    ''' 从数据流读取 Parquet 文件的 schema（不会关闭调用方的数据流）。
+    ''' </summary>
+    Public Function read_schema(input As Stream) As Schema.ParquetSchema
+        Dim meta As Format.FileMetaData = read_metadata(input)
 
         Return Schema.ParquetSchema.FromMetadata(meta.Schema)
     End Function
@@ -109,6 +125,13 @@ Public Module pq
         Using input As Stream = New FileStream(IO.Path.GetFullPath(fileName), FileMode.Open, FileAccess.Read, FileShare.Read)
             Return ParquetReader.ReadMetadata(input)
         End Using
+    End Function
+
+    ''' <summary>
+    ''' 从数据流读取 Parquet 文件的 footer 元数据（不会关闭调用方的数据流）。
+    ''' </summary>
+    Public Function read_metadata(input As Stream) As Format.FileMetaData
+        Return ParquetReader.ReadMetadata(input)
     End Function
 
 End Module

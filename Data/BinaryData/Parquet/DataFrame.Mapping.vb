@@ -396,9 +396,18 @@ Public Module DataFrameMapping
     ''' <summary>
     ''' 将读取到的叶子列数据还原为 <see cref="DataFrameModel"/>。
     ''' </summary>
+    ''' <param name="tableSchema">文件 schema</param>
+    ''' <param name="columnData">叶子列数据</param>
+    ''' <param name="numRows">数据行数</param>
+    ''' <param name="restoreRowNames">
+    ''' 是否把 <c>__index__</c> 列还原为 <c>rownames</c>？默认 <c>True</c>。
+    ''' 当该参数为 <c>False</c> 时，<c>__index__</c> 列会被保留为一个普通的数据列，
+    ''' 且 <c>rownames</c> 为 <c>Nothing</c>，交由调用方自行生成行名。
+    ''' </param>
     Public Function ToDataFrame(tableSchema As Schema.ParquetSchema,
                                 columnData As List(Of Columns.DataColumn),
-                                numRows As Integer) As DataFrameModel
+                                numRows As Integer,
+                                Optional restoreRowNames As Boolean = True) As DataFrameModel
         Dim lookup As New Dictionary(Of Schema.ParquetSchemaNode, Columns.DataColumn)
 
         For Each column As Columns.DataColumn In columnData
@@ -460,7 +469,7 @@ Public Module DataFrameMapping
 
         Dim rownames As String() = Nothing
 
-        If df.features.ContainsKey(ParquetConstants.IndexColumnName) Then
+        If restoreRowNames AndAlso df.features.ContainsKey(ParquetConstants.IndexColumnName) Then
             Dim indexColumn As FeatureVectorModel = df.features(ParquetConstants.IndexColumnName)
 
             ' 行名列可能来自外部文件，类型不一定是字符串，这里统一转换为文本
@@ -477,7 +486,7 @@ Public Module DataFrameMapping
             Call df.features.Remove(ParquetConstants.IndexColumnName)
         End If
 
-        If rownames Is Nothing OrElse rownames.Length <> numRows Then
+        If restoreRowNames AndAlso (rownames Is Nothing OrElse rownames.Length <> numRows) Then
             Dim generated As String() = Columns.ArrayUtil.NewArray(Of String)(numRows)
 
             For i As Integer = 0 To numRows - 1
@@ -488,7 +497,7 @@ Public Module DataFrameMapping
         End If
 
         If numRows > 0 Then
-            df.name = $"parquet[{df.features.Count} x {numRows}]"
+            df.name = $"parquet[{numRows} x {df.features.Count}]"
         End If
 
         df.rownames = rownames

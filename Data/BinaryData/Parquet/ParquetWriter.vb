@@ -33,6 +33,21 @@ Public NotInheritable Class ParquetWriter
             Throw New ArgumentNullException(NameOf(output))
         End If
 
+        If Not output.CanSeek Then
+            ' 写入过程需要回填 row group 的文件偏移量，因此这里先把数据写入内存流，
+            ' 之后再整体复制到调用方给定的不可定位（例如网络流 / GZipStream）的输出流
+            Dim buffer As New MemoryStream()
+
+            Call Write(plan, buffer, options)
+
+            Dim data As Byte() = buffer.ToArray()
+
+            Call output.Write(data, 0, data.Length)
+            Call output.Flush()
+
+            Return
+        End If
+
         Dim opts As ParquetOptions = If(options, ParquetOptions.Defaults).Clone()
 
         If opts.RowGroupSize <= 0 Then
