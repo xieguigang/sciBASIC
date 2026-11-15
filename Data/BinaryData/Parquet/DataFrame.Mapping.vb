@@ -15,6 +15,17 @@ Imports FeatureVectorModel = Microsoft.VisualBasic.Data.Framework.FeatureVector
 ''' 约定：<c>rownames</c> 以 <c>__index__</c> 列存储；struct 成员展开为 <c>a.b</c> 形式的点号列名；
 ''' LIST / MAP 转换为 JSON 文本列，并在 <c>FeatureVector.attributes("parquet.type")</c> 中记录类型描述。
 ''' </para>
+''' <para>
+''' 缺失值（null）规则：写入时 <c>Nothing</c> 字符串与 <c>NaN</c> 数值都写成 null 槽位；
+''' 读取时数值列中的 null 还原为 <c>NaN</c>、字符列中的 null 还原为 <c>Nothing</c>。
+''' 含 null 的 <c>INT32</c>/<c>INT64</c>/<c>DATE</c>/<c>TIMESTAMP</c> 列会降级为
+''' <c>Double</c> 数值列（缺失值为 <c>NaN</c>），因为 CLR 的强类型数组无法承载 null。
+''' </para>
+''' <para>
+''' 读取时还会处理外部文件中的 <c>UINT_8/16/32/64</c>（提升为可以容纳其范围的类型）、
+''' <c>DECIMAL</c>（按 <c>10^scale</c> 还原为数值）、没有 <c>STRING</c> 逻辑类型的
+''' <c>BYTE_ARRAY</c>（按 base64 文本承载，属性 <c>parquet.binary</c> 标记以便回写）。
+''' </para>
 ''' </summary>
 Public Module DataFrameMapping
 
@@ -200,8 +211,7 @@ Public Module DataFrameMapping
             .Name = top,
             .Kind = ColumnKind.Nested,
             .Node = node,
-            .JsonValues = json,
-            .TypeDefinition = declaration
+            .JsonValues = json
         })
     End Sub
 

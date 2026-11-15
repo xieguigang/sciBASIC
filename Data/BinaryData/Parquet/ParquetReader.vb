@@ -11,6 +11,16 @@ Imports System.Linq
 ''' 读取端支持 DataPageV1 / DataPageV2、PLAIN、PLAIN_DICTIONARY / RLE_DICTIONARY、DELTA 系列、
 ''' BYTE_STREAM_SPLIT、旧式 BIT_PACKED 级别，以及 UNCOMPRESSED / SNAPPY / GZIP 压缩。
 ''' </para>
+''' <para>
+''' 与 pyarrow / pandas 生成的文件做了逐值对拍（见 test 工程）：<c>INT32/INT64</c>（含
+''' <c>UINT_8/16/32/64</c> 无符号整数）、<c>FLOAT/DOUBLE</c>、<c>BOOLEAN</c>、<c>BYTE_ARRAY</c>
+''' （<c>STRING</c> 与二进制）、<c>FIXED_LEN_BYTE_ARRAY</c>、<c>DECIMAL</c>、<c>DATE</c>、
+''' <c>TIMESTAMP(MILLIS/MICROS/NANOS)</c> 与 <c>INT96</c> 时间戳。
+''' </para>
+''' <para>
+''' 不支持：ZSTD / LZ4 / LZO / BROTLI 压缩、页级索引（page index）、Bloom filter、
+''' 列块外置（<c>file_path</c>）以及 CRC 校验。
+''' </para>
 ''' </summary>
 Public NotInheritable Class ParquetReader
 

@@ -9,12 +9,17 @@ Imports System.Linq
 ''' Parquet 文件的写入器。
 ''' <para>
 ''' 写入端统一使用规范编码：数据页 <c>PLAIN</c>、级别 <c>RLE</c>（bit-packed hybrid），
-''' 可选的 SNAPPY / GZIP / UNCOMPRESSED 压缩，因此生成的文件可以被 PyArrow / pandas 直接打开。
+''' 可选的 SNAPPY / GZIP / UNCOMPRESSED 压缩，因此生成的文件可以被 PyArrow / pandas 直接打开
+''' （已通过 <c>test</c> 工程中的 pyarrow 对拍验证）。
 ''' </para>
 ''' <para>
-''' 当前实现中每个 row group 的每个叶子列只产生<b>一个</b> DataPageV1（不使用词典页与索引页），
-''' 页面大小由 row group 的行数决定；列块的 <c>num_values</c>、<c>total_compressed_size</c>、
-''' <c>data_page_offset</c> 与 <c>column_orders</c> 均严格按规范填写。
+''' 当前实现中每个 row group 的每个叶子列只产生<b>一个</b> DataPageV1（不写词典页与索引页），
+''' 页面大小由 row group 的行数决定，因此超大表需要调小
+''' <see cref="ParquetOptions.RowGroupSize"/> 来控制单页的内存占用；列块的 <c>num_values</c>、
+''' <c>total_compressed_size</c>、<c>data_page_offset</c> 与 <c>column_orders</c> 均按规范填写。
+''' </para>
+''' <para>
+''' 缺失值以定义级别低于最大定义级别的方式写出（即 null 槽位），不会写成 0 或者空字符串。
 ''' </para>
 ''' </summary>
 Public NotInheritable Class ParquetWriter
@@ -55,8 +60,9 @@ Public NotInheritable Class ParquetWriter
         End If
 
         Dim leaves As List(Of Schema.ParquetSchemaNode) = plan.Root.Leaves().ToList()
+        ' 写入端只产生 DataPageV1，因此文件格式版本标注为 1
         Dim meta As New Format.FileMetaData With {
-            .Version = 2,
+            .Version = 1,
             .NumRows = plan.RowCount,
             .Schema = Schema.ParquetSchema.ToMetadata(plan.Root),
             .ColumnOrders = leaves.Count,
