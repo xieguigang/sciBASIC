@@ -193,7 +193,8 @@ Friend Module PyArrowInteropTests
 
         Call TestSupport.AssertTrue(text(0) Is Nothing, "multigroup: 第 0 行文本为 null")
         Call TestSupport.AssertEqual("text_1", text(1), "multigroup: 第 1 行文本")
-        Call TestSupport.AssertEqual("text_9", text(9), "multigroup: 第 9 行文本")
+        Call TestSupport.AssertTrue(text(9) Is Nothing, "multigroup: 第 9 行文本为 null")
+        Call TestSupport.AssertEqual("text_8", text(8), "multigroup: 第 8 行文本")
     End Sub
 
     Private Sub ReadDelta(file As String)
