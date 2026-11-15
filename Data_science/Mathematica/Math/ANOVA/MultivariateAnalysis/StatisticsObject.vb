@@ -266,6 +266,63 @@ Public Class StatisticsObject
         Return lCopyX
     End Function
 
+    ''' <summary>
+    ''' 基于当前对象创建一个「只有响应变量 Y 被替换」的浅拷贝。
+    ''' 
+    ''' <para>
+    ''' 置换检验（permutation test）需要对同一个 X 矩阵反复建模上千次，
+    ''' 如果每次都重新做一次标准化，则会带来 O(N·n·m) 的重复计算。
+    ''' 这个方法让所有的置换迭代共享同一份 <c>XDataMatrix/XTransformed/XScaled/XMeans/XStdevs</c> 引用，
+    ''' 只重建与 Y 相关的字段（含 Y 的均值与标准差），从而把置换检验的瓶颈留给真正的建模环节。
+    ''' </para>
+    ''' 
+    ''' <para>
+    ''' 注意：共享的是数组引用，调用方不应当再修改返回对象上的 X 矩阵。
+    ''' </para>
+    ''' </summary>
+    ''' <param name="y">新的响应变量（长度必须等于样本数）</param>
+    Public Function WithResponse(y As Double()) As StatisticsObject
+        If y Is Nothing Then
+            Throw New ArgumentNullException(NameOf(y))
+        End If
+        If XDataMatrix Is Nothing Then
+            Throw New InvalidOperationException("the X data matrix is not initialized!")
+        End If
+        If y.Length <> XDataMatrix.GetLength(0) Then
+            Throw New ArgumentException($"the response vector length {y.Length} does not match the sample size {XDataMatrix.GetLength(0)}", NameOf(y))
+        End If
+
+        Dim clone As New StatisticsObject With {
+            .decoder = decoder,
+            .YVariables = y,
+            .YTransformed = y,
+            .YScaled = y,
+            .XDataMatrix = XDataMatrix,
+            .XTransformed = XTransformed,
+            .XScaled = XScaled,
+            .XMeans = XMeans,
+            .XStdevs = XStdevs,
+            .YIndexes = YIndexes,
+            .XIndexes = XIndexes,
+            .YLabels = YLabels,
+            .YLabels2 = YLabels2,
+            .XLabels = XLabels,
+            .YColors = YColors,
+            .XColors = XColors,
+            .Scale = Scale,
+            .Transform = Transform
+        }
+
+        Dim yMean, yStdev As Double
+
+        Call StatisticsMathematics.StatisticsProperties(y, yMean, yStdev)
+
+        clone.YMean = yMean
+        clone.YStdev = yStdev
+
+        Return clone
+    End Function
+
     Public Function RowSize() As Integer
         Return XDataMatrix.GetLength(0)
     End Function
