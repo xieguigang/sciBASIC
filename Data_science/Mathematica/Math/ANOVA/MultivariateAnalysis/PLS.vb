@@ -356,7 +356,9 @@ Public Class PLS
         optfactor = 1
 
         For i = 0 To maxLV - 1
-            Dim currentSS = BasicMathematics.SumOfSquare(yArray)
+            ' Q2 使用中心化的总平方和：未中心化的 SS 会把分类编码响应（1..k）的均值项
+            ' 也算进去，导致 Q2 恒等于 0 附近而失去意义
+            Dim currentSS = BasicMathematics.SumOfSquareCentered(yArray)
             ss.Add(currentSS)
             Dim currentPress = PlsPressCalculation(nFold, dataArray, yArray)
             press.Add(currentPress)
@@ -681,9 +683,19 @@ Public Class PLS
             tTest(i) = s
         Next
 
+        ' 预测必须带上训练集的响应均值（截距项）：X 是中心化/标准化过的，
+        ' 没有截距时预测值恒在 0 附近，PRESS 会退化成「未中心化的总平方和」
+        Dim yTrainMean As Double = 0
+
+        For i As Integer = 0 To trainYvalues.Length - 1
+            yTrainMean += trainYvalues(i)
+        Next
+
+        yTrainMean /= std.Max(1, trainYvalues.Length)
+
         Dim yPred = New Double(testSize - 1) {}
         For i = 0 To testSize - 1
-            yPred(i) = cTrain * tTest(i)
+            yPred(i) = cTrain * tTest(i) + yTrainMean
         Next
         Dim press = BasicMathematics.ErrorOfSquareVs2(testYvalues, yPred)
         Return press

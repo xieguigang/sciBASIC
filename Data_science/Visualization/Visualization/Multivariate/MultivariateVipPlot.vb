@@ -134,24 +134,28 @@ Public Class MultivariateVipPlot : Inherits PlotEngine
 
         Dim n As Integer = items.Length
 
-        ' ---- 坐标范围：x 是数值，y 是分类轴 ----
-        Dim xmax As Double = 0
+        ' ---- 坐标范围：x 是数值（系数会有负值），y 是分类轴 ----
+        Dim maxValue As Double = 0
+        Dim minValue As Double = 0
 
         For Each item As MultivariateVipEntry In items
-            xmax = std.Max(xmax, std.Abs(MultivariatePlotHelper.Finite(item.Value)))
+            Dim value As Double = MultivariatePlotHelper.Finite(item.Value)
+
+            maxValue = std.Max(maxValue, value)
+            minValue = std.Min(minValue, value)
         Next
 
         If Me.Threshold.HasValue Then
-            xmax = std.Max(xmax, Me.Threshold.Value)
+            maxValue = std.Max(maxValue, Me.Threshold.Value)
         End If
 
-        If xmax <= 0 Then
-            xmax = 1
+        If maxValue <= 0 AndAlso minValue >= 0 Then
+            maxValue = 1
         End If
 
-        xmax *= 1.12
-
-        Dim xmin As Double = 0
+        Dim span As Double = std.Max(0.000001, maxValue - minValue)
+        Dim xmax As Double = maxValue + span * 0.12
+        Dim xmin As Double = If(minValue < 0, minValue - span * 0.12, 0)
         Dim ymin As Double = -0.6
         Dim ymax As Double = n - 0.4
 
@@ -177,22 +181,27 @@ Public Class MultivariateVipPlot : Inherits PlotEngine
             Dim item As MultivariateVipEntry = items(n - 1 - r)
             Dim value As Double = MultivariatePlotHelper.Finite(item.Value)
             Dim cy As Single = ToPixelY(r, ymin, ymax)
-            Dim endX As Single = ToPixelX(std.Abs(value), xmin, xmax)
+            Dim endX As Single = ToPixelX(value, xmin, xmax)
             Dim isHighlight As Boolean = Me.Threshold.HasValue AndAlso std.Abs(value) >= Me.Threshold.Value
             Dim color As Color = If(isHighlight, highlightColor, barColor)
 
-            If endX > zeroX Then
+            ' 统一从 0 出发：正值向右、负值向左
+            Dim left As Single = std.Min(zeroX, endX)
+            Dim width As Single = std.Abs(endX - zeroX)
+
+            If width > 0 Then
                 Using brush As New SolidBrush(Color.FromArgb(215, color))
-                    g.FillRectangle(brush, zeroX, cy - barHeight / 2, endX - zeroX, barHeight)
+                    g.FillRectangle(brush, left, cy - barHeight / 2, width, barHeight)
                 End Using
             End If
 
             If ShowValueLabels Then
                 Dim text As String = value.ToString("F2")
                 Dim size As SizeF = MeasureString(text, font)
+                Dim labelX As Single = If(value >= 0, endX + 4, endX - size.Width - 4)
 
                 Using brush As New SolidBrush(Theme.TextColor)
-                    Call DrawLabel(text, font, brush, endX + 4, cy - size.Height / 2, Nothing, Nothing)
+                    Call DrawLabel(text, font, brush, labelX, cy - size.Height / 2, Nothing, Nothing)
                 End Using
             End If
         Next

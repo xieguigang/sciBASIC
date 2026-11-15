@@ -145,7 +145,7 @@ Module MultivariateDemo
         oplsPlot.ShowPointLabels = True
         oplsPlot.Ellipses.Mode = MultivariateEllipseMode.Confidence
         oplsPlot.Ellipses.EllipseType = PCAEllipseCalculator.EllipseType.T
-        oplsPlot.LegendLocation = PlotEngine.LegendPos.LowerRight
+        oplsPlot.LegendLocation = PlotEngine.LegendPos.UpperRight
 
         Call Export(oplsPlot, Path.Combine(dir, "oplsda-score.png"))
     End Sub
@@ -171,7 +171,7 @@ Module MultivariateDemo
         loadingPlot.Title = "PCA loading plot (biplot)"
         loadingPlot.SubTitle = "loading vectors scaled into the score space"
         loadingPlot.ShowBiplot = True
-        loadingPlot.LegendLocation = PlotEngine.LegendPos.LowerRight
+        loadingPlot.LegendLocation = PlotEngine.LegendPos.UpperLeft
 
         Call Export(loadingPlot, Path.Combine(dir, "pca-loading-biplot.png"))
     End Sub
@@ -207,7 +207,7 @@ Module MultivariateDemo
         coefPlot.Title = "PLS-DA regression coefficients"
         coefPlot.SubTitle = "variables sorted by coefficient"
         coefPlot.MaxBars = 12
-        coefPlot.LegendLocation = PlotEngine.LegendPos.LowerRight
+        coefPlot.LegendLocation = PlotEngine.LegendPos.UpperLeft
 
         Call Export(coefPlot, Path.Combine(dir, "plsda-coefficients.png"))
 

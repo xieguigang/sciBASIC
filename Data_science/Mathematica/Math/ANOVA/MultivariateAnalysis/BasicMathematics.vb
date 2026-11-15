@@ -86,6 +86,38 @@ Public Class BasicMathematics
         Return sum
     End Function
 
+    ''' <summary>
+    ''' 中心化的平方和 <c>Σ(x - x̄)²</c>。
+    ''' 
+    ''' <para>
+    ''' 交叉验证的 Q2 与 R2 都必须使用中心化的总平方和：如果直接使用
+    ''' <see cref="SumOfSquare"/>（未中心化），响应变量的均值项会被算进「总平方和」里。
+    ''' 对于取值为 1..k 的分类编码，均值项往往占据 90% 以上的平方和，
+    ''' 于是即使模型完美拟合，Q2/R2 也只会得到 0.1 左右的数值。
+    ''' </para>
+    ''' </summary>
+    Public Shared Function SumOfSquareCentered(array As Double()) As Double
+        If array Is Nothing OrElse array.Length = 0 Then
+            Return 0
+        End If
+
+        Dim mean As Double = 0
+
+        For i As Integer = 0 To array.Length - 1
+            mean += array(i)
+        Next
+
+        mean /= array.Length
+
+        Dim sum As Double = 0
+
+        For i As Integer = 0 To array.Length - 1
+            sum += std.Pow(array(i) - mean, 2)
+        Next
+
+        Return sum
+    End Function
+
     Public Shared Function RootSumOfSquare(array1 As Double(), array2 As Double()) As Double
         Dim sum As Double = 0
         For i = 0 To array1.Length - 1

@@ -250,6 +250,9 @@ Public Class MultivariateScorePlot : Inherits PlotEngine
             Return
         End If
 
+        ' 简单的标签避让：与已经画出的标签重叠时整体下移，避免同一簇内的样本名糊成一团
+        Dim occupied As New List(Of RectangleF)
+
         Using brush As New SolidBrush(Color.FromArgb(235, Theme.TextColor))
             For Each i As Integer In members
                 If i >= names.Length OrElse String.IsNullOrEmpty(names(i)) Then
@@ -263,8 +266,10 @@ Public Class MultivariateScorePlot : Inherits PlotEngine
                 End If
 
                 Dim size As SizeF = MeasureString(names(i), font)
+                Dim location As PointF = MultivariatePlotHelper.PlaceLabel(
+                    p.X + 4, p.Y - size.Height, size, _plotArea, occupied)
 
-                Call DrawLabel(names(i), font, brush, p.X + 4, p.Y - size.Height, Nothing, Nothing)
+                Call DrawLabel(names(i), font, brush, location.X, location.Y, Nothing, Nothing)
             Next
         End Using
     End Sub

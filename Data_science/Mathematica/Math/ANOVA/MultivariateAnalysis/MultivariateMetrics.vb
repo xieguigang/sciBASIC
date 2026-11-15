@@ -163,7 +163,14 @@ Public Module MultivariateMetrics
     End Function
 
     ''' <summary>
-    ''' 模型的累计 Q2（交叉验证的可预测性指标，最后一个成分的累计值）。
+    ''' 模型的可预测性指标 Q2（交叉验证结果）。
+    ''' 
+    ''' <para>
+    ''' 取**最后一个成分的单步 Q2**（<c>1 - PRESS/SS</c>），而不是 <c>Q2Cums</c> 的累计值。
+    ''' 原因：<c>Q2Cums</c> 是各步 <c>PRESS/SS</c> 比值的连乘，在置换检验里遇到
+    ''' 「模型完全不成立」的样本时，连乘会把 Q2 放大到 -70 这种量级，图上的 Q2 序列
+    ''' 就会把 R2Y 压成一条贴边的直线。单步 Q2 的取值范围要稳定得多。
+    ''' </para>
     ''' 
     ''' <para>
     ''' PCA 没有交叉验证过程，返回 <see cref="Double.NaN"/>。
@@ -171,6 +178,12 @@ Public Module MultivariateMetrics
     ''' </summary>
     ''' <param name="result">多元分析结果</param>
     Public Function Q2(result As MultivariateAnalysisResult) As Double
+        Dim values = result?.Q2Values
+
+        If values IsNot Nothing AndAlso values.Count > 0 Then
+            Return SafeValue(values(values.Count - 1))
+        End If
+
         Dim cum = result?.Q2Cums
 
         If cum Is Nothing OrElse cum.Count = 0 Then
@@ -210,6 +223,12 @@ Public Module MultivariateMetrics
         ' 直接调用 IsNullOrEmpty 会导致扩展方法重载歧义（BC30521），因此这里显式判断 Count。
         If result.Contributions IsNot Nothing AndAlso result.Contributions.Count > 0 Then
             Return result.Contributions.Select(Function(v) SafeValue(v)).ToArray
+        End If
+
+        ' OPLS 的载荷是正交滤波之后的 p/po，无法用 t·p' 还原 X 的方差分解，
+        ' 强行估算只会得到 0.x% 这种误导性的数字，因此不返回方差解释率
+        If IsOpls(result) Then
+            Return New Double() {}
         End If
 
         Return EstimateR2X(result)

@@ -180,8 +180,9 @@ Public Class MultivariateOutlierPlot : Inherits PlotEngine
             Dim value As Double = MultivariatePlotHelper.Finite(values(i))
             Dim cx As Single = ToPixelX(i, xmin, xmax)
             Dim top As Single = ToPixelY(value, ymin, ymax)
-            Dim isOutlier As Boolean = (i < data.Outliers.Length AndAlso data.Outliers(i)) OrElse
-                (Not Double.IsNaN(threshold) AndAlso value > threshold)
+            ' 只按当前绘制的这个统计量来判断是否超限：
+            ' 否则一张 DModX 图上会把「仅 T2 超限」的样本也标成红色，容易误读
+            Dim isOutlier As Boolean = Not Double.IsNaN(threshold) AndAlso value > threshold
             Dim color As Color = If(isOutlier, outlierColor, normalColor)
 
             Using pen As New Pen(Color.FromArgb(160, color), 1.0F)
@@ -220,7 +221,7 @@ Public Class MultivariateOutlierPlot : Inherits PlotEngine
             New Series With {.Name = "In control", .Color = normalColor, .MarkerShape = MarkerShape.Circle}
         }
 
-        If data.Outliers IsNot Nothing AndAlso data.Outliers.Any(Function(flag) flag) Then
+        If Not Double.IsNaN(threshold) Then
             Call legends.Add(New Series With {.Name = "Outlier", .Color = outlierColor, .MarkerShape = MarkerShape.Diamond})
         End If
 

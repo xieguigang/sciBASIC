@@ -187,7 +187,8 @@ Public Class MultivariatePredictionPlot : Inherits PlotEngine
             width = std.Max(width, MeasureString(line, font).Width)
         Next
 
-        Dim x0 As Single = _plotArea.Right - width - 12
+        ' 数据点沿 y=x 对角线分布，左上角是唯一的空白区域
+        Dim x0 As Single = _plotArea.Left + 12
         Dim y0 As Single = _plotArea.Top + 8
 
         Using brush As New SolidBrush(Theme.TextColor)

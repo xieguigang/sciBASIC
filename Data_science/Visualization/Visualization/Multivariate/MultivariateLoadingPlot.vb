@@ -264,32 +264,11 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
     Private Sub DrawVariableLabel(label As String, font As Font, color As Color, isHighlight As Boolean,
                                   px As Single, py As Single, occupied As List(Of RectangleF))
         Dim size As SizeF = MeasureString(label, font)
-        Dim x As Single = px + 4
-        Dim y As Single = py - size.Height / 2
-
-        For attempt As Integer = 0 To 8
-            Dim rect As New RectangleF(x, y, size.Width, size.Height)
-            Dim collision As Boolean = False
-
-            For Each used As RectangleF In occupied
-                If rect.IntersectsWith(used) Then
-                    collision = True
-
-                    Exit For
-                End If
-            Next
-
-            If Not collision Then
-                Call occupied.Add(rect)
-
-                Exit For
-            End If
-
-            y += size.Height + 1
-        Next
+        Dim location As PointF = MultivariatePlotHelper.PlaceLabel(
+            px + 4, py - size.Height / 2, size, _plotArea, occupied)
 
         Using brush As New SolidBrush(Color.FromArgb(If(isHighlight, 240, 170), color))
-            Call DrawLabel(label, font, brush, x, y, Nothing, Nothing)
+            Call DrawLabel(label, font, brush, location.X, location.Y, Nothing, Nothing)
         End Using
     End Sub
 

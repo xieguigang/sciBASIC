@@ -391,7 +391,8 @@ Public Class OPLS
         Dim w = PLS.getWeightLoading(yArray, dataArray) ' this w is fixed for opls modeling
 
         For i = 0 To maxLV - 1
-            Dim currentSS = BasicMathematics.SumOfSquare(yArray)
+            ' 与 PLS 保持一致：Q2 使用中心化的总平方和
+            Dim currentSS = BasicMathematics.SumOfSquareCentered(yArray)
             ss.Add(currentSS)
             Dim currentPress = PLS.PlsPressCalculation(nFold, dataArray, yArray) ' same in opls
             press.Add(currentPress)
