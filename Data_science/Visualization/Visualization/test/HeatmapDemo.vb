@@ -35,6 +35,8 @@ Module HeatmapDemo
     ''' <para>
     ''' 可以用命令行参数选择只跑其中一部分：
     ''' <c>--heatmap</c> 只跑热图，<c>--3d</c> 只跑三维图表，缺省两者都跑。
+    ''' <c>--mv</c> 只跑多元统计分析（PCA / PLS-DA / OPLS-DA）的图表演示 ——
+    ''' 因为其中的置换检验需要反复重跑建模，所以不放进默认流程。
     ''' </para>
     ''' </summary>
     Sub Main()
@@ -42,8 +44,16 @@ Module HeatmapDemo
         Dim args As String() = Environment.GetCommandLineArgs()
         Dim only3D As Boolean = args.Any(Function(a) a = "--3d")
         Dim onlyHeatmap As Boolean = args.Any(Function(a) a = "--heatmap")
+        Dim onlyMultivariate As Boolean = args.Any(Function(a) a = "--mv")
 
         Call Console.WriteLine($"output directory: {outDir}")
+
+        If onlyMultivariate Then
+            Call MultivariateDemo.Run(outDir)
+            Call Console.WriteLine("done.")
+
+            Return
+        End If
 
         If Not only3D Then
             Call RenderMatrixDemo(outDir)
