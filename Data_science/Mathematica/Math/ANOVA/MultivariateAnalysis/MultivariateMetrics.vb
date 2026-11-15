@@ -76,22 +76,70 @@ Public Module MultivariateMetrics
     ''' 模型的 R2Y（响应的可解释方差比例）。
     ''' 
     ''' <para>
-    ''' <c>SsPreds</c> 的首元素是 Y 的初始平方和，末元素是建模之后的残差平方和，
-    ''' 因此 <c>R2Y = 1 - 残差/总平方和</c>。PCA 没有响应变量，返回 <see cref="Double.NaN"/>。
+    ''' 这里使用的是**中心化**的定义（SIMCA / 置换检验图的标准做法）：
+    ''' <c>R2Y = 1 - SSE/SST</c>，其中 <c>SST = Σ(y - ȳ)²</c>。
+    ''' </para>
+    ''' 
+    ''' <para>
+    ''' 注意：不能直接用 <c>1 - SsPreds(末)/SsPreds(0)</c>。因为 <c>SsPreds(0)</c> 是**未中心化**的
+    ''' <c>Σy²</c>，它把响应均值也计入了「总平方和」。对于取值 1..k 的分类编码，
+    ''' 均值项会占据绝大部分平方和（例如两类编码 1/2 时，理论上限只有 10%），
+    ''' 于是模型无论拟合得多好，R2Y 都只能得到 0.1 左右的荒谬数值。
+    ''' </para>
+    ''' 
+    ''' <para>
+    ''' PCA 没有响应变量，返回 <see cref="Double.NaN"/>。
     ''' </para>
     ''' </summary>
     ''' <param name="result">多元分析结果</param>
     Public Function R2Y(result As MultivariateAnalysisResult) As Double
+        Dim stat = result?.StatisticsObject
+        Dim y As Double() = stat?.YVariables
+        Dim predicted = result?.PredictedYs
+
+        If y IsNot Nothing AndAlso predicted IsNot Nothing AndAlso predicted.Count = y.Length AndAlso y.Length > 1 Then
+            Dim mean As Double = 0
+
+            For i As Integer = 0 To y.Length - 1
+                mean += y(i)
+            Next
+
+            mean /= y.Length
+
+            Dim sse As Double = 0
+            Dim sst As Double = 0
+
+            For i As Integer = 0 To y.Length - 1
+                Dim error_ As Double = y(i) - predicted(i)
+                Dim deviation As Double = y(i) - mean
+
+                sse += error_ * error_
+                sst += deviation * deviation
+            Next
+
+            If sst > 0 Then
+                Return SafeValue(1 - sse / sst)
+            End If
+        End If
+
+        ' ---- 退化路径：没有预测值的时候，用 SsPreds 扣除均值项之后估算 ----
         Dim ss = result?.SsPreds
 
-        If ss Is Nothing OrElse ss.Count < 2 Then
+        If ss Is Nothing OrElse ss.Count < 2 OrElse y Is Nothing Then
             Return Double.NaN
         End If
 
-        Dim total As Double = ss(0)
-        Dim residual As Double = ss(ss.Count - 1)
+        Dim average As Double = 0
 
-        Return PercentageOfVariance(total, residual)
+        For i As Integer = 0 To y.Length - 1
+            average += y(i)
+        Next
+
+        average /= y.Length
+
+        Dim centeredTotal As Double = ss(0) - y.Length * average * average
+
+        Return PercentageOfVariance(centeredTotal, ss(ss.Count - 1))
     End Function
 
     ''' <summary>
