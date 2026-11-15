@@ -104,7 +104,8 @@ Public Module DataFrameMapping
     Private Sub AddLeafColumn(plan As WritePlan, root As Schema.ParquetSchemaNode, column As FeatureVectorModel, rowCount As Integer)
         Dim nullMask As Boolean() = Nothing
         Dim values As Array = AsTypedColumn(column, rowCount, nullMask)
-        Dim node As Schema.ParquetSchemaNode = CreateLeafNode(column.name, column.type, nullMask IsNot Nothing)
+        Dim node As Schema.ParquetSchemaNode = CreateLeafNode(column.name, column.type, nullMask IsNot Nothing,
+                                                             IsBinaryColumn(column))
 
         Call root.Children.Add(node)
         Call plan.Columns.Add(New ColumnPlan With {
@@ -158,7 +159,8 @@ Public Module DataFrameMapping
             Dim column As FeatureVectorModel = df(member)
             Dim nullMask As Boolean() = Nothing
             Dim values As Array = AsTypedColumn(column, rowCount, nullMask)
-            Dim leaf As Schema.ParquetSchemaNode = CreateLeafNode(parts(parts.Length - 1), column.type, nullMask IsNot Nothing)
+            Dim leaf As Schema.ParquetSchemaNode = CreateLeafNode(parts(parts.Length - 1), column.type,
+                                                                  nullMask IsNot Nothing, IsBinaryColumn(column))
 
             leaf.Parent = parent
             Call parent.Children.Add(leaf)
@@ -360,7 +362,15 @@ Public Module DataFrameMapping
     ''' <summary>
     ''' 依据 CLR 类型创建叶子 schema 节点。
     ''' </summary>
-    Private Function CreateLeafNode(name As String, type As Type, hasNulls As Boolean) As Schema.ParquetSchemaNode
+    ''' <param name="name">列名</param>
+    ''' <param name="type">列的元素类型</param>
+    ''' <param name="hasNulls">是否包含空值（决定 OPTIONAL / REQUIRED）</param>
+    ''' <param name="isBinary">
+    ''' 文本列承载的是 base64 编码的二进制数据，此时不写入 STRING 逻辑类型
+    ''' （即还原为原始的 BYTE_ARRAY 二进制列）。
+    ''' </param>
+    Private Function CreateLeafNode(name As String, type As Type, hasNulls As Boolean,
+                                    Optional isBinary As Boolean = False) As Schema.ParquetSchemaNode
         Dim node As New Schema.ParquetSchemaNode With {
             .Name = name,
             .Repetition = If(hasNulls, Format.FieldRepetitionType.[OPTIONAL], Format.FieldRepetitionType.REQUIRED)
@@ -379,8 +389,11 @@ Public Module DataFrameMapping
                 node.PhysicalType = Format.ParquetType.[BOOLEAN]
             Case GetType(String)
                 node.PhysicalType = Format.ParquetType.BYTE_ARRAY
-                node.Logical = Format.LogicalType.MakeString()
-                node.Converted = Format.ConvertedType.UTF8
+
+                If Not isBinary Then
+                    node.Logical = Format.LogicalType.MakeString()
+                    node.Converted = Format.ConvertedType.UTF8
+                End If
             Case GetType(Date)
                 node.PhysicalType = Format.ParquetType.INT64
                 node.Logical = Format.LogicalType.TimestampMillis()
