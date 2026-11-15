@@ -51,7 +51,9 @@ Module MultivariateDemo
 
         ' ---- 合成数据 ----
         Dim pcaData As DemoData = BuildTable({"Control", "Treat-A", "Treat-B"}, 8, -1)
-        Dim plsData As DemoData = BuildTable({"Control", "Treat-A"}, 10, outlierIndex:=9)
+        Dim plsData As DemoData = BuildTable({"Control", "Treat-A"}, 10, -1)
+        ' 离群诊断单独用一份注入了异常偏差的数据：这样得分图不会被离群点撑变形
+        Dim diagData As DemoData = BuildTable({"Control", "Treat-A"}, 10, outlierIndex:=9)
 
         Call DebugAudit.Mark("pca samples", pcaData.samples.Length)
         Call DebugAudit.Mark("pls samples", plsData.samples.Length)
@@ -62,6 +64,7 @@ Module MultivariateDemo
         Dim pcaResult = pcaData.table.pca(maxPC:=5)
         Dim plsResult = plsData.table.plsda(component:=2)
         Dim oplsResult = plsData.table.oplsda(component:=1)
+        Dim diagResult = diagData.table.plsda(component:=2)
 
         Call watch.Stop()
         Call Console.WriteLine($"  analysis finished in {watch.ElapsedMilliseconds} ms")
@@ -84,7 +87,7 @@ Module MultivariateDemo
         Call RenderPermutation(dir, plsResult, oplsResult)
 
         ' ---- 模型诊断 ----
-        Call RenderDiagnostics(dir, plsData, plsResult)
+        Call RenderDiagnostics(dir, plsData, plsResult, diagData, diagResult)
 
         ' ---- 自检报告 ----
         Dim report As String = Path.Combine(dir, "multivariate-demo-audit.json")
@@ -295,7 +298,8 @@ Module MultivariateDemo
 
 #Region "模型诊断"
 
-    Private Sub RenderDiagnostics(dir As String, data As DemoData, plsResult As MultivariateAnalysisResult)
+    Private Sub RenderDiagnostics(dir As String, data As DemoData, plsResult As MultivariateAnalysisResult,
+                                  diagData As DemoData, diagResult As MultivariateAnalysisResult)
         ' 预测值对实测值
         Dim prediction As New MultivariatePredictionPlot(1100, 900, plsResult, data.groups, data.samples, PlotTheme.Light())
 
@@ -305,9 +309,9 @@ Module MultivariateDemo
 
         Call Export(prediction, Path.Combine(dir, "plsda-prediction.png"))
 
-        ' Hotelling T2
-        Dim t2Plot As New MultivariateOutlierPlot(1200, 800, plsResult, MultivariateOutlierMetric.HotellingT2,
-                                                  data.groups, data.samples, PlotTheme.Light())
+        ' Hotelling T2（离群诊断使用注入了异常偏差的那份数据）
+        Dim t2Plot As New MultivariateOutlierPlot(1200, 800, diagResult, MultivariateOutlierMetric.HotellingT2,
+                                                  diagData.groups, diagData.samples, PlotTheme.Light())
 
         t2Plot.Title = "Hotelling T2 diagnostic"
         t2Plot.SubTitle = "95% control limit from the F distribution"
@@ -315,17 +319,17 @@ Module MultivariateDemo
         Call Export(t2Plot, Path.Combine(dir, "plsda-hotelling-t2.png"))
 
         ' DModX
-        Dim dmodxPlot As New MultivariateOutlierPlot(1200, 800, plsResult, MultivariateOutlierMetric.DModX,
-                                                     data.groups, data.samples, PlotTheme.Light())
+        Dim dmodxPlot As New MultivariateOutlierPlot(1200, 800, diagResult, MultivariateOutlierMetric.DModX,
+                                                     diagData.groups, diagData.samples, PlotTheme.Light())
 
         dmodxPlot.Title = "DModX diagnostic"
         dmodxPlot.SubTitle = "residual space distance with chi-square control limit"
 
         Call Export(dmodxPlot, Path.Combine(dir, "plsda-dmodx.png"))
 
-        Dim outliers As MultivariateOutlierSeries = plsResult.ToOutlierSeries(data.groups, data.samples)
+        Dim outliers As MultivariateOutlierSeries = diagResult.ToOutlierSeries(diagData.groups, diagData.samples)
 
-        Call Assert(outliers.Size = data.samples.Length, $"outlier series size = {outliers.Size}")
+        Call Assert(outliers.Size = diagData.samples.Length, $"outlier series size = {outliers.Size}")
         Call Assert(Not Double.IsNaN(outliers.T2Threshold), $"T2 threshold = {outliers.T2Threshold.ToString("F3")}")
         Call Assert(Not Double.IsNaN(outliers.DModXThreshold), $"DModX threshold = {outliers.DModXThreshold.ToString("F3")}")
         Call Assert(outliers.DModX.All(Function(v) v >= 0), "all DModX values are non-negative")
