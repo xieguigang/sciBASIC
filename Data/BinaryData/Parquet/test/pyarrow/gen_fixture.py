@@ -79,7 +79,7 @@ def nested_table():
     return pa.table({
         "values": pa.array([[1.0, 2.0, 3.0], [4.5], [], None, [6.0, 7.0]],
                            type=pa.list_(pa.float64())),
-        "attrs": pa.array([[("a", 1), ("b", 2)], [], [("c", 3)], None, [("d", 4), ("e", None)]],
+        "attrs": pa.array([[("a", 1), ("b", 2)], [], [("c", 3)], None, [("e", None), ("d", 4)]],
                           type=map_type),
         "points": pa.array(
             [[{"x": 1, "y": 1.5}, {"x": 2, "y": 2.5}], [], [{"x": 3, "y": 3.5}], None, [{"x": 4, "y": 4.5}]],
@@ -131,6 +131,14 @@ def main():
             "score": pa.array([i * 0.5 for i in range(64)], type=pa.float64()),
         }),
         out_dir, "flat_delta.parquet",
+        use_dictionary=False, column_encoding={"id": "DELTA_BINARY_PACKED"})
+    manifest["flat_delta32.parquet"] = write(
+        pa.table({
+            # 交替的大数值会让 DELTA_BINARY_PACKED 的 miniblock bit width 达到 32 位，
+            # 用于覆盖位打包解码的 32 位溢出问题
+            "id": pa.array([0 if i % 2 == 0 else 2000000000 for i in range(32)], type=pa.int64()),
+        }),
+        out_dir, "flat_delta32.parquet",
         use_dictionary=False, column_encoding={"id": "DELTA_BINARY_PACKED"})
     manifest["flat_types.parquet"] = write(flat_types_table(), out_dir, "flat_types.parquet")
     manifest["flat_empty.parquet"] = write(empty_table(), out_dir, "flat_empty.parquet")

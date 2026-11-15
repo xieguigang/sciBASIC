@@ -44,6 +44,8 @@ Module Program
             Call RunSuite("suite:nested-roundtrip", AddressOf NestedTests.RunStableRoundtrip)
             Call RunSuite("suite:nested-schema", AddressOf NestedTests.RunNestedSchema)
             Call RunSuite("suite:interop", AddressOf InteropTests.Run)
+            Call RunSuite("suite:pyarrow-read", AddressOf PyArrowInteropTests.RunPyArrowFixtures)
+            Call RunSuite("suite:pyarrow-write", AddressOf PyArrowInteropTests.RunWriterInterop)
         Catch ex As Exception
             Call DebugAudit.Mark("fatal", ex.ToString())
             Call Console.WriteLine(ex.ToString())

@@ -56,6 +56,36 @@ Friend Module Frames
     End Function
 
     ''' <summary>
+    ''' 构造用于 pyarrow 对拍的扁平表：包含 nullable 的字符串（区分 null 与空串）、
+    ''' <c>NaN</c> 浮点以及 UTC 日期时间列。
+    ''' </summary>
+    Friend Function MakeInterop() As DataFrame
+        Dim df As New DataFrame
+
+        Call df.add(New FeatureVector("id", New Integer() {1, 2, 3, 4, 5, 6}))
+        Call df.add(New FeatureVector("count", New Long() {
+            1000000000000L, 1000000000001L, 1000000000002L,
+            1000000000003L, 1000000000004L, 1000000000005L
+        }))
+        Call df.add(New FeatureVector("score", New Double() {0.5, -1.25, Double.NaN, 2.0, 0.0, 1.0E-08}))
+        Call df.add(New FeatureVector("weight", New Single() {0.0F, 0.25F, 0.5F, 0.75F, 1.0F, 1.25F}))
+        Call df.add(New FeatureVector("flag", New Boolean() {True, False, True, False, True, False}))
+        Call df.add(New FeatureVector("label", New String() {"alpha", Nothing, "", "delta", "中文", "z"}))
+        Call df.add(New FeatureVector("time", New Date() {
+            New Date(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+            New Date(2020, 1, 1, 1, 0, 0, DateTimeKind.Utc),
+            New Date(2020, 1, 1, 2, 0, 0, DateTimeKind.Utc),
+            New Date(2020, 1, 1, 3, 0, 0, DateTimeKind.Utc),
+            New Date(2020, 1, 1, 4, 0, 0, DateTimeKind.Utc),
+            New Date(2020, 1, 1, 5, 0, 0, DateTimeKind.Utc)
+        }))
+
+        df.rownames = New String() {"r1", "r2", "r3", "r4", "r5", "r6"}
+
+        Return df
+    End Function
+
+    ''' <summary>
     ''' 构造一个包含嵌套类型（list / map / list&lt;struct&gt; / struct 内含 list）的 DataFrame。
     ''' </summary>
     Friend Function MakeNested() As DataFrame

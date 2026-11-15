@@ -17,10 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="pyarrow\gen_fixture.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="pyarrow\verify_vb_output.py">
+    <None Update="pyarrow\*.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
