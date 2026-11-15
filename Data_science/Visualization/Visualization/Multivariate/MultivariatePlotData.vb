@@ -87,8 +87,8 @@ Public Enum MultivariateEllipseMode
     ''' <summary>不绘制椭圆。</summary>
     None
     ''' <summary>
-    ''' 统计置信椭圆：基于协方差矩阵特征分解 + 卡方（<see cref="LinearAlgebra.PCAEllipseCalculator.EllipseType.Normal"/>）
-    ''' 或者 F 分布（<see cref="LinearAlgebra.PCAEllipseCalculator.EllipseType.T"/>）的置信水平。
+    ''' 统计置信椭圆：基于协方差矩阵特征分解 + 卡方（Normal）或者 F 分布（T）的置信水平，
+    ''' 具体实现见 <c>PCAEllipseCalculator</c>。
     ''' </summary>
     Confidence
     ''' <summary>k 倍标准差椭圆：<c>Geometry.EstimateEllipse</c> 的简化版，k = 2 约等于 95%。</summary>
@@ -596,16 +596,25 @@ Public Class MultivariateOutlierSeries
         }
 
         If n > k + 1 Then
-            series.T2Threshold = k * (n - 1) / (n - k) * dist.FDistributionInverse(0.95, k, n - k)
+            ' 标准公式：k(n²-1)/(n(n-k)) · F(0.05, k, n-k)
+            ' 注意 Distribution.FDistributionInverse 的输入是**上尾概率**，
+            ' 因此 95% 控制限要传 0.05 而不是 0.95
+            series.T2Threshold = k * (n * n - 1) / (n * (n - k)) * dist.FDistributionInverse(0.05, k, n - k)
         End If
 
         Call series.ComputeSpeThreshold()
+        Call series.UpdateOutliers()
 
         Return series
     End Function
 
     ''' <summary>
     ''' 用 Nomikos &amp; MacGregor 的卡方近似重新计算 SPE / DModX 控制限。
+    ''' 
+    ''' <para>
+    ''' <c>SPE ~ g·χ²(h)</c>，其中 <c>g = σ²/(2μ)</c>、<c>h = 2μ²/σ²</c>；
+    ''' 同样地，<see cref="dist.ChiSquareInverse"/> 使用上尾概率，95% 控制限传 0.05。
+    ''' </para>
     ''' </summary>
     Public Sub ComputeSpeThreshold()
         Dim n As Integer = Spe.Length
@@ -629,20 +638,26 @@ Public Class MultivariateOutlierSeries
 
         variance /= (n - 1)
 
-        If mean > 0 AndAlso variance > 0 Then
-            Dim g As Double = variance / (2 * mean)
-            Dim h As Integer = std.Max(1, CInt(std.Round(2 * mean * mean / variance)))
-
-            SpeThreshold = g * dist.ChiSquareInverse(0.95, h)
-            DModXThreshold = std.Sqrt(SpeThreshold / std.Max(1, (Spe.Length - 1)))
+        If mean <= 0 OrElse variance <= 0 Then
+            Return
         End If
 
-        ' DModX 是标准化之后的 SPE，控制限需要按同样的尺度换算
-        If SpeThreshold > 0 Then
-            Dim ratio As Double = If(Spe.Length > 0 AndAlso Spe(0) > 0 AndAlso DModX(0) > 0, DModX(0) / std.Sqrt(Spe(0)), 1)
+        Dim g As Double = variance / (2 * mean)
+        Dim h As Integer = std.Max(1, CInt(std.Round(2 * mean * mean / variance)))
 
-            DModXThreshold = std.Sqrt(SpeThreshold) * ratio
+        SpeThreshold = g * dist.ChiSquareInverse(0.05, h)
+
+        ' DModX = sqrt(SPE / dof)，是 SPE 的固定比例缩放，控制限按同样比例换算
+        If SpeThreshold > 0 AndAlso Spe(0) > 0 AndAlso DModX(0) > 0 Then
+            DModXThreshold = std.Sqrt(SpeThreshold) * (DModX(0) / std.Sqrt(Spe(0)))
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 根据当前的 T2 / DModX 控制限重新标记离群样本。
+    ''' </summary>
+    Public Sub UpdateOutliers()
+        Dim n As Integer = HotellingT2.Length
 
         Outliers = New Boolean(n - 1) {}
 

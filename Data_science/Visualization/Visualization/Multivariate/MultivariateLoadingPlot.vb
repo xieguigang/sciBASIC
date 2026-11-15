@@ -136,20 +136,22 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
 
         Dim n As Integer = data.Size
 
-        ' ---- 双标图的得分缩放 ----
+        ' ---- 双标图的载荷放大系数 ----
+        ' 载荷的数值通常只有得分的一个零头，直接画在同一坐标系里会全部挤在原点附近，
+        ' 因此把**载荷**放大到得分的量级（而不是把得分缩小到原点）
         Dim scores As MultivariateScoreSet = Nothing
-        Dim scoreScale As Double = 1
+        Dim loadingScale As Double = 1
 
         If ShowBiplot AndAlso data.Scores IsNot Nothing AndAlso data.Scores.Size > 0 Then
             scores = data.Scores
-            scoreScale = If(Me.BiplotScale.HasValue, Me.BiplotScale.Value, AutoBiplotScale(data, scores))
+            loadingScale = If(Me.BiplotScale.HasValue, Me.BiplotScale.Value, AutoBiplotScale(data, scores))
         End If
 
-        ' ---- 坐标范围（载荷 + 缩放后的得分）----
+        ' ---- 坐标范围（缩放后的载荷 + 得分）----
         Dim xmin#, xmax#, ymin#, ymax#
 
-        Call MultivariatePlotHelper.RangeOf(data.X.Take(n).ToArray, xmin, xmax)
-        Call MultivariatePlotHelper.RangeOf(data.Y.Take(n).ToArray, ymin, ymax)
+        Call MultivariatePlotHelper.RangeOf(Scale(data.X, loadingScale), xmin, xmax)
+        Call MultivariatePlotHelper.RangeOf(Scale(data.Y, loadingScale), ymin, ymax)
 
         If scores IsNot Nothing Then
             Dim sx#, sxo#, sy#, syo#
@@ -157,10 +159,10 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
             Call MultivariatePlotHelper.RangeOf(scores.X.Take(scores.Size).ToArray, sx, sxo)
             Call MultivariatePlotHelper.RangeOf(scores.Y.Take(scores.Size).ToArray, sy, syo)
 
-            xmin = std.Min(xmin, sx * scoreScale)
-            xmax = std.Max(xmax, sxo * scoreScale)
-            ymin = std.Min(ymin, sy * scoreScale)
-            ymax = std.Max(ymax, syo * scoreScale)
+            xmin = std.Min(xmin, sx)
+            xmax = std.Max(xmax, sxo)
+            ymin = std.Min(ymin, sy)
+            ymax = std.Max(ymax, syo)
         End If
 
         Call ExpandRange(xmin, xmax)
@@ -191,8 +193,8 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
             Dim colors As Dictionary(Of String, Color) = MultivariatePlotHelper.GroupColors(groups, Theme.Palette)
 
             For i As Integer = 0 To scores.Size - 1
-                Dim px As Single = ToPixelX(scores.X(i) * scoreScale, xmin, xmax)
-                Dim py As Single = ToPixelY(scores.Y(i) * scoreScale, ymin, ymax)
+                Dim px As Single = ToPixelX(scores.X(i), xmin, xmax)
+                Dim py As Single = ToPixelY(scores.Y(i), ymin, ymax)
 
                 If Not InPlotArea(px, py) Then
                     Continue For
@@ -214,10 +216,11 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
         Dim highlight As Color = If(Theme.Palette.Length > 3, Theme.Palette(3), Color.Firebrick)
         Dim normal As Color = If(Theme.Palette.Length > 0, Theme.Palette(0), Color.SteelBlue)
         Dim origin As New PointF(ToPixelX(0, xmin, xmax), ToPixelY(0, ymin, ymax))
+        Dim occupied As New List(Of RectangleF)
 
         For i As Integer = 0 To n - 1
-            Dim px As Single = ToPixelX(data.X(i), xmin, xmax)
-            Dim py As Single = ToPixelY(data.Y(i), ymin, ymax)
+            Dim px As Single = ToPixelX(data.X(i) * loadingScale, xmin, xmax)
+            Dim py As Single = ToPixelY(data.Y(i) * loadingScale, ymin, ymax)
             Dim distance As Double = std.Sqrt(data.X(i) ^ 2 + data.Y(i) ^ 2)
             Dim isHighlight As Boolean = distance >= threshold
             Dim color As Color = If(isHighlight, highlight, normal)
@@ -233,11 +236,8 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
             If ShowVariableLabels AndAlso (isHighlight OrElse maxDistance <= 0 OrElse distance >= maxDistance * 0.25) Then
                 Dim label As String = If(data.VariableNames IsNot Nothing AndAlso i < data.VariableNames.Length,
                                          data.VariableNames(i), "X" & (i + 1).ToString)
-                Dim size As SizeF = MeasureString(label, font)
 
-                Using brush As New SolidBrush(Color.FromArgb(If(isHighlight, 240, 170), color))
-                    Call DrawLabel(label, font, brush, px + 4, py - size.Height / 2, Nothing, Nothing)
-                End Using
+                Call DrawVariableLabel(label, font, color, isHighlight, px, py, occupied)
             End If
         Next
 
@@ -248,14 +248,53 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
         }
 
         If scores IsNot Nothing Then
-            Call legends.Insert(0, New Series With {.Name = $"Score (×{scoreScale.ToString("0.###")})", .Color = Color.Gray, .MarkerShape = MarkerShape.Circle})
+            Call legends.Insert(0, New Series With {
+                .Name = $"Score (loading ×{loadingScale.ToString("0.##")})",
+                .Color = Color.Gray,
+                .MarkerShape = MarkerShape.Circle
+            })
         End If
 
         Call DrawLegend(legends)
     End Sub
 
     ''' <summary>
-    ''' 自动双标图缩放：让得分点占据载荷点 85% 的半径范围。
+    ''' 绘制变量名，并做一次简单的竖直避让：与已经画出的标签重叠时向下平移。
+    ''' </summary>
+    Private Sub DrawVariableLabel(label As String, font As Font, color As Color, isHighlight As Boolean,
+                                  px As Single, py As Single, occupied As List(Of RectangleF))
+        Dim size As SizeF = MeasureString(label, font)
+        Dim x As Single = px + 4
+        Dim y As Single = py - size.Height / 2
+
+        For attempt As Integer = 0 To 8
+            Dim rect As New RectangleF(x, y, size.Width, size.Height)
+            Dim collision As Boolean = False
+
+            For Each used As RectangleF In occupied
+                If rect.IntersectsWith(used) Then
+                    collision = True
+
+                    Exit For
+                End If
+            Next
+
+            If Not collision Then
+                Call occupied.Add(rect)
+
+                Exit For
+            End If
+
+            y += size.Height + 1
+        Next
+
+        Using brush As New SolidBrush(Color.FromArgb(If(isHighlight, 240, 170), color))
+            Call DrawLabel(label, font, brush, x, y, Nothing, Nothing)
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' 自动双标图缩放：把载荷放大到得分 85% 的半径范围（载荷通常比得分小一到两个数量级）。
     ''' </summary>
     Private Shared Function AutoBiplotScale(loadings As MultivariateLoadingSet, scores As MultivariateScoreSet) As Double
         Dim maxLoading As Double = 0
@@ -273,7 +312,17 @@ Public Class MultivariateLoadingPlot : Inherits PlotEngine
             Return 1
         End If
 
-        Return 0.85 * maxLoading / maxScore
+        Return 0.85 * maxScore / maxLoading
+    End Function
+
+    Private Shared Function Scale(values As Double(), factor As Double) As Double()
+        Dim scaled As Double() = New Double(values.Length - 1) {}
+
+        For i As Integer = 0 To values.Length - 1
+            scaled(i) = values(i) * factor
+        Next
+
+        Return scaled
     End Function
 
     Private Sub DrawZeroLines(xmin As Double, xmax As Double, ymin As Double, ymax As Double)
