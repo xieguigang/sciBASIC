@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj" />
     <ProjectReference Include="..\..\..\DataMining\UMAP\UMAP.NET5.vbproj" />
     <ProjectReference Include="..\..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Mathematica\Math\ANOVA\ANOVA.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj" />
     <ProjectReference Include="..\..\DataPlot\DataPlot.vbproj" />
