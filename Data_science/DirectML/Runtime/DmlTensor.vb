@@ -172,21 +172,21 @@ Namespace Runtime
         ''' </summary>
         ''' <param name="builder">持有内存的构建器。</param>
         Public Function WriteDescriptor(builder As DmlOperatorBuilder) As IntPtr
-            Dim sizes As IntPtr = builder.UIntArray(Dims)
-            Dim strides As IntPtr
+            Dim sizesPtr As IntPtr = builder.UIntArray(Dims)
+            Dim stridesPtr As IntPtr
 
             If Strides Is Nothing Then
-                strides = IntPtr.Zero
+                stridesPtr = IntPtr.Zero
             Else
-                strides = builder.UIntArray(Strides)
+                stridesPtr = builder.UIntArray(Strides)
             End If
 
             Dim buffer As New DML_BUFFER_TENSOR_DESC With {
                 .DataType = DataType,
                 .Flags = Flags,
                 .DimensionCount = CUInt(Dims.Length),
-                .Sizes = sizes,
-                .Strides = strides,
+                .Sizes = sizesPtr,
+                .Strides = stridesPtr,
                 .TotalTensorSizeInBytes = TotalSizeInBytes,
                 .GuaranteedBaseOffsetAlignment = 0UI
             }

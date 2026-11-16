@@ -88,8 +88,8 @@ Namespace Runtime
         ''' <summary>设备支持的最高 DirectML 特性级别。</summary>
         Public ReadOnly Property FeatureLevel As DML_FEATURE_LEVEL
 
-        ''' <summary>特性级别对应的 DirectML 版本文本（例如 <c>1.7</c>）。</summary>
-        Public ReadOnly Property DirectMLVersionText As String
+        ''' <summary>DirectML 特性级别文本（例如 <c>5.1</c>）。</summary>
+        Public ReadOnly Property FeatureLevelText As String
             Get
                 Return GetFeatureLevelText(FeatureLevel)
             End Get
@@ -420,7 +420,7 @@ Namespace Runtime
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"DML {DirectMLVersionText} @ {Adapter.Description}"
+            Return $"DML feature level {FeatureLevelText} @ {Adapter.Description}"
         End Function
 
     End Class

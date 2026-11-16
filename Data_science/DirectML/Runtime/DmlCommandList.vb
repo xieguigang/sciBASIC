@@ -72,19 +72,19 @@ Namespace Runtime
                 Return
             End If
 
-            Dim barrier As New D3D12_RESOURCE_BARRIER With {
+            Dim resourceBarrier As New D3D12_RESOURCE_BARRIER With {
                 .Type = D3D12_RESOURCE_BARRIER_TYPE.TRANSITION,
                 .Flags = D3D12_RESOURCE_BARRIER_FLAGS.NONE
             }
 
-            barrier.Union.Transition = New D3D12_RESOURCE_TRANSITION_BARRIER With {
+            resourceBarrier.Union.Transition = New D3D12_RESOURCE_TRANSITION_BARRIER With {
                 .pResource = resource.NativePointer,
                 .Subresource = UInteger.MaxValue,
                 .StateBefore = before,
                 .StateAfter = after
             }
 
-            Call Barrier(barrier)
+            Call Barrier(resourceBarrier)
         End Sub
 
         ''' <summary>UAV 屏障：让前一次写入对后续读取可见。</summary>
@@ -99,14 +99,14 @@ Namespace Runtime
         End Sub
 
         ''' <summary>插入单个屏障。</summary>
-        Public Sub Barrier(barrier As D3D12_RESOURCE_BARRIER)
+        Public Sub Barrier(resourceBarrier As D3D12_RESOURCE_BARRIER)
             ThrowIfDisposed()
 
             Dim size As Integer = Marshal.SizeOf(Of D3D12_RESOURCE_BARRIER)()
             Dim ptr As IntPtr = Marshal.AllocHGlobal(size)
 
             Try
-                Call Marshal.StructureToPtr(barrier, ptr, False)
+                Call Marshal.StructureToPtr(resourceBarrier, ptr, False)
                 Call _barrier(NativePointer, 1UI, ptr)
             Finally
                 Call Marshal.FreeHGlobal(ptr)
