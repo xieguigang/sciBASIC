@@ -31,22 +31,21 @@ Namespace Interop
     End Enum
 
     Public Enum D3D12_HEAP_TYPE As Integer
-        DEFAULT = 1
-        UPLOAD = 2
-        READBACK = 3
-        CUSTOM = 4
+        DEFAULT_HEAP = 1
+        UPLOAD_HEAP = 2
+        READBACK_HEAP = 3
+        CUSTOM_HEAP = 4
     End Enum
 
     <Flags>
     Public Enum D3D12_HEAP_FLAGS As UInteger
         NONE = 0
-        SHARED = 1
+        SHARED_HEAP = 1
         DENY_BUFFERS = 2
         ALLOW_DISPLAY = 4
         SHARED_CROSS_ADAPTER = 8
         DENY_RT_DS_TEXTURES = &H10
         DENY_NON_RT_DS_TEXTURES = &H20
-        ALLOW_ALL_BUFFERS_AND_TEXTURES = 0
     End Enum
 
     Public Enum D3D12_CPU_PAGE_PROPERTY As Integer
@@ -124,7 +123,7 @@ Namespace Interop
     <Flags>
     Public Enum D3D12_FENCE_FLAGS As UInteger
         NONE = 0
-        SHARED = 1
+        SHARED_FENCE = 1
         SHARED_CROSS_ADAPTER = 2
         NON_MONITORED = 4
     End Enum
@@ -170,9 +169,9 @@ Namespace Interop
         Public CreationNodeMask As UInteger
         Public VisibleNodeMask As UInteger
 
-        Public Shared Function Default() As D3D12_HEAP_PROPERTIES
+        Public Shared Function CreateDefault() As D3D12_HEAP_PROPERTIES
             Return New D3D12_HEAP_PROPERTIES With {
-                .Type = D3D12_HEAP_TYPE.DEFAULT,
+                .Type = D3D12_HEAP_TYPE.DEFAULT_HEAP,
                 .CPUPageProperty = D3D12_CPU_PAGE_PROPERTY.UNKNOWN,
                 .MemoryPoolPreference = D3D12_MEMORY_POOL.UNKNOWN,
                 .CreationNodeMask = 1,
@@ -180,9 +179,9 @@ Namespace Interop
             }
         End Function
 
-        Public Shared Function Upload() As D3D12_HEAP_PROPERTIES
+        Public Shared Function CreateUpload() As D3D12_HEAP_PROPERTIES
             Return New D3D12_HEAP_PROPERTIES With {
-                .Type = D3D12_HEAP_TYPE.UPLOAD,
+                .Type = D3D12_HEAP_TYPE.UPLOAD_HEAP,
                 .CPUPageProperty = D3D12_CPU_PAGE_PROPERTY.UNKNOWN,
                 .MemoryPoolPreference = D3D12_MEMORY_POOL.UNKNOWN,
                 .CreationNodeMask = 1,
@@ -190,9 +189,9 @@ Namespace Interop
             }
         End Function
 
-        Public Shared Function Readback() As D3D12_HEAP_PROPERTIES
+        Public Shared Function CreateReadback() As D3D12_HEAP_PROPERTIES
             Return New D3D12_HEAP_PROPERTIES With {
-                .Type = D3D12_HEAP_TYPE.READBACK,
+                .Type = D3D12_HEAP_TYPE.READBACK_HEAP,
                 .CPUPageProperty = D3D12_CPU_PAGE_PROPERTY.UNKNOWN,
                 .MemoryPoolPreference = D3D12_MEMORY_POOL.UNKNOWN,
                 .CreationNodeMask = 1,

@@ -67,8 +67,9 @@ Namespace Interop
         ''' <returns>委托实例；调用方必须缓存它。</returns>
         Public Function GetDelegate(Of TDelegate As Class)(instance As IntPtr, slot As Integer) As TDelegate
             Dim fn As IntPtr = GetVtableSlot(instance, slot)
+            Dim created As System.Delegate = Marshal.GetDelegateForFunctionPointer(fn, GetType(TDelegate))
 
-            Return DirectCast(Marshal.GetDelegateForFunctionPointer(fn, GetType(TDelegate)), TDelegate)
+            Return DirectCast(CObj(created), TDelegate)
         End Function
 
         ''' <summary>

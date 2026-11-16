@@ -181,7 +181,9 @@ Namespace Interop
                 Throw New EntryPointNotFoundException($"模块 {_name} 中找不到导出函数 {entryPoint}")
             End If
 
-            Return DirectCast(Marshal.GetDelegateForFunctionPointer(ptr, GetType(TDelegate)), TDelegate)
+            Dim created As System.Delegate = Marshal.GetDelegateForFunctionPointer(ptr, GetType(TDelegate))
+
+            Return DirectCast(CObj(created), TDelegate)
         End Function
 
         Public Sub Dispose() Implements IDisposable.Dispose

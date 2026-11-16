@@ -101,16 +101,10 @@ Namespace Interop
         ' ---- IDMLBindingTable ----
 
         <UnmanagedFunctionPointer(CallingConvention.StdCall)>
-        Public Delegate Sub DmlBindInputsFn(bindingTable As IntPtr, bindingCount As UInteger, bindings As IntPtr)
+        Public Delegate Sub DmlBindArrayFn(bindingTable As IntPtr, bindingCount As UInteger, bindings As IntPtr)
 
         <UnmanagedFunctionPointer(CallingConvention.StdCall)>
-        Public Delegate Sub DmlBindOutputsFn(bindingTable As IntPtr, bindingCount As UInteger, bindings As IntPtr)
-
-        <UnmanagedFunctionPointer(CallingConvention.StdCall)>
-        Public Delegate Sub DmlBindTemporaryResourceFn(bindingTable As IntPtr, binding As IntPtr)
-
-        <UnmanagedFunctionPointer(CallingConvention.StdCall)>
-        Public Delegate Sub DmlBindPersistentResourceFn(bindingTable As IntPtr, binding As IntPtr)
+        Public Delegate Sub DmlBindResourceFn(bindingTable As IntPtr, binding As IntPtr)
 
         <UnmanagedFunctionPointer(CallingConvention.StdCall)>
         Public Delegate Function DmlBindingTableResetFn(bindingTable As IntPtr, desc As IntPtr) As Integer

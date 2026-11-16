@@ -117,7 +117,7 @@ Namespace Interop
 
         Private Shared Function BuildMessage(hr As Integer, apiName As String, detail As String) As String
             Dim name As String = If(String.IsNullOrEmpty(apiName), "<native call>", apiName)
-            Dim text As String = $"{name} 调用失败：{HResult.Describe(hr)}"
+            Dim text As String = $"{name} 调用失败：{Interop.HResult.Describe(hr)}"
 
             If Not String.IsNullOrEmpty(detail) Then
                 text &= "；" & detail
