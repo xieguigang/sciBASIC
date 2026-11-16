@@ -133,20 +133,33 @@ Namespace DirectMLDemo
             Dim list As DmlCommandList = Nothing
             Dim fence As DmlFence = Nothing
 
-            Dim dmlDevice As DmlDevice = DmlDevice.Create(adapter)
+            Dim wrapper As DmlDevice = DmlDevice.Create(adapter)
 
-            Call Trace($"device wrapper created: {dmlDevice}")
+            Call Trace($"device wrapper created: {wrapper}")
 
-            queue = dmlDevice.CreateCommandQueue()
+            queue = wrapper.CreateCommandQueue()
             Call Trace("command queue ok")
-            allocator = dmlDevice.CreateCommandAllocator()
+            allocator = wrapper.CreateCommandAllocator()
             Call Trace("command allocator ok")
-            list = dmlDevice.CreateCommandList(allocator)
+            list = wrapper.CreateCommandList(allocator)
             Call Trace("command list ok")
-            fence = dmlDevice.CreateFence()
+            Dim fenceFn As D3D12CreateFenceFn = ComApi.GetDelegate(Of D3D12CreateFenceFn)(wrapper.D3D12Device, 36)
+            Dim fenceIid As Guid = ComIIDs.ID3D12Fence
+            Dim fencePtr As IntPtr = IntPtr.Zero
+
+            Call Trace("calling raw CreateFence")
+            Dim fenceHr As Integer = fenceFn(wrapper.D3D12Device, 0UL, D3D12_FENCE_FLAGS.NONE, fenceIid, fencePtr)
+
+            Call Trace("CreateFence hr = 0x" & fenceHr.ToString("X8") & ", ptr = 0x" & fencePtr.ToInt64().ToString("X"))
+
+            Dim getValue As D3D12FenceGetCompletedValueFn = ComApi.GetDelegate(Of D3D12FenceGetCompletedValueFn)(fencePtr, 8)
+
+            Call Trace("completed value = " & getValue(fencePtr).ToString())
+
+            fence = wrapper.CreateFence()
             Call Trace("fence ok")
 
-            Dim recorder As DmlCommandRecorder = dmlDevice.CreateCommandRecorder()
+            Dim recorder As DmlCommandRecorder = wrapper.CreateCommandRecorder()
             Call Trace("command recorder ok")
 
             recorder.Dispose()
@@ -154,7 +167,7 @@ Namespace DirectMLDemo
             list.Dispose()
             allocator.Dispose()
             queue.Dispose()
-            dmlDevice.Dispose()
+            wrapper.Dispose()
             adapters.ForEach(Sub(a) a.Dispose())
             Call Trace("all objects released")
         End Sub
@@ -280,15 +293,26 @@ Namespace DirectMLDemo
             Call DebugAudit.Mark("onnx model created")
 
             Dim options As New DmlOnnxOptions With {.AllowCpuFallback = False}
-            Dim session As DmlOnnxSession = DmlOnnxSession.TryCreate(model, options)
 
-            If session Is Nothing Then
-                Call Reporter.Warn("DirectML backend unavailable: " & If(options.ErrorMessage, "<unknown>"))
-                Call DebugAudit.Mark("DirectML backend skipped: " & If(options.ErrorMessage, "<unknown>"))
+            If System.Environment.GetEnvironmentVariable("DIRECTML_DEBUG") = "1" Then
+                options.Trace = Sub(text) Trace(text)
+            End If
+            Dim session As DmlOnnxSession = Nothing
+
+            Try
+                session = DmlOnnxSession.Create(model, options)
+            Catch ex As Exception
+                Call Reporter.Warn("DirectML backend unavailable: " & ex.Message)
+
+                If System.Environment.GetEnvironmentVariable("DIRECTML_DEBUG") = "1" Then
+                    Call Console.WriteLine(ex.ToString())
+                End If
+
+                Call DebugAudit.Mark("DirectML backend skipped: " & ex.Message)
                 Call Reporter.Info("CPU reference output: " & String.Join(", ", expected.Select(Function(v) v.ToString("F6"))))
 
                 Return True
-            End If
+            End Try
 
             Using session
                 Call Reporter.Info(session.Summary())

@@ -1,7 +1,10 @@
 ' ------------------------------------------------------------------------
 ' D3D12 原生互操作：结构体、枚举、导出函数与 vtable 槽位委托
 '
-' 槽位号来自 Windows SDK d3d12.h 的 ID3D12xxxVtbl 结构体（已逐项核对）。
+' 槽位号来自 Windows SDK d3d12.h 的 ID3D12xxxVtbl 结构体，并在 RTX A4000 上实测校验：
+'   ID3D12Device        8 CreateCommandQueue / 9 CreateCommandAllocator / 12 CreateCommandList /
+'                       13 CheckFeatureSupport / 14 CreateDescriptorHeap / 15 GetDescriptorHandleIncrementSize /
+'                       27 CreateCommittedResource / 36 CreateFence / 37 GetDeviceRemovedReason
 ' ------------------------------------------------------------------------
 
 Imports System.Runtime.InteropServices

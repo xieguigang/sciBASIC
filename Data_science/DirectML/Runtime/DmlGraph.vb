@@ -138,6 +138,19 @@ Namespace Runtime
         End Property
 
         ''' <summary>
+        ''' 可选的执行阶段回调：用于在与原生驱动交互崩溃时定位到具体步骤。
+        ''' </summary>
+        Public Property Trace As Action(Of String)
+
+        Private Sub TraceStep(text As String)
+            Dim handler As Action(Of String) = Trace
+
+            If handler IsNot Nothing Then
+                handler(text)
+            End If
+        End Sub
+
+        ''' <summary>
         ''' 注册一个张量。
         ''' </summary>
         ''' <param name="name">名称（唯一）。</param>
@@ -280,7 +293,11 @@ Namespace Runtime
             Dim compiledPointers As New List(Of IntPtr)()
 
             For Each node As DmlGraphNode In _nodes
+                TraceStep($"compile: create operator {node.Definition.Type}")
+
                 Dim operatorPtr As IntPtr = device.CreateOperator(node.Definition.DescPtr)
+
+                TraceStep($"compile: compile operator {node.Definition.Type}")
 
                 node.Compiled = device.CompileOperator(operatorPtr, _executionFlags)
                 node.Definition.Dispose()
@@ -289,6 +306,8 @@ Namespace Runtime
             Next
 
             ' 2) 初始化器与描述符堆
+            TraceStep("compile: create operator initializer")
+
             _initializer = device.CreateOperatorInitializer(compiledPointers.ToArray())
 
             Dim totalDescriptors As UInteger = _initializer.BindingProperties.RequiredDescriptorCount
@@ -296,6 +315,8 @@ Namespace Runtime
             For Each node As DmlGraphNode In _nodes
                 totalDescriptors += node.Compiled.BindingProperties.RequiredDescriptorCount
             Next
+
+            TraceStep($"compile: create descriptor heap ({totalDescriptors} descriptors)")
 
             _heap = device.CreateDescriptorHeap(System.Math.Max(1UI, totalDescriptors))
 
@@ -318,6 +339,8 @@ Namespace Runtime
                     .GPUDescriptorHandle = _heap.GetGpuHandle(offset),
                     .SizeInDescriptors = count
                 }
+
+                TraceStep($"compile: create binding table for {node.Compiled.BindingProperties.RequiredDescriptorCount} descriptors")
 
                 node.Binding = device.CreateBindingTable(desc)
                 offset += count
@@ -349,6 +372,8 @@ Namespace Runtime
             For Each node As DmlGraphNode In _nodes
                 temporaryBytes += DmlMemoryPool.Align(node.Compiled.BindingProperties.TemporaryResourceSize)
             Next
+
+            TraceStep($"compile: allocate arena ({totalBytes + temporaryBytes} bytes)")
 
             _pool = New DmlMemoryPool(device, totalBytes + temporaryBytes, "dml-graph-arena")
 
@@ -390,6 +415,8 @@ Namespace Runtime
                 End If
             Next
 
+            TraceStep($"compile: create staging buffers (upload={uploadBytes}, readback={readbackBytes})")
+
             If uploadBytes > 0UL Then
                 _upload = DmlBuffer.CreateUpload(device, uploadBytes, "dml-graph-upload")
             End If
@@ -401,6 +428,8 @@ Namespace Runtime
             _compiled = True
 
             ' 6) 算子初始化（必须在使用之前执行一次）
+            TraceStep("compile: run operator initializer")
+
             Using context As New DmlExecutionContext(device, _engine.Context.Queue.Type)
                 context.Begin()
 
@@ -462,6 +491,8 @@ Namespace Runtime
             Dim context As DmlExecutionContext = _engine.Context
             Dim commandList As DmlCommandList = context.CommandList
 
+            TraceStep("execute: begin")
+
             context.Begin()
 
             ' 2) 上传
@@ -489,6 +520,8 @@ Namespace Runtime
             _arenaState = D3D12_RESOURCE_STATES.UNORDERED_ACCESS
 
             For Each node As DmlGraphNode In _nodes
+                TraceStep($"execute: dispatch {node.Definition.Type}")
+
                 Dim inputs As DML_BUFFER_BINDING() = GetBindings(node.Inputs)
                 Dim outputs As DML_BUFFER_BINDING() = GetBindings(node.Outputs)
 
@@ -521,7 +554,11 @@ Namespace Runtime
                 Next
             End If
 
+            TraceStep("execute: submit")
+
             context.Submit()
+
+            TraceStep("execute: read back")
 
             ' 5) 回读结果到托管内存
             If hasReadback Then

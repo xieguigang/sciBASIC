@@ -143,12 +143,11 @@ Namespace ONNX.DirectML
             End If
 
             Dim result As UInteger() = New UInteger(3) {}
+            Dim offset As Integer = 4 - dims.Length
 
-            For i As Integer = 0 To 3 - dims.Length - 1
+            For i As Integer = 0 To offset - 1
                 result(i) = 1UI
             Next
-
-            Dim offset As Integer = 4 - dims.Length
 
             For i As Integer = 0 To dims.Length - 1
                 result(offset + i) = CUInt(System.Math.Max(1, dims(i)))
@@ -212,6 +211,13 @@ Namespace ONNX.DirectML
             If dims Is Nothing OrElse dims.Length = 0 Then
                 dims = New Integer() {1}
             End If
+
+            For Each d As Integer In dims
+                If d <= 0 Then
+                    Throw New InvalidOperationException(
+                        $"常量 ""{name}"" 的形状非法：[{String.Join(", ", dims)}]（数据长度 {value.Data.Length}）")
+                End If
+            Next
 
             Dim tensor As DmlGraphTensor = Register(name, dims, DmlTensorKind.Constant, DML_TENSOR_DATA_TYPE.FLOAT32)
 

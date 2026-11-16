@@ -53,9 +53,9 @@ Namespace Runtime
             Me._createCommandList = ComApi.GetDelegate(Of D3D12CreateCommandListFn)(d3d12, 12)
             Me._createDescriptorHeap = ComApi.GetDelegate(Of D3D12CreateDescriptorHeapFn)(d3d12, 14)
             Me._getDescriptorHandleIncrementSize = ComApi.GetDelegate(Of D3D12GetDescriptorHandleIncrementSizeFn)(d3d12, 15)
-            Me._createCommittedResource = ComApi.GetDelegate(Of D3D12CreateCommittedResourceFn)(d3d12, 29)
-            Me._createFence = ComApi.GetDelegate(Of D3D12CreateFenceFn)(d3d12, 38)
-            Me._getD3D12RemovedReason = ComApi.GetDelegate(Of D3D12GetDeviceRemovedReasonFn)(d3d12, 39)
+            Me._createCommittedResource = ComApi.GetDelegate(Of D3D12CreateCommittedResourceFn)(d3d12, 27)
+            Me._createFence = ComApi.GetDelegate(Of D3D12CreateFenceFn)(d3d12, 36)
+            Me._getD3D12RemovedReason = ComApi.GetDelegate(Of D3D12GetDeviceRemovedReasonFn)(d3d12, 37)
 
             Me._dmlCheckFeatureSupport = ComApi.GetDelegate(Of DmlCheckFeatureSupportFn)(dml, DmlApi.SlotCheckFeatureSupport)
             Me._dmlCreateOperator = ComApi.GetDelegate(Of DmlCreateOperatorFn)(dml, DmlApi.SlotCreateOperator)

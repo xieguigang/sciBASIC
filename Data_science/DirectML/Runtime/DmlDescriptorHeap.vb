@@ -18,8 +18,10 @@ Namespace Runtime
 
             Me.DescriptorCount = descriptorCount
             Me.IncrementSize = incrementSize
-            Me._getCpuHandle = GetSlotDelegate(Of D3D12HeapGetCPUDescriptorHandleForHeapStartFn)(10)
-            Me._getGpuHandle = GetSlotDelegate(Of D3D12HeapGetGPUDescriptorHandleForHeapStartFn)(12)
+            ' ID3D12DescriptorHeap: 8 GetDesc, 9 GetCPUDescriptorHandleForHeapStart,
+            ' 10 GetGPUDescriptorHandleForHeapStart（在 RTX A4000 上实测校验）
+            Me._getCpuHandle = GetSlotDelegate(Of D3D12HeapGetCPUDescriptorHandleForHeapStartFn)(9)
+            Me._getGpuHandle = GetSlotDelegate(Of D3D12HeapGetGPUDescriptorHandleForHeapStartFn)(10)
         End Sub
 
         ''' <summary>描述符个数。</summary>
