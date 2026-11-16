@@ -52,6 +52,8 @@ Namespace DirectMLDemo
                     Case "device"
                         RunDeviceSteps()
                         exitCode = 0
+                    Case "graph"
+                        exitCode = If(RunGraphSteps(args), 0, 1)
                     Case Else
                         PrintUsage()
                         exitCode = 2
@@ -171,6 +173,55 @@ Namespace DirectMLDemo
             adapters.ForEach(Sub(a) a.Dispose())
             Call Trace("all objects released")
         End Sub
+
+        ''' <summary>
+        ''' 最小计算图：input -> Relu -> output，用于验证算子/绑定表/提交链路。
+        ''' </summary>
+        Private Function RunGraphSteps(args As String()) As Boolean
+            Dim op As String = If(args IsNot Nothing AndAlso args.Length > 1, args(1).ToLowerInvariant(), "relu")
+
+            Using engine As DmlEngine = DmlEngine.Create()
+                Using graph As DmlGraph = engine.CreateGraph()
+                    graph.Trace = Sub(text) Trace(text)
+
+                    Dim input As DmlGraphTensor = graph.DefineTensor("input", {1UI, 1UI, 2UI, 2UI}, DmlTensorKind.Input)
+                    Dim output As DmlGraphTensor = graph.DefineTensor("output", {1UI, 1UI, 2UI, 2UI}, DmlTensorKind.Output)
+
+                    Select Case op
+                        Case "conv"
+                            Dim w As DmlGraphTensor = graph.DefineConstant("w", {1UI, 1UI, 2UI, 2UI},
+                                                                          {1.0F, 0.0F, 0.0F, 0.0F,
+                                                                           0.0F, 1.0F, 0.0F, 0.0F,
+                                                                           0.0F, 0.0F, 1.0F, 0.0F,
+                                                                           0.0F, 0.0F, 0.0F, 1.0F})
+                            Dim conv As DmlOperatorDefinition = ConvolutionOperators.Convolution(
+                                input, w, Nothing, output, {1UI, 1UI}, {1UI, 1UI}, {0UI, 0UI}, {0UI, 0UI},
+                                Nothing, 1UI, DML_CONVOLUTION_DIRECTION.FORWARD, "conv")
+
+                            graph.AddOperator(conv)
+                        Case Else
+                            graph.AddOperator(ActivationOperators.Relu(input, output, "relu"))
+                    End Select
+
+                    Call Trace("graph: compile")
+                    graph.Compile()
+
+                    Call Trace("graph: set input")
+                    graph.SetInput("input", {-1.0F, 2.0F, -3.0F, 4.0F})
+
+                    Call Trace("graph: execute")
+                    graph.Execute()
+
+                    Dim result As Single() = graph.GetOutput("output")
+
+                    Call Trace("graph: output = " & String.Join(", ", result))
+
+                    Call DebugAudit.Test(result.Length = 4, "output element count")
+                End Using
+            End Using
+
+            Return True
+        End Function
 
         Private Sub PrintUsage()
             Call Console.WriteLine("DirectML.Demo <command>")

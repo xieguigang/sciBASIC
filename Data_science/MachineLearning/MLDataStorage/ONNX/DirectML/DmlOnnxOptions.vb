@@ -32,6 +32,11 @@ Namespace ONNX.DirectML
         ''' <summary>组装/编译失败时的原因（由 <see cref="DmlOnnxSession.TryCreate"/> 填充）。</summary>
         Public Property ErrorMessage As String
 
+        ''' <summary>
+        ''' 可选的执行阶段回调（编译/执行各步骤），用于定位与原生驱动交互时的崩溃。
+        ''' </summary>
+        Public Property Trace As Action(Of String)
+
     End Class
 
 End Namespace

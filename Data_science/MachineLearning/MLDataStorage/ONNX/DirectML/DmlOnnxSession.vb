@@ -136,6 +136,9 @@ Namespace ONNX.DirectML
 
             Try
                 Dim graph As DmlGraph = engine.CreateGraph()
+
+                graph.Trace = options.Trace
+
                 Dim compiler As New DmlOnnxGraphCompiler(model, graph)
 
                 compiler.Build()
