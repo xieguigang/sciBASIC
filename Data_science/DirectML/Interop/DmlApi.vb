@@ -93,8 +93,12 @@ Namespace Interop
 
         ' ---- IDMLDispatchable ----
 
+        ''' <summary>
+        ''' IDMLDispatchable::GetBindingProperties：原生按值返回 24 字节结构体，
+        ''' x64 上走"隐藏返回指针"约定，因此第一个参数就是返回缓冲区。
+        ''' </summary>
         <UnmanagedFunctionPointer(CallingConvention.StdCall)>
-        Public Delegate Function DmlGetBindingPropertiesFn(dispatchable As IntPtr) As DML_BINDING_PROPERTIES
+        Public Delegate Function DmlGetBindingPropertiesFn(dispatchable As IntPtr, returnBuffer As IntPtr) As IntPtr
 
         ' ---- IDMLOperatorInitializer ----
 

@@ -34,7 +34,9 @@ Namespace Runtime
         Public Function GetCpuHandle(index As UInteger) As D3D12_CPU_DESCRIPTOR_HANDLE
             ThrowIfDisposed()
 
-            Dim start As D3D12_CPU_DESCRIPTOR_HANDLE = _getCpuHandle(NativePointer)
+            Dim start As D3D12_CPU_DESCRIPTOR_HANDLE
+
+            Call _getCpuHandle(NativePointer, start)
 
             start.ptr = New IntPtr(start.ptr.ToInt64() + CLng(index) * IncrementSize)
 
@@ -45,7 +47,9 @@ Namespace Runtime
         Public Function GetGpuHandle(index As UInteger) As D3D12_GPU_DESCRIPTOR_HANDLE
             ThrowIfDisposed()
 
-            Dim start As D3D12_GPU_DESCRIPTOR_HANDLE = _getGpuHandle(NativePointer)
+            Dim start As D3D12_GPU_DESCRIPTOR_HANDLE
+
+            Call _getGpuHandle(NativePointer, start)
 
             start.ptr += CULng(index) * CULng(IncrementSize)
 

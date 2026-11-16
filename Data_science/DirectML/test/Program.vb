@@ -128,6 +128,15 @@ Namespace DirectMLDemo
                 End If
             End Using
 
+            Call Trace("probing CreateOperatorInitializer with an empty set")
+
+            Dim initFn As DmlCreateOperatorInitializerFn = ComApi.GetDelegate(Of DmlCreateOperatorInitializerFn)(dml, DmlApi.SlotCreateOperatorInitializer)
+            Dim initIid As Guid = ComIIDs.IDMLOperatorInitializer
+            Dim initPtr As IntPtr = IntPtr.Zero
+            Dim initHr As Integer = initFn(dml, 0UI, IntPtr.Zero, initIid, initPtr)
+
+            Call Trace("empty initializer hr = 0x" & initHr.ToString("X8") & ", ptr = 0x" & initPtr.ToInt64().ToString("X"))
+
             Call Trace("creating command queue / allocator / list / fence")
 
             Dim queue As DmlCommandQueue = Nothing
@@ -163,6 +172,116 @@ Namespace DirectMLDemo
 
             Dim recorder As DmlCommandRecorder = wrapper.CreateCommandRecorder()
             Call Trace("command recorder ok")
+
+            Dim heap As DmlDescriptorHeap = wrapper.CreateDescriptorHeap(4UI)
+            Call Trace($"descriptor heap ok, increment={heap.IncrementSize}")
+            Call Trace("cpu handle = 0x" & heap.GetCpuHandle(0).ptr.ToInt64().ToString("X"))
+            Call Trace("gpu handle = 0x" & heap.GetGpuHandle(0).ptr.ToString("X"))
+
+            heap.Dispose()
+
+            Dim createResource As D3D12CreateCommittedResourceFn =
+                ComApi.GetDelegate(Of D3D12CreateCommittedResourceFn)(wrapper.D3D12Device, 27)
+
+            Call Trace($"size(desc)={Marshal.SizeOf(Of D3D12_RESOURCE_DESC)()}, " &
+                       $"offset(width)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Width")}, " &
+                       $"offset(height)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Height")}, " &
+                       $"offset(format)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Format")}, " &
+                       $"offset(sample)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("SampleDesc")}, " &
+                       $"offset(layout)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Layout")}, " &
+                       $"offset(flags)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Flags")}, " &
+                       $"size(heapProps)={Marshal.SizeOf(Of D3D12_HEAP_PROPERTIES)()}")
+
+            For Each heapKind As D3D12_HEAP_TYPE In {D3D12_HEAP_TYPE.UPLOAD_HEAP, D3D12_HEAP_TYPE.DEFAULT_HEAP, D3D12_HEAP_TYPE.READBACK_HEAP}
+                Dim props As D3D12_HEAP_PROPERTIES
+
+                Select Case heapKind
+                    Case D3D12_HEAP_TYPE.UPLOAD_HEAP
+                        props = D3D12_HEAP_PROPERTIES.CreateUpload()
+                    Case D3D12_HEAP_TYPE.READBACK_HEAP
+                        props = D3D12_HEAP_PROPERTIES.CreateReadback()
+                    Case Else
+                        props = D3D12_HEAP_PROPERTIES.CreateDefault()
+                End Select
+
+                Dim state As D3D12_RESOURCE_STATES = D3D12_RESOURCE_STATES.COMMON
+
+                If heapKind = D3D12_HEAP_TYPE.UPLOAD_HEAP Then
+                    state = D3D12_RESOURCE_STATES.GENERIC_READ
+                ElseIf heapKind = D3D12_HEAP_TYPE.READBACK_HEAP Then
+                    state = D3D12_RESOURCE_STATES.COPY_DEST
+                End If
+
+                Dim resourceDesc As New D3D12_RESOURCE_DESC With {
+                    .Dimension = D3D12_RESOURCE_DIMENSION.BUFFER,
+                    .Alignment = 0UL,
+                    .Width = 512UL,
+                    .Height = 1UI,
+                    .DepthOrArraySize = 1US,
+                    .MipLevels = 1US,
+                    .Format = 0,
+                    .SampleDesc = New DXGI_SAMPLE_DESC With {.Count = 1UI, .Quality = 0UI},
+                    .Layout = D3D12_TEXTURE_LAYOUT.UNKNOWN,
+                    .Flags = D3D12_RESOURCE_FLAGS.NONE
+                }
+
+                Call Trace($"props: type={props.Type}, page={props.CPUPageProperty}, pool={props.MemoryPoolPreference}, " &
+                           $"node={props.CreationNodeMask}/{props.VisibleNodeMask}, iid={ComIIDs.ID3D12Resource}")
+                Call Trace($"desc: dim={resourceDesc.Dimension}, width={resourceDesc.Width}, height={resourceDesc.Height}, " &
+                           $"depth={resourceDesc.DepthOrArraySize}, mip={resourceDesc.MipLevels}, fmt={resourceDesc.Format}, " &
+                           $"sample={resourceDesc.SampleDesc.Count}/{resourceDesc.SampleDesc.Quality}, layout={resourceDesc.Layout}, flags={resourceDesc.Flags}")
+
+                Dim resourcePtr As IntPtr = IntPtr.Zero
+                Dim resourceIid As Guid = ComIIDs.ID3D12Resource
+                Dim hr As Integer = createResource(wrapper.D3D12Device, props, D3D12_HEAP_FLAGS.NONE, resourceDesc, state,
+                                                   IntPtr.Zero, resourceIid, resourcePtr)
+
+                Call Trace($"{heapKind} resource hr = 0x{hr:X8}, ptr = 0x{resourcePtr.ToInt64():X}")
+
+                If heapKind = D3D12_HEAP_TYPE.UPLOAD_HEAP Then
+                    Dim textureDesc As New D3D12_RESOURCE_DESC With {
+                        .Dimension = D3D12_RESOURCE_DIMENSION.TEXTURE2D,
+                        .Alignment = 0UL,
+                        .Width = 4UL,
+                        .Height = 4UI,
+                        .DepthOrArraySize = 1US,
+                        .MipLevels = 1US,
+                        .Format = 28,
+                        .SampleDesc = New DXGI_SAMPLE_DESC With {.Count = 1UI, .Quality = 0UI},
+                        .Layout = D3D12_TEXTURE_LAYOUT.UNKNOWN,
+                        .Flags = D3D12_RESOURCE_FLAGS.NONE
+                    }
+
+                    Dim texturePtr As IntPtr = IntPtr.Zero
+                    Dim textureProps As D3D12_HEAP_PROPERTIES = D3D12_HEAP_PROPERTIES.CreateDefault()
+                    Dim textureHr As Integer = createResource(wrapper.D3D12Device, textureProps, D3D12_HEAP_FLAGS.NONE,
+                                                              textureDesc, D3D12_RESOURCE_STATES.COPY_DEST,
+                                                              IntPtr.Zero, resourceIid, texturePtr)
+
+                    Call Trace($"texture2d resource hr = 0x{textureHr:X8}, ptr = 0x{texturePtr.ToInt64():X}")
+
+                    ' 缓冲区 + 默认堆 + COPY_DEST（排除 state/heap 组合的影响）
+                    Dim probePtr As IntPtr = IntPtr.Zero
+                    Dim probeDesc As New D3D12_RESOURCE_DESC With {
+                        .Dimension = D3D12_RESOURCE_DIMENSION.BUFFER,
+                        .Alignment = 0UL,
+                        .Width = 512UL,
+                        .Height = 1UI,
+                        .DepthOrArraySize = 1US,
+                        .MipLevels = 1US,
+                        .Format = 0,
+                        .SampleDesc = New DXGI_SAMPLE_DESC With {.Count = 1UI, .Quality = 0UI},
+                        .Layout = D3D12_TEXTURE_LAYOUT.UNKNOWN,
+                        .Flags = D3D12_RESOURCE_FLAGS.NONE
+                    }
+
+                    Dim probeHr As Integer = createResource(wrapper.D3D12Device, D3D12_HEAP_PROPERTIES.CreateDefault(),
+                                                            D3D12_HEAP_FLAGS.NONE, probeDesc, D3D12_RESOURCE_STATES.COPY_DEST,
+                                                            IntPtr.Zero, resourceIid, probePtr)
+
+                    Call Trace($"buffer+default+copy_dest hr = 0x{probeHr:X8}, ptr = 0x{probePtr.ToInt64():X}, dim={CInt(probeDesc.Dimension)}")
+                End If
+            Next
 
             recorder.Dispose()
             fence.Dispose()

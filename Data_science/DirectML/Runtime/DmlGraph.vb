@@ -302,6 +302,11 @@ Namespace Runtime
                 node.Compiled = device.CompileOperator(operatorPtr, _executionFlags)
                 node.Definition.Dispose()
 
+                TraceStep($"compile: compiled operator at 0x{node.Compiled.NativePointer.ToInt64():X}, " &
+                          $"descriptors={node.Compiled.BindingProperties.RequiredDescriptorCount}, " &
+                          $"temp={node.Compiled.BindingProperties.TemporaryResourceSize}, " &
+                          $"raw={BitConverter.ToString(node.Compiled.RawBindingProperties)}")
+
                 Call compiledPointers.Add(node.Compiled.NativePointer)
             Next
 

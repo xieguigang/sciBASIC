@@ -392,12 +392,14 @@ Namespace Interop
     Public Delegate Function D3D12FenceSignalFn(fence As IntPtr, value As ULong) As Integer
 
     ' ---- ID3D12DescriptorHeap ----
+    ' 注意：在 _WIN32 分支下，D3D12 的 COM 方法返回结构体时改为
+    ' "第二个参数是 RetVal 指针、返回值也是该指针" 的约定，而不是 x64 的 sret。
 
     <UnmanagedFunctionPointer(CallingConvention.StdCall)>
-    Public Delegate Function D3D12HeapGetCPUDescriptorHandleForHeapStartFn(heap As IntPtr) As D3D12_CPU_DESCRIPTOR_HANDLE
+    Public Delegate Sub D3D12HeapGetCPUDescriptorHandleForHeapStartFn(heap As IntPtr, ByRef result As D3D12_CPU_DESCRIPTOR_HANDLE)
 
     <UnmanagedFunctionPointer(CallingConvention.StdCall)>
-    Public Delegate Function D3D12HeapGetGPUDescriptorHandleForHeapStartFn(heap As IntPtr) As D3D12_GPU_DESCRIPTOR_HANDLE
+    Public Delegate Sub D3D12HeapGetGPUDescriptorHandleForHeapStartFn(heap As IntPtr, ByRef result As D3D12_GPU_DESCRIPTOR_HANDLE)
 
 #End Region
 

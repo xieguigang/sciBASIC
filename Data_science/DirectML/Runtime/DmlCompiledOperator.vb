@@ -2,6 +2,7 @@
 ' 编译后的 DML 算子（以及算子初始化器）
 ' ------------------------------------------------------------------------
 
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Computing.DirectML.Interop
 
 Namespace Runtime
@@ -18,11 +19,32 @@ Namespace Runtime
             MyBase.New(ptr)
 
             Me._getBindingProperties = GetSlotDelegate(Of DmlGetBindingPropertiesFn)(DmlApi.SlotGetBindingProperties)
-            Me.BindingProperties = _getBindingProperties(NativePointer)
+            Me.BindingProperties = QueryBindingProperties()
         End Sub
 
         ''' <summary>描述符数量、临时资源与持久资源需求。</summary>
         Public ReadOnly Property BindingProperties As DML_BINDING_PROPERTIES
+
+        Private Function QueryBindingProperties() As DML_BINDING_PROPERTIES
+            Dim size As Integer = Marshal.SizeOf(Of DML_BINDING_PROPERTIES)()
+            Dim buffer As IntPtr = Marshal.AllocHGlobal(size)
+
+            Try
+                Call _getBindingProperties(NativePointer, buffer)
+
+                Dim raw As Byte() = New Byte(size - 1) {}
+
+                Call Marshal.Copy(buffer, raw, 0, size)
+                Me.RawBindingProperties = raw
+
+                Return Marshal.PtrToStructure(Of DML_BINDING_PROPERTIES)(buffer)
+            Finally
+                Call Marshal.FreeHGlobal(buffer)
+            End Try
+        End Function
+
+        ''' <summary>绑定属性的原始字节（诊断用）。</summary>
+        Public Property RawBindingProperties As Byte()
 
         Protected Overrides Sub Release()
             ReleaseNative()
@@ -44,11 +66,24 @@ Namespace Runtime
 
             Me._reset = GetSlotDelegate(Of DmlInitializerResetFn)(DmlApi.SlotInitializerReset)
             Me._getBindingProperties = GetSlotDelegate(Of DmlGetBindingPropertiesFn)(DmlApi.SlotGetBindingProperties)
-            Me.BindingProperties = _getBindingProperties(NativePointer)
+            Me.BindingProperties = QueryBindingProperties()
         End Sub
 
         ''' <summary>初始化器的绑定属性。</summary>
         Public ReadOnly Property BindingProperties As DML_BINDING_PROPERTIES
+
+        Private Function QueryBindingProperties() As DML_BINDING_PROPERTIES
+            Dim size As Integer = Marshal.SizeOf(Of DML_BINDING_PROPERTIES)()
+            Dim buffer As IntPtr = Marshal.AllocHGlobal(size)
+
+            Try
+                Call _getBindingProperties(NativePointer, buffer)
+
+                Return Marshal.PtrToStructure(Of DML_BINDING_PROPERTIES)(buffer)
+            Finally
+                Call Marshal.FreeHGlobal(buffer)
+            End Try
+        End Function
 
         ''' <summary>重置为另一批被编译算子。</summary>
         Public Sub Reset(operators As IntPtr())
