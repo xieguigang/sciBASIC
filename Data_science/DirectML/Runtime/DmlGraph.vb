@@ -166,6 +166,41 @@ Namespace Runtime
             Return node
         End Function
 
+        ''' <summary>
+        ''' 注册一个共享显存的视图张量（形状/步长不同、数据相同）。
+        ''' </summary>
+        ''' <param name="name">视图名称。</param>
+        ''' <param name="tensor">视图的形状描述（可以带显式步长）。</param>
+        ''' <param name="owner">显存宿主。</param>
+        ''' <param name="kind">图角色。</param>
+        Public Function DefineTensorView(name As String, tensor As DmlTensor, owner As DmlGraphTensor,
+                                         Optional kind As DmlTensorKind = DmlTensorKind.Intermediate) As DmlGraphTensor
+
+            If String.IsNullOrEmpty(name) Then
+                Throw New ArgumentNullException(NameOf(name))
+            End If
+
+            If tensor Is Nothing Then
+                Throw New ArgumentNullException(NameOf(tensor))
+            End If
+
+            If owner Is Nothing Then
+                Throw New ArgumentNullException(NameOf(owner))
+            End If
+
+            If _byName.ContainsKey(name) Then
+                Throw New ArgumentException($"张量名称重复：{name}", NameOf(name))
+            End If
+
+            Dim node As New DmlGraphTensor(name, tensor, kind) With {.AllocationOwner = owner}
+
+            Call _tensors.Add(node)
+            _byName(name) = node
+            _byTensor(tensor) = node
+
+            Return node
+        End Function
+
         ''' <summary>注册一个常量张量并写入数据。</summary>
         Public Function DefineConstant(name As String, dims As UInteger(), data As Single()) As DmlGraphTensor
             Dim node As DmlGraphTensor = DefineTensor(name, dims, DmlTensorKind.Constant)
@@ -306,7 +341,9 @@ Namespace Runtime
             Dim temporaryBytes As ULong = 0UL
 
             For Each tensor As DmlGraphTensor In _tensors
-                totalBytes += DmlMemoryPool.Align(tensor.Tensor.TotalSizeInBytes)
+                If tensor.AllocationOwner Is Nothing Then
+                    totalBytes += DmlMemoryPool.Align(tensor.Tensor.TotalSizeInBytes)
+                End If
             Next
 
             For Each node As DmlGraphNode In _nodes
@@ -316,7 +353,15 @@ Namespace Runtime
             _pool = New DmlMemoryPool(device, totalBytes + temporaryBytes, "dml-graph-arena")
 
             For Each tensor As DmlGraphTensor In _tensors
-                tensor.Allocation = _pool.Allocate(tensor.Tensor.TotalSizeInBytes)
+                If tensor.AllocationOwner Is Nothing Then
+                    tensor.Allocation = _pool.Allocate(tensor.Tensor.TotalSizeInBytes)
+                End If
+            Next
+
+            For Each tensor As DmlGraphTensor In _tensors
+                If tensor.AllocationOwner IsNot Nothing Then
+                    tensor.Allocation = tensor.AllocationOwner.Allocation
+                End If
             Next
 
             For Each node As DmlGraphNode In _nodes
@@ -485,9 +530,17 @@ Namespace Runtime
                         Continue For
                     End If
 
-                    Dim count As Integer = CInt(tensor.Tensor.ElementCount)
+                    If tensor.Tensor.DataType = DML_TENSOR_DATA_TYPE.FLOAT32 Then
+                        Dim count As Integer = CInt(tensor.Tensor.ElementCount)
 
-                    tensor.Data = _readback.ReadSingles(tensor.ReadbackOffset, count)
+                        tensor.Data = _readback.ReadSingles(tensor.ReadbackOffset, count)
+                    Else
+                        Dim size As Integer = CInt(tensor.Tensor.TotalSizeInBytes)
+                        Dim bytes As Byte() = New Byte(size - 1) {}
+
+                        _readback.ReadBytes(tensor.ReadbackOffset, bytes, 0, size)
+                        tensor.RawData = bytes
+                    End If
                 Next
             End If
 
@@ -498,16 +551,27 @@ Namespace Runtime
         End Sub
 
         Private Sub WriteStaging(tensor As DmlGraphTensor)
-            If tensor.Data Is Nothing Then
-                Throw New InvalidOperationException($"张量 ""{tensor.Name}"" 没有数据")
-            End If
+            If tensor.Tensor.DataType = DML_TENSOR_DATA_TYPE.FLOAT32 Then
+                If tensor.Data Is Nothing Then
+                    Throw New InvalidOperationException($"张量 ""{tensor.Name}"" 没有数据")
+                End If
 
-            If tensor.Tensor.DataType <> DML_TENSOR_DATA_TYPE.FLOAT32 Then
-                Throw New NotSupportedException($"张量 ""{tensor.Name}"" 的数据类型 {tensor.Tensor.DataType} 暂不支持上传")
-            End If
+                _upload.WriteSingles(tensor.UploadOffset, tensor.Data)
+            Else
+                If tensor.RawData Is Nothing Then
+                    Throw New InvalidOperationException($"张量 ""{tensor.Name}"" 没有原始字节数据")
+                End If
 
-            _upload.WriteSingles(tensor.UploadOffset, tensor.Data)
+                _upload.WriteBytes(tensor.UploadOffset, tensor.RawData)
+            End If
         End Sub
+
+        ''' <summary>读取输出张量的原始字节（非 FP32 输出）。</summary>
+        Public Function GetOutputBytes(name As String) As Byte()
+            Dim tensor As DmlGraphTensor = Require(name)
+
+            Return tensor.RawData
+        End Function
 
         Private Shared Function GetBindings(tensors As DmlGraphTensor()) As DML_BUFFER_BINDING()
             If tensors Is Nothing OrElse tensors.Length = 0 Then

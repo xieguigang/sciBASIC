@@ -41,13 +41,22 @@ Namespace Runtime
         Public ReadOnly Property Tensor As DmlTensor
 
         ''' <summary>图角色。</summary>
-        Public ReadOnly Property Kind As DmlTensorKind
+        Public Property Kind As DmlTensorKind
 
         ''' <summary>主机端数据（FP32）。</summary>
         Public Property Data As Single()
 
+        ''' <summary>主机端原始字节（非 FP32 类型时使用）。</summary>
+        Public Property RawData As Byte()
+
         ''' <summary>显存切片（编译后有效）。</summary>
         Public Property Allocation As DmlAllocation
+
+        ''' <summary>
+        ''' 共享显存的宿主张量：非空时本张量与宿主使用同一段显存，
+        ''' 但可以用不同的形状/步长描述它（用于转置等零拷贝视图）。
+        ''' </summary>
+        Public Property AllocationOwner As DmlGraphTensor
 
         ''' <summary>在上传堆中的偏移。</summary>
         Public Property UploadOffset As ULong
@@ -72,6 +81,25 @@ Namespace Runtime
             End If
 
             Me.Data = values
+            Me.RawData = Nothing
+            Me.StagingDirty = True
+        End Sub
+
+        ''' <summary>
+        ''' 写入原始字节（用于 INT32 / UINT8 / BOOL 张量）。
+        ''' </summary>
+        Public Sub SetRawData(bytes As Byte())
+            If bytes Is Nothing Then
+                Throw New ArgumentNullException(NameOf(bytes))
+            End If
+
+            If CULng(bytes.Length) <> Tensor.TotalSizeInBytes Then
+                Throw New ArgumentException(
+                    $"张量 ""{Name}"" 需要 {Tensor.TotalSizeInBytes} 字节，但提供了 {bytes.Length} 字节", NameOf(bytes))
+            End If
+
+            Me.RawData = bytes
+            Me.Data = Nothing
             Me.StagingDirty = True
         End Sub
 
@@ -79,6 +107,17 @@ Namespace Runtime
         Public Function GetData() As Single()
             Return Data
         End Function
+
+        ''' <summary>
+        ''' 隐式转成算子工厂需要的 <see cref="DmlTensor"/> 形状描述。
+        ''' </summary>
+        Public Shared Widening Operator CType(value As DmlGraphTensor) As DmlTensor
+            If value Is Nothing Then
+                Return Nothing
+            End If
+
+            Return value.Tensor
+        End Operator
 
         Public Overrides Function ToString() As String
             Return $"{Kind} {Name}: {Tensor}"

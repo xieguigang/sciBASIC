@@ -3,6 +3,9 @@
 '
 ' 槽位号来自 Windows SDK DirectML.h 的接口声明顺序（已逐项核对）：
 '   IDMLObject      3 GetPrivateData, 4 SetPrivateData, 5 SetPrivateDataInterface, 6 SetName
+'   IDMLDevice      7 CheckFeatureSupport, 8 CreateOperator, 9 CompileOperator,
+'                   10 CreateOperatorInitializer, 11 CreateCommandRecorder, 12 CreateBindingTable,
+'                   13 Evict, 14 MakeResident, 15 GetDeviceRemovedReason, 16 GetParentDevice
 '   IDMLDeviceChild 7 GetDevice
 '   IDMLDispatchable 8 GetBindingProperties
 '   IDMLOperatorInitializer 9 Reset
@@ -18,14 +21,14 @@ Namespace Interop
     ''' <summary>DirectML 导出函数与 Vtbl 槽位。</summary>
     Public Module DmlApi
 
-        ' ---- IDMLDevice ----
-        Public Const SlotCheckFeatureSupport As Integer = 5
-        Public Const SlotCreateOperator As Integer = 6
-        Public Const SlotCompileOperator As Integer = 7
-        Public Const SlotCreateOperatorInitializer As Integer = 8
-        Public Const SlotCreateCommandRecorder As Integer = 9
-        Public Const SlotCreateBindingTable As Integer = 10
-        Public Const SlotGetDeviceRemovedReason As Integer = 13
+        ' ---- IDMLDevice（IDMLObject 占 3..6，IDMLDevice 从 7 开始）----
+        Public Const SlotCheckFeatureSupport As Integer = 7
+        Public Const SlotCreateOperator As Integer = 8
+        Public Const SlotCompileOperator As Integer = 9
+        Public Const SlotCreateOperatorInitializer As Integer = 10
+        Public Const SlotCreateCommandRecorder As Integer = 11
+        Public Const SlotCreateBindingTable As Integer = 12
+        Public Const SlotGetDeviceRemovedReason As Integer = 15
 
         ' ---- IDMLDispatchable ----
         Public Const SlotGetBindingProperties As Integer = 8
