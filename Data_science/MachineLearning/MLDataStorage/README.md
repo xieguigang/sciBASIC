@@ -95,6 +95,36 @@ Dim y = New OnnxGraphEvaluator(model).RunSingle(observation)
   `OnnxUnsupportedOperatorException`（异常里带节点名与算子名）。
 - **零依赖**：protobuf 编解码复用仓库内的 `Microsoft.VisualBasic.Data.IO.Protobuf`，不引入任何 NuGet 包。
 
+## DirectML 推理后端（GPU）
+
+`ONNX\DirectML\` 提供一条 GPU 推理路径：把 `.onnx` 的计算图**编译成 DirectML 算子图**，
+一次提交执行，API 形状与 CPU 求值器完全一致，便于直接比对。
+
+```vbnet
+Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX.DirectML
+
+Dim model = OnnxModel.Load("./model.onnx")
+
+Using session = DmlOnnxSession.Create(model, New DmlOnnxOptions With {.AllowCpuFallback = False})
+    Console.WriteLine(session.Summary())      ' 适配器 + DirectML 特性级别 + 算子数 + 显存占用
+    Dim y = session.RunSingle(observation)     ' 与 OnnxGraphEvaluator.RunSingle 同形
+End Using
+
+' 只看某个模型能不能跑：
+Dim unsupported = DmlOnnxCapabilities.FindUnsupported(model)
+```
+
+实现要点：
+
+- **精度边界**：ONNX 张量是 `Double`，DirectML 只吃 FP16/FP32；转换只发生在图的输入/输出各一次，
+  中间结果全程驻留显存。
+- **布局**：任意秩的 ONNX 张量左侧补 1 到 4 维（秩 5 的卷积保持 5 维），逻辑秩单独记录，
+  这样 GEMM / 卷积都能直接落在 DML 的 NCHW 形态上。
+- **不静默降级**：没有映射的算子会抛 `OnnxDmlUnsupportedOperatorException`（带算子名、节点名、
+  当前 DirectML 特性级别）；`AllowCpuFallback = True` 时才会回退到 CPU 求值器，
+  并且 `session.Backend` 会明确报告实际使用的后端。
+- **依赖方向**：本包引用 `DirectML.vbproj`；DirectML 侧只提供算子与图执行，不认识 ONNX。
+
 ## 实现要点
 
 - **归一化为什么在这里做**：归一化参数（均值、标准差、最大最小值）必须**与数据集一起保存**，否则推理时无法复现同样的变换；把它放在数据层而非训练代码里，可以保证训练与推理一致。

@@ -1,4 +1,4 @@
-' ------------------------------------------------------------------------
+﻿' ------------------------------------------------------------------------
 ' DirectML 框架的命令行测试程序
 '
 ' 子命令：
@@ -83,219 +83,63 @@ Namespace DirectMLDemo
 
             Dim adapters As List(Of DmlAdapter) = DmlAdapter.Enumerate()
 
-            Call Trace($"adapters = {adapters.Count}")
+            Call Trace("adapters = " & adapters.Count.ToString())
 
-            Dim adapter As DmlAdapter = adapters(0)
-
-            Call Trace($"adapter = {adapter}")
-
-            Dim createDevice As D3D12CreateDeviceFn = DmlRuntime.GetCreateDevice()
-            Dim iid As Guid = ComIIDs.ID3D12Device
-            Dim d3d12 As IntPtr = IntPtr.Zero
-
-            Call HResult.ThrowIfFailed(createDevice(adapter.NativePointer, D3D_FEATURE_LEVEL.LEVEL_11_0, iid, d3d12), "D3D12CreateDevice")
-            Call Trace("d3d12 device = 0x" & d3d12.ToInt64().ToString("X"))
-
-            Dim dml As IntPtr = DmlRuntime.CreateDmlDevice(d3d12, DML_FEATURE_LEVEL.LEVEL_1_0, DML_CREATE_DEVICE_FLAGS.NONE)
-
-            Call Trace("dml device = 0x" & dml.ToInt64().ToString("X"))
-
-            Call Trace("binding CheckFeatureSupport slot")
-
-            Dim check As DmlCheckFeatureSupportFn = ComApi.GetDelegate(Of DmlCheckFeatureSupportFn)(dml, DmlApi.SlotCheckFeatureSupport)
-
-            Call Trace("querying feature levels")
-
-            Using builder As New DmlOperatorBuilder()
-                Dim levels As Integer() = {&H1000, &H2000, &H3000, &H4000, &H5000, &H5100, &H6000, &H6100}
-                Dim levelsPtr As IntPtr = builder.IntArray(levels)
-                Dim query As New DML_FEATURE_QUERY_FEATURE_LEVELS With {
-                    .RequestedFeatureLevelCount = CUInt(levels.Length),
-                    .RequestedFeatureLevels = levelsPtr
-                }
-                Dim queryPtr As IntPtr = builder.StructPtr(query)
-                Dim dataPtr As IntPtr = builder.Alloc(Marshal.SizeOf(Of DML_FEATURE_DATA_FEATURE_LEVELS)())
-                Dim hr As Integer = check(dml, DML_FEATURE.FEATURE_LEVELS,
-                                          CUInt(Marshal.SizeOf(Of DML_FEATURE_QUERY_FEATURE_LEVELS)()), queryPtr,
-                                          CUInt(Marshal.SizeOf(Of DML_FEATURE_DATA_FEATURE_LEVELS)()), dataPtr)
-
-                Call Trace("CheckFeatureSupport hr = 0x" & hr.ToString("X8"))
-
-                If hr >= 0 Then
-                    Dim data As DML_FEATURE_DATA_FEATURE_LEVELS = DmlNativeHelper.Read(Of DML_FEATURE_DATA_FEATURE_LEVELS)(dataPtr)
-
-                    Call Trace("max feature level = " & DmlDevice.GetFeatureLevelText(data.MaxSupportedFeatureLevel))
-                End If
-            End Using
-
-            Call Trace("probing CreateOperatorInitializer with an empty set")
-
-            Dim initFn As DmlCreateOperatorInitializerFn = ComApi.GetDelegate(Of DmlCreateOperatorInitializerFn)(dml, DmlApi.SlotCreateOperatorInitializer)
-            Dim initIid As Guid = ComIIDs.IDMLOperatorInitializer
-            Dim initPtr As IntPtr = IntPtr.Zero
-            Dim initHr As Integer = initFn(dml, 0UI, IntPtr.Zero, initIid, initPtr)
-
-            Call Trace("empty initializer hr = 0x" & initHr.ToString("X8") & ", ptr = 0x" & initPtr.ToInt64().ToString("X"))
-
-            Call Trace("creating command queue / allocator / list / fence")
-
-            Dim queue As DmlCommandQueue = Nothing
-            Dim allocator As DmlCommandAllocator = Nothing
-            Dim list As DmlCommandList = Nothing
-            Dim fence As DmlFence = Nothing
-
-            Dim wrapper As DmlDevice = DmlDevice.Create(adapter)
-
-            Call Trace($"device wrapper created: {wrapper}")
-
-            queue = wrapper.CreateCommandQueue()
-            Call Trace("command queue ok")
-            allocator = wrapper.CreateCommandAllocator()
-            Call Trace("command allocator ok")
-            list = wrapper.CreateCommandList(allocator)
-            Call Trace("command list ok")
-            Dim fenceFn As D3D12CreateFenceFn = ComApi.GetDelegate(Of D3D12CreateFenceFn)(wrapper.D3D12Device, 36)
-            Dim fenceIid As Guid = ComIIDs.ID3D12Fence
-            Dim fencePtr As IntPtr = IntPtr.Zero
-
-            Call Trace("calling raw CreateFence")
-            Dim fenceHr As Integer = fenceFn(wrapper.D3D12Device, 0UL, D3D12_FENCE_FLAGS.NONE, fenceIid, fencePtr)
-
-            Call Trace("CreateFence hr = 0x" & fenceHr.ToString("X8") & ", ptr = 0x" & fencePtr.ToInt64().ToString("X"))
-
-            Dim getValue As D3D12FenceGetCompletedValueFn = ComApi.GetDelegate(Of D3D12FenceGetCompletedValueFn)(fencePtr, 8)
-
-            Call Trace("completed value = " & getValue(fencePtr).ToString())
-
-            fence = wrapper.CreateFence()
-            Call Trace("fence ok")
-
-            Dim recorder As DmlCommandRecorder = wrapper.CreateCommandRecorder()
-            Call Trace("command recorder ok")
-
-            Dim heap As DmlDescriptorHeap = wrapper.CreateDescriptorHeap(4UI)
-            Call Trace($"descriptor heap ok, increment={heap.IncrementSize}")
-            Call Trace("cpu handle = 0x" & heap.GetCpuHandle(0).ptr.ToInt64().ToString("X"))
-            Call Trace("gpu handle = 0x" & heap.GetGpuHandle(0).ptr.ToString("X"))
-
-            heap.Dispose()
-
-            Dim createResource As D3D12CreateCommittedResourceFn =
-                ComApi.GetDelegate(Of D3D12CreateCommittedResourceFn)(wrapper.D3D12Device, 27)
-
-            Call Trace($"size(desc)={Marshal.SizeOf(Of D3D12_RESOURCE_DESC)()}, " &
-                       $"offset(width)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Width")}, " &
-                       $"offset(height)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Height")}, " &
-                       $"offset(format)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Format")}, " &
-                       $"offset(sample)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("SampleDesc")}, " &
-                       $"offset(layout)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Layout")}, " &
-                       $"offset(flags)={Marshal.OffsetOf(Of D3D12_RESOURCE_DESC)("Flags")}, " &
-                       $"size(heapProps)={Marshal.SizeOf(Of D3D12_HEAP_PROPERTIES)()}")
-
-            For Each heapKind As D3D12_HEAP_TYPE In {D3D12_HEAP_TYPE.UPLOAD_HEAP, D3D12_HEAP_TYPE.DEFAULT_HEAP, D3D12_HEAP_TYPE.READBACK_HEAP}
-                Dim props As D3D12_HEAP_PROPERTIES
-
-                Select Case heapKind
-                    Case D3D12_HEAP_TYPE.UPLOAD_HEAP
-                        props = D3D12_HEAP_PROPERTIES.CreateUpload()
-                    Case D3D12_HEAP_TYPE.READBACK_HEAP
-                        props = D3D12_HEAP_PROPERTIES.CreateReadback()
-                    Case Else
-                        props = D3D12_HEAP_PROPERTIES.CreateDefault()
-                End Select
-
-                Dim state As D3D12_RESOURCE_STATES = D3D12_RESOURCE_STATES.COMMON
-
-                If heapKind = D3D12_HEAP_TYPE.UPLOAD_HEAP Then
-                    state = D3D12_RESOURCE_STATES.GENERIC_READ
-                ElseIf heapKind = D3D12_HEAP_TYPE.READBACK_HEAP Then
-                    state = D3D12_RESOURCE_STATES.COPY_DEST
-                End If
-
-                Dim resourceDesc As New D3D12_RESOURCE_DESC With {
-                    .Dimension = D3D12_RESOURCE_DIMENSION.BUFFER,
-                    .Alignment = 0UL,
-                    .Width = 512UL,
-                    .Height = 1UI,
-                    .DepthOrArraySize = 1US,
-                    .MipLevels = 1US,
-                    .Format = 0,
-                    .SampleDesc = New DXGI_SAMPLE_DESC With {.Count = 1UI, .Quality = 0UI},
-                    .Layout = D3D12_TEXTURE_LAYOUT.UNKNOWN,
-                    .Flags = D3D12_RESOURCE_FLAGS.NONE
-                }
-
-                Call Trace($"props: type={props.Type}, page={props.CPUPageProperty}, pool={props.MemoryPoolPreference}, " &
-                           $"node={props.CreationNodeMask}/{props.VisibleNodeMask}, iid={ComIIDs.ID3D12Resource}")
-                Call Trace($"desc: dim={resourceDesc.Dimension}, width={resourceDesc.Width}, height={resourceDesc.Height}, " &
-                           $"depth={resourceDesc.DepthOrArraySize}, mip={resourceDesc.MipLevels}, fmt={resourceDesc.Format}, " &
-                           $"sample={resourceDesc.SampleDesc.Count}/{resourceDesc.SampleDesc.Quality}, layout={resourceDesc.Layout}, flags={resourceDesc.Flags}")
-
-                Dim resourcePtr As IntPtr = IntPtr.Zero
-                Dim resourceIid As Guid = ComIIDs.ID3D12Resource
-                Dim hr As Integer = createResource(wrapper.D3D12Device, props, D3D12_HEAP_FLAGS.NONE, resourceDesc, state,
-                                                   IntPtr.Zero, resourceIid, resourcePtr)
-
-                Call Trace($"{heapKind} resource hr = 0x{hr:X8}, ptr = 0x{resourcePtr.ToInt64():X}")
-
-                If heapKind = D3D12_HEAP_TYPE.UPLOAD_HEAP Then
-                    Dim textureDesc As New D3D12_RESOURCE_DESC With {
-                        .Dimension = D3D12_RESOURCE_DIMENSION.TEXTURE2D,
-                        .Alignment = 0UL,
-                        .Width = 4UL,
-                        .Height = 4UI,
-                        .DepthOrArraySize = 1US,
-                        .MipLevels = 1US,
-                        .Format = 28,
-                        .SampleDesc = New DXGI_SAMPLE_DESC With {.Count = 1UI, .Quality = 0UI},
-                        .Layout = D3D12_TEXTURE_LAYOUT.UNKNOWN,
-                        .Flags = D3D12_RESOURCE_FLAGS.NONE
-                    }
-
-                    Dim texturePtr As IntPtr = IntPtr.Zero
-                    Dim textureProps As D3D12_HEAP_PROPERTIES = D3D12_HEAP_PROPERTIES.CreateDefault()
-                    Dim textureHr As Integer = createResource(wrapper.D3D12Device, textureProps, D3D12_HEAP_FLAGS.NONE,
-                                                              textureDesc, D3D12_RESOURCE_STATES.COPY_DEST,
-                                                              IntPtr.Zero, resourceIid, texturePtr)
-
-                    Call Trace($"texture2d resource hr = 0x{textureHr:X8}, ptr = 0x{texturePtr.ToInt64():X}")
-
-                    ' 缓冲区 + 默认堆 + COPY_DEST（排除 state/heap 组合的影响）
-                    Dim probePtr As IntPtr = IntPtr.Zero
-                    Dim probeDesc As New D3D12_RESOURCE_DESC With {
-                        .Dimension = D3D12_RESOURCE_DIMENSION.BUFFER,
-                        .Alignment = 0UL,
-                        .Width = 512UL,
-                        .Height = 1UI,
-                        .DepthOrArraySize = 1US,
-                        .MipLevels = 1US,
-                        .Format = 0,
-                        .SampleDesc = New DXGI_SAMPLE_DESC With {.Count = 1UI, .Quality = 0UI},
-                        .Layout = D3D12_TEXTURE_LAYOUT.UNKNOWN,
-                        .Flags = D3D12_RESOURCE_FLAGS.NONE
-                    }
-
-                    Dim probeHr As Integer = createResource(wrapper.D3D12Device, D3D12_HEAP_PROPERTIES.CreateDefault(),
-                                                            D3D12_HEAP_FLAGS.NONE, probeDesc, D3D12_RESOURCE_STATES.COPY_DEST,
-                                                            IntPtr.Zero, resourceIid, probePtr)
-
-                    Call Trace($"buffer+default+copy_dest hr = 0x{probeHr:X8}, ptr = 0x{probePtr.ToInt64():X}, dim={CInt(probeDesc.Dimension)}")
-                End If
+            For Each adapter As DmlAdapter In adapters
+                Call Trace("adapter: " & adapter.ToString())
             Next
 
-            recorder.Dispose()
-            fence.Dispose()
-            list.Dispose()
-            allocator.Dispose()
-            queue.Dispose()
-            wrapper.Dispose()
-            adapters.ForEach(Sub(a) a.Dispose())
-            Call Trace("all objects released")
+            If adapters.Count = 0 Then
+                Call DebugAudit.Mark("no DirectML capable adapter found")
+
+                Return
+            End If
+
+            Call Trace("create device")
+
+            Dim wrapper As DmlDevice = DmlDevice.Create(adapters(0))
+
+            Call Trace("device: " & wrapper.ToString())
+
+            Using wrapper
+                Using queue As DmlCommandQueue = wrapper.CreateCommandQueue()
+                    Using allocator As DmlCommandAllocator = wrapper.CreateCommandAllocator()
+                        Using list As DmlCommandList = wrapper.CreateCommandList(allocator)
+                            Using fence As DmlFence = wrapper.CreateFence()
+                                Call Trace("queue / allocator / list / fence created")
+                                Call DebugAudit.Test(fence.GetCompletedValue() = 0UL, "fence starts at 0")
+                            End Using
+                        End Using
+                    End Using
+                End Using
+
+                Using recorder As DmlCommandRecorder = wrapper.CreateCommandRecorder()
+                    Call Trace("command recorder created")
+                End Using
+
+                Using heap As DmlDescriptorHeap = wrapper.CreateDescriptorHeap(4UI)
+                    Call Trace("descriptor heap created, increment = " & heap.IncrementSize.ToString())
+                    Call DebugAudit.Test(heap.IncrementSize > 0UI, "descriptor handle increment")
+                End Using
+
+                Call Trace("create buffer")
+
+                Try
+                    Using buffer As DmlBuffer = DmlBuffer.CreateDefault(wrapper, 4096UL, True, "probe")
+                        Call Trace("buffer created: " & buffer.ToString())
+                        Call DebugAudit.Test(buffer.SizeInBytes = 4096UL, "buffer size")
+                    End Using
+                Catch ex As Exception
+                    Call Trace("buffer creation failed: " & ex.Message)
+                    Call DebugAudit.Mark("CreateCommittedResource failed: " & ex.Message)
+                End Try
+            End Using
+
+            For Each adapter As DmlAdapter In adapters
+                adapter.Dispose()
+            Next
         End Sub
 
-        ''' <summary>
-        ''' 最小计算图：input -> Relu -> output，用于验证算子/绑定表/提交链路。
-        ''' </summary>
         Private Function RunGraphSteps(args As String()) As Boolean
             Dim op As String = If(args IsNot Nothing AndAlso args.Length > 1, args(1).ToLowerInvariant(), "relu")
 
