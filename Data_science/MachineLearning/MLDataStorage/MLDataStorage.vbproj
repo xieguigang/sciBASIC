@@ -56,6 +56,7 @@
     <ProjectReference Include="..\DeepLearning\DeepLearning.NET6.vbproj" />
     <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\DirectML\DirectML.vbproj" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

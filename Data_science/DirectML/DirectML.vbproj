@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Microsoft.VisualBasic.Computing.DirectML</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Computing.DirectML</AssemblyName>
+    <TargetFramework>net10.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
+    <Nullable>disable</Nullable>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;nuget_release;Rsharp_app_release</Configurations>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <OutputPath>../../.nuget/</OutputPath>
+    <Title>Pure-Interop DirectML Compute Framework</Title>
+    <Description>A DirectML compute framework for sciBASIC#: zero-dependency hand written COM vtable interop for DXGI, D3D12 and DirectML, covering adapter/device enumeration, command recording, buffer and descriptor management, DML operator descriptors, graph compilation and execution, and a native ONNX graph backend.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Computing.DirectML</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;directml;d3d12;dxgi;gpu;interop;com;onnx;machine-learning</PackageTags>
+    <PackageReleaseNotes>First release: hand written vtable interop over dxgi.dll, d3d12.dll and DirectML.dll, with device enumeration, command recording, tensor buffers, DML operator descriptors, graph compilation/execution and an ONNX backend.</PackageReleaseNotes>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Version>10.8.9797.36764</Version>
+    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../.nuget/</OutputPath>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+</Project>
