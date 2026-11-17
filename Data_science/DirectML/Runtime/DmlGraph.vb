@@ -519,6 +519,9 @@ Namespace Runtime
                     Continue For
                 End If
 
+                TraceStep($"execute: upload {tensor.Name} -> staging offset {tensor.UploadOffset}, " &
+                          $"values={If(tensor.Data Is Nothing, -1, tensor.Data.Length)}")
+
                 SetResourceState(commandList, tensor.Allocation.Buffer, D3D12_RESOURCE_STATES.COPY_DEST)
 
                 commandList.CopyBufferRegion(tensor.Allocation.Buffer, tensor.Allocation.Offset,

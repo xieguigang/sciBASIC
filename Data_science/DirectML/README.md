@@ -154,7 +154,8 @@ DirectML.Demo.exe onnx       :: 小型 ONNX 模型：DirectML 推理 vs CPU 双�
 | 指令分配器 `Reset` + 命令列表录制 | ✅ 通过 |
 | `DmlGraph` 编译：上传/回读暂存、arena、绑定表 | ✅ 通过 |
 | `IDMLCommandRecorder::RecordDispatch` + 数值正确性 | ✅ 通过（`graph relu` 输出 `0, 2, 0, 4`） |
-| `graph conv`（卷积算子描述符） | ⚠️ 见下节 |
+| `graph conv`（卷积算子描述符） | ✅ 通过（输出 `-1`） |
+| `onnx` 端到端 | ⚠️ 见下节 |
 
 ### 已解决：缓冲区资源创建被拒绝（根因与修复）
 
@@ -212,14 +213,39 @@ bindings must have exactly the same offsets and sizes.
 修复后 `graph relu`（输入 `-1, 2, -3, 4`）稳定输出 `0, 2, 0, 4`，
 调试层开/关两种模式都通过。
 
-### 待解决：卷积算子（`graph conv`）
+### 已解决：卷积算子（`graph conv`）
 
-`IDMLDevice::CreateOperator(DML_OPERATOR_TYPE_CONVOLUTION)` 在真机上会直接
-fail-fast（`0xC0000409`），而 Relu / 逐元素算子的创建、编译、dispatch 全部正常。
-描述符结构体（`DML_CONVOLUTION_OPERATOR_DESC`，含 `OutputPadding`）与
-SDK 头文件逐字段一致，因此下一步需要用最小参数逐字段缩小范围
-（先 `DimensionCount=2` + 单位步长/无填充 + 无 bias，再逐项加回），
-并用 `DmlDebugLayer.Capture()` 读取运行时给出的第一条校验消息。
+三个坑，都由调试层/运行时原文定位：
+
+1. `DML_CONVOLUTION_OPERATOR_DESC::OutputPadding` 传 `NULL` 会让
+   `IDMLDevice::CreateOperator` 在真机上 fail-fast（`0xC0000409`）——必须显式给零数组。
+2. 卷积的绑定表**固定占 3 个输入槽**（Input / Filter / Bias），
+   `BiasTensor = NULL` 时仍要提供第三个绑定，否则
+   `expected 3 bindings but 2 were provided` 并静默丢弃 dispatch。
+3. ONNX 的 bias 形状是 `[C]`，DML 要求 `[1, C, 1, ...]`；
+   编译器现在用共享显存的视图改写形状，缺 bias 时补一个零偏置常量。
+
+### ONNX 端到端（已跑通，数值精度待收口）
+
+5 节点小模型（Conv/Relu/GlobalAveragePool/Flatten/Gemm）现在能在 GPU 上完整执行，
+`DmlOnnxSession.Create` + `RunSingle` 全链路可用。
+
+统一的「逻辑形状 ↔ 物理形状」规则（`DmlOnnxGraphCompiler`）：
+
+- `Physical()`：逻辑形状左补 1 到 4 维（`[N,F]` → `[1,1,N,F]`，`[C]` → `[1,1,1,C]`）；
+- **形状改写一律用共享显存视图**（`ReshapeView` / `DefineTensorView`），
+  不产生 dispatch：`Reshape` / `Flatten` / `Squeeze` / `Unsqueeze` / `Transpose` 全部走视图。
+  原因：若用 `ELEMENT_WISE_IDENTITY` 在两个形状不同的张量间拷贝，DML 会以
+  `Mismatched tensor sizes`（例如 `[1,2,1,1]` 与 `[1,1,1,2]`）拒绝创建算子；
+- **通道维必须落在物理维 1**：Conv 的 bias（ONNX 是 `[C]`）用视图改成 `[1,C,1,...]`；
+  缺少 bias 时补零偏置常量（卷积绑定表固定占 3 个输入槽）。
+
+当前遗留：GPU 结果与 CPU 双精度参考的最大绝对误差约 `1.7E-2`
+（`GPU: 0.158091, 0.019985` vs `CPU: 0.141506, 0.011145`），
+远超 FP32 的舍入量级，说明某个算子存在语义差异而非精度损失。
+下一步建议在 `DmlOnnxGraphCompiler.EmitNode` 里为每个节点加输出转储，
+逐节点与 `OnnxGraphEvaluator` 对比，优先怀疑 Conv 的 `pads` 映射方向
+与 Gemm 的 `beta * C` 处理。
 
 ## 许可
 
