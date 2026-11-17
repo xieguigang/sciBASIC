@@ -87,6 +87,8 @@ Namespace Scripting.MathExpression
                             Yield New MathToken(MathTokens.Open, "(")
                         ElseIf buf(Scan0) = ")"c Then
                             Yield New MathToken(MathTokens.Close, ")")
+                        ElseIf buf(Scan0) = ":"c Then
+                            Yield New MathToken(MathTokens.Assign, ":=")
                         End If
 
                         buf *= 0
@@ -127,6 +129,15 @@ Namespace Scripting.MathExpression
                     Return populateToken(cacheNext:=c)
                 Else
                     Return New MathToken(MathTokens.Close, ")"c)
+                End If
+            ElseIf c = ":"c AndAlso text.Current = "="c Then
+                ' consume the '=' character, it is part of the ':=' operator
+                text += 1
+
+                If buf > 0 Then
+                    Return populateToken(cacheNext:= ":"c)
+                Else
+                    Return New MathToken(MathTokens.Assign, ":=")
                 End If
             ElseIf c = ";"c OrElse c = ","c Then
                 If buf > 0 Then

@@ -3,9 +3,6 @@
 '  Data_science\MachineLearning\MachineLearning\MultilayerPerceptron\DataSetAdapter.vb
 ' /********************************************************************************/
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math

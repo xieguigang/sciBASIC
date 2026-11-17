@@ -3,7 +3,6 @@
 '  Data_science\MachineLearning\MachineLearning\MultilayerPerceptron\DenseLayer.vb
 ' /********************************************************************************/
 
-Imports System
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix

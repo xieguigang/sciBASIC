@@ -101,6 +101,9 @@ Namespace Scripting.MathExpression
                 Case GetType(SymbolExpression)
                     ' x
                     Return DirectCast(model, SymbolExpression).MakeSymbolReference(parameters, applied)
+                Case GetType(NamedArgument)
+                    ' name:=value, the name is only meaningful to the caller
+                    Return CreateExpression(parameters, DirectCast(model, NamedArgument).value, applied)
                 Case GetType(Impl.BinaryExpression)
                     ' a - b
                     Dim bin As Impl.BinaryExpression = DirectCast(model, Impl.BinaryExpression)

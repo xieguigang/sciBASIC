@@ -7,7 +7,6 @@
 '   3. 绑定缓冲必须是 UAV 状态，偏移必须 256 字节对齐。
 ' ------------------------------------------------------------------------
 
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Computing.DirectML.Interop
 Imports Microsoft.VisualBasic.Computing.DirectML.Operators
 
