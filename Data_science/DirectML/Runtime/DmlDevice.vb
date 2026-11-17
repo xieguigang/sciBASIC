@@ -113,14 +113,28 @@ Namespace Runtime
             Dim iid As Guid = ComIIDs.ID3D12Device
             Dim device As IntPtr = IntPtr.Zero
 
+            ' 调试层必须在创建设备之前打开，否则设备不会挂接 InfoQueue。
+            If debug Then
+                Call DmlDebugLayer.TryEnable()
+            End If
+
             HResult.ThrowIfFailed(createDevice(adapter.NativePointer, D3D_FEATURE_LEVEL.LEVEL_11_0, iid, device), "D3D12CreateDevice")
+
+            If debug Then
+                Call DmlDebugLayer.TryAttach(device)
+            End If
 
             Dim dml As IntPtr
 
             Try
                 Dim flags As DML_CREATE_DEVICE_FLAGS = DML_CREATE_DEVICE_FLAGS.NONE
 
-                If debug Then
+                ' DML 自身的调试标志可以独立打开（不依赖 D3D12 调试层），
+                ' 便于把"调试层"与"DML 调试模式"两个变量分开做对比实验。
+                Dim dmlDebug As Boolean = debug OrElse
+                    String.Equals(Environment.GetEnvironmentVariable("DIRECTML_DML_DEBUG"), "1", StringComparison.Ordinal)
+
+                If dmlDebug Then
                     flags = DML_CREATE_DEVICE_FLAGS.DEBUG
                 End If
 

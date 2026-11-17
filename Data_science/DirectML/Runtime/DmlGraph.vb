@@ -102,10 +102,12 @@ Namespace Runtime
 
             Me._engine = engine
 
+            ' 默认关闭 meta command：meta command 会把算子展开成 DML 内部的间接 dispatch，
+            ' 在缺少显式临时资源绑定时容易触发驱动崩溃（表现为 RecordDispatch 里的访问冲突）。
+            Me._executionFlags = DML_EXECUTION_FLAGS.DISABLE_META_COMMANDS
+
             If engine.Options.AllowHalfPrecision Then
-                Me._executionFlags = DML_EXECUTION_FLAGS.ALLOW_HALF_PRECISION_COMPUTATION
-            Else
-                Me._executionFlags = DML_EXECUTION_FLAGS.NONE
+                Me._executionFlags = Me._executionFlags Or DML_EXECUTION_FLAGS.ALLOW_HALF_PRECISION_COMPUTATION
             End If
         End Sub
 
@@ -315,10 +317,12 @@ Namespace Runtime
 
             _initializer = device.CreateOperatorInitializer(compiledPointers.ToArray())
 
-            Dim totalDescriptors As UInteger = _initializer.BindingProperties.RequiredDescriptorCount
+            ' 每个绑定表至少占 1 个描述符（RequiredDescriptorCount = 0 的算子也要占位），
+            ' 堆容量必须按同样的口径累加，否则初始化器的描述符会落到堆外。
+            Dim totalDescriptors As UInteger = System.Math.Max(1UI, _initializer.BindingProperties.RequiredDescriptorCount)
 
             For Each node As DmlGraphNode In _nodes
-                totalDescriptors += node.Compiled.BindingProperties.RequiredDescriptorCount
+                totalDescriptors += System.Math.Max(1UI, node.Compiled.BindingProperties.RequiredDescriptorCount)
             Next
 
             TraceStep($"compile: create descriptor heap ({totalDescriptors} descriptors)")
@@ -418,6 +422,12 @@ Namespace Runtime
                     tensor.ReadbackOffset = readbackBytes
                     readbackBytes += DmlMemoryPool.Align(tensor.Tensor.TotalSizeInBytes)
                 End If
+            Next
+
+            For Each tensor As DmlGraphTensor In _tensors
+                TraceStep($"compile: tensor {tensor.Name} [{tensor.Kind}] dims={tensor.Tensor.ShapeText} " &
+                          $"bytes={tensor.Tensor.TotalSizeInBytes}, alloc={tensor.Allocation.Offset}, " &
+                          $"upload={tensor.UploadOffset}, readback={tensor.ReadbackOffset}")
             Next
 
             TraceStep($"compile: create staging buffers (upload={uploadBytes}, readback={readbackBytes})")
@@ -530,13 +540,35 @@ Namespace Runtime
                 Dim inputs As DML_BUFFER_BINDING() = GetBindings(node.Inputs)
                 Dim outputs As DML_BUFFER_BINDING() = GetBindings(node.Outputs)
 
-                node.Binding.Reset(node.Compiled.NativePointer, _heap, node.DescriptorOffset, node.DescriptorCount)
+                TraceStep($"execute:   binding reset ({node.DescriptorOffset}+{node.DescriptorCount}, heap={_heap.DescriptorCount})")
+
+                ' 实验：每次都新建绑定表（而不是 Reset 复用的那张），用于验证 Reset 语义是否是问题所在。
+                node.Binding.Dispose()
+                node.Binding = _engine.Device.CreateBindingTable(New DML_BINDING_TABLE_DESC With {
+                    .Dispatchable = node.Compiled.NativePointer,
+                    .CPUDescriptorHandle = _heap.GetCpuHandle(node.DescriptorOffset),
+                    .GPUDescriptorHandle = _heap.GetGpuHandle(node.DescriptorOffset),
+                    .SizeInDescriptors = node.DescriptorCount
+                })
+
+                TraceStep($"execute:   bind {inputs.Length} input(s) / {outputs.Length} output(s)")
+
+                For Each binding As DML_BUFFER_BINDING In inputs
+                    TraceStep($"execute:     in  offset={binding.Offset} size={binding.SizeInBytes}")
+                Next
+
+                For Each binding As DML_BUFFER_BINDING In outputs
+                    TraceStep($"execute:     out offset={binding.Offset} size={binding.SizeInBytes}")
+                Next
+
                 node.Binding.BindInputs(inputs)
                 node.Binding.BindOutputs(outputs)
 
                 If node.Temporary.IsValid Then
                     node.Binding.BindTemporaryResource(node.Temporary)
                 End If
+
+                TraceStep("execute:   record dispatch")
 
                 context.Recorder.RecordDispatch(commandList, node.Compiled.NativePointer, node.Binding)
             Next
@@ -563,7 +595,13 @@ Namespace Runtime
 
             context.Submit()
 
-            TraceStep("execute: read back")
+            TraceStep("execute: read back, fence = " & context.Fence.GetCompletedValue().ToString())
+
+            If _readback IsNot Nothing Then
+                Dim probe As Single() = _readback.ReadSingles(0UL, CInt(System.Math.Min(4UL, _readback.SizeInBytes \ 4UL)))
+
+                TraceStep("execute: readback first values = " & String.Join(", ", probe))
+            End If
 
             ' 5) 回读结果到托管内存
             If hasReadback Then

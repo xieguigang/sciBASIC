@@ -150,26 +150,64 @@ DirectML.Demo.exe onnx       :: 小型 ONNX 模型：DirectML 推理 vs CPU 双�
 | 描述符堆（`GetCPU/GPUDescriptorHandleForHeapStart`） | ✅ 通过（increment = 32） |
 | `IDMLDevice::CreateOperator` / `CompileOperator` / `GetBindingProperties` | ✅ 通过（Relu: 2 descriptors, temp = 0） |
 | `IDMLDevice::CreateOperatorInitializer` / `CreateBindingTable` | ✅ 通过 |
-| `ID3D12Device::CreateCommittedResource`（缓冲区） | ⚠️ 返回 `E_INVALIDARG`，见下节 |
+| `ID3D12Device::CreateCommittedResource`（缓冲区） | ✅ 通过（默认/上传/回读三种堆） |
+| 指令分配器 `Reset` + 命令列表录制 | ✅ 通过 |
+| `DmlGraph` 编译：上传/回读暂存、arena、绑定表 | ✅ 通过 |
+| `IDMLCommandRecorder::RecordDispatch` + 数值正确性 | ⚠️ 见下节 |
 
-### 待解决：缓冲区资源创建被拒绝
+### 已解决：缓冲区资源创建被拒绝（根因与修复）
 
-在 RTX A4000 / Intel UHD 770 与 WARP 上，`CreateCommittedResource` 对 **BUFFER** 描述符
-一律返回 `0x80070057 (E_INVALIDARG)`，而同一次调用换成 **TEXTURE2D** 描述符则成功，
-说明 vtable 槽位（27）、`D3D12_HEAP_PROPERTIES`、`riid`、初始状态都与运行时一致，
-问题只出在缓冲区描述符的校验上。
+现象：`CreateCommittedResource` 对 **BUFFER** 描述符一律返回 `0x80070057`，
+而同一次调用换成 **TEXTURE2D** 描述符则成功。
 
-已经排除的因素：
+用 D3D12 调试层（`D3D12GetDebugInterface` + `ID3D12Debug::EnableDebugLayer`）
+配合 `ID3D12InfoQueue` 直接读到了运行时给出的原文：
 
-- 结构体布局：`Marshal.SizeOf(D3D12_RESOURCE_DESC) = 56`，`Width @16`、`Height @24`、
-  `Format @32`、`SampleDesc @36`、`Layout @44`、`Flags @48`，与 SDK 头文件一致；
-- 描述符字节：`01-00-00-00 … 00-02-00-00…`（Dimension=BUFFER、Width=512、Height=1、
-  Depth=1、Mip=1、Format=UNKNOWN、SampleDesc=1/0、Layout=UNKNOWN、Flags=NONE）；
-- 三种堆类型（DEFAULT/UPLOAD/READBACK）、三种初始状态、`Width` ∈ {4,256,512,65536}、
-  `Alignment` ∈ {0,65536}、`Flags` ∈ {NONE, UAV}、`NodeMask` ∈ {0,1} 全部失败。
+```
+[ERROR] EXECUTION#724: ID3D12Device::CreateCommittedResource:
+D3D12_RESOURCE_DESC::Layout must be D3D12_TEXTURE_LAYOUT_ROW_MAJOR when
+D3D12_RESOURCE_DESC::Dimension is D3D12_RESOURCE_DIMENSION_BUFFER.
+Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN.
+```
 
-下一步建议：在创建 D3D12 设备前启用调试层（`D3D12GetDebugInterface` + `EnableDebugLayer`），
-再通过 `ID3D12InfoQueue` 读取校验消息，即可直接得到运行时给出的拒绝原因。
+即 **缓冲区必须写 `Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR`**（纹理才允许 `UNKNOWN`）。
+修正后一块 512 字节的默认堆 UAV 缓冲区立刻创建成功。
+
+同一轮调试还暴露并修复了两个"只有真机才会踩到"的错误：
+
+1. `D3D12_RESOURCE_STATE_GENERIC_READ` 是若干只读状态的按位组合（`0xAC3`），
+   不是 D3D11 的 `0x80000000`；写错会得到 `ID3D12Device::CreateCommittedResource:
+   D3D12_RESOURCE_STATES has reserved bits set`。
+2. `ID3D12GraphicsCommandList` 由 `CreateCommandList` 创建后处于**录制中**状态，
+   此时对其分配器调用 `Reset` 会返回 `E_FAIL`；现在创建后立即 `Close`，
+   统一走 `Reset → 录制 → Close → 提交`。
+3. 绑定表至少占 1 个描述符，描述符堆容量必须按同样口径累加，否则初始化器的
+   描述符会落到堆外。
+
+### 待解决：`RecordDispatch` 之后输出仍为零
+
+当前状态（RTX A4000 + Windows 11）：
+
+- 打开 D3D12 调试层（`DIRECTML_DEBUG_LAYER=1`）时，`graph relu` 完整跑完
+  （编译 → 初始化器 → 上传 → dispatch → 回读），但输出是 `0, 0, 0, 0`
+  （期望 `0, 2, 0, 4`）；
+- 关闭调试层时同一路径在 `IDMLCommandRecorder::RecordDispatch` 内触发访问冲突
+  （`0xC0000005`）。
+
+已排除：
+
+- 上传链路正确：把 arena 第一段单独拷回复读，得到 `-1, 2, -3, 4`，说明
+  staging → arena 的拷贝已生效；
+- 绑定参数正确：输入 `offset=0 size=16`、输出 `offset=256 size=16`，同一块 arena；
+- 描述符堆句柄槽位正确（`GetCPU=9 / GetGPU=10`，交换后立刻 `SEHException`）；
+- 描述符堆容量已按 `max(1, RequiredDescriptorCount)` 累加（Relu 为 3）；
+- `DML_EXECUTION_FLAGS.DISABLE_META_COMMANDS` 不影响该现象；
+- 张量与切片布局正确（`input @0`、`output @256`、`readback @0`）。
+
+下一步建议：用 DML 官方 sample 的最小二进制/pipeline 状态比对
+（`IDMLCompiledOperator` 是否真正写入输出），重点检查 `DML_BINDING_TABLE_DESC`
+在 `Reset` 之后是否需要重新 `CreateBindingTable`，以及 `IDMLBindingTable::Bind*`
+的调用是否需要配合 `DML_EXECUTION_FLAG_DESCRIPTORS_VOLATILE`。
 
 ## 许可
 

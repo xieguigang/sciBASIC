@@ -77,6 +77,28 @@ Namespace DirectMLDemo
             Call Console.Out.Flush()
         End Sub
 
+        ''' <summary>
+        ''' 取走并打印 D3D12 调试层累积的校验消息（未启用调试层时静默跳过）。
+        ''' </summary>
+        Private Sub ReportValidationMessages(operation As String)
+            Dim messages As DmlValidationMessage() = DmlDebugLayer.Capture(operation)
+
+            If messages Is Nothing OrElse messages.Length = 0 Then
+                Call Trace($"validation messages for {operation}: <none>")
+
+                Return
+            End If
+
+            Call Trace($"validation messages for {operation}: {messages.Length}")
+
+            For Each message As DmlValidationMessage In messages
+                Call Console.WriteLine("        " & message.ToString())
+                Call DebugAudit.Mark("d3d12: " & message.ToString())
+            Next
+
+            Call Console.Out.Flush()
+        End Sub
+
         ''' <summary>逐段创建 DirectML 对象，用于定位原生调用崩溃。</summary>
         Private Sub RunDeviceSteps()
             Call Trace("enumerate adapters")
@@ -95,13 +117,27 @@ Namespace DirectMLDemo
                 Return
             End If
 
+            Call Trace("enable D3D12 debug layer")
+
+            Dim debugEnabled As Boolean = DmlDebugLayer.TryEnable()
+
+            If debugEnabled Then
+                Call Trace("debug layer enabled")
+            Else
+                Call Trace("debug layer unavailable: " & If(DmlDebugLayer.EnableError, "<unknown>"))
+            End If
+
             Call Trace("create device")
 
-            Dim wrapper As DmlDevice = DmlDevice.Create(adapters(0))
+            Dim wrapper As DmlDevice = DmlDevice.Create(adapters(0), debugEnabled)
 
             Call Trace("device: " & wrapper.ToString())
+            Call Trace("info queue attached: " & DmlDebugLayer.IsAttached.ToString())
 
             Using wrapper
+                Call Trace("info queue self-check: " & DmlDebugLayer.SelfTest())
+                Call Trace("info queue pending messages = " & DmlDebugLayer.PendingMessageCount.ToString())
+
                 Using queue As DmlCommandQueue = wrapper.CreateCommandQueue()
                     Using allocator As DmlCommandAllocator = wrapper.CreateCommandAllocator()
                         Using list As DmlCommandList = wrapper.CreateCommandList(allocator)
@@ -122,7 +158,7 @@ Namespace DirectMLDemo
                     Call DebugAudit.Test(heap.IncrementSize > 0UI, "descriptor handle increment")
                 End Using
 
-                Call Trace("create buffer")
+                Call Trace("create buffer, pending = " & DmlDebugLayer.PendingMessageCount.ToString())
 
                 Try
                     Using buffer As DmlBuffer = DmlBuffer.CreateDefault(wrapper, 4096UL, True, "probe")
@@ -133,6 +169,8 @@ Namespace DirectMLDemo
                     Call Trace("buffer creation failed: " & ex.Message)
                     Call DebugAudit.Mark("CreateCommittedResource failed: " & ex.Message)
                 End Try
+
+                ReportValidationMessages("CreateCommittedResource")
             End Using
 
             For Each adapter As DmlAdapter In adapters

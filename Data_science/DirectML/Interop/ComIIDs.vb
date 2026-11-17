@@ -41,6 +41,15 @@ Namespace Interop
         Public ReadOnly ID3D12Fence As New Guid("0a753dcf-c4d8-4b91-adf6-be5a60d95a76")
         ''' <summary>ID3D12DescriptorHeap</summary>
         Public ReadOnly ID3D12DescriptorHeap As New Guid("8efb471d-616c-4f49-90f7-127bb763fa51")
+        ''' <summary>ID3D12Heap（placed 资源的显存堆）</summary>
+        Public ReadOnly ID3D12Heap As New Guid("6b3b2502-6e51-45b3-90ee-9884265e8df3")
+
+        ' ---- D3D12 调试层（d3d12sdklayers.h）----
+
+        ''' <summary>ID3D12Debug</summary>
+        Public ReadOnly ID3D12Debug As New Guid("344488b7-6846-474b-b989-f027448245e0")
+        ''' <summary>ID3D12InfoQueue</summary>
+        Public ReadOnly ID3D12InfoQueue As New Guid("0742a90b-c387-483f-b946-30a7e4e61458")
 
         ' ---- DirectML ----
 

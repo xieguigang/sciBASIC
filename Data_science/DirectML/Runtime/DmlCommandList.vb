@@ -23,6 +23,10 @@ Namespace Runtime
             Me._reset = GetSlotDelegate(Of D3D12CommandListResetFn)(10)
             Me._copy = GetSlotDelegate(Of D3D12CopyBufferRegionFn)(15)
             Me._barrier = GetSlotDelegate(Of D3D12ResourceBarrierFn)(26)
+
+            ' CreateCommandList 返回的是"正在录制"状态；此时对它所属的分配器调用 Reset
+            ' 会得到 E_FAIL。因此创建后立即关闭，后续统一走 Reset → 录制 → Close → 提交。
+            Call Close()
         End Sub
 
         ''' <summary>重置命令列表以重新记录。</summary>
