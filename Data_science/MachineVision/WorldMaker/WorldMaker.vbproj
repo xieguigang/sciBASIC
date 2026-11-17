@@ -14,6 +14,7 @@
     <UseSystemDrawing>true</UseSystemDrawing>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);BC42024;BC42030;BC42104;BC42105;BC42353</NoWarn>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
