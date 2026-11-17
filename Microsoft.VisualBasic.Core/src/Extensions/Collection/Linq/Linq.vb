@@ -177,7 +177,7 @@ Namespace Linq
                                         <CallerLineNumber> Optional line As Integer = -1,
                                         <CallerMemberName> Optional callee As String = Nothing) As IEnumerable(Of T)
 
-            Call DebugAudit.Check(source Is Nothing, $"target source sequence '{expr}' is nothing, empty collection will be generated...", expr, sourceFile, line, callee)
+            Call DebugAudit.Check(Not source Is Nothing, $"target source sequence '{expr}' is nothing, empty collection will be generated...", expr, sourceFile, line, callee)
 
             If Not source Is Nothing Then
                 Return source
