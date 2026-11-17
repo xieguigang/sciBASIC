@@ -113,8 +113,41 @@ Namespace Columns
     Public Module ValueCast
 
         ''' <summary>
+        ''' 读取列的无符号整数位宽（<c>8</c>/<c>16</c>/<c>32</c>/<c>64</c>），非无符号整数列返回 <c>0</c>。
+        ''' </summary>
+        Public Function UnsignedBitWidth(node As Schema.ParquetSchemaNode) As Integer
+            If node Is Nothing Then
+                Return 0
+            End If
+
+            Select Case node.Converted
+                Case Format.ConvertedType.UINT_8
+                    Return 8
+                Case Format.ConvertedType.UINT_16
+                    Return 16
+                Case Format.ConvertedType.UINT_32
+                    Return 32
+                Case Format.ConvertedType.UINT_64
+                    Return 64
+            End Select
+
+            If node.Logical IsNot Nothing AndAlso
+               String.Equals(node.Logical.Kind, Format.LogicalType.KindInteger, StringComparison.Ordinal) AndAlso
+               Not node.Logical.IsSigned Then
+                Return node.Logical.BitWidth
+            End If
+
+            Return 0
+        End Function
+
+        ''' <summary>
         ''' 将装箱的数值列表转换为列物理类型对应的强类型数组。
         ''' </summary>
+        ''' <remarks>
+        ''' 无符号整数（<c>UINT_8/16/32/64</c>）会被提升为可以容纳其取值范围的有符号类型：
+        ''' <c>UINT_8/16</c> → <see cref="Integer"/>、<c>UINT_32</c> → <see cref="Long"/>、
+        ''' <c>UINT_64</c> → <see cref="Double"/>（超过 <see cref="Long"/> 的范围，存在精度损失）。
+        ''' </remarks>
         Public Function ToTypedArray(node As Schema.ParquetSchemaNode, values As List(Of Object)) As Array
             Select Case node.PhysicalType.Value
                 Case Format.ParquetType.[BOOLEAN]
@@ -126,14 +159,42 @@ Namespace Columns
 
                     Return data
                 Case Format.ParquetType.INT32
+                    Dim width As Integer = UnsignedBitWidth(node)
+
+                    If width = 32 Then
+                        Dim unsigned As Long() = New Long(values.Count - 1) {}
+
+                        For i As Integer = 0 To values.Count - 1
+                            unsigned(i) = CLng(AsUnsigned(32, values(i)))
+                        Next
+
+                        Return unsigned
+                    End If
+
                     Dim data As Integer() = New Integer(values.Count - 1) {}
 
                     For i As Integer = 0 To values.Count - 1
                         data(i) = Convert.ToInt32(values(i))
+
+                        If width = 8 Then
+                            data(i) = data(i) And &HFF
+                        ElseIf width = 16 Then
+                            data(i) = data(i) And &HFFFF
+                        End If
                     Next
 
                     Return data
                 Case Format.ParquetType.INT64
+                    If UnsignedBitWidth(node) = 64 Then
+                        Dim unsigned As Double() = New Double(values.Count - 1) {}
+
+                        For i As Integer = 0 To values.Count - 1
+                            unsigned(i) = AsUnsigned(64, values(i))
+                        Next
+
+                        Return unsigned
+                    End If
+
                     Dim data As Long() = New Long(values.Count - 1) {}
 
                     For i As Integer = 0 To values.Count - 1
@@ -166,6 +227,21 @@ Namespace Columns
 
                     Return data
             End Select
+        End Function
+
+        ''' <summary>
+        ''' 将底层的补码数值按无符号整数解释，返回 <see cref="Double"/>（最大可以表示 64 位无符号整数）。
+        ''' </summary>
+        Private Function AsUnsigned(bitWidth As Integer, value As Object) As Double
+            If bitWidth = 32 Then
+                Return BitConverter.ToUInt32(BitConverter.GetBytes(Convert.ToInt32(value)), 0)
+            ElseIf bitWidth = 64 Then
+                Return BitConverter.ToUInt64(BitConverter.GetBytes(Convert.ToInt64(value)), 0)
+            ElseIf bitWidth = 16 Then
+                Return Convert.ToInt32(value) And &HFFFF
+            Else
+                Return Convert.ToInt32(value) And &HFF
+            End If
         End Function
 
         ''' <summary>

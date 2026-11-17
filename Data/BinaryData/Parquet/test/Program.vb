@@ -21,6 +21,13 @@ Module Program
 
     Sub Main(args As String())
         Call DebugAudit.Reset()
+
+        ' 触发 sciBASIC# 的 App 静态初始化：其内部使用了 SafeQuery 探测命令行环境变量，
+        ' 在没有命令行参数时会记录一条 check 日志（与 parquet 无关），这里初始化之后
+        ' 再重置一次审计记录，避免该日志混入测试报告
+        Call Ignore()
+        Call DebugAudit.Reset()
+
         Call TestSupport.ResetChecks()
 
         Dim reportPath As String = System.IO.Path.Combine(AppContext.BaseDirectory, "parquet-test-report.json")
@@ -44,6 +51,8 @@ Module Program
             Call RunSuite("suite:nested-roundtrip", AddressOf NestedTests.RunStableRoundtrip)
             Call RunSuite("suite:nested-schema", AddressOf NestedTests.RunNestedSchema)
             Call RunSuite("suite:interop", AddressOf InteropTests.Run)
+            Call RunSuite("suite:pyarrow-read", AddressOf PyArrowInteropTests.RunPyArrowFixtures)
+            Call RunSuite("suite:pyarrow-write", AddressOf PyArrowInteropTests.RunWriterInterop)
         Catch ex As Exception
             Call DebugAudit.Mark("fatal", ex.ToString())
             Call Console.WriteLine(ex.ToString())
@@ -106,6 +115,17 @@ Module Program
         For Each child As Schema.ParquetSchemaNode In node.Children
             Call PrintSchema(child, indent + 1)
         Next
+    End Sub
+
+    ''' <summary>
+    ''' 访问一次 <see cref="Microsoft.VisualBasic.App"/> 的静态属性，强制完成基础运行时的初始化。
+    ''' </summary>
+    Private Sub Ignore()
+        Dim home As String = Microsoft.VisualBasic.App.HOME
+
+        If home Is Nothing Then
+            Return
+        End If
     End Sub
 
     ''' <summary>

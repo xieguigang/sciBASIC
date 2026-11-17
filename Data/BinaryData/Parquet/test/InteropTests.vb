@@ -34,7 +34,7 @@ Friend Module InteropTests
         Call TestSupport.AssertEqual(2, meta.RowGroups.Count, "row group 数量为 2")
         Call TestSupport.AssertEqual(64L, meta.NumRows, "footer 记录的总行数正确")
         Call TestSupport.AssertTrue(meta.CreatedBy IsNot Nothing AndAlso meta.CreatedBy.Contains("Parquet"), "footer 写入 created_by")
-        Call TestSupport.AssertEqual(2, meta.Version, "footer 版本号为 2")
+        Call TestSupport.AssertEqual(1, meta.Version, "footer 版本号为 1（只写出 DataPageV1）")
         Call TestSupport.AssertEqual(9, meta.Schema.Count, "schema 元素数量（根 + 7 列 + 行名）")
 
         For Each group As Format.RowGroup In meta.RowGroups

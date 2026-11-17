@@ -228,12 +228,19 @@ Namespace Nested
             End If
 
             Dim valueNode As Schema.ParquetSchemaNode = Nothing
-            Dim keyColumn As Columns.DataColumn = columns(keyNode)
+            Dim keyColumn As Columns.DataColumn = Nothing
             Dim valueColumn As Columns.DataColumn = Nothing
-            Dim keyRowStarts As Integer() = RowStarts(keyColumn, numRows)
-            Dim keyValueStarts As Integer() = ValueStarts(keyColumn, keyRowStarts, numRows)
+            Dim keyRowStarts As Integer() = Nothing
+            Dim keyValueStarts As Integer() = Nothing
             Dim valueRowStarts As Integer() = Nothing
             Dim valueValueStarts As Integer() = Nothing
+
+            If Not columns.TryGetValue(keyNode, keyColumn) OrElse keyColumn Is Nothing Then
+                Throw New ParquetException($"the key column data is missing for the map column '{top.Name}'!")
+            End If
+
+            keyRowStarts = RowStarts(keyColumn, numRows)
+            keyValueStarts = ValueStarts(keyColumn, keyRowStarts, numRows)
 
             If keyValue.Children.Count > 1 Then
                 valueNode = keyValue.Children(1)
@@ -242,9 +249,14 @@ Namespace Nested
                     Throw New ParquetException($"the map column '{top.Name}' uses a complex value type which is not supported by this implementation!")
                 End If
 
-                valueColumn = columns(valueNode)
-                valueRowStarts = RowStarts(valueColumn, numRows)
-                valueValueStarts = ValueStarts(valueColumn, valueRowStarts, numRows)
+                If Not columns.TryGetValue(valueNode, valueColumn) Then
+                    valueColumn = Nothing
+                End If
+
+                If valueColumn IsNot Nothing Then
+                    valueRowStarts = RowStarts(valueColumn, numRows)
+                    valueValueStarts = ValueStarts(valueColumn, valueRowStarts, numRows)
+                End If
             End If
 
             Dim result As String() = New String(numRows - 1) {}
@@ -253,8 +265,8 @@ Namespace Nested
                 Dim map As New JsonObject()
                 Dim keyIndex As Integer = keyValueStarts(row)
                 Dim valueIndex As Integer = If(valueColumn Is Nothing, 0, valueValueStarts(row))
-                Dim valueEnd As Integer = If(valueColumn Is Nothing, 0, valueValueStarts(row + 1))
                 Dim valueSlot As Integer = 0
+                Dim valueStart As Integer = If(valueColumn Is Nothing, 0, valueRowStarts(row))
 
                 For slot As Integer = keyRowStarts(row) To keyRowStarts(row + 1) - 1
                     If keyColumn.DefinitionLevels(slot) < keyColumn.MaxDefinitionLevel Then
@@ -267,17 +279,21 @@ Namespace Nested
 
                     Dim item As JsonNode = Nothing
 
-                    If valueColumn IsNot Nothing AndAlso valueIndex < valueEnd Then
-                        Dim valueSlotIndex As Integer = valueRowStarts(row) + valueSlot
+                    If valueColumn IsNot Nothing Then
+                        ' key 与 value 在 map 的重复层中使用相同的槽位编号，而 DataColumn.Values
+                        ' 只保存了已定义的数值，因此 valueIndex 只能在定义级别达到最大定义级别
+                        ' 的时候才向前推进，否则 null value 之后的数值会整体错位
+                        Dim valueSlotIndex As Integer = valueStart + valueSlot
 
-                        If valueSlotIndex < valueColumn.Count AndAlso valueColumn.DefinitionLevels(valueSlotIndex) >= valueColumn.MaxDefinitionLevel Then
+                        If valueSlotIndex >= 0 AndAlso valueSlotIndex < valueColumn.Count AndAlso
+                           valueColumn.DefinitionLevels(valueSlotIndex) >= valueColumn.MaxDefinitionLevel Then
                             item = ToJsonValue(valueNode, valueColumn.Values.GetValue(valueIndex))
-                        End If
 
-                        valueIndex += 1
-                        valueSlot += 1
+                            valueIndex += 1
+                        End If
                     End If
 
+                    valueSlot += 1
                     map(key) = item
                 Next
 

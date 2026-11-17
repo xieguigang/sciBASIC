@@ -15,10 +15,26 @@ Imports FeatureVectorModel = Microsoft.VisualBasic.Data.Framework.FeatureVector
 ''' 约定：<c>rownames</c> 以 <c>__index__</c> 列存储；struct 成员展开为 <c>a.b</c> 形式的点号列名；
 ''' LIST / MAP 转换为 JSON 文本列，并在 <c>FeatureVector.attributes("parquet.type")</c> 中记录类型描述。
 ''' </para>
+''' <para>
+''' 缺失值（null）规则：写入时 <c>Nothing</c> 字符串与 <c>NaN</c> 数值都写成 null 槽位；
+''' 读取时数值列中的 null 还原为 <c>NaN</c>、字符列中的 null 还原为 <c>Nothing</c>。
+''' 含 null 的 <c>INT32</c>/<c>INT64</c>/<c>DATE</c>/<c>TIMESTAMP</c> 列会降级为
+''' <c>Double</c> 数值列（缺失值为 <c>NaN</c>），因为 CLR 的强类型数组无法承载 null。
+''' </para>
+''' <para>
+''' 读取时还会处理外部文件中的 <c>UINT_8/16/32/64</c>（提升为可以容纳其范围的类型）、
+''' <c>DECIMAL</c>（按 <c>10^scale</c> 还原为数值）、没有 <c>STRING</c> 逻辑类型的
+''' <c>BYTE_ARRAY</c>（按 base64 文本承载，属性 <c>parquet.binary</c> 标记以便回写）。
+''' </para>
 ''' </summary>
 Public Module DataFrameMapping
 
     Public Const NestedTypeAttribute As String = Nested.JsonShredder.NestedTypeAttribute
+
+    ''' <summary>
+    ''' 标记一个文本列承载的是 base64 编码的二进制数据（没有 STRING 逻辑类型的 BYTE_ARRAY 列）。
+    ''' </summary>
+    Public Const BinaryColumnAttribute As String = "parquet.binary"
 
     ' =====================================================================
     '  写：DataFrame → WritePlan
@@ -99,7 +115,8 @@ Public Module DataFrameMapping
     Private Sub AddLeafColumn(plan As WritePlan, root As Schema.ParquetSchemaNode, column As FeatureVectorModel, rowCount As Integer)
         Dim nullMask As Boolean() = Nothing
         Dim values As Array = AsTypedColumn(column, rowCount, nullMask)
-        Dim node As Schema.ParquetSchemaNode = CreateLeafNode(column.name, column.type, nullMask IsNot Nothing)
+        Dim node As Schema.ParquetSchemaNode = CreateLeafNode(column.name, column.type, nullMask IsNot Nothing,
+                                                             IsBinaryColumn(column))
 
         Call root.Children.Add(node)
         Call plan.Columns.Add(New ColumnPlan With {
@@ -153,7 +170,8 @@ Public Module DataFrameMapping
             Dim column As FeatureVectorModel = df(member)
             Dim nullMask As Boolean() = Nothing
             Dim values As Array = AsTypedColumn(column, rowCount, nullMask)
-            Dim leaf As Schema.ParquetSchemaNode = CreateLeafNode(parts(parts.Length - 1), column.type, nullMask IsNot Nothing)
+            Dim leaf As Schema.ParquetSchemaNode = CreateLeafNode(parts(parts.Length - 1), column.type,
+                                                                  nullMask IsNot Nothing, IsBinaryColumn(column))
 
             leaf.Parent = parent
             Call parent.Children.Add(leaf)
@@ -193,8 +211,7 @@ Public Module DataFrameMapping
             .Name = top,
             .Kind = ColumnKind.Nested,
             .Node = node,
-            .JsonValues = json,
-            .TypeDefinition = declaration
+            .JsonValues = json
         })
     End Sub
 
@@ -285,9 +302,16 @@ Public Module DataFrameMapping
             Case GetType(Long)
                 Return Adapt(Of Long)(column, rowCount)
             Case GetType(Single)
-                Return Adapt(Of Single)(column, rowCount)
+                Dim source As Single() = Adapt(Of Single)(column, rowCount)
+
+                ' NaN 在 R 语言之中是缺失值（is.na(NaN) == TRUE），写出为 null 槽位
+                nullMask = NaMask(Of Single)(source, Function(v) Single.IsNaN(v))
+                Return source
             Case GetType(Double)
-                Return Adapt(Of Double)(column, rowCount)
+                Dim source As Double() = Adapt(Of Double)(column, rowCount)
+
+                nullMask = NaMask(Of Double)(source, Function(v) Double.IsNaN(v))
+                Return source
             Case GetType(Boolean)
                 Return Adapt(Of Boolean)(column, rowCount)
             Case GetType(String)
@@ -306,7 +330,22 @@ Public Module DataFrameMapping
 
                 nullMask = mask
 
-                Return source
+                If Not IsBinaryColumn(column) Then
+                    Return source
+                End If
+
+                ' base64 文本还原为原始的二进制字节
+                Dim bytes As Byte()() = New Byte(rowCount - 1)() {}
+
+                For i As Integer = 0 To rowCount - 1
+                    If source(i) Is Nothing Then
+                        bytes(i) = New Byte() {}
+                    Else
+                        bytes(i) = FromBase64(column.name, source(i))
+                    End If
+                Next
+
+                Return bytes
             Case GetType(Date)
                 Dim source As Date() = Adapt(Of Date)(column, rowCount)
                 Dim values As Long() = New Long(rowCount - 1) {}
@@ -353,9 +392,55 @@ Public Module DataFrameMapping
     End Function
 
     ''' <summary>
+    ''' 生成数值列的空值掩码：命中 <paramref name="isNa"/> 的槽位标记为缺失值。
+    ''' </summary>
+    Private Function NaMask(Of T)(values As T(), isNa As Func(Of T, Boolean)) As Boolean()
+        Dim mask As Boolean() = Nothing
+
+        For i As Integer = 0 To values.Length - 1
+            If isNa(values(i)) Then
+                If mask Is Nothing Then
+                    mask = New Boolean(values.Length - 1) {}
+                End If
+
+                mask(i) = True
+            End If
+        Next
+
+        Return mask
+    End Function
+
+    ''' <summary>
+    ''' 该列是否承载 base64 编码的二进制数据？
+    ''' </summary>
+    Private Function IsBinaryColumn(column As FeatureVectorModel) As Boolean
+        If column Is Nothing OrElse column.attributes Is Nothing Then
+            Return False
+        End If
+
+        Return column.attributes.ContainsKey(BinaryColumnAttribute)
+    End Function
+
+    Private Function FromBase64(name As String, text As String) As Byte()
+        Try
+            Return Convert.FromBase64String(text)
+        Catch ex As Exception
+            Throw New ParquetException($"the column '{name}' contains invalid base64 text which could not be cast to a binary value!", ex)
+        End Try
+    End Function
+
+    ''' <summary>
     ''' 依据 CLR 类型创建叶子 schema 节点。
     ''' </summary>
-    Private Function CreateLeafNode(name As String, type As Type, hasNulls As Boolean) As Schema.ParquetSchemaNode
+    ''' <param name="name">列名</param>
+    ''' <param name="type">列的元素类型</param>
+    ''' <param name="hasNulls">是否包含空值（决定 OPTIONAL / REQUIRED）</param>
+    ''' <param name="isBinary">
+    ''' 文本列承载的是 base64 编码的二进制数据，此时不写入 STRING 逻辑类型
+    ''' （即还原为原始的 BYTE_ARRAY 二进制列）。
+    ''' </param>
+    Private Function CreateLeafNode(name As String, type As Type, hasNulls As Boolean,
+                                    Optional isBinary As Boolean = False) As Schema.ParquetSchemaNode
         Dim node As New Schema.ParquetSchemaNode With {
             .Name = name,
             .Repetition = If(hasNulls, Format.FieldRepetitionType.[OPTIONAL], Format.FieldRepetitionType.REQUIRED)
@@ -374,8 +459,11 @@ Public Module DataFrameMapping
                 node.PhysicalType = Format.ParquetType.[BOOLEAN]
             Case GetType(String)
                 node.PhysicalType = Format.ParquetType.BYTE_ARRAY
-                node.Logical = Format.LogicalType.MakeString()
-                node.Converted = Format.ConvertedType.UTF8
+
+                If Not isBinary Then
+                    node.Logical = Format.LogicalType.MakeString()
+                    node.Converted = Format.ConvertedType.UTF8
+                End If
             Case GetType(Date)
                 node.PhysicalType = Format.ParquetType.INT64
                 node.Logical = Format.LogicalType.TimestampMillis()
@@ -521,6 +609,8 @@ Public Module DataFrameMapping
     Private Function MakeFeatureVector(name As String, leaf As Schema.ParquetSchemaNode, column As Columns.DataColumn) As FeatureVectorModel
         Dim physical As Format.ParquetType = leaf.PhysicalType.Value
         Dim hasNulls As Boolean = column.DefinedCount < column.Count
+        Dim logical As Format.LogicalType = EffectiveLogical(leaf)
+        Dim unsigned As Integer = Columns.ValueCast.UnsignedBitWidth(leaf)
 
         If physical = Format.ParquetType.INT96 Then
             Dim raw As Byte()() = CType(column.Values, Byte()())
@@ -533,38 +623,16 @@ Public Module DataFrameMapping
             Return New FeatureVectorModel(name, times)
         End If
 
-        If leaf.Logical IsNot Nothing Then
-            Select Case leaf.Logical.Kind
+        If logical IsNot Nothing Then
+            Select Case logical.Kind
                 Case Format.LogicalType.KindTimestamp
-                    Dim ticks As Long() = CType(column.Values, Long())
-                    Dim times As Date() = Columns.ArrayUtil.NewArray(Of Date)(ticks.Length)
-                    Dim unit As String = If(leaf.Logical.TimeUnit, "MILLIS")
-
-                    For i As Integer = 0 To ticks.Length - 1
-                        Select Case UCase(unit)
-                            Case "MICROS"
-                                times(i) = DateTime.UnixEpoch.AddTicks(ticks(i) * 10L)
-                            Case "NANOS"
-                                times(i) = DateTime.UnixEpoch.AddTicks(ticks(i) \ 100L)
-                            Case Else
-                                times(i) = DateTime.UnixEpoch.AddMilliseconds(ticks(i))
-                        End Select
-                    Next
-
-                    Return New FeatureVectorModel(name, times)
+                    Return MakeTimestampVector(name, column, logical)
                 Case Format.LogicalType.KindDate
-                    Dim days As Integer() = CType(column.Values, Integer())
-                    Dim times As Date() = Columns.ArrayUtil.NewArray(Of Date)(days.Length)
-
-                    For i As Integer = 0 To days.Length - 1
-                        times(i) = DateTime.UnixEpoch.AddDays(days(i))
-                    Next
-
-                    Return New FeatureVectorModel(name, times)
-                Case Format.LogicalType.KindString
+                    Return MakeDateVector(name, column)
+                Case Format.LogicalType.KindString, Format.LogicalType.KindEnum, Format.LogicalType.KindJson
                     Return New FeatureVectorModel(name, AsStrings(column))
                 Case Format.LogicalType.KindDecimal
-                    Return New FeatureVectorModel(name, AsScaledDoubles(column, leaf.Logical.Scale))
+                    Return New FeatureVectorModel(name, AsDecimals(column, leaf, logical.Scale))
             End Select
         End If
 
@@ -572,12 +640,22 @@ Public Module DataFrameMapping
             Case Format.ParquetType.[BOOLEAN]
                 Return New FeatureVectorModel(name, Fill(Of Boolean)(column))
             Case Format.ParquetType.INT32
+                If unsigned = 32 Then
+                    ' UINT_32 超出 Integer 的范围，提升为 Long
+                    Return New FeatureVectorModel(name, Fill(Of Long)(column))
+                End If
+
                 If hasNulls Then
                     Return New FeatureVectorModel(name, AsDoublesWithNaN(column))
                 End If
 
                 Return New FeatureVectorModel(name, Fill(Of Integer)(column))
             Case Format.ParquetType.INT64
+                If unsigned = 64 Then
+                    ' UINT_64 超出 Long 的范围，只能使用 Double 承载（会存在精度损失）
+                    Return New FeatureVectorModel(name, Fill(Of Double)(column))
+                End If
+
                 If hasNulls Then
                     Return New FeatureVectorModel(name, AsDoublesWithNaN(column))
                 End If
@@ -588,8 +666,151 @@ Public Module DataFrameMapping
             Case Format.ParquetType.[DOUBLE]
                 Return New FeatureVectorModel(name, AsDoubles(column, hasNulls))
             Case Else
-                Return New FeatureVectorModel(name, AsStrings(column))
+                ' 没有 STRING 逻辑类型的 BYTE_ARRAY / FIXED_LEN_BYTE_ARRAY 是二进制数据，
+                ' 强解为 UTF8 文本会破坏数据，这里以 base64 文本读取
+                Return MakeBinaryFeature(name, column)
         End Select
+    End Function
+
+    ''' <summary>
+    ''' 将 <c>converted_type</c> 归一化为 <see cref="Format.LogicalType"/>，用于兼容只写入了
+    ''' 旧式 <c>converted_type</c> 的外部文件。
+    ''' </summary>
+    Private Function EffectiveLogical(leaf As Schema.ParquetSchemaNode) As Format.LogicalType
+        If leaf Is Nothing Then
+            Return Nothing
+        End If
+        If leaf.Logical IsNot Nothing Then
+            Return leaf.Logical
+        End If
+        If Not leaf.Converted.HasValue Then
+            Return Nothing
+        End If
+
+        Select Case leaf.Converted.Value
+            Case Format.ConvertedType.UTF8, Format.ConvertedType.[ENUM], Format.ConvertedType.JSON, Format.ConvertedType.BSON
+                Return Format.LogicalType.MakeString()
+            Case Format.ConvertedType.[DATE]
+                Return Format.LogicalType.MakeDate()
+            Case Format.ConvertedType.TIMESTAMP_MILLIS
+                Return Format.LogicalType.TimestampMillis()
+            Case Format.ConvertedType.TIMESTAMP_MICROS
+                Return New Format.LogicalType With {
+                    .Kind = Format.LogicalType.KindTimestamp,
+                    .TimeUnit = "MICROS",
+                    .IsAdjustedToUtc = True
+                }
+            Case Format.ConvertedType.[DECIMAL]
+                Return New Format.LogicalType With {
+                    .Kind = Format.LogicalType.KindDecimal,
+                    .Scale = If(leaf.Element Is Nothing, 0, leaf.Element.Scale.GetValueOrDefault(0)),
+                    .Precision = If(leaf.Element Is Nothing, 0, leaf.Element.Precision.GetValueOrDefault(0))
+                }
+            Case Else
+                Return Nothing
+        End Select
+    End Function
+
+    ''' <summary>
+    ''' 时间戳列：没有空值时还原为 <see cref="Date"/> 向量；含空值时降级为
+    ''' unix 毫秒数值向量（缺失值为 <c>NaN</c>）。
+    ''' </summary>
+    Private Function MakeTimestampVector(name As String, column As Columns.DataColumn, logical As Format.LogicalType) As FeatureVectorModel
+        Dim unit As String = UCase(If(logical.TimeUnit, "MILLIS"))
+        Dim millis As Double() = New Double(column.Count - 1) {}
+        Dim valueIndex As Integer = 0
+
+        For i As Integer = 0 To column.Count - 1
+            If column.DefinitionLevels(i) >= column.MaxDefinitionLevel Then
+                Dim ticks As Long = Convert.ToInt64(column.Values.GetValue(valueIndex))
+
+                valueIndex += 1
+
+                Select Case unit
+                    Case "MICROS"
+                        millis(i) = ticks / 1000.0R
+                    Case "NANOS"
+                        millis(i) = ticks / 1000000.0R
+                    Case Else
+                        millis(i) = ticks
+                End Select
+            Else
+                millis(i) = Double.NaN
+            End If
+        Next
+
+        If column.DefinedCount < column.Count Then
+            ' 含空值：使用 NaN 作为缺失值，不能再保持 Date 类型
+            Return New FeatureVectorModel(name, millis)
+        End If
+
+        Dim times As Date() = Columns.ArrayUtil.NewArray(Of Date)(millis.Length)
+
+        For i As Integer = 0 To millis.Length - 1
+            times(i) = DateTime.UnixEpoch.AddMilliseconds(millis(i))
+        Next
+
+        Return New FeatureVectorModel(name, times)
+    End Function
+
+    ''' <summary>
+    ''' 日期列：没有空值时还原为 <see cref="Date"/> 向量；含空值时降级为
+    ''' 从 unix epoch 起算的天数数值向量（缺失值为 <c>NaN</c>）。
+    ''' </summary>
+    Private Function MakeDateVector(name As String, column As Columns.DataColumn) As FeatureVectorModel
+        Dim days As Double() = New Double(column.Count - 1) {}
+        Dim valueIndex As Integer = 0
+
+        For i As Integer = 0 To column.Count - 1
+            If column.DefinitionLevels(i) >= column.MaxDefinitionLevel Then
+                days(i) = Convert.ToInt32(column.Values.GetValue(valueIndex))
+                valueIndex += 1
+            Else
+                days(i) = Double.NaN
+            End If
+        Next
+
+        If column.DefinedCount < column.Count Then
+            Return New FeatureVectorModel(name, days)
+        End If
+
+        Dim times As Date() = Columns.ArrayUtil.NewArray(Of Date)(days.Length)
+
+        For i As Integer = 0 To days.Length - 1
+            times(i) = DateTime.UnixEpoch.AddDays(days(i))
+        Next
+
+        Return New FeatureVectorModel(name, times)
+    End Function
+
+    ''' <summary>
+    ''' 二进制列：以 base64 文本承载原始字节，并在 <c>attributes</c> 中记录标记以便回写。
+    ''' </summary>
+    Private Function MakeBinaryFeature(name As String, column As Columns.DataColumn) As FeatureVectorModel
+        Dim data As String() = New String(column.Count - 1) {}
+        Dim valueIndex As Integer = 0
+
+        For i As Integer = 0 To column.Count - 1
+            If column.DefinitionLevels(i) >= column.MaxDefinitionLevel Then
+                Dim raw As Object = column.Values.GetValue(valueIndex)
+
+                valueIndex += 1
+
+                If TypeOf raw Is Byte() Then
+                    data(i) = Convert.ToBase64String(CType(raw, Byte()))
+                Else
+                    data(i) = Convert.ToString(raw, Globalization.CultureInfo.InvariantCulture)
+                End If
+            End If
+        Next
+
+        Dim column_Vector As New FeatureVectorModel(name, data)
+
+        column_Vector.attributes = New Dictionary(Of String, String) From {
+            {BinaryColumnAttribute, "true"}
+        }
+
+        Return column_Vector
     End Function
 
     Private Function Fill(Of T)(column As Columns.DataColumn) As T()
@@ -680,17 +901,64 @@ Public Module DataFrameMapping
         Return result
     End Function
 
-    Private Function AsScaledDoubles(column As Columns.DataColumn, scale As Integer) As Double()
-        Dim data As Double() = AsDoublesWithNaN(column)
+    ''' <summary>
+    ''' DECIMAL 列：按物理类型解码为未缩放的整数后再除以 <c>10^scale</c>。
+    ''' <para>
+    ''' <c>FIXED_LEN_BYTE_ARRAY</c> / <c>BYTE_ARRAY</c> 承载的是大端序的补码整数，
+    ''' 不能直接 <c>Convert.ToDouble(Byte())</c>（会抛 <see cref="InvalidCastException"/>）。
+    ''' </para>
+    ''' </summary>
+    Private Function AsDecimals(column As Columns.DataColumn, leaf As Schema.ParquetSchemaNode, scale As Integer) As Double()
+        Dim count As Integer = column.Count
+        Dim result As Double() = New Double(count - 1) {}
+        Dim physical As Format.ParquetType = leaf.PhysicalType.Value
         Dim factor As Double = System.Math.Pow(10, scale)
+        Dim valueIndex As Integer = 0
 
-        For i As Integer = 0 To data.Length - 1
-            If Not Double.IsNaN(data(i)) Then
-                data(i) = data(i) / factor
+        For i As Integer = 0 To count - 1
+            If column.DefinitionLevels(i) >= column.MaxDefinitionLevel Then
+                Dim raw As Object = column.Values.GetValue(valueIndex)
+
+                valueIndex += 1
+                result(i) = UnscaledDecimal(physical, raw) / factor
+            Else
+                result(i) = Double.NaN
             End If
         Next
 
-        Return data
+        Return result
+    End Function
+
+    Private Function UnscaledDecimal(physical As Format.ParquetType, raw As Object) As Double
+        Select Case physical
+            Case Format.ParquetType.INT32
+                Return Convert.ToInt32(raw)
+            Case Format.ParquetType.INT64
+                Return Convert.ToInt64(raw)
+            Case Else
+                Return SignedBigEndian(CType(raw, Byte()))
+        End Select
+    End Function
+
+    ''' <summary>
+    ''' 将大端序的补码整数（DECIMAL 的字节表示）转换为数值。
+    ''' </summary>
+    Private Function SignedBigEndian(bytes As Byte()) As Double
+        If bytes Is Nothing OrElse bytes.Length = 0 Then
+            Return 0
+        End If
+
+        Dim value As Double = 0
+
+        For i As Integer = 0 To bytes.Length - 1
+            value = value * 256.0R + bytes(i)
+        Next
+
+        If (bytes(0) And &H80) <> 0 Then
+            value -= System.Math.Pow(2, bytes.Length * 8)
+        End If
+
+        Return value
     End Function
 
 End Module

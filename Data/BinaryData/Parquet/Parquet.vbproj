@@ -4,10 +4,10 @@
     <RootNamespace>Microsoft.VisualBasic.DataStorage.Parquet</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.DataStorage.Parquet</AssemblyName>
-    <AssemblyTitle>Apache Parquet is an open source, column-oriented data file format designed for efficient data storage and retrieval. It provides high performance compression and encoding schemes to handle complex data in bulk and is supported in many programming languages and analytics tools.</AssemblyTitle>
+    <AssemblyTitle>Pure VB.NET implementation of the Apache Parquet columnar data file format</AssemblyTitle>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Apache Parquet is an open source, column-oriented data file format designed for efficient data storage and retrieval. It provides high performance compression and encoding schemes to handle complex data in bulk and is supported in many programming languages and analytics tools.</Title>
-    <Description>A pure VB.NET implementation of the Apache Parquet columnar file format: thrift compact metadata, PLAIN / RLE / dictionary / DELTA / BYTE_STREAM_SPLIT encodings, UNCOMPRESSED / SNAPPY / GZIP compression and nested schema support. Reads and writes Microsoft.VisualBasic.Data.Framework.DataFrame objects.</Description>
+    <Title>Apache Parquet columnar data file format (pure VB.NET implementation)</Title>
+    <Description>A pure VB.NET implementation of the Apache Parquet columnar file format, without any native (parquet-mr / arrow) dependency. Supports thrift compact protocol metadata, PLAIN values with RLE bit-packed hybrid levels on write, PLAIN / dictionary / DELTA / BYTE_STREAM_SPLIT / RLE decoding on read, DataPageV1 writing and DataPageV1+V2 reading, UNCOMPRESSED / SNAPPY / GZIP page compression, row groups, column statistics and LIST / MAP / STRUCT nested schemas. Reads and writes Microsoft.VisualBasic.Data.Framework.DataFrame objects.</Description>
     <PackageTags>scibasic;parquet;columnar;dataframe;apache</PackageTags>
     <Version>1.0.0</Version>
     <Authors>sciBASIC.NET Foundation</Authors>

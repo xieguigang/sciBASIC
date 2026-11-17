@@ -48,11 +48,6 @@ Public Class ColumnPlan
     ''' </summary>
     Public Property JsonValues As String()
 
-    ''' <summary>
-    ''' 嵌套列的类型描述（写入到 <c>FeatureVector.attributes</c> 以便读取时还原）。
-    ''' </summary>
-    Public Property TypeDefinition As String
-
 End Class
 
 ''' <summary>

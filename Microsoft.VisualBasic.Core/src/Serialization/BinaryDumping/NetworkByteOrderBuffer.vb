@@ -487,5 +487,103 @@ Namespace Serialization.BinaryDumping
 
             Return bytes.ToArray
         End Function
+
+#Region "Zero allocation codec (buffer + offset overloads)"
+
+        ' 这一组方法是给"超大型矩阵"的流式读写准备的：调用方持有一个可复用的 Byte() 缓冲区，
+        ' 逐块解码/编码，全程不产生任何中间数组与字符串，避免 GB 级数据下的 GC 抖动与 LOH 压力。
+        '
+        ' 实现上不依赖主机的字节序：先按 IEEE754 的位模式在 Long 上重组（DecodeDouble），
+        ' 或者把位模式拆成 8 个字节（EncodeDouble）。BitConverter.Int64BitsToDouble /
+        ' DoubleToInt64Bits 的语义与主机字节序无关，因此这段代码在小端与大端平台上行为一致，
+        ' 输出的永远是网络字节序（大端）。
+
+        ''' <summary>
+        ''' 从缓冲区的指定偏移处解码一个网络字节序的 <see cref="Double"/>（零分配）
+        ''' </summary>
+        ''' <param name="buffer">原始字节缓冲区</param>
+        ''' <param name="offset">该 double 的起始字节偏移</param>
+        ''' <returns></returns>
+        ''' <remarks>注意：VB 的移位运算不做溢出检查，因此高位字节可以直接移入符号位。</remarks>
+        Public Function DecodeDouble(buffer As Byte(), offset As Integer) As Double
+            Dim bits As Long =
+                (CLng(buffer(offset)) << 56) Or
+                (CLng(buffer(offset + 1)) << 48) Or
+                (CLng(buffer(offset + 2)) << 40) Or
+                (CLng(buffer(offset + 3)) << 32) Or
+                (CLng(buffer(offset + 4)) << 24) Or
+                (CLng(buffer(offset + 5)) << 16) Or
+                (CLng(buffer(offset + 6)) << 8) Or
+                CLng(buffer(offset + 7))
+
+            Return BitConverter.Int64BitsToDouble(bits)
+        End Function
+
+        ''' <summary>
+        ''' 把一个 <see cref="Double"/> 以网络字节序写入缓冲区的指定偏移处（零分配）
+        ''' </summary>
+        ''' <param name="value">待编码的数值</param>
+        ''' <param name="buffer">目标字节缓冲区</param>
+        ''' <param name="offset">写入的起始字节偏移</param>
+        Public Sub EncodeDouble(value As Double, buffer As Byte(), offset As Integer)
+            Dim bits As Long = BitConverter.DoubleToInt64Bits(value)
+
+            buffer(offset) = CByte((bits >> 56) And &HFFL)
+            buffer(offset + 1) = CByte((bits >> 48) And &HFFL)
+            buffer(offset + 2) = CByte((bits >> 40) And &HFFL)
+            buffer(offset + 3) = CByte((bits >> 32) And &HFFL)
+            buffer(offset + 4) = CByte((bits >> 24) And &HFFL)
+            buffer(offset + 5) = CByte((bits >> 16) And &HFFL)
+            buffer(offset + 6) = CByte((bits >> 8) And &HFFL)
+            buffer(offset + 7) = CByte(bits And &HFFL)
+        End Sub
+
+        ''' <summary>
+        ''' 批量解码：把 <paramref name="buffer"/> 之中从 <paramref name="offset"/> 开始的
+        ''' <paramref name="count"/> 个网络字节序 double 写入 <paramref name="target"/>（零分配）
+        ''' </summary>
+        ''' <param name="buffer">原始字节缓冲区</param>
+        ''' <param name="offset">第一个 double 的起始字节偏移</param>
+        ''' <param name="count">需要解码的元素个数</param>
+        ''' <param name="target">目标数组</param>
+        ''' <param name="targetOffset">目标数组之中的写入起始下标</param>
+        Public Sub DecodeDoubles(buffer As Byte(),
+                                 offset As Integer,
+                                 count As Integer,
+                                 target As Double(),
+                                 Optional targetOffset As Integer = 0)
+
+            Dim p As Integer = offset
+
+            For i As Integer = 0 To count - 1
+                target(targetOffset + i) = DecodeDouble(buffer, p)
+                p += RawStream.DblFloat
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 批量编码：把 <paramref name="data"/> 之中从 <paramref name="offset"/> 开始的
+        ''' <paramref name="count"/> 个数值以网络字节序写入 <paramref name="buffer"/>（零分配）
+        ''' </summary>
+        ''' <param name="data">数值数组</param>
+        ''' <param name="offset">数值数组之中的读取起始下标</param>
+        ''' <param name="count">需要编码的元素个数</param>
+        ''' <param name="buffer">目标字节缓冲区</param>
+        ''' <param name="bufferOffset">目标缓冲区之中的写入起始字节偏移</param>
+        Public Sub EncodeDoubles(data As Double(),
+                                 offset As Integer,
+                                 count As Integer,
+                                 buffer As Byte(),
+                                 Optional bufferOffset As Integer = 0)
+
+            Dim p As Integer = bufferOffset
+
+            For i As Integer = 0 To count - 1
+                Call EncodeDouble(data(offset + i), buffer, p)
+                p += RawStream.DblFloat
+            Next
+        End Sub
+
+#End Region
     End Class
 End Namespace
