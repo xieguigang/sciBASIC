@@ -21,8 +21,11 @@
   -->
   <ItemGroup>
     <Compile Remove="Cloudy.Test\**" />
+    <Compile Remove="test\**" />
     <EmbeddedResource Remove="Cloudy.Test\**" />
+    <EmbeddedResource Remove="test\**" />
     <None Remove="Cloudy.Test\**" />
+    <None Remove="test\**" />
   </ItemGroup>
 
 </Project>
