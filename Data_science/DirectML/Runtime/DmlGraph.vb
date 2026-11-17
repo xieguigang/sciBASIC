@@ -91,7 +91,8 @@ Namespace Runtime
         Private _initializer As DmlOperatorInitializer
         Private _initializerBinding As DmlBindingTable
         Private _initializerDescriptorOffset As UInteger
-        Private _arenaState As D3D12_RESOURCE_STATES = D3D12_RESOURCE_STATES.COMMON
+        ''' <summary>每个张量资源当前的 D3D12 状态（用于插入最小必要的屏障）。</summary>
+        Private ReadOnly _bufferStates As New Dictionary(Of IntPtr, D3D12_RESOURCE_STATES)()
         Private _compiled As Boolean
         Private _disposed As Boolean
 
@@ -102,10 +103,12 @@ Namespace Runtime
 
             Me._engine = engine
 
+            ' 默认关闭 meta command：meta command 会把算子展开成 DML 内部的间接 dispatch，
+            ' 在缺少显式临时资源绑定时容易触发驱动崩溃（表现为 RecordDispatch 里的访问冲突）。
+            Me._executionFlags = DML_EXECUTION_FLAGS.NONE
+
             If engine.Options.AllowHalfPrecision Then
-                Me._executionFlags = DML_EXECUTION_FLAGS.ALLOW_HALF_PRECISION_COMPUTATION
-            Else
-                Me._executionFlags = DML_EXECUTION_FLAGS.NONE
+                Me._executionFlags = Me._executionFlags Or DML_EXECUTION_FLAGS.ALLOW_HALF_PRECISION_COMPUTATION
             End If
         End Sub
 
@@ -315,10 +318,12 @@ Namespace Runtime
 
             _initializer = device.CreateOperatorInitializer(compiledPointers.ToArray())
 
-            Dim totalDescriptors As UInteger = _initializer.BindingProperties.RequiredDescriptorCount
+            ' 每个绑定表至少占 1 个描述符（RequiredDescriptorCount = 0 的算子也要占位），
+            ' 堆容量必须按同样的口径累加，否则初始化器的描述符会落到堆外。
+            Dim totalDescriptors As UInteger = System.Math.Max(1UI, _initializer.BindingProperties.RequiredDescriptorCount)
 
             For Each node As DmlGraphNode In _nodes
-                totalDescriptors += node.Compiled.BindingProperties.RequiredDescriptorCount
+                totalDescriptors += System.Math.Max(1UI, node.Compiled.BindingProperties.RequiredDescriptorCount)
             Next
 
             TraceStep($"compile: create descriptor heap ({totalDescriptors} descriptors)")
@@ -420,6 +425,12 @@ Namespace Runtime
                 End If
             Next
 
+            For Each tensor As DmlGraphTensor In _tensors
+                TraceStep($"compile: tensor {tensor.Name} [{tensor.Kind}] dims={tensor.Tensor.ShapeText} " &
+                          $"bytes={tensor.Tensor.TotalSizeInBytes}, alloc={tensor.Allocation.Offset}, " &
+                          $"upload={tensor.UploadOffset}, readback={tensor.ReadbackOffset}")
+            Next
+
             TraceStep($"compile: create staging buffers (upload={uploadBytes}, readback={readbackBytes})")
 
             If uploadBytes > 0UL Then
@@ -508,10 +519,10 @@ Namespace Runtime
                     Continue For
                 End If
 
-                If _arenaState <> D3D12_RESOURCE_STATES.COPY_DEST Then
-                    commandList.Transition(_pool.Buffer, _arenaState, D3D12_RESOURCE_STATES.COPY_DEST)
-                    _arenaState = D3D12_RESOURCE_STATES.COPY_DEST
-                End If
+                TraceStep($"execute: upload {tensor.Name} -> staging offset {tensor.UploadOffset}, " &
+                          $"values={If(tensor.Data Is Nothing, -1, tensor.Data.Length)}")
+
+                SetResourceState(commandList, tensor.Allocation.Buffer, D3D12_RESOURCE_STATES.COPY_DEST)
 
                 commandList.CopyBufferRegion(tensor.Allocation.Buffer, tensor.Allocation.Offset,
                                              _upload, tensor.UploadOffset,
@@ -520,9 +531,13 @@ Namespace Runtime
                 hasUpload = True
             Next
 
-            ' 3) 切换到 UAV 并记录 dispatch
-            commandList.Transition(_pool.Buffer, _arenaState, D3D12_RESOURCE_STATES.UNORDERED_ACCESS)
-            _arenaState = D3D12_RESOURCE_STATES.UNORDERED_ACCESS
+            ' 3) 全部张量资源切到 UAV，并记录 dispatch
+            For Each tensor As DmlGraphTensor In _tensors
+                SetResourceState(commandList, tensor.Allocation.Buffer, D3D12_RESOURCE_STATES.UNORDERED_ACCESS)
+            Next
+
+            ' DML 的 dispatch 通过描述符表解析绑定，必须先让命令列表看到这个堆。
+            commandList.SetDescriptorHeaps(New DmlDescriptorHeap() {_heap})
 
             For Each node As DmlGraphNode In _nodes
                 TraceStep($"execute: dispatch {node.Definition.Type}")
@@ -530,7 +545,20 @@ Namespace Runtime
                 Dim inputs As DML_BUFFER_BINDING() = GetBindings(node.Inputs)
                 Dim outputs As DML_BUFFER_BINDING() = GetBindings(node.Outputs)
 
+                TraceStep($"execute:   binding reset ({node.DescriptorOffset}+{node.DescriptorCount}, heap={_heap.DescriptorCount})")
+
                 node.Binding.Reset(node.Compiled.NativePointer, _heap, node.DescriptorOffset, node.DescriptorCount)
+
+                TraceStep($"execute:   bind {inputs.Length} input(s) / {outputs.Length} output(s)")
+
+                For Each binding As DML_BUFFER_BINDING In inputs
+                    TraceStep($"execute:     in  offset={binding.Offset} size={binding.SizeInBytes}")
+                Next
+
+                For Each binding As DML_BUFFER_BINDING In outputs
+                    TraceStep($"execute:     out offset={binding.Offset} size={binding.SizeInBytes}")
+                Next
+
                 node.Binding.BindInputs(inputs)
                 node.Binding.BindOutputs(outputs)
 
@@ -538,20 +566,25 @@ Namespace Runtime
                     node.Binding.BindTemporaryResource(node.Temporary)
                 End If
 
+                TraceStep("execute:   record dispatch")
+
                 context.Recorder.RecordDispatch(commandList, node.Compiled.NativePointer, node.Binding)
+
+                ' 连续 dispatch 之间必须插入 UAV 屏障：前一个算子写入的缓冲区
+                ' 需要在下一次 dispatch 读取前对 GPU 可见，否则下游会读到全 0。
+                Call commandList.UavBarrier(Nothing)
             Next
 
             ' 4) 回读
             Dim hasReadback As Boolean = _readback IsNot Nothing
 
             If hasReadback Then
-                commandList.Transition(_pool.Buffer, D3D12_RESOURCE_STATES.UNORDERED_ACCESS, D3D12_RESOURCE_STATES.COPY_SOURCE)
-                _arenaState = D3D12_RESOURCE_STATES.COPY_SOURCE
-
                 For Each tensor As DmlGraphTensor In _tensors
                     If tensor.Kind <> DmlTensorKind.Output Then
                         Continue For
                     End If
+
+                    SetResourceState(commandList, tensor.Allocation.Buffer, D3D12_RESOURCE_STATES.COPY_SOURCE)
 
                     commandList.CopyBufferRegion(_readback, tensor.ReadbackOffset,
                                                  tensor.Allocation.Buffer, tensor.Allocation.Offset,
@@ -563,7 +596,13 @@ Namespace Runtime
 
             context.Submit()
 
-            TraceStep("execute: read back")
+            TraceStep("execute: read back, fence = " & context.Fence.GetCompletedValue().ToString())
+
+            If _readback IsNot Nothing Then
+                Dim probe As Single() = _readback.ReadSingles(0UL, CInt(System.Math.Min(4UL, _readback.SizeInBytes \ 4UL)))
+
+                TraceStep("execute: readback first values = " & String.Join(", ", probe))
+            End If
 
             ' 5) 回读结果到托管内存
             If hasReadback Then
@@ -590,6 +629,29 @@ Namespace Runtime
             For Each tensor As DmlGraphTensor In _tensors
                 tensor.StagingDirty = False
             Next
+        End Sub
+
+        ''' <summary>
+        ''' 把某个张量资源切换到目标状态（相同状态不重复插入屏障）。
+        ''' </summary>
+        Private Sub SetResourceState(commandList As DmlCommandList, buffer As DmlBuffer, state As D3D12_RESOURCE_STATES)
+            If buffer Is Nothing Then
+                Return
+            End If
+
+            Dim key As IntPtr = buffer.NativePointer
+            Dim current As D3D12_RESOURCE_STATES
+
+            If Not _bufferStates.TryGetValue(key, current) Then
+                current = D3D12_RESOURCE_STATES.COMMON
+            End If
+
+            If current = state Then
+                Return
+            End If
+
+            commandList.Transition(buffer, current, state)
+            _bufferStates(key) = state
         End Sub
 
         Private Sub WriteStaging(tensor As DmlGraphTensor)

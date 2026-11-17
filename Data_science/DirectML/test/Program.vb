@@ -19,6 +19,7 @@ Imports Microsoft.VisualBasic.Computing.DirectML.Operators
 Imports Microsoft.VisualBasic.Computing.DirectML.Runtime
 Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX
 Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX.DirectML
+Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX.Proto
 
 Namespace DirectMLDemo
 
@@ -77,6 +78,28 @@ Namespace DirectMLDemo
             Call Console.Out.Flush()
         End Sub
 
+        ''' <summary>
+        ''' 取走并打印 D3D12 调试层累积的校验消息（未启用调试层时静默跳过）。
+        ''' </summary>
+        Private Sub ReportValidationMessages(operation As String)
+            Dim messages As DmlValidationMessage() = DmlDebugLayer.Capture(operation)
+
+            If messages Is Nothing OrElse messages.Length = 0 Then
+                Call Trace($"validation messages for {operation}: <none>")
+
+                Return
+            End If
+
+            Call Trace($"validation messages for {operation}: {messages.Length}")
+
+            For Each message As DmlValidationMessage In messages
+                Call Console.WriteLine("        " & message.ToString())
+                Call DebugAudit.Mark("d3d12: " & message.ToString())
+            Next
+
+            Call Console.Out.Flush()
+        End Sub
+
         ''' <summary>逐段创建 DirectML 对象，用于定位原生调用崩溃。</summary>
         Private Sub RunDeviceSteps()
             Call Trace("enumerate adapters")
@@ -95,13 +118,27 @@ Namespace DirectMLDemo
                 Return
             End If
 
+            Call Trace("enable D3D12 debug layer")
+
+            Dim debugEnabled As Boolean = DmlDebugLayer.TryEnable()
+
+            If debugEnabled Then
+                Call Trace("debug layer enabled")
+            Else
+                Call Trace("debug layer unavailable: " & If(DmlDebugLayer.EnableError, "<unknown>"))
+            End If
+
             Call Trace("create device")
 
-            Dim wrapper As DmlDevice = DmlDevice.Create(adapters(0))
+            Dim wrapper As DmlDevice = DmlDevice.Create(adapters(0), debugEnabled)
 
             Call Trace("device: " & wrapper.ToString())
+            Call Trace("info queue attached: " & DmlDebugLayer.IsAttached.ToString())
 
             Using wrapper
+                Call Trace("info queue self-check: " & DmlDebugLayer.SelfTest())
+                Call Trace("info queue pending messages = " & DmlDebugLayer.PendingMessageCount.ToString())
+
                 Using queue As DmlCommandQueue = wrapper.CreateCommandQueue()
                     Using allocator As DmlCommandAllocator = wrapper.CreateCommandAllocator()
                         Using list As DmlCommandList = wrapper.CreateCommandList(allocator)
@@ -122,7 +159,7 @@ Namespace DirectMLDemo
                     Call DebugAudit.Test(heap.IncrementSize > 0UI, "descriptor handle increment")
                 End Using
 
-                Call Trace("create buffer")
+                Call Trace("create buffer, pending = " & DmlDebugLayer.PendingMessageCount.ToString())
 
                 Try
                     Using buffer As DmlBuffer = DmlBuffer.CreateDefault(wrapper, 4096UL, True, "probe")
@@ -133,6 +170,8 @@ Namespace DirectMLDemo
                     Call Trace("buffer creation failed: " & ex.Message)
                     Call DebugAudit.Mark("CreateCommittedResource failed: " & ex.Message)
                 End Try
+
+                ReportValidationMessages("CreateCommittedResource")
             End Using
 
             For Each adapter As DmlAdapter In adapters
@@ -148,18 +187,19 @@ Namespace DirectMLDemo
                     graph.Trace = Sub(text) Trace(text)
 
                     Dim input As DmlGraphTensor = graph.DefineTensor("input", {1UI, 1UI, 2UI, 2UI}, DmlTensorKind.Input)
-                    Dim output As DmlGraphTensor = graph.DefineTensor("output", {1UI, 1UI, 2UI, 2UI}, DmlTensorKind.Output)
+                    Dim outputDims As UInteger() = If(op = "conv", New UInteger() {1UI, 1UI, 1UI, 1UI}, New UInteger() {1UI, 1UI, 2UI, 2UI})
+                    Dim output As DmlGraphTensor = graph.DefineTensor("output", outputDims, DmlTensorKind.Output)
 
                     Select Case op
                         Case "conv"
-                            Dim w As DmlGraphTensor = graph.DefineConstant("w", {1UI, 1UI, 2UI, 2UI},
-                                                                          {1.0F, 0.0F, 0.0F, 0.0F,
-                                                                           0.0F, 1.0F, 0.0F, 0.0F,
-                                                                           0.0F, 0.0F, 1.0F, 0.0F,
-                                                                           0.0F, 0.0F, 0.0F, 1.0F})
+                            ' 2x2 卷积核、只保留左上角元素：output = 1 * input(0,0) = -1
+                            ' 只保留左上角的 1x1 卷积核：output = input(0,0) = -1
+                            Dim w As DmlGraphTensor = graph.DefineConstant("w", {1UI, 1UI, 2UI, 2UI}, {1.0F, 0.0F, 0.0F, 0.0F})
+                            ' 卷积的绑定表固定占 3 个输入槽，bias 必须占位（零偏置最省事）
+                            Dim b As DmlGraphTensor = graph.DefineConstant("b", {1UI, 1UI, 1UI, 1UI}, {0.0F})
                             Dim conv As DmlOperatorDefinition = ConvolutionOperators.Convolution(
-                                input, w, Nothing, output, {1UI, 1UI}, {1UI, 1UI}, {0UI, 0UI}, {0UI, 0UI},
-                                Nothing, 1UI, DML_CONVOLUTION_DIRECTION.FORWARD, "conv")
+                                input, w, b, output, {1UI, 1UI}, {1UI, 1UI}, {0UI, 0UI}, {0UI, 0UI},
+                                {0UI, 0UI}, 1UI, DML_CONVOLUTION_DIRECTION.FORWARD, "conv")
 
                             graph.AddOperator(conv)
                         Case Else
@@ -175,16 +215,93 @@ Namespace DirectMLDemo
                     Call Trace("graph: execute")
                     graph.Execute()
 
+                    Call ReportValidationMessages("Execute")
+
                     Dim result As Single() = graph.GetOutput("output")
 
                     Call Trace("graph: output = " & String.Join(", ", result))
 
-                    Call DebugAudit.Test(result.Length = 4, "output element count")
+                    If op = "conv" Then
+                        Call DebugAudit.Test(result.Length = 1, "conv output element count")
+                        Call DebugAudit.AreEqual(-1.0F, result(0), "conv value")
+                    Else
+                        Call DebugAudit.Test(result.Length = 4, "relu output element count")
+                        Call DebugAudit.AreEqual(0.0F, result(0), "relu(-1)")
+                        Call DebugAudit.AreEqual(2.0F, result(1), "relu(2)")
+                        Call DebugAudit.AreEqual(0.0F, result(2), "relu(-3)")
+                        Call DebugAudit.AreEqual(4.0F, result(3), "relu(4)")
+                    End If
                 End Using
             End Using
 
             Return True
         End Function
+
+        ''' <summary>
+        ''' 逐节点对比 CPU 与 GPU：把模型截断成前 k 个节点，分别用两条后端求值。
+        ''' </summary>
+        Private Sub ComparePerNode(model As OnnxModel, input As Double())
+            Dim savedNodes As NodeProto() = model.Graph.Node.ToArray()
+            Dim savedOutputs As ValueInfoProto() = model.Graph.Output.ToArray()
+            Dim originalName As String = savedOutputs(0).Name
+
+            Try
+                For k As Integer = 1 To savedNodes.Length
+                    Dim outputName As String = savedNodes(k - 1).Output(0)
+
+                    ' 截断到前 k 个节点，并把图输出改成第 k 个节点的输出
+                    model.Graph.Node.Clear()
+
+                    For i As Integer = 0 To k - 1
+                        Call model.Graph.Node.Add(savedNodes(i))
+                    Next
+
+                    model.Graph.Output.Clear()
+                    savedOutputs(0).Name = outputName
+                    Call model.Graph.Output.Add(savedOutputs(0))
+
+                    Dim cpu As New OnnxGraphEvaluator(model)
+                    Dim expected As Double() = cpu.RunSingle(input)
+                    Dim actual As Double()
+
+                    Try
+                        Using session As DmlOnnxSession = DmlOnnxSession.Create(model)
+                            actual = session.RunSingle(input)
+                        End Using
+                    Catch ex As Exception
+                        Call Reporter.Warn($"node[{k}] {savedNodes(k - 1).OpType} GPU 失败：{ex.Message}")
+
+                        Continue For
+                    End Try
+
+                    Dim maxDiff As Double = 0.0
+
+                    For i As Integer = 0 To System.Math.Min(expected.Length, actual.Length) - 1
+                        maxDiff = System.Math.Max(maxDiff, System.Math.Abs(expected(i) - actual(i)))
+                    Next
+
+                    Call Reporter.Info($"node[{k}] {savedNodes(k - 1).OpType,-18} <- {outputName,-3} " &
+                                       $"len={expected.Length,-4} maxDiff={maxDiff:E3}")
+
+                    If maxDiff > 1.0E-4 Then
+                        Dim show As Integer = System.Math.Min(6, expected.Length)
+
+                        Call Reporter.Info("    cpu: " & String.Join(", ", expected.Take(show).Select(Function(v) v.ToString("F5"))))
+                        Call Reporter.Info("    gpu: " & String.Join(", ", actual.Take(show).Select(Function(v) v.ToString("F5"))))
+                    End If
+                Next
+            Finally
+                model.Graph.Node.Clear()
+
+                For Each node As NodeProto In savedNodes
+                    Call model.Graph.Node.Add(node)
+                Next
+
+                model.Graph.Output.Clear()
+                savedOutputs(0).Name = originalName
+                Call model.Graph.Output.Add(savedOutputs(0))
+            End Try
+        End Sub
 
         Private Sub PrintUsage()
             Call Console.WriteLine("DirectML.Demo <command>")
@@ -317,6 +434,7 @@ Namespace DirectMLDemo
                 session = DmlOnnxSession.Create(model, options)
             Catch ex As Exception
                 Call Reporter.Warn("DirectML backend unavailable: " & ex.Message)
+                Call ReportValidationMessages("Onnx")
 
                 If System.Environment.GetEnvironmentVariable("DIRECTML_DEBUG") = "1" Then
                     Call Console.WriteLine(ex.ToString())
@@ -341,6 +459,12 @@ Namespace DirectMLDemo
                     maxDiff = System.Math.Max(maxDiff, System.Math.Abs(expected(i) - actual(i)))
                 Next
 
+                If System.Environment.GetEnvironmentVariable("DIRECTML_ONNX_STEP") = "1" Then
+                    Call ComparePerNode(model, input)
+                End If
+
+                Call Reporter.Info($"GPU: {String.Join(", ", actual.Select(Function(v) v.ToString("F6")))}")
+                Call Reporter.Info($"CPU: {String.Join(", ", expected.Select(Function(v) v.ToString("F6")))}")
                 Call Reporter.Info($"fp32 vs fp64 max abs diff: {maxDiff:E3}")
                 Call DebugAudit.Snapshot(("backend", session.Backend.ToString()), ("maxDiff", maxDiff))
 

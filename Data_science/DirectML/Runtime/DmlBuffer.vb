@@ -70,6 +70,9 @@ Namespace Runtime
                 resourceFlags = D3D12_RESOURCE_FLAGS.ALLOW_UNORDERED_ACCESS
             End If
 
+            ' 注意：缓冲区必须声明 Layout = ROW_MAJOR。D3D12 的校验明确要求
+            ' "Layout must be D3D12_TEXTURE_LAYOUT_ROW_MAJOR when Dimension is BUFFER"，
+            ' 写成 UNKNOWN 会被 CreateCommittedResource 以 E_INVALIDARG 拒绝（纹理则接受 UNKNOWN）。
             Dim desc As New D3D12_RESOURCE_DESC With {
                 .Dimension = D3D12_RESOURCE_DIMENSION.BUFFER,
                 .Alignment = 0UL,
@@ -79,7 +82,7 @@ Namespace Runtime
                 .MipLevels = 1US,
                 .Format = 0,
                 .SampleDesc = New DXGI_SAMPLE_DESC With {.Count = 1UI, .Quality = 0UI},
-                .Layout = D3D12_TEXTURE_LAYOUT.UNKNOWN,
+                .Layout = D3D12_TEXTURE_LAYOUT.ROW_MAJOR,
                 .Flags = resourceFlags
             }
 
@@ -97,9 +100,21 @@ Namespace Runtime
             Dim iid As Guid = ComIIDs.ID3D12Resource
             Dim ptr As IntPtr = IntPtr.Zero
 
-            HResult.ThrowIfFailed(device.CreateCommittedResource(heap, D3D12_HEAP_FLAGS.NONE, desc, initialState,
-                                                                 IntPtr.Zero, iid, ptr),
-                                  "CreateCommittedResource")
+            Dim hr As Integer = device.CreateCommittedResource(heap, D3D12_HEAP_FLAGS.NONE, desc, initialState,
+                                                               IntPtr.Zero, iid, ptr)
+
+            If HResult.Failed(hr) Then
+                ' 失败时把描述符关键字段与调试层原文一起抛出，避免只留一个 E_INVALIDARG。
+                Dim validation As String = DmlDebugLayer.Summarize(DmlDebugLayer.Capture("CreateCommittedResource"))
+                Dim detail As String = $"heapType={heapType}, size={sizeInBytes}, layout={desc.Layout}, " &
+                                       $"flags={desc.Flags}, initialState={initialState}"
+
+                If Not String.IsNullOrEmpty(validation) Then
+                    detail &= "；调试层：" & validation
+                End If
+
+                Throw New DmlException(hr, "CreateCommittedResource", detail)
+            End If
 
             Return New DmlBuffer(ptr, sizeInBytes, name)
         End Function

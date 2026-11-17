@@ -106,7 +106,11 @@ Namespace Interop
         COPY_SOURCE = &H800
         RESOLVE_DEST = &H1000
         RESOLVE_SOURCE = &H2000
-        GENERIC_READ = &H80000000UI
+        ''' <summary>
+        ''' 注意：D3D12 的 GENERIC_READ 是若干只读状态的按位组合（0xAC3），
+        ''' 不是 D3D11 的 0x80000000——写成 0x80000000 会被运行时判为 "reserved bits set"。
+        ''' </summary>
+        GENERIC_READ = &HAC3
         ALL_SHADER_RESOURCE = &HC0
     End Enum
 

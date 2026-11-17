@@ -113,7 +113,15 @@ Namespace Runtime
                 adapter = candidates(index)
             End If
 
-            Dim device As DmlDevice = DmlDevice.Create(adapter, options.EnableDebugLayer, options.MinimumFeatureLevel)
+            ' 除了代码开关，也允许用环境变量临时打开（便于给已有程序做现场诊断）：
+            '   set DIRECTML_DEBUG_LAYER=1
+            Dim debugLayer As Boolean = options.EnableDebugLayer
+
+            If Not debugLayer Then
+                debugLayer = String.Equals(Environment.GetEnvironmentVariable("DIRECTML_DEBUG_LAYER"), "1", StringComparison.Ordinal)
+            End If
+
+            Dim device As DmlDevice = DmlDevice.Create(adapter, debugLayer, options.MinimumFeatureLevel)
             Dim engine As New DmlEngine(device, options)
 
             Return engine

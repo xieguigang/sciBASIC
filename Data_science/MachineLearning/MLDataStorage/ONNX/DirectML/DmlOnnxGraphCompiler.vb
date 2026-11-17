@@ -188,6 +188,29 @@ Namespace ONNX.DirectML
             Return Register(name, dims.Select(Function(v) CInt(v)).ToArray(), DmlTensorKind.Intermediate, dataType)
         End Function
 
+        ''' <summary>
+        ''' 以"共享显存视图"的方式改写张量形状（纯元数据操作，不产生 dispatch）。
+        ''' </summary>
+        ''' <remarks>
+        ''' ONNX 的 Reshape/Flatten/Squeeze/Transpose 都不改变元素顺序，
+        ''' 因此用视图表达即可。若改用 ELEMENT_WISE_IDENTITY 做拷贝，
+        ''' 两张量只要物理尺寸不完全相同就会被 DML 以
+        ''' "Mismatched tensor sizes" 拒绝（例如 <c>[1,2,1,1]</c> 与 <c>[1,1,1,2]</c>）。
+        ''' </remarks>
+        ''' <param name="name">新张量名（通常是节点输出名）。</param>
+        ''' <param name="source">数据来源张量。</param>
+        ''' <param name="logicalDims">新张量的逻辑形状。</param>
+        Private Function ReshapeView(name As String, source As DmlGraphTensor, logicalDims As Integer()) As DmlGraphTensor
+            Dim view As DmlGraphTensor = _graph.DefineTensorView(name,
+                                                                New DmlTensor(Physical(logicalDims), source.Tensor.DataType),
+                                                                source)
+
+            _shapes(name) = logicalDims
+            _env(name) = view
+
+            Return view
+        End Function
+
         ''' <summary>按名称取得张量（常量按需上传到显存）。</summary>
         Private Function GetTensor(name As String) As DmlGraphTensor
             Dim tensor As DmlGraphTensor
@@ -987,6 +1010,28 @@ Namespace ONNX.DirectML
             Dim wDims As Integer() = _shapes(w.Name)
             Dim spatial As Integer = xDims.Length - 2
 
+            ' 卷积算子的绑定表固定占 3 个输入槽（Input / Filter / Bias），
+            ' 缺少 bias 时必须用一个零偏置占位，否则 RecordDispatch 会被运行时拒绝。
+            Dim biasDims As Integer() = Enumerable.Repeat(1, xDims.Length).ToArray()
+
+            biasDims(1) = wDims(0)
+
+            If bias Is Nothing Then
+                bias = Register(NextName(node.Output(0), "bias0"), biasDims,
+                                DmlTensorKind.Constant, DML_TENSOR_DATA_TYPE.FLOAT32)
+                Call bias.SetData(New Single(biasDims(1) - 1) {})
+            ElseIf _shapes(bias.Name).Length <> biasDims.Length Then
+                ' ONNX 的 bias 是 [C]；DML 要求 [1, C, 1, ...]，用共享显存的视图改写形状。
+                Dim view As DmlGraphTensor = _graph.DefineTensorView(
+                    NextName(bias.Name, "view"),
+                    New DmlTensor(biasDims.Select(Function(d) CUInt(d)).ToArray(), DML_TENSOR_DATA_TYPE.FLOAT32),
+                    bias,
+                    DmlTensorKind.Constant)
+
+                _shapes(view.Name) = biasDims
+                bias = view
+            End If
+
             Dim strides As Integer() = NodeInts(node, "strides")
             Dim dilations As Integer() = NodeInts(node, "dilations")
             Dim pads As Integer() = NodeInts(node, "pads")
@@ -1030,6 +1075,8 @@ Namespace ONNX.DirectML
             Next
 
             Dim y As DmlGraphTensor = Create(node.Output(0), outDims)
+            ' OutputPadding 必须显式给出（传 Nothing 会让 CreateOperator 在真机上 fail-fast）
+            Dim outputPadding As UInteger() = Enumerable.Repeat(0UI, spatial).ToArray()
 
             _graph.AddOperator(ConvolutionOperators.Convolution(
                 x, w, bias, y,
@@ -1037,7 +1084,8 @@ Namespace ONNX.DirectML
                 DmlShapeInference.ToUnsigned(dilations),
                 DmlShapeInference.ToUnsigned(startPadding),
                 DmlShapeInference.ToUnsigned(endPadding),
-                Nothing, CUInt(group), DML_CONVOLUTION_DIRECTION.FORWARD, node.Name))
+                outputPadding,
+                CUInt(group), DML_CONVOLUTION_DIRECTION.FORWARD, node.Name))
         End Sub
 
         Private Shared Function NodeString(node As NodeProto, name As String) As String
@@ -1366,9 +1414,8 @@ Namespace ONNX.DirectML
                     End If
 
                     Dim resolved As Integer() = OnnxTensor.ResolveDims(logical, CInt(x.Tensor.ElementCount), target)
-                    Dim y As DmlGraphTensor = Create(node.Output(0), resolved)
 
-                    _graph.AddOperator(ShapeOperators.Identity(x, y, node.Name))
+                    Call ReshapeView(node.Output(0), x, resolved)
 
                 Case "flatten"
                     Dim axis As Integer = NodeInt(node, "axis", 1)
@@ -1388,9 +1435,7 @@ Namespace ONNX.DirectML
                         tail *= logical(i)
                     Next
 
-                    Dim y As DmlGraphTensor = Create(node.Output(0), New Integer() {head, tail})
-
-                    _graph.AddOperator(ShapeOperators.Identity(x, y, node.Name))
+                    Call ReshapeView(node.Output(0), x, New Integer() {head, tail})
 
                 Case "squeeze", "unsqueeze"
                     Dim axes As Integer() = NodeInts(node, "axes")
@@ -1448,9 +1493,7 @@ Namespace ONNX.DirectML
                         Call result.Add(1)
                     End If
 
-                    Dim y As DmlGraphTensor = Create(node.Output(0), result.ToArray())
-
-                    _graph.AddOperator(ShapeOperators.Identity(x, y, node.Name))
+                    Call ReshapeView(node.Output(0), x, result.ToArray())
 
                 Case "transpose"
                     Dim perm As Integer() = NodeInts(node, "perm")
@@ -1476,15 +1519,13 @@ Namespace ONNX.DirectML
                     Dim viewDims As UInteger() = physPerm.Select(Function(i) srcPhysical(i)).ToArray()
                     Dim viewStrides As UInteger() = physPerm.Select(Function(i) srcStrides(i)).ToArray()
 
-                    Dim view As DmlGraphTensor = _graph.DefineTensorView(NextName(x.Name, "transpose"),
+                    ' 转置同样是纯元数据操作：用带置换步长的视图直接作为输出，避免多余拷贝。
+                    Dim view As DmlGraphTensor = _graph.DefineTensorView(node.Output(0),
                                                                          New DmlTensor(viewDims, x.Tensor.DataType, viewStrides),
                                                                          x)
 
                     _shapes(view.Name) = outLogical
-
-                    Dim y As DmlGraphTensor = Create(node.Output(0), outLogical)
-
-                    _graph.AddOperator(ShapeOperators.Identity(view, y, node.Name))
+                    _env(view.Name) = view
             End Select
         End Sub
 

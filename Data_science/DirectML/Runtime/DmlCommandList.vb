@@ -15,6 +15,7 @@ Namespace Runtime
         Private ReadOnly _reset As D3D12CommandListResetFn
         Private ReadOnly _copy As D3D12CopyBufferRegionFn
         Private ReadOnly _barrier As D3D12ResourceBarrierFn
+        Private ReadOnly _setDescriptorHeaps As D3D12SetDescriptorHeapsFn
 
         Friend Sub New(ptr As IntPtr)
             MyBase.New(ptr)
@@ -23,6 +24,11 @@ Namespace Runtime
             Me._reset = GetSlotDelegate(Of D3D12CommandListResetFn)(10)
             Me._copy = GetSlotDelegate(Of D3D12CopyBufferRegionFn)(15)
             Me._barrier = GetSlotDelegate(Of D3D12ResourceBarrierFn)(26)
+            Me._setDescriptorHeaps = GetSlotDelegate(Of D3D12SetDescriptorHeapsFn)(28)
+
+            ' CreateCommandList 返回的是"正在录制"状态；此时对它所属的分配器调用 Reset
+            ' 会得到 E_FAIL。因此创建后立即关闭，后续统一走 Reset → 录制 → Close → 提交。
+            Call Close()
         End Sub
 
         ''' <summary>重置命令列表以重新记录。</summary>
@@ -96,6 +102,33 @@ Namespace Runtime
             End If
 
             Call Barrier(D3D12_RESOURCE_BARRIER.UnorderedAccess(ptr))
+        End Sub
+
+        ''' <summary>
+        ''' 设置当前命令列表使用的描述符堆（DML 的 dispatch 需要通过它解析描述符表）。
+        ''' </summary>
+        Public Sub SetDescriptorHeaps(heaps As DmlDescriptorHeap())
+            If heaps Is Nothing OrElse heaps.Length = 0 Then
+                Return
+            End If
+
+            ThrowIfDisposed()
+
+            Dim pointers As IntPtr() = New IntPtr(heaps.Length - 1) {}
+
+            For i As Integer = 0 To heaps.Length - 1
+                pointers(i) = heaps(i).NativePointer
+            Next
+
+            Dim size As Integer = IntPtr.Size * pointers.Length
+            Dim buffer As IntPtr = Marshal.AllocHGlobal(size)
+
+            Try
+                Call Marshal.Copy(pointers, 0, buffer, pointers.Length)
+                Call _setDescriptorHeaps(NativePointer, CUInt(pointers.Length), buffer)
+            Finally
+                Call Marshal.FreeHGlobal(buffer)
+            End Try
         End Sub
 
         ''' <summary>插入单个屏障。</summary>
