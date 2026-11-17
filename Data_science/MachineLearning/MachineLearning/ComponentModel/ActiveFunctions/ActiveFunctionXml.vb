@@ -153,6 +153,12 @@ Namespace ComponentModel.Activations
                         Return New Threshold
                     Case NameOf(Activations.ReLU)
                         Return New ReLU
+                    Case NameOf(Activations.Elu)
+                        If HasKey("alpha") Then
+                            Return New Elu(!alpha)
+                        Else
+                            Return New Elu
+                        End If
                     Case NameOf(Activations.HyperbolicTangent)
                         Return New HyperbolicTangent
                     Case NameOf(Activations.Sinc)

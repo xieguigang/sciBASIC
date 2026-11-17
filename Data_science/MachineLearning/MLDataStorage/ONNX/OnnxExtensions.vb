@@ -5,6 +5,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports MlpModel = Microsoft.VisualBasic.MachineLearning.MultilayerPerceptron.MultilayerPerceptron
 
 Namespace ONNX
 
@@ -55,6 +56,28 @@ Namespace ONNX
         ''' <returns>模型对象。</returns>
         Public Function ReadModel(path As String) As OnnxModel
             Return OnnxModel.Load(path)
+        End Function
+
+        ''' <summary>把多层感知机导出为 ONNX 文件。</summary>
+        <Extension>
+        Public Sub SaveOnnx(mlp As MlpModel, path As String, Optional options As OnnxExportOptions = Nothing)
+            Call OnnxMlpExport.Save(mlp, path, options)
+        End Sub
+
+        ''' <summary>把多层感知机转换为 ONNX 模型对象（不写文件）。</summary>
+        <Extension>
+        Public Function ToOnnx(mlp As MlpModel, Optional options As OnnxExportOptions = Nothing) As OnnxModel
+            Return OnnxMlpExport.ToModel(mlp, options)
+        End Function
+
+        ''' <summary>从 ONNX 文件还原多层感知机。</summary>
+        Public Function ReadMLP(path As String, Optional options As OnnxImportOptions = Nothing) As MlpModel
+            Return OnnxMlpImport.Load(path, options)
+        End Function
+
+        ''' <summary>使用内置求值器对一个单输入 ONNX 模型执行推理。</summary>
+        Public Function EvaluateOnnx(model As OnnxModel, input As Double()) As Double()
+            Return New OnnxGraphEvaluator(model).RunSingle(input)
         End Function
 
     End Module
