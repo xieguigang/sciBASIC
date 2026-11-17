@@ -1,57 +1,57 @@
 #Region "Microsoft.VisualBasic::6ef4d622228baf32ec3f317d2a282e5c, Data_science\Visualization\DataPlot\Statistics\DensityPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 135
-    '    Code Lines: 93 (68.89%)
-    ' Comment Lines: 18 (13.33%)
-    '    - Xml Docs: 55.56%
-    ' 
-    '   Blank Lines: 24 (17.78%)
-    '     File Size: 5.85 KB
+' Summaries:
 
 
-    ' Class DensityPlot
-    ' 
-    '     Properties: ColorMap, GridResolution, KernelRadius, PointColor, Points
-    '                 ShowColorLegend, ShowContour, ShowPoints
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Sub: DrawDensityCells, DrawDensityContour, Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 135
+'    Code Lines: 93 (68.89%)
+' Comment Lines: 18 (13.33%)
+'    - Xml Docs: 55.56%
+' 
+'   Blank Lines: 24 (17.78%)
+'     File Size: 5.85 KB
+
+
+' Class DensityPlot
+' 
+'     Properties: ColorMap, GridResolution, KernelRadius, PointColor, Points
+'                 ShowColorLegend, ShowContour, ShowPoints
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Sub: DrawDensityCells, DrawDensityContour, Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 
 ' ============================================================================
@@ -89,7 +90,7 @@ Public Class DensityPlot
     ''' <summary>散点颜色</summary>
     Public Property PointColor As Color = Color.White
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 
