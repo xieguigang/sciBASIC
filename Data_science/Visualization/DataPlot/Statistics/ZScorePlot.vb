@@ -1,60 +1,60 @@
 #Region "Microsoft.VisualBasic::18aaca57d87adff7f775f28b911a48f9, Data_science\Visualization\DataPlot\Statistics\ZScorePlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 139
-    '    Code Lines: 100 (71.94%)
-    ' Comment Lines: 17 (12.23%)
-    '    - Xml Docs: 52.94%
-    ' 
-    '   Blank Lines: 22 (15.83%)
-    '     File Size: 6.33 KB
+' Summaries:
 
 
-    ' Class ZScorePlot
-    ' 
-    '     Properties: ColorMap, DisplayZERO, Entries, GroupBarWidth, ShowColorLegend
-    '                 ShowValues, VariableNames
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: GroupColor
-    ' 
-    '     Sub: DrawColumnLabels, Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 139
+'    Code Lines: 100 (71.94%)
+' Comment Lines: 17 (12.23%)
+'    - Xml Docs: 52.94%
+' 
+'   Blank Lines: 22 (15.83%)
+'     File Size: 6.33 KB
+
+
+' Class ZScorePlot
+' 
+'     Properties: ColorMap, DisplayZERO, Entries, GroupBarWidth, ShowColorLegend
+'                 ShowValues, VariableNames
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: GroupColor
+' 
+'     Sub: DrawColumnLabels, Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -91,7 +92,7 @@ Public Class ZScorePlot
     ''' <summary>分组标注条的宽度，0 表示不画</summary>
     Public Property GroupBarWidth As Single = 10.0F
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 

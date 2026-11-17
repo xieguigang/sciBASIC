@@ -1,66 +1,66 @@
 #Region "Microsoft.VisualBasic::e084a06cce9f9f5fe5834fa311ffacce, Data_science\Visualization\DataPlot\Statistics\ROCPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 131
-    '    Code Lines: 92 (70.23%)
-    ' Comment Lines: 15 (11.45%)
-    '    - Xml Docs: 46.67%
-    ' 
-    '   Blank Lines: 24 (18.32%)
-    '     File Size: 5.28 KB
+' Summaries:
 
 
-    ' Class ROCPlot
-    ' 
-    '     Properties: Curves, FillAUC, ShowAUCValue, ShowDiagonal
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: CurveList, EstimateAUC
-    ' 
-    '     Sub: DrawCurveLegend, Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 131
+'    Code Lines: 92 (70.23%)
+' Comment Lines: 15 (11.45%)
+'    - Xml Docs: 46.67%
+' 
+'   Blank Lines: 24 (18.32%)
+'     File Size: 5.28 KB
+
+
+' Class ROCPlot
+' 
+'     Properties: Curves, FillAUC, ShowAUCValue, ShowDiagonal
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: CurveList, EstimateAUC
+' 
+'     Sub: DrawCurveLegend, Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -76,7 +76,7 @@ Public Class ROCPlot
     Inherits PlotEngine
 
     ''' <summary>要绘制的曲线（可以多条）</summary>
-    Public Property Curves As List(Of ROCCurve) = New List(Of ROCCurve)()
+    Public Property Curves As ROCCurve()
     ''' <summary>是否用半透明色填充曲线下面积</summary>
     Public Property FillAUC As Boolean = True
     ''' <summary>是否绘制随机猜测对角线</summary>
@@ -84,7 +84,7 @@ Public Class ROCPlot
     ''' <summary>是否在图例文本里带上 AUC 值</summary>
     Public Property ShowAUCValue As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 
@@ -95,7 +95,7 @@ Public Class ROCPlot
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim curves = CurveList()
-        If Curves Is Nothing OrElse Curves.Count = 0 Then
+        If curves Is Nothing OrElse curves.Count = 0 Then
             Throw New InvalidOperationException("ROCPlot requires at least one ROC curve.")
         End If
 
@@ -151,8 +151,8 @@ Public Class ROCPlot
         DrawCurveLegend(curves)
     End Sub
 
-    Private Function CurveList() As List(Of ROCCurve)
-        Return If(Curves, New List(Of ROCCurve)())
+    Private Function CurveList() As ROCCurve()
+        Return If(Curves, New ROCCurve() {})
     End Function
 
     ''' <summary>梯形法估算 AUC（调用方没给 AUC 时兜底）</summary>
@@ -172,7 +172,7 @@ Public Class ROCPlot
         Return area
     End Function
 
-    Private Sub DrawCurveLegend(curves As List(Of ROCCurve))
+    Private Sub DrawCurveLegend(curves As ROCCurve())
         Dim legends As New List(Of Series)()
 
         For i = 0 To curves.Count - 1
