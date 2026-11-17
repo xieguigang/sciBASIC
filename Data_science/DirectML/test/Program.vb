@@ -282,6 +282,13 @@ Namespace DirectMLDemo
 
                     Call Reporter.Info($"node[{k}] {savedNodes(k - 1).OpType,-18} <- {outputName,-3} " &
                                        $"len={expected.Length,-4} maxDiff={maxDiff:E3}")
+
+                    If maxDiff > 1.0E-4 Then
+                        Dim show As Integer = System.Math.Min(6, expected.Length)
+
+                        Call Reporter.Info("    cpu: " & String.Join(", ", expected.Take(show).Select(Function(v) v.ToString("F5"))))
+                        Call Reporter.Info("    gpu: " & String.Join(", ", actual.Take(show).Select(Function(v) v.ToString("F5"))))
+                    End If
                 Next
             Finally
                 model.Graph.Node.Clear()

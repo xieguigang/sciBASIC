@@ -155,7 +155,7 @@ DirectML.Demo.exe onnx       :: 小型 ONNX 模型：DirectML 推理 vs CPU 双�
 | `DmlGraph` 编译：上传/回读暂存、arena、绑定表 | ✅ 通过 |
 | `IDMLCommandRecorder::RecordDispatch` + 数值正确性 | ✅ 通过（`graph relu` 输出 `0, 2, 0, 4`） |
 | `graph conv`（卷积算子描述符） | ✅ 通过（输出 `-1`） |
-| `onnx` 端到端 | ⚠️ 见下节 |
+| `onnx` 端到端（5 节点 Conv/Relu/GAP/Flatten/Gemm） | ✅ 通过（与 CPU 最大误差 `4.3E-009`） |
 
 ### 已解决：缓冲区资源创建被拒绝（根因与修复）
 
@@ -240,12 +240,24 @@ bindings must have exactly the same offsets and sizes.
 - **通道维必须落在物理维 1**：Conv 的 bias（ONNX 是 `[C]`）用视图改成 `[1,C,1,...]`；
   缺少 bias 时补零偏置常量（卷积绑定表固定占 3 个输入槽）。
 
-当前遗留：GPU 结果与 CPU 双精度参考的最大绝对误差约 `1.7E-2`
-（`GPU: 0.158091, 0.019985` vs `CPU: 0.141506, 0.011145`），
-远超 FP32 的舍入量级，说明某个算子存在语义差异而非精度损失。
-下一步建议在 `DmlOnnxGraphCompiler.EmitNode` 里为每个节点加输出转储，
-逐节点与 `OnnxGraphEvaluator` 对比，优先怀疑 Conv 的 `pads` 映射方向
-与 Gemm 的 `beta * C` 处理。
+**多 dispatch 串联必须插入 UAV 屏障**。定位手段是把模型截断成"前 k 个节点"
+分别用 CPU / GPU 求值（`DIRECTML_ONNX_STEP=1`），第一次运行的结果是：
+
+```
+node[1] Conv    maxDiff=2.2E-008   ← 单算子精确
+node[2] Relu    maxDiff=3.2E-001   ← GPU 全 0
+node[5] Gemm    maxDiff=1.7E-002   ← 结果实际只是 bias
+```
+
+即第一个算子之后的数据对后续 dispatch 不可见。在 `DmlGraph.Execute` 的每次
+`RecordDispatch` 之后补一条 `UavBarrier` 后，逐节点误差降到 `1E-8` 量级：
+
+```
+node[1] Conv 2.2E-008 / node[2] Relu 2.2E-008 / node[3] GAP 2.8E-009 /
+node[4] Flatten 2.8E-009 / node[5] Gemm 4.3E-009
+```
+
+单算子图（`graph relu` / `graph conv`）不需要这条屏障，因此此前没有暴露。
 
 ## 许可
 

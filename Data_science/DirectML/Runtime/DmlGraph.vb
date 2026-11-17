@@ -569,6 +569,10 @@ Namespace Runtime
                 TraceStep("execute:   record dispatch")
 
                 context.Recorder.RecordDispatch(commandList, node.Compiled.NativePointer, node.Binding)
+
+                ' 连续 dispatch 之间必须插入 UAV 屏障：前一个算子写入的缓冲区
+                ' 需要在下一次 dispatch 读取前对 GPU 可见，否则下游会读到全 0。
+                Call commandList.UavBarrier(Nothing)
             Next
 
             ' 4) 回读
