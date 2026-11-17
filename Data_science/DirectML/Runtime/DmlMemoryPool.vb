@@ -1,10 +1,15 @@
 ' ------------------------------------------------------------------------
-' 显存池：一块大的 UAV 缓冲区 + 256 字节对齐的线性切片分配
+' 显存池：按张量切分，每段独占一块 ID3D12Resource
 '
-' DirectML 的绑定（DML_BUFFER_BINDING）由 资源 + 偏移 + 长度 组成，
-' 因此多个张量可以共享同一块 ID3D12Resource，只要切片互不重叠。
-' 这样整张计算图只需要 1 个大资源 + 1 个 staging + 1 个 readback，
-' 提交次数与资源数量都与图的节点数无关。
+' 为什么不是"一块大缓冲 + 偏移切片"：
+'   DirectML 的绑定校验以 **ID3D12Resource 指针** 判定是否 in-place 执行。
+'   若输入与输出绑定同一块资源但偏移不同，DML 会报
+'     "Invalid bindings for in-place execution ... must have exactly the
+'      same offsets and sizes"
+'   并静默丢弃该 dispatch（关闭调试层时表现为驱动内访问冲突）。
+'   因此每个张量必须拥有独立的资源；绑定偏移恒为 0。
+'
+' 代价是资源对象数量与张量数同阶（显存总量不变），换来的是与 DML 绑定语义一致。
 ' ------------------------------------------------------------------------
 
 Imports Microsoft.VisualBasic.Computing.DirectML.Interop
@@ -14,10 +19,10 @@ Namespace Runtime
     ''' <summary>显存池里的一段切片。</summary>
     Public Structure DmlAllocation
 
-        ''' <summary>所属缓冲区。</summary>
+        ''' <summary>所属缓冲区（独占资源）。</summary>
         Public Buffer As DmlBuffer
 
-        ''' <summary>起始字节偏移（256 字节对齐）。</summary>
+        ''' <summary>起始字节偏移（独占资源时为 0）。</summary>
         Public Offset As ULong
 
         ''' <summary>字节长度。</summary>
@@ -52,7 +57,7 @@ Namespace Runtime
     End Structure
 
     ''' <summary>
-    ''' 基于单块 UAV 缓冲区的线性显存池。
+    ''' 显存池：按需为每个张量创建一块独占的 UAV 缓冲区。
     ''' </summary>
     ''' <remarks>
     ''' 采用"一次性布局"策略：编译期把所有张量与临时资源一次性分配完，
@@ -64,7 +69,9 @@ Namespace Runtime
         ''' <summary>切片对齐粒度（DirectML 绑定要求 256 字节对齐）。</summary>
         Public Const Alignment As ULong = 256UL
 
-        Private ReadOnly _buffer As DmlBuffer
+        Private ReadOnly _device As DmlDevice
+        Private ReadOnly _name As String
+        Private ReadOnly _buffers As New List(Of DmlBuffer)()
         Private _cursor As ULong
         Private _peak As ULong
 
@@ -72,30 +79,25 @@ Namespace Runtime
         ''' 创建显存池。
         ''' </summary>
         ''' <param name="device">设备。</param>
-        ''' <param name="sizeInBytes">池的字节容量。</param>
+        ''' <param name="sizeInBytes">池的字节容量（作为总量上限）。</param>
         ''' <param name="name">调试名称。</param>
         Public Sub New(device As DmlDevice, sizeInBytes As ULong, Optional name As String = Nothing)
             If device Is Nothing Then
                 Throw New ArgumentNullException(NameOf(device))
             End If
 
-            Dim aligned As ULong = Align(sizeInBytes)
-
-            If aligned = 0UL Then
-                aligned = Alignment
-            End If
-
-            Me._buffer = DmlBuffer.CreateDefault(device, aligned, True, If(name, "dml-arena"))
-            Me.Capacity = aligned
+            Me._device = device
+            Me._name = If(name, "dml-arena")
+            Me.Capacity = Align(System.Math.Max(sizeInBytes, Alignment))
         End Sub
 
         ''' <summary>池容量（字节）。</summary>
         Public ReadOnly Property Capacity As ULong
 
-        ''' <summary>底层缓冲区。</summary>
-        Public ReadOnly Property Buffer As DmlBuffer
+        ''' <summary>池内全部资源。</summary>
+        Public ReadOnly Property Buffers As IReadOnlyList(Of DmlBuffer)
             Get
-                Return _buffer
+                Return _buffers.ToArray()
             End Get
         End Property
 
@@ -123,12 +125,12 @@ Namespace Runtime
         End Function
 
         ''' <summary>
-        ''' 从池中切出一段。
+        ''' 切出一段独占的显存。
         ''' </summary>
         ''' <param name="sizeInBytes">需要的字节数。</param>
-        ''' <returns>切片；容量不足时抛出 <see cref="InvalidOperationException"/>。</returns>
+        ''' <returns>切片；池容量不足时抛出 <see cref="InvalidOperationException"/>。</returns>
         Public Function Allocate(sizeInBytes As ULong) As DmlAllocation
-            If _buffer Is Nothing Then
+            If _device Is Nothing Then
                 Throw New ObjectDisposedException(NameOf(DmlMemoryPool))
             End If
 
@@ -143,9 +145,13 @@ Namespace Runtime
                     $"显存池容量不足：需要 {(_cursor + size) / 1024.0 / 1024.0:F2} MB，当前容量 {Capacity / 1024.0 / 1024.0:F2} MB")
             End If
 
-            Dim alloc As New DmlAllocation With {
-                .Buffer = _buffer,
-                .Offset = _cursor,
+            Dim buffer As DmlBuffer = DmlBuffer.CreateDefault(_device, size, True, $"{_name}#{_buffers.Count}")
+
+            Call _buffers.Add(buffer)
+
+            Dim allocation As New DmlAllocation With {
+                .Buffer = buffer,
+                .Offset = 0UL,
                 .SizeInBytes = size
             }
 
@@ -155,22 +161,30 @@ Namespace Runtime
                 _peak = _cursor
             End If
 
-            Return alloc
+            Return allocation
         End Function
 
-        ''' <summary>重置分配游标（仅用于重新布局）。</summary>
+        ''' <summary>重置分配游标（仅用于重新布局，会丢弃已分配的资源）。</summary>
         Public Sub Reset()
+            For Each buffer As DmlBuffer In _buffers
+                buffer.Dispose()
+            Next
+
+            _buffers.Clear()
             _cursor = 0UL
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            If _buffer IsNot Nothing Then
-                _buffer.Dispose()
-            End If
+            For Each buffer As DmlBuffer In _buffers
+                buffer.Dispose()
+            Next
+
+            _buffers.Clear()
+            _cursor = 0UL
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"arena: {Used} / {Capacity} bytes ({Peak} peak)"
+            Return $"arena: {Used} / {Capacity} bytes ({_buffers.Count} resources, {Peak} peak)"
         End Function
 
     End Class

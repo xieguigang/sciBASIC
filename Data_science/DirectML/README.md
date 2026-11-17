@@ -153,7 +153,8 @@ DirectML.Demo.exe onnx       :: 小型 ONNX 模型：DirectML 推理 vs CPU 双�
 | `ID3D12Device::CreateCommittedResource`（缓冲区） | ✅ 通过（默认/上传/回读三种堆） |
 | 指令分配器 `Reset` + 命令列表录制 | ✅ 通过 |
 | `DmlGraph` 编译：上传/回读暂存、arena、绑定表 | ✅ 通过 |
-| `IDMLCommandRecorder::RecordDispatch` + 数值正确性 | ⚠️ 见下节 |
+| `IDMLCommandRecorder::RecordDispatch` + 数值正确性 | ✅ 通过（`graph relu` 输出 `0, 2, 0, 4`） |
+| `graph conv`（卷积算子描述符） | ⚠️ 见下节 |
 
 ### 已解决：缓冲区资源创建被拒绝（根因与修复）
 
@@ -184,30 +185,41 @@ Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN.
 3. 绑定表至少占 1 个描述符，描述符堆容量必须按同样口径累加，否则初始化器的
    描述符会落到堆外。
 
-### 待解决：`RecordDispatch` 之后输出仍为零
+### 已解决：dispatch 不生效 / `RecordDispatch` 访问冲突
 
-当前状态（RTX A4000 + Windows 11）：
+现象：dispatch 之后输出恒为 0；关闭调试层时在 `IDMLCommandRecorder::RecordDispatch`
+里触发 `0xC0000005`。
 
-- 打开 D3D12 调试层（`DIRECTML_DEBUG_LAYER=1`）时，`graph relu` 完整跑完
-  （编译 → 初始化器 → 上传 → dispatch → 回读），但输出是 `0, 0, 0, 0`
-  （期望 `0, 2, 0, 4`）；
-- 关闭调试层时同一路径在 `IDMLCommandRecorder::RecordDispatch` 内触发访问冲突
-  （`0xC0000005`）。
+同样是调试层给出了答案：
 
-已排除：
+```
+[ERROR] APPLICATION_DEFINED#1: Invalid bindings for in-place execution were provided
+for dispatch of DML_OPERATOR_ACTIVATION_RELU. When performing in-place execution
+(i.e. binding the same ID3D12Resource as both input and output) the input and output
+bindings must have exactly the same offsets and sizes.
+```
 
-- 上传链路正确：把 arena 第一段单独拷回复读，得到 `-1, 2, -3, 4`，说明
-  staging → arena 的拷贝已生效；
-- 绑定参数正确：输入 `offset=0 size=16`、输出 `offset=256 size=16`，同一块 arena；
-- 描述符堆句柄槽位正确（`GetCPU=9 / GetGPU=10`，交换后立刻 `SEHException`）；
-- 描述符堆容量已按 `max(1, RequiredDescriptorCount)` 累加（Relu 为 3）；
-- `DML_EXECUTION_FLAGS.DISABLE_META_COMMANDS` 不影响该现象；
-- 张量与切片布局正确（`input @0`、`output @256`、`readback @0`）。
+即 **DML 用 `ID3D12Resource` 指针判定"是否 in-place 执行"**：如果输入输出绑定同一块
+资源但偏移不同（原设计的"单块大 arena + 切片偏移"，0 与 256），DML 判定为 in-place
+并要求偏移/大小完全一致，否则静默丢弃该 dispatch。修法有两处：
 
-下一步建议：用 DML 官方 sample 的最小二进制/pipeline 状态比对
-（`IDMLCompiledOperator` 是否真正写入输出），重点检查 `DML_BINDING_TABLE_DESC`
-在 `Reset` 之后是否需要重新 `CreateBindingTable`，以及 `IDMLBindingTable::Bind*`
-的调用是否需要配合 `DML_EXECUTION_FLAG_DESCRIPTORS_VOLATILE`。
+1. **每个张量独占一块 `ID3D12Resource`**（`DmlMemoryPool` 改为按张量分配，
+   绑定偏移恒为 0）；显存总量不变，资源数量与张量数同阶。
+2. **dispatch 之前对命令列表调用 `SetDescriptorHeaps`**，让 GPU 能解析 DML 写入
+   描述符堆的绑定；缺少这一步时，调试层关闭的情况下会在 `RecordDispatch` 内
+   触发访问冲突。
+
+修复后 `graph relu`（输入 `-1, 2, -3, 4`）稳定输出 `0, 2, 0, 4`，
+调试层开/关两种模式都通过。
+
+### 待解决：卷积算子（`graph conv`）
+
+`IDMLDevice::CreateOperator(DML_OPERATOR_TYPE_CONVOLUTION)` 在真机上会直接
+fail-fast（`0xC0000409`），而 Relu / 逐元素算子的创建、编译、dispatch 全部正常。
+描述符结构体（`DML_CONVOLUTION_OPERATOR_DESC`，含 `OutputPadding`）与
+SDK 头文件逐字段一致，因此下一步需要用最小参数逐字段缩小范围
+（先 `DimensionCount=2` + 单位步长/无填充 + 无 bias，再逐项加回），
+并用 `DmlDebugLayer.Capture()` 读取运行时给出的第一条校验消息。
 
 ## 许可
 

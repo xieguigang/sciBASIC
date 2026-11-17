@@ -186,18 +186,16 @@ Namespace DirectMLDemo
                     graph.Trace = Sub(text) Trace(text)
 
                     Dim input As DmlGraphTensor = graph.DefineTensor("input", {1UI, 1UI, 2UI, 2UI}, DmlTensorKind.Input)
-                    Dim output As DmlGraphTensor = graph.DefineTensor("output", {1UI, 1UI, 2UI, 2UI}, DmlTensorKind.Output)
+                    Dim outputDims As UInteger() = If(op = "conv", New UInteger() {1UI, 1UI, 1UI, 1UI}, New UInteger() {1UI, 1UI, 2UI, 2UI})
+                    Dim output As DmlGraphTensor = graph.DefineTensor("output", outputDims, DmlTensorKind.Output)
 
                     Select Case op
                         Case "conv"
-                            Dim w As DmlGraphTensor = graph.DefineConstant("w", {1UI, 1UI, 2UI, 2UI},
-                                                                          {1.0F, 0.0F, 0.0F, 0.0F,
-                                                                           0.0F, 1.0F, 0.0F, 0.0F,
-                                                                           0.0F, 0.0F, 1.0F, 0.0F,
-                                                                           0.0F, 0.0F, 0.0F, 1.0F})
+                            ' 2x2 卷积核、只保留左上角元素：output = 1 * input(0,0) = -1
+                            Dim w As DmlGraphTensor = graph.DefineConstant("w", {1UI, 1UI, 2UI, 2UI}, {1.0F, 0.0F, 0.0F, 0.0F})
                             Dim conv As DmlOperatorDefinition = ConvolutionOperators.Convolution(
                                 input, w, Nothing, output, {1UI, 1UI}, {1UI, 1UI}, {0UI, 0UI}, {0UI, 0UI},
-                                Nothing, 1UI, DML_CONVOLUTION_DIRECTION.FORWARD, "conv")
+                                {0UI, 0UI}, 1UI, DML_CONVOLUTION_DIRECTION.FORWARD, "conv")
 
                             graph.AddOperator(conv)
                         Case Else
@@ -212,6 +210,8 @@ Namespace DirectMLDemo
 
                     Call Trace("graph: execute")
                     graph.Execute()
+
+                    Call ReportValidationMessages("Execute")
 
                     Dim result As Single() = graph.GetOutput("output")
 
