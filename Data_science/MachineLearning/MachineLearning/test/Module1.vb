@@ -102,6 +102,12 @@ Module Module1
         Call VerifyExpression("BipolarSigmoid(alpha := -1.5)", "BipolarSigmoid", "alpha", -1.5R)
         Call VerifyExpression("Sigmoid( alpha:=2, beta:=3 )", "Sigmoid", "alpha", 2.0R)
 
+        ' regression: plain math expressions must still work after the ':=' token change
+        Call DebugAudit.Test(ScriptEngine.Expression.Evaluate("2 + 3 * 4") = 14.0R,
+                             "plain arithmetic expression regression")
+        Call DebugAudit.Test(ScriptEngine.ParseExpression("x^2 + 3*x") IsNot Nothing,
+                             "symbolic expression parse regression")
+
         Call DebugAudit.Mark("active function parse verification completed")
 
         Dim reportPath As String = Path.Combine(reportDirectory, "active-function-parse-report.txt")
