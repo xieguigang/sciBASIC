@@ -43,10 +43,15 @@ Kenneth Tay, J, Narasimhan, Balasubramanian, Hastie, Trevor. 2023. “Elastic Ne
     <AssemblyName>Microsoft.VisualBasic.MachineLearning.GLMNet</AssemblyName>
     <Version>10.8.9818.14504</Version>
     <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
-    <Configurations>Debug;Release;nuget_release</Configurations>
+    <Configurations>Debug;Release;nuget_release;Rsharp_app_release</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
