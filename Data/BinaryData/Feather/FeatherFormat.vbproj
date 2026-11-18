@@ -57,10 +57,7 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.14" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.14" />
-  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />

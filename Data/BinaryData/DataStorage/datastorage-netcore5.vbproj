@@ -132,10 +132,6 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.14" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.14" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />

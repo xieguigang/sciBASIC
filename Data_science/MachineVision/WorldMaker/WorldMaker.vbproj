@@ -20,7 +20,7 @@
   <ItemGroup>
     <!-- JPEG 解码：Core 的依赖无关 JpegReader 在 Tanks&Temples 这类“视频帧导出的 JPEG”
          上会把 MCU 网格当成像素尺寸（实测 980×545 → 215×35），因此生产路径改用 GDI+。 -->
-    <PackageReference Include="System.Drawing.Common" Version="10.0.14" />
+    <PackageReference Include="System.Drawing.Common" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
