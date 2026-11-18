@@ -117,7 +117,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="11.0.0" />
-    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="10.0.14" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
