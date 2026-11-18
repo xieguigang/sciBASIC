@@ -13,8 +13,8 @@
     <PackageTags>scibasic;shap;shapley-value;model-interpretation;explainable-ai;feature-importance</PackageTags>
     <PackageReleaseNotes>Adds the GLMNet (glmnet) explainer: analytic SHAP for all six glmnet families, lambda step / lambda value selection and cv.glmnet lambda.min / lambda.1se support. Expands the linear, random forest and XGBoost explainers together with the sample dataset model, prediction evaluation and CSV report writer.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>10.8.9797.36764</Version>
-    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
+    <Version>10.8.9818.14504</Version>
+    <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.SHAP</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>

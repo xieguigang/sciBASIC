@@ -7,7 +7,7 @@
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.GCN</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.9797.1</Version>
+    <Version>10.8.9818.14504</Version>
     <Title>Graph Convolutional Networks (Kipf &amp; Welling)</Title>
     <Description>Kipf &amp; Welling graph convolutional network for semi-supervised node classification, with symmetric normalized adjacency in both dense and CSR form, fp64 master weights and fp32 (CUDA-friendly) GEMM/SpMM hot spots, AdamW with decoupled weight decay and early stopping.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.GCN</AssemblyTitle>
@@ -20,6 +20,13 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
+    <Configurations>Debug;Release;nuget_release</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
