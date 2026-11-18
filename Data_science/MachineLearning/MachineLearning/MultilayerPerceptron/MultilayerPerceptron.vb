@@ -3,10 +3,8 @@
 '  Data_science\MachineLearning\MachineLearning\MultilayerPerceptron\MultilayerPerceptron.vb
 ' /********************************************************************************/
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
