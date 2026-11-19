@@ -247,6 +247,21 @@ Namespace Hybrid
                 Next
             End If
 
+            ' 归一化后的浮点求和通常差最后一位（0.9999999999999999），
+            ' 把误差补给最大的一项，让下游可以按「和为 1」做精确断言
+            Dim sum As Double = 0.0
+            Dim peak As Integer = 0
+
+            For r As Integer = 0 To rules - 1
+                sum += result(r)
+
+                If result(r) > result(peak) Then
+                    peak = r
+                End If
+            Next
+
+            result(peak) += 1.0 - sum
+
             Return result
         End Function
 
