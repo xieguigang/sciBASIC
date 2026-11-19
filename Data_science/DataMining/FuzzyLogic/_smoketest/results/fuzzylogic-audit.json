@@ -1,0 +1,88 @@
+﻿{
+  "captures": {
+    "BN/PBN 自检结束": "0",
+    "FCM 自检结束": "0",
+    "联合建模自检结束": "0"
+  },
+  "failureCount": 0,
+  "records": [
+    {
+      "time": "2026-11-19T14:51:28.221",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "BN/PBN 自检开始",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.BooleanNetworks.vb",
+      "line": 15,
+      "member": "Run",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-19T14:51:28.248",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "BN/PBN 自检结束 = 0",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.BooleanNetworks.vb",
+      "line": 26,
+      "member": "Run",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-19T14:51:28.248",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "FCM 自检开始",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.FuzzyCognitiveMaps.vb",
+      "line": 13,
+      "member": "Run",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-19T14:51:28.259",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "FCM 自检结束 = 0",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.FuzzyCognitiveMaps.vb",
+      "line": 22,
+      "member": "Run",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-19T14:51:28.259",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "联合建模自检开始",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.Hybrid.vb",
+      "line": 14,
+      "member": "Run",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-19T14:51:28.263",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "联合建模自检结束 = 0",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.Hybrid.vb",
+      "line": 21,
+      "member": "Run",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    }
+  ]
+}

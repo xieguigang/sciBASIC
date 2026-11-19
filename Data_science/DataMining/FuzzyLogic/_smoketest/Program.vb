@@ -3,8 +3,9 @@ Option Explicit On
 
 Imports System
 Imports System.Linq
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Text
-Imports FL = Microsoft.VisualBasic.DataMining.FuzzyLogic.Logical.FuzzyLogic
+Imports FL = Microsoft.VisualBasic.DataMining.FuzzyLogic.Mamdani
 Imports TSK = Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
 Imports std = System.Math
 
@@ -26,6 +27,8 @@ Module Program
     Private failures As Integer = 0
 
     Function Main(args As String()) As Integer
+        Call DebugAudit.Reset()
+
         Call Section("1. Mamdani 求值一致性（与重构前基线逐点对比）")
         Call TestMamdaniBaseline()
 
@@ -49,6 +52,18 @@ Module Program
 
         Call Section("8. Mamdani 模型的 XML 往返回归")
         Call TestXmlRoundTrip()
+
+        Call Section("9. BN/PBN 建模组件")
+        failures += BooleanNetworksAudit.Run()
+
+        Call Section("10. FCM 建模组件")
+        failures += FuzzyCognitiveMapsAudit.Run()
+
+        Call Section("11. 模糊联合建模原型")
+        failures += HybridAudit.Run()
+
+        failures += DebugAudit.FailureCount
+        Call DebugAudit.SaveReport("results/fuzzylogic-audit.json")
 
         Call Console.WriteLine()
         Call Console.WriteLine($"{checks} assertions, {failures} failure(s)")
@@ -585,7 +600,7 @@ Module Program
     Private Sub TestJsonRoundTrip()
         Dim net As TSK.TskNetwork = CreateTinyNetwork(3, 23)
         Dim x As Double()() = SampleGrid(30, -1.0, 1.0, 29, 2)
-        Dim json As String = net.ToJson()
+        Dim json As String = Microsoft.VisualBasic.Serialization.JSON.JsonContract.GetJson(net.ToJsonDto())
         Dim loaded As TSK.TskNetwork = TSK.TskNetwork.FromJson(json)
 
         Dim before As Double()() = net.Predict(x)

@@ -29,8 +29,11 @@
 
   <!-- 自检程序是独立工程，不能被编进库 -->
   <ItemGroup>
+    <Compile Remove="test\**" />
     <Compile Remove="_smoketest\**" />
+    <EmbeddedResource Remove="test\**" />
     <EmbeddedResource Remove="_smoketest\**" />
+    <None Remove="test\**" />
     <None Remove="_smoketest\**" />
   </ItemGroup>
 

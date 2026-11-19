@@ -125,7 +125,90 @@ engine = FL.Models.FuzzyModel.FromXml("fuzzyModel.xml")
 
 ---
 
-## 三、自检
+## 三、布尔网络 / 概率布尔网络 / 模糊认知图
+
+### 3.1 命名空间
+
+| 命名空间 | 内容 |
+|---|---|
+| `Microsoft.VisualBasic.DataMining.FuzzyLogic.BooleanNetworks` | BN、PBN、真值表、二值化、状态空间、推断与 JSON DTO |
+| `Microsoft.VisualBasic.DataMining.FuzzyLogic.FuzzyCognitiveMaps` | FCM 概念节点、传播函数、加权迭代、权重学习与 JSON DTO |
+| `Microsoft.VisualBasic.DataMining.FuzzyLogic.Hybrid` | 连续 → 模糊 → 布尔联合建模最小原型 |
+
+### 3.2 BN / PBN 最小用法
+
+```vb
+Imports BN = Microsoft.VisualBasic.DataMining.FuzzyLogic.BooleanNetworks
+
+' 1. 基因节点：A 恒定表达；B = NOT A；C = A AND B
+Dim a As New BN.BooleanNode("A", New Integer() {}, BN.BooleanTruthTable.FromValues(0, True))
+Dim b As New BN.BooleanNode("B", New Integer() {0}, BN.BooleanTruthTable.CreateNot())
+Dim c As New BN.BooleanNode("C", New Integer() {0, 1}, BN.BooleanTruthTable.CreateAnd(2))
+Dim net As New BN.BooleanNetwork({a, b, c}, {False, False, False})
+
+Dim trajectory As BN.StateTrajectory = net.Run(10)
+Dim attractor As BN.AttractorResult = net.RunToAttractor(10000)
+
+' 2. 连续表达值 → 布尔状态（可复用 TSK 隶属函数）
+Dim binarizer As New BN.FixedThresholdBinarizer(0.5)
+Call net.SetContinuousState(New Double() {1.2, 0.1, 0.7}, binarizer)
+
+' 3. PBN：每个基因可持有多函数及概率
+Dim pbnNode As BN.BooleanNode = BN.ProbabilisticBooleanNetwork.CreateNode(
+    "B", {0},
+    BN.ProbabilisticBooleanNetwork.CreateRule(BN.BooleanTruthTable.CreateNot(), 0.7),
+    BN.ProbabilisticBooleanNetwork.CreateRule(BN.BooleanTruthTable.CreateAnd(1), 0.3))
+Dim pbn As New BN.ProbabilisticBooleanNetwork({a, pbnNode}, {False, False}, seed:=42)
+```
+
+真值表用 `ULong` 位掩码存储，输入按小端解释（`inputs(0)` 是最低位）；父节点超过 20 个时回退 `BitArray`。PBN 采样与推断使用显式种子，保证可复现。
+
+### 3.3 从表达数据推断
+
+```vb
+' 二值化表达矩阵：样本 × 基因；Boolean? 的 Nothing 表示缺失
+Dim data As New BN.BooleanExpressionData({"A", "B"}, expressionMatrix)
+
+Dim bn As BN.InferenceResult = New BN.BooleanNetworkInference(maxParents:=4).Fit(data)
+Dim pbn As BN.PbnInferenceResult = New BN.PbnInference(maxParents:=3, minCod:=0.05).Fit(data, seed:=7)
+
+Console.WriteLine(bn.Cods(1))       ' 基因 B 的 CoD
+Console.WriteLine(pbn.Probabilities(1)(0))  ' B 的第一条规则选择概率
+```
+
+BN 推断枚举父节点组合并多数投票拟合真值表；PBN 以 CoD 为权重估计函数选择概率；缺失值用 Best-Fit Extension 跳过。
+
+### 3.4 FCM 与联合建模
+
+```vb
+Imports FCM = Microsoft.VisualBasic.DataMining.FuzzyLogic.FuzzyCognitiveMaps
+Imports HY = Microsoft.VisualBasic.DataMining.FuzzyLogic.Hybrid
+
+Dim concepts As FCM.FcmConcept() = {New FCM.FcmConcept("GeneA", 1.0), New FCM.FcmConcept("GeneB", 0.0)}
+Dim weights(1, 1) As Double
+weights(0, 1) = 0.8
+Dim map As New FCM.FuzzyCognitiveMap(concepts, weights, New FCM.ClampedLinearActivation(-1.0, 1.0))
+
+Call map.Propagate()
+Dim steps As Integer = map.RunToConvergence()
+
+' 权重学习：Hebbian 或岭回归最小二乘
+Dim learned As Double(,) = New FCM.FcmInference().FitLeastSquares(activationSequence, 2)
+
+' 联合原型：TSK 输出 → FCM 传播 → 二值化 → BN 步进 → 模糊规则反馈
+Dim bridge As New HY.FuzzyCausalBridge(tskNetwork, map, booleanNetwork, binarizer)
+Dim result As HY.BridgeResult = bridge.InferStep(New Double() {0.5})
+```
+
+FCM 更新式为 `c_i(t+1) = f(Σ_j w_ji·c_j(t))`，提供 Sigmoid、二值、裁剪线性以及复用 TSK 隶属函数的激活函数；`ActivationFunction`、`IncludeSelfLoop` 可在运行时切换。
+
+### 3.5 持久化
+
+`BooleanNetworkDto` / `FcmDto` 提供 `FromModel`、`ToJson`、`FromJson`、`ToModel`，含 `formatVersion = "1.0"` 与结构校验。FCM 权重矩阵按行展开成 `Double()` 以兼容 `System.Text.Json`。
+
+---
+
+## 四、自检
 
 ```powershell
 cd _smoketest
@@ -134,7 +217,11 @@ dotnet run --project selftest.vbproj
 
 覆盖：Mamdani 基线逐点一致、退化肩点语义、五种隶属函数的解析导数 vs 中心差分、
 批量前向 vs 标量参考、前提/结论梯度 vs 中心差分、规则表枚举与掩膜与剪枝、
-JSON 往返、XML 往返回归。
+JSON 往返、XML 往返回归，以及 BN/PBN（真值表、同步异步步进、吸引子、PBN 可复现、
+表达数据推断、JSON 往返）、FCM（激活函数、传播收敛、Hebbian/最小二乘权重学习、
+JSON 往返）、联合建模全链路。
+
+新增章节的断言通过 `DebugAudit` 记录，报告写入 `_smoketest/results/fuzzylogic-audit.json`。
 
 ## 来源
 
