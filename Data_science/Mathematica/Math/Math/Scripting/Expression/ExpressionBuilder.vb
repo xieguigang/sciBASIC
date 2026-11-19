@@ -83,7 +83,7 @@ Namespace Scripting.MathExpression
                     Else
                         Return New SymbolExpression(token.text)
                     End If
-                Case MathTokens.Open, MathTokens.Close, MathTokens.Invalid, MathTokens.Operator, MathTokens.Terminator
+                Case MathTokens.Open, MathTokens.Close, MathTokens.Invalid, MathTokens.Operator, MathTokens.Terminator, MathTokens.Assign
                     Throw New SyntaxErrorException
                 Case Else
                     Throw New NotImplementedException
@@ -129,6 +129,14 @@ Namespace Scripting.MathExpression
 
         Public Function BuildExpression(tokens As MathToken()) As Expression
             tokens = mergeNotEqual(tokens)
+
+            ' named argument: name:=value
+            If tokens.Length > 2 AndAlso
+               tokens(Scan0).name = MathTokens.Symbol AndAlso
+               tokens(1).name = MathTokens.Assign Then
+
+                Return New NamedArgument(tokens(Scan0).text, BuildExpression(tokens.Skip(2).ToArray))
+            End If
 
             Dim blocks As List(Of MathToken())
 

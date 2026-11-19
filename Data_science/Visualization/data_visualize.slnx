@@ -76,6 +76,10 @@
       <BuildType Solution="LipidSearch|*" Project="nuget_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../Mathematica/Math/ANOVA/ANOVA.vbproj">
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../Mathematica/Math/ElasticNet/ElasticNet.vbproj">
       <BuildType Solution="gcmodeller_desktop|*" Project="nuget_release" />
       <BuildType Solution="LipidSearch|*" Project="nuget_release" />

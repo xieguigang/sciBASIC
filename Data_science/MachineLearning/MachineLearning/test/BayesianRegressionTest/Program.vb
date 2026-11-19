@@ -36,6 +36,16 @@ Namespace BayesianRegressionTest
                 Return
             End If
 
+            If args.Any(Function(a) String.Equals(a, "--mlp", StringComparison.OrdinalIgnoreCase)) Then
+                Call Global.test.MlpTest.Program.Main()
+                Return
+            End If
+
+            If args.Any(Function(a) String.Equals(a, "--activation", StringComparison.OrdinalIgnoreCase)) Then
+                Call Global.test.Module1.activeFunctionParseTest()
+                Return
+            End If
+
             Dim reportDirectory As String = Path.Combine(AppContext.BaseDirectory, "report")
 
             If Not Directory.Exists(reportDirectory) Then

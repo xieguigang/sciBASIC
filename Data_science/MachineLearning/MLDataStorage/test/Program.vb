@@ -7,6 +7,10 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX
 Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX.Proto
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports ActiveFunction = Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations.ActiveFunction
+Imports MlpModel = Microsoft.VisualBasic.MachineLearning.MultilayerPerceptron.MultilayerPerceptron
+Imports MlpTask = Microsoft.VisualBasic.MachineLearning.MultilayerPerceptron.MlpTask
 
 ''' <summary>
 ''' MLDataStorage 的存储格式支持测试：
@@ -32,6 +36,7 @@ Module Program
 
             Call TestPolicyModels()
             Call TestCnnRoundtrip()
+            Call TestMlpOnnxRoundtrip()
 
             Dim report As String = IO.Path.Combine(AppContext.BaseDirectory, "onnx-test-report.txt")
 
@@ -343,6 +348,116 @@ Module Program
 
         Return result
     End Function
+
+#End Region
+
+#Region "MLP ONNX ROUNDTRIP"
+
+    ''' <summary>
+    ''' 多层感知机的 ONNX 导出、内置解释器推理与导入往返验证。
+    ''' </summary>
+    Private Sub TestMlpOnnxRoundtrip()
+        Call Console.WriteLine("== 多层感知机 ONNX 导出 / 导入往返测试")
+
+        For Each job As MlpTask In New MlpTask() {MlpTask.Classification, MlpTask.Regression}
+            For Each precision As TensorDataType In New TensorDataType() {TensorDataType.Float, TensorDataType.Float64}
+                Call TestMlpRoundtrip(job, precision)
+            Next
+        Next
+
+        If Directory.Exists(PoliciesDir) Then
+            Dim files As String() = Directory.GetFiles(PoliciesDir, "*.onnx").OrderBy(Function(f) f).ToArray()
+
+            If files.Length > 0 Then
+                Call TestExternalMlp(files(0))
+            End If
+        End If
+    End Sub
+
+    ''' <summary>验证外部工具导出的 Gemm 策略模型可以被还原为 MLP。</summary>
+    Private Sub TestExternalMlp(file As String)
+        Dim name As String = IO.Path.GetFileName(file)
+
+        Try
+            Dim model As OnnxModel = OnnxModel.Load(file)
+            Dim dims As Long() = model.Inputs(0).GetDims()
+            Dim length As Integer = 1
+
+            For Each d As Long In dims
+                length *= CInt(d)
+            Next
+
+            Dim values As Double() = Pattern(length, 5)
+            Dim expected As Double() = New OnnxGraphEvaluator(model).RunSingle(values)
+            Dim mlp As MlpModel = OnnxMlpImport.ToMLP(model)
+            Dim actual As Double() = DirectCast(
+                mlp.Predict(New NumericMatrix(New Double()() {values}))(0),
+                Microsoft.VisualBasic.Math.LinearAlgebra.Vector).Array
+
+            Call DebugAudit.AreEqual(expected.Length, actual.Length, $"{name}: 外部模型还原后的输出长度应当一致")
+            Call DebugAudit.Test(MaxAbsDifference(expected, actual) < 1.0E-08,
+                                 $"{name}: 外部模型还原后的预测应当与 ONNX 求值一致")
+            Call DebugAudit.Mark($"[mlp-external] {name}", $"{mlp.Layers.Count} layers")
+            Call Console.WriteLine($"  [ok] {name}: external MLP import, {mlp.Layers.Count} layers")
+
+        Catch ex As Exception
+            Call DebugAudit.Test(False, $"{name}: 外部 MLP 导入异常 {ex.GetType().Name}: {ex.Message}")
+            Call Console.WriteLine($"  [fail] {name}: {ex.Message}")
+        End Try
+    End Sub
+
+    Private Sub TestMlpRoundtrip(job As MlpTask, precision As TensorDataType)
+        Dim label As String = $"task={job}, precision={precision}"
+
+        Try
+            Dim mlp As New MlpModel(4, {6, 5}, 3, job,
+                                    ActiveFunction.Parse(ActiveFunction.ReLU), seed:=2026)
+            Dim values As Double() = Pattern(4, 11)
+            Dim matrix As New NumericMatrix(New Double()() {values})
+            Dim expected As Double() = DirectCast(mlp.Predict(matrix)(0), Microsoft.VisualBasic.Math.LinearAlgebra.Vector).Array
+            Dim options As New OnnxExportOptions With {
+                .WeightPrecision = precision,
+                .ModelName = "mlp"
+            }
+            Dim model As OnnxModel = mlp.ToOnnx(options)
+            Dim ops As String() = model.GetOpTypes()
+            Dim tolerance As Double = If(precision = TensorDataType.Float, 1.0E-06, 1.0E-09)
+
+            Call DebugAudit.Test(ops.Contains("Gemm"), $"{label}: 导出图应当包含 Gemm 节点")
+            Call DebugAudit.Test(ops.Contains("Relu"), $"{label}: 导出图应当包含 Relu 节点")
+            Call DebugAudit.Test(ops.Contains("Softmax") = (job = MlpTask.Classification),
+                                 $"{label}: Softmax 节点应当与任务类型匹配")
+
+            Dim actual As Double() = New OnnxGraphEvaluator(model).RunSingle(values)
+
+            Call DebugAudit.AreEqual(expected.Length, actual.Length, $"{label}: 解释器输出长度应当一致")
+            Call DebugAudit.Test(MaxAbsDifference(expected, actual) < tolerance,
+                                 $"{label}: 解释器结果应当与 MLP 一致（max|Δ| = {MaxAbsDifference(expected, actual):G3}）")
+
+            Dim path As String = IO.Path.Combine(IO.Path.GetTempPath(), $"scibasic_mlp_{job}_{precision}.onnx")
+
+            Call mlp.SaveOnnx(path, options)
+
+            Dim restored As MlpModel = OnnxExtensions.ReadMLP(path)
+            Dim afterImport As Double() = DirectCast(restored.Predict(matrix)(0), Microsoft.VisualBasic.Math.LinearAlgebra.Vector).Array
+
+            Call DebugAudit.AreEqual(mlp.Layers.Count, restored.Layers.Count, $"{label}: 导入后层数应当一致")
+            Call DebugAudit.AreEqual(job, restored.Task, $"{label}: 导入后任务类型应当一致")
+            Call DebugAudit.Test(MaxAbsDifference(expected, afterImport) < tolerance,
+                                 $"{label}: 导入后的预测应当与原模型一致（max|Δ| = {MaxAbsDifference(expected, afterImport):G3}）")
+            Call DebugAudit.Mark($"[mlp] {label}",
+                                 $"{model.Graph.Node.Count} nodes, {model.Initializers.Count} tensors")
+
+            Call Console.WriteLine($"  [ok] {label}: nodes={model.Graph.Node.Count}, " &
+                                   $"evaluator max|Δ|={MaxAbsDifference(expected, actual):G3}")
+
+            Call File.Delete(path)
+
+        Catch ex As Exception
+            Call DebugAudit.Test(False, $"{label}: 抛出异常 {ex.GetType().Name}: {ex.Message}")
+            Call Console.WriteLine($"  [fail] {label}: {ex.Message}")
+        End Try
+    End Sub
 
 #End Region
 

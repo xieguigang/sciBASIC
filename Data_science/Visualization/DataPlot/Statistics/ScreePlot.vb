@@ -1,62 +1,63 @@
 #Region "Microsoft.VisualBasic::b1ddded0ca388fc3296ad347b7f14b19, Data_science\Visualization\DataPlot\Statistics\ScreePlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 113
-    '    Code Lines: 77 (68.14%)
-    ' Comment Lines: 15 (13.27%)
-    '    - Xml Docs: 46.67%
-    ' 
-    '   Blank Lines: 21 (18.58%)
-    '     File Size: 4.84 KB
+' Summaries:
 
 
-    ' Class ScreePlot
-    ' 
-    '     Properties: BarColor, ComponentNames, Contributions, ShowCumulative, ShowValueLabels
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Sub: DrawCumulative, Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 113
+'    Code Lines: 77 (68.14%)
+' Comment Lines: 15 (13.27%)
+'    - Xml Docs: 46.67%
+' 
+'   Blank Lines: 21 (18.58%)
+'     File Size: 4.84 KB
+
+
+' Class ScreePlot
+' 
+'     Properties: BarColor, ComponentNames, Contributions, ShowCumulative, ShowValueLabels
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Sub: DrawCumulative, Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -82,7 +83,7 @@ Public Class ScreePlot
     ''' <summary>是否在柱子上写出百分比</summary>
     Public Property ShowValueLabels As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 

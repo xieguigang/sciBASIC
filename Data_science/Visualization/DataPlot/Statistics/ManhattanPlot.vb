@@ -1,79 +1,80 @@
 #Region "Microsoft.VisualBasic::63a4d1c83245dec2bf57e86c7db3c8f8, Data_science\Visualization\DataPlot\Statistics\ManhattanPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 181
-    '    Code Lines: 130 (71.82%)
-    ' Comment Lines: 20 (11.05%)
-    '    - Xml Docs: 55.00%
-    ' 
-    '   Blank Lines: 31 (17.13%)
-    '     File Size: 7.77 KB
+' Summaries:
 
 
-    ' Class ManhattanPlot
-    ' 
-    '     Properties: EvenColor, LabelThresholdPValue, MarkerSize, OddColor, Points
-    '                 ShowLabels, ShowThresholds, SignificantPValue, SuggestivePValue
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: BuildLayout, MinPValue
-    ' 
-    '     Sub: DrawLocusLabel, DrawThreshold, Plot
-    '     Structure LocusSlot
-    ' 
-    '         Properties: chromIndex, point, x, y
-    ' 
-    '     Structure TickSlot
-    ' 
-    '         Properties: name, position
-    ' 
-    '     Structure LayoutResult
-    ' 
-    '         Properties: positions, ticks, total
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 181
+'    Code Lines: 130 (71.82%)
+' Comment Lines: 20 (11.05%)
+'    - Xml Docs: 55.00%
+' 
+'   Blank Lines: 31 (17.13%)
+'     File Size: 7.77 KB
+
+
+' Class ManhattanPlot
+' 
+'     Properties: EvenColor, LabelThresholdPValue, MarkerSize, OddColor, Points
+'                 ShowLabels, ShowThresholds, SignificantPValue, SuggestivePValue
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: BuildLayout, MinPValue
+' 
+'     Sub: DrawLocusLabel, DrawThreshold, Plot
+'     Structure LocusSlot
+' 
+'         Properties: chromIndex, point, x, y
+' 
+'     Structure TickSlot
+' 
+'         Properties: name, position
+' 
+'     Structure LayoutResult
+' 
+'         Properties: positions, ticks, total
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -108,7 +109,7 @@ Public Class ManhattanPlot
     Public Property OddColor As Color = Color.FromArgb(31, 119, 180)
     Public Property EvenColor As Color = Color.FromArgb(140, 86, 75)
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 

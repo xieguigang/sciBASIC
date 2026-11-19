@@ -95,5 +95,9 @@ Namespace Scripting.MathExpression
         Symbol
         Comma
         Terminator
+        ''' <summary>
+        ''' the named argument assignment operator: ``:=``
+        ''' </summary>
+        Assign
     End Enum
 End Namespace

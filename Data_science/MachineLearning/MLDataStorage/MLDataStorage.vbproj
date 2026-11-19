@@ -9,8 +9,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.8.9797.36764</Version>
-    <AssemblyVersion>1.0.9797.36764</AssemblyVersion>
+    <Version>10.8.9818.14504</Version>
+    <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
     <Title>Machine Learning Dataset and Model Storage: DataPack, MNIST, DataFrame Import and ONNX</Title>
     <Description>Persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, packs large sample collections into streamable HDSPack archives, and reads and writes ONNX model files (export a trained CNN to .onnx, restore it, or run an ONNX graph with the built-in double precision evaluator).</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.DataStorage</AssemblyTitle>
