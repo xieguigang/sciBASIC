@@ -5,6 +5,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Threading
 Imports std = System.Math
+Imports BN = Microsoft.VisualBasic.DataMining.FuzzyLogic.BooleanNetworks
 
 Namespace FuzzyCognitiveMaps
 
@@ -171,7 +172,7 @@ Namespace FuzzyCognitiveMaps
         End Function
 
         ''' <summary>同步传播一步。</summary>
-        Public Function Step() As Double()
+        Public Function Propagate() As Double()
             Dim n As Integer = _concepts.Length
             Dim sums As Double() = SumBuffer(n)
             Dim nextState As Double() = NextBuffer(n)
@@ -216,7 +217,7 @@ Namespace FuzzyCognitiveMaps
             Call history.Add(Activation)
 
             For i As Integer = 1 To steps
-                Call Step()
+                Call Propagate()
                 Call history.Add(Activation)
             Next
 
@@ -239,7 +240,7 @@ Namespace FuzzyCognitiveMaps
             For stepIndex As Integer = 1 To maxSteps
                 Dim previous As Double() = Activation
 
-                Call Step()
+                Call Propagate()
 
                 If MaxDifference(previous, _activation) < tolerance Then
                     Return stepIndex
@@ -253,7 +254,7 @@ Namespace FuzzyCognitiveMaps
         ''' 检测传播轨迹中的极限环（含不动点）。
         ''' </summary>
         Public Function DetectCycle(Optional maxSteps As Integer = 1000,
-                                    Optional tolerance As Double = 1e-6) As AttractorResult
+                                    Optional tolerance As Double = 1e-6) As BN.AttractorResult
             Dim seen As New Dictionary(Of String, Integer)()
             Dim trajectory As New List(Of Double())
 
@@ -278,12 +279,12 @@ Namespace FuzzyCognitiveMaps
                         cycle(j) = bits
                     Next
 
-                    Return New AttractorResult(first, period, cycle)
+                    Return New BN.AttractorResult(first, period, cycle)
                 End If
 
                 seen(key) = stepIndex
 
-                Call Step()
+                Call Propagate()
                 Call trajectory.Add(Activation)
             Next
 
