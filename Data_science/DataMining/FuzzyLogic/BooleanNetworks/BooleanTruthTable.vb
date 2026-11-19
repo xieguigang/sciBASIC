@@ -165,7 +165,7 @@ Namespace BooleanNetworks
 
         ''' <summary>导出现式真值表。</summary>
         Public Function ToTruthTable() As Boolean() Implements IBooleanRule.ToTruthTable
-            Dim values(1 << _inputCount - 1) As Boolean
+            Dim values((1 << _inputCount) - 1) As Boolean
 
             For i As Integer = 0 To values.Length - 1
                 values(i) = GetValue(i)

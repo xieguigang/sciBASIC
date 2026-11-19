@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FuzzyLogic.vbproj" />
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
 </Project>

@@ -47,8 +47,12 @@ Namespace FuzzyCognitiveMaps
         Public Property FormatVersion As String = CurrentVersion
         ''' <summary>概念列表。</summary>
         Public Property Concepts As System.Collections.Generic.List(Of FcmConceptDto)
-        ''' <summary>权重矩阵（按行展开）。</summary>
-        Public Property Weights As Double(,)
+        ''' <summary>权重矩阵（按行展开的一维数组，System.Text.Json 不支持二维矩阵）。</summary>
+        Public Property Weights As Double()
+        ''' <summary>权重矩阵行数。</summary>
+        Public Property Rows As Integer
+        ''' <summary>权重矩阵列数。</summary>
+        Public Property Columns As Integer
         ''' <summary>激活函数类型。</summary>
         Public Property ActivationKind As String = FunctionSigmoid
         ''' <summary>Sigmoid 斜率。</summary>
@@ -74,11 +78,11 @@ Namespace FuzzyCognitiveMaps
                 Call conceptDtos.Add(FcmConceptDto.FromModel(concept))
             Next
 
-            Dim weights(map.Count - 1, map.Count - 1) As Double
+            Dim weights(map.Count * map.Count - 1) As Double
 
             For i As Integer = 0 To map.Count - 1
                 For j As Integer = 0 To map.Count - 1
-                    weights(i, j) = map.GetWeight(i, j)
+                    weights(i * map.Count + j) = map.GetWeight(i, j)
                 Next
             Next
 
@@ -86,6 +90,8 @@ Namespace FuzzyCognitiveMaps
                 .FormatVersion = CurrentVersion,
                 .Concepts = conceptDtos,
                 .Weights = weights,
+                .Rows = map.Count,
+                .Columns = map.Count,
                 .IncludeSelfLoop = map.IncludeSelfLoop
             }
 
@@ -132,8 +138,11 @@ Namespace FuzzyCognitiveMaps
             If Weights Is Nothing Then
                 Throw New InvalidOperationException("FCM DTO has no weight matrix")
             End If
-            If Weights.GetLength(0) <> Concepts.Count OrElse Weights.GetLength(1) <> Concepts.Count Then
+            If Rows <> Concepts.Count OrElse Columns <> Concepts.Count Then
                 Throw New InvalidOperationException("weight matrix must be square with concept count")
+            End If
+            If Weights.Length <> Rows * Columns Then
+                Throw New InvalidOperationException("flat weight matrix length does not match dimensions")
             End If
             If Not String.IsNullOrEmpty(FormatVersion) AndAlso FormatVersion <> CurrentVersion Then
                 Throw New NotSupportedException($"unsupported format version '{FormatVersion}'")
@@ -158,7 +167,15 @@ Namespace FuzzyCognitiveMaps
                     Throw New NotSupportedException($"unknown activation function '{ActivationKind}'")
             End Select
 
-            Return New FuzzyCognitiveMap(modelConcepts, Weights, activation, IncludeSelfLoop)
+            Dim matrix(Rows - 1, Columns - 1) As Double
+
+            For i As Integer = 0 To Rows - 1
+                For j As Integer = 0 To Columns - 1
+                    matrix(i, j) = Weights(i * Columns + j)
+                Next
+            Next
+
+            Return New FuzzyCognitiveMap(modelConcepts, matrix, activation, IncludeSelfLoop)
         End Function
     End Class
 
