@@ -5,7 +5,7 @@
 [![License GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Gitter](https://badges.gitter.im/xieguigang/sciBASIC.svg)](https://gitter.im/xieguigang/sciBASIC)
 
-> A VisualBasic(.NET) language kernel and runtime for scientific data computing, deep learning, LLM inference, GPU acceleration, visualization and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS. Write your analysis as a plain `.vb` script and run it directly with the built-in **`vbs` script engine**.
+> A VisualBasic(.NET) language kernel and runtime for scientific data computing, deep learning, LLM inference, GPU acceleration (CUDA + DirectML), machine vision, physics simulation, unified data reporting and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS. Write your analysis as a plain `.vb` or `.js` script and run it directly with the built-in **`vbs`** / **`njs`** script engines, which share one standard library.
 
 ![](tutorials/logo.png)
 
@@ -22,8 +22,13 @@
 - [Deep Learning Suite](#deep-learning-suite)
 - [LLM Engine (Decoder-Only Transformer)](#llm-engine-decoder-only-transformer)
 - [GPU Acceleration — ILCuda & ILCudaTensor](#gpu-acceleration--ilcuda--ilcudatensor)
+- [DirectML Compute & ONNX Interop](#directml-compute--onnx-interop)
 - [SIMD Math Acceleration](#simd-math-acceleration)
 - [The VBS Script Engine](#the-vbs-script-engine)
+- [The NJS JavaScript Script Engine](#the-njs-javascript-script-engine)
+- [Shared Script Libraries](#shared-script-libraries)
+- [Unified Data Reporting](#unified-data-reporting)
+- [Machine Vision & Physics Simulation](#machine-vision--physics-simulation)
 - [Module & Namespace Overview](#module--namespace-overview)
 - [Extended VisualBasic Language](#extended-visualbasic-language)
 - [Examples by Domain](#examples-by-domain)
@@ -36,20 +41,21 @@
 
 **sciBASIC#** is a cross-platform framework, written entirely in Microsoft VisualBasic.NET, that brings the
 productivity of the BASIC language to scientific computing. It bundles a large, cohesive set of reusable
-libraries (100+ projects in `nuget.slnx`) that together form the foundation for building data-science
+libraries (109 packable projects in `scibasic.net.slnx`) that together form the foundation for building data-science
 **command-line tools** on Windows, Linux and macOS — on modern .NET (`net10.0`).
 
 The runtime is organized into cooperating layers:
 
 | Layer | Source root | Purpose |
 | --- | --- | --- |
-| **Core runtime** | `Microsoft.VisualBasic.Core/` | Extended VB language syntax, LINQ-style collections, a CLI application framework, the `NumericTable` unified data model, serialization, networking and **SIMD-accelerated math**. |
-| **Data framework** | `Data/`, `mime/` | Tabular data (`DataFrame`), scientific file I/O (NetCDF, HDF5, Feather, SQLite3, HDSPack), MIME / text & XML parsing (JSON, xlsx, docx, pdf, markdown, yaml), and NLP (word2vec, KnowledgeGraph). |
-| **Math & data science** | `Data_science/` | Numerical math, statistics, ODE solvers, **deep learning (CNN / RNN / Transformer / GNN / LNN / SNN)**, classic ML, dimension reduction (UMAP / PaCMAP / t-SNE), evolutionary algorithms (`Darwinism`) and machine vision. |
+| **Core runtime** | `Microsoft.VisualBasic.Core/` | Extended VB language syntax, LINQ-style collections, a CLI application framework, the `NumericTable` unified data model, serialization, networking, **SIMD-accelerated math** and the **unified data-report framework** (`ApplicationServices.Report`). |
+| **Data framework** | `Data/`, `mime/` | Tabular data (`DataFrame`), scientific file I/O (NetCDF, HDF5, Feather, SQLite3, HDSPack), MIME / text & XML parsing (JSON, xlsx, docx, pdf, markdown, yaml), NLP (word2vec, KnowledgeGraph) and the **document renderers** for markdown / HTML / docx / pdf / rtf / xps. |
+| **Math & data science** | `Data_science/` | Numerical math, statistics, ODE solvers, **deep learning (CNN / RNN / Transformer / GNN / LNN / SNN / ANFIS / GCN)**, classic ML (incl. **GLMNet**), dimension reduction (UMAP / PaCMAP / t-SNE), evolutionary algorithms (`Darwinism`), **ONNX model exchange** and **machine vision** (point clouds, U-Net, 3-D Gaussian splatting). |
 | **LLM engine** | `llm/` | A pure-managed **decoder-only LLM** implementation: MoE, KV cache, RoPE, function calling with constrained decoding. |
-| **GPU acceleration** | `cuda/` | **NVIDIA CUDA computing framework** (`ILCuda`) and a **GPU tensor runtime** (`ILCudaTensor`) — native heterogeneous computing without any third-party NuGet dependency. |
+| **GPU acceleration** | `cuda/`, `Data_science/DirectML/` | **NVIDIA CUDA computing framework** (`ILCuda`) and a **GPU tensor runtime** (`ILCudaTensor`), plus a **DirectML** backend (DXGI / D3D12 / DirectML) for Windows GPU compute and ONNX graph execution. |
 | **Graphics & visualization** | `gr/`, `Data_science/Visualization` | The "sciBASIC# Artists" imaging engine that produces publication-quality 2D/3D plots, SVG / d3js export, network layouts and color palettes. |
-| **Script engine** | `vs_solutions/VBS/` | The **`vbs` scripting host**: run VB.NET scripts directly without creating a project — with vectorized syntax, dynamic types and more. |
+| **Physics simulation** | `physics/` | 2-D / 3-D rigid-body engine with joints, contacts and force fields; **SPH fluid** and boids particle simulation with a pluggable compute backend; world simulation player. |
+| **Script engines** | `vs_solutions/VBS/`, `vs_solutions/NJS/`, `vs_solutions/libs/` | **`vbs`** (VB.NET) and **`njs`** (Node-style JavaScript) hosts driven by the **same `stdlib` / `stdio` API** — run scripts directly without creating a project. |
 
 The design philosophy is **CLI-first / script-first**: instead of drag-and-drop controls, sciBASIC# emphasizes
 headless, scriptable, reproducible data-science programs that read files, compute, and emit figures or
@@ -79,9 +85,11 @@ The framework has been extended substantially in the recent releases:
    one table model (row names + feature columns + label columns) shared by *every* machine-learning
    algorithm in the framework, enabling **chain-style** data-science pipelines:
    `NumericTableIO.ReadCsv(...).kmeans(3).pca(2).ScoreTable()` …
-4. **SIMD math acceleration** (`Microsoft.VisualBasic.Core/src/Math/SIMD/`) — hardware-vectorized
-   arithmetic (SSE2/AVX/ARM Advanced SIMD) for element-wise math, matrix kernels and reductions,
-   plus a `Vec*` operator vocabulary used by the script engine's auto-vectorization.
+4. **SIMD math acceleration** (`Microsoft.VisualBasic.Core/src/Math/SIMD/`) — a substantially
+   reworked `Engine/` + `Intrinsics.vb` + `Arithmetic/` + `Parallel/` stack for hardware-vectorized
+   arithmetic (SSE2 / AVX / ARM Advanced SIMD): element-wise math, matrix kernels and reproducible
+   reductions, plus the `Vec*` vocabulary and `Math.SIMD.Vectorization` used by the script engine's
+   auto-vectorizer.
 5. **CUDA GPU framework** (`cuda/`) — `ILCuda` (P/Invoke of the CUDA Driver API + NVRTC runtime
    compilation, zero third-party dependencies, and an **IL → CUDA** translator that compiles your
    .NET methods to GPU kernels) and `ILCudaTensor` (a `double`-precision GPU tensor runtime whose
@@ -91,6 +99,26 @@ The framework has been extended substantially in the recent releases:
    in memory via Roslyn and executes the assembly — and adds scripting-only syntax extensions
    (vectorized array math, `let` dynamic typing, tuple destructuring, `@` array projection,
    `#include` of dlls/scripts/NuGet packages).
+7. **The NJS JavaScript engine and shared standard library** (`vs_solutions/NJS/`,
+   `vs_solutions/JavaScript/`, `vs_solutions/libs/`) — `njs` runs `.js` files in a Node-like
+   environment (REPL, `process.argv`, `fs`/`path`/`Buffer`, ANSI / plain / HTML output) and can
+   generate TypeScript `.d.ts` definitions from CLR assemblies. `stdio` and `stdlib` expose the
+   same data-science API to **both** `vbs` and `njs`, so a demo has one implementation and two
+   runnable script versions.
+8. **Machine-learning workflow expansion** (`Data_science/`) — new model packages including
+   **ANFIS**, **GCN**, **GLMNet** and **FuzzyLogic**; `MLDataStorage/ONNX` adds `.onnx` export /
+   import plus a dependency-free forward evaluator, with a **DirectML GPU session** for ONNX
+   graphs; `MachineVision` adds **Cloudy** point-cloud processing, **UNet** segmentation and
+   3-D Gaussian splatting.
+9. **DirectML compute backend** (`Data_science/DirectML/`) — beside CUDA, a zero-dependency
+   hand-written COM vtable interop layer for DXGI / D3D12 / DirectML covering adapter discovery,
+   command recording, descriptors, DML operator graphs and execution.
+10. **Unified data reporting** (`Microsoft.VisualBasic.Core/src/ApplicationServices/Report/` +
+    `mime/`) — one `Block` content model and `ReportRender` / `IDocumentWriter` interface render
+    the same document to **Markdown, HTML, plain text, docx, pdf, rtf and xps/oxps**.
+11. **Physics simulation** (`physics/`) — a fixed-step 2-D / 3-D rigid-body engine (SAT contacts,
+    joints, force fields) and a Structure-of-Arrays **3-D SPH fluid** solver with boids flocking,
+    uniform-grid neighbour search, a pluggable compute backend and force-driven label layouts.
 
 ---
 
@@ -138,6 +166,17 @@ The framework has been extended substantially in the recent releases:
   publication-quality** output.
 - **LLM proxy** — bridge a local model (e.g. Ollama) or any `Func(Of String, String)` endpoint into the
   runtime via `Microsoft.VisualBasic.LLMs`.
+- **JavaScript script engine (`njs`)** — run `.js` files or start a Node-like REPL on the .NET CLR,
+  import CLR namespaces from assemblies, and generate TypeScript `.d.ts` files from CLR types.
+- **Shared script standard library** — `stdio` (csv/tsv/xlsx/arff/json/MNIST IO) and `stdlib`
+  (table, regression, statistics, clustering, dimension reduction, plotting, networks, reports,
+  NLP, ML and CUDA) are identical across `vbs` and `njs`.
+- **DirectML & ONNX interop** — DirectML operator-graph execution on D3D12, plus `.onnx` export,
+  import, inspection and CPU/GPU forward evaluation with no external inference engine.
+- **Machine vision & physics simulation** — point-cloud registration/reconstruction, U-Net
+  segmentation, Gaussian splatting; rigid-body worlds, SPH fluids, boids and particle layout.
+- **Unified data reporting** — build documents from typed `Block`s once, then render them to
+  Markdown, HTML, plain text, docx, pdf, rtf or xps.
 
 ---
 
@@ -149,7 +188,8 @@ The framework has been extended substantially in the recent releases:
   target `net10.0-windows`).
 - Visual Studio 2022 (Windows) or any editor with the VB.NET / .NET workload (Visual Studio Code +
   the C#/VB dev kit, or JetBrains Rider) on Linux / macOS.
-- Optional: an NVIDIA GPU + driver for the `cuda/` acceleration layer (everything else runs CPU-only).
+- Optional: an NVIDIA GPU + driver for the `cuda/` layer, or Windows with D3D12 for `Data_science/DirectML/`
+  (everything else runs CPU-only).
 
 ### Consume the packages
 
@@ -162,17 +202,27 @@ dotnet add package Microsoft.VisualBasic.Runtime
 
 ### Build from source
 
-Clone the repository and build the NuGet solution, which references every library project:
+Clone the repository and build the main solution, which references every library project:
 
 ```bash
 git clone https://github.com/xieguigang/sciBASIC.git
 cd sciBASIC
-dotnet build nuget.slnx -c Release
+dotnet build scibasic.net.slnx -c Release
+```
+
+The two script hosts and their shared libraries can also be built individually:
+
+```bash
+dotnet build vs_solutions/libs/stdio/stdio.vbproj  -c Release
+dotnet build vs_solutions/libs/stdlib/stdlib.vbproj -c Release
+dotnet build vs_solutions/VBS/VBS.vbproj -c Release
+dotnet build vs_solutions/NJS/NJS.vbproj -c Release
 ```
 
 To build a single library, open its `.vbproj` (for example
-`Microsoft.VisualBasic.Core/src/Core.vbproj`, `llm/llm.vbproj` or `vs_solutions/VBS/VBS.vbproj`)
-or the relevant solution under `vs_solutions/`.
+`Microsoft.VisualBasic.Core/src/Core.vbproj`, `llm/llm.vbproj`,
+`Data_science/DirectML/DirectML.vbproj` or `physics/Engine/PhysicsEngine.vbproj`),
+or the relevant solution under `vs_solutions/`, `Data_science/` or `physics/`.
 
 ---
 
@@ -229,6 +279,29 @@ Run it with the `vbs` host (see [The VBS Script Engine](#the-vbs-script-engine))
 dotnet build vs_solutions/VBS/VBS.vbproj -c Release
 .nuget/net10.0/vbs.exe hello.vb --name "sciBASIC#"
 ```
+
+### C. Or write JavaScript — same library, another host
+
+Save `hello.js`:
+
+```javascript
+import stdio from '../../.nuget/net10.0/stdio.dll';
+import stdlib from '../../.nuget/net10.0/stdlib.dll';
+
+const table = stdio.read.csv('iris.csv', ['D1', 'D2', 'D3', 'D4']);
+const model = stdlib.fit.linear(table, 'y');
+
+console.log(`R2 = ${model.r2}, RMSE = ${model.rmse}`);
+```
+
+Run it with `njs`, or just type `njs` for the interactive REPL:
+
+```bash
+dotnet build vs_solutions/NJS/NJS.vbproj -c Release
+.nuget/net10.0/njs.exe hello.js
+```
+
+See [Shared Script Libraries](#shared-script-libraries) for the full API surface.
 
 ---
 
@@ -371,6 +444,48 @@ dotnet ILCuda.Demo.dll selftest    # kernel-logic self-check (no GPU required)
 
 ---
 
+## DirectML Compute & ONNX Interop
+
+`Data_science/DirectML/DirectML.vbproj` adds a second heterogeneous-computing path beside CUDA:
+a **zero-dependency, hand-written COM vtable interop** layer for DXGI, D3D12 and DirectML. It covers
+adapter / device enumeration, command recording, buffer and descriptor management, DML operator
+descriptors, graph compilation and execution, and a native ONNX graph backend.
+
+`Data_science/MachineLearning/MLDataStorage/ONNX/` makes the framework interoperable with the wider
+ML ecosystem without pulling in an inference engine:
+
+- `cnn.SaveOnnx(path)` exports a trained CNN (float32 by default, float64 for lossless round-trips);
+- `OnnxImport.Load(path)` restores a `ConvolutionalNN` that can be trained further;
+- `OnnxModel.Load(path).Summary()` inspects metadata, operator sequence and tensor shapes;
+- `OnnxGraphEvaluator(model).RunSingle(observation)` performs CPU forward inference with no engine;
+- `DmlOnnxSession.Create(model, options)` compiles the same graph to **DirectML operators** and runs
+  it on the GPU through `Data_science/DirectML/`.
+
+```vbnet
+Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX
+Imports Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX.DirectML
+
+Dim model = OnnxModel.Load("./model.onnx")
+Call Console.WriteLine(model.Summary())
+
+Dim y = New OnnxGraphEvaluator(model).RunSingle(observation)   ' CPU
+
+Using session = DmlOnnxSession.Create(model, New DmlOnnxOptions With {.AllowCpuFallback = False})
+    Call Console.WriteLine(session.Summary())                  ' adapter, feature level, operators, VRAM
+    Dim yGpu = session.RunSingle(observation)                  ' same API shape, GPU
+End Using
+
+Dim unsupported = DmlOnnxCapabilities.FindUnsupported(model)   ' preflight a model
+```
+
+Unsupported operators are reported explicitly (`OnnxUnsupportedOperatorException` /
+`OnnxDmlUnsupportedOperatorException`) rather than silently degraded; set `AllowCpuFallback = True`
+to opt into a CPU fallback, and `session.Backend` reports which backend actually ran. The protobuf
+codec is the in-repo `Microsoft.VisualBasic.Data.IO.Protobuf` package, so no extra NuGet dependency
+is introduced.
+
+---
+
 ## SIMD Math Acceleration
 
 `Microsoft.VisualBasic.Core/src/Math/SIMD/` is the CPU-side high-performance math core, used by the
@@ -478,10 +593,129 @@ End Using   ' the dynamic assembly is unloaded here
 
 ---
 
+## The NJS JavaScript Script Engine
+
+`vs_solutions/NJS/NJS.vbproj` builds **`njs`**, a Node-like host for the pure-managed
+**LiteJs** JavaScript engine (`vs_solutions/JavaScript/LiteJs.vbproj`). It shares the CLR bridge and
+the script libraries with `vbs`, so the same data-science API is available from JavaScript.
+
+```bash
+njs ./run.js                       # run a script (process.argv, __dirname, __filename, fs / path / Buffer)
+njs                                # interactive REPL: persistent globals, trailing expression echoed
+njs ./run.js --plain               # buffered plain output for byte-level comparison
+njs ./run.js --html report.html    # styled standalone HTML output
+njs --dts stdlib.dll -o stdlib.d.ts --xmldoc stdlib.xml   # generate TypeScript declarations
+```
+
+- `--ansi` (default) renders `%c` CSS styles through `ConsoleIO` as ANSI escape sequences;
+  `--plain` and `--html <file>` select `LogTextIO` and `HtmlIO`.
+- `import stdlib from '../../.nuget/net10.0/stdlib.dll'` is the CLR **namespace import**: the alias
+  receives the public types of that namespace (`stdlib.fit.linear(...)`, `stdio.read.csv(...)`).
+- `--dts` reflects the same rules the runtime bridge uses, so editor completion matches runtime
+  behaviour. Dependency trees of imported assemblies are resolved automatically (managed assemblies
+  by simple name, native ones through `runtimes/*/native`).
+
+---
+
+## Shared Script Libraries
+
+`vs_solutions/libs/` contains the common standard library used by **both** hosts. Scripts written
+against it run unchanged under `vbs` and `njs`; only the import syntax differs.
+
+| Library | API modules |
+| --- | --- |
+| `stdio` (`stdio.vbproj`) | `read` / `write`: csv, tsv, table, xlsx, arff, json, text, lines, mnist |
+| `stdlib` (`stdlib.vbproj`) | `table`, `fit`, `stats`, `lapack`, `cluster`, `dimreduce`, `plot`, `net`, `report`, `nlp`, `ml`, `cuda` |
+
+```vbnet
+' VBS
+#include "stdlib.dll"
+#include "stdio.dll"
+imports stdlib
+imports stdio
+
+dim table = read.csv("iris.csv", columns:={"D1", "D2", "D3", "D4"})
+dim model = fit.linear(table, "y")
+call write.csv(table, here("result.csv"))
+```
+
+```javascript
+// NJS
+import stdlib from '../../.nuget/net10.0/stdlib.dll';
+import stdio from '../../.nuget/net10.0/stdio.dll';
+
+const table = stdio.read.csv('iris.csv', ['D1', 'D2', 'D3', 'D4']);
+const model = stdlib.fit.linear(table, 'y');
+console.log(`R2 = ${model.r2}, RMSE = ${model.rmse}`);
+```
+
+All table readers/writers use `NumericTable` (row names + feature columns + `label:` columns).
+The bridge deliberately accepts arrays, primitives, `NumericTable` and library-owned model types —
+not generics, delegates or `IEnumerable(Of T)` — which keeps the same API callable from both
+engines. See [`vs_solutions/libs/readme.md`](vs_solutions/libs/readme.md) for the complete reference;
+`tutorials/VBS/scripts/<demo>/` ships a `.vb` and a `.js` version of each demo with identical output.
+
+---
+
+## Unified Data Reporting
+
+`Microsoft.VisualBasic.Core/src/ApplicationServices/Report/` defines a single content model and a
+common output contract:
+
+- `Block` — heading, paragraph, code, list, blockquote, table, image, math, footnote, …;
+- `ReportRender` — renders `IEnumerable(Of Block)` into a target format;
+- `IDocumentWriter` — the fluent `docx` / `pdf` writing interface (title, styles, TOC, tables, images);
+- `ToMarkdown` / `ToHtml` / `ToPlainText` extension methods for the text renderers.
+
+Renderers live in Core (`TextRender`, `HtmlRender`, `PlainTextRender`) and in `mime/`
+(`WordRender` → docx, `PdfRender` → pdf, `RtfRender` → rtf, `XpsRender` → xps/oxps). One document
+therefore produces every format:
+
+```vbnet
+' Through the shared library (works in vbs and njs)
+dim doc = report.document("Linear regression report", "sciBASIC", toc:=False)
+call doc.add(report.heading("1. Dataset"))
+call doc.add(report.paragraph("100 samples of one feature column."))
+call doc.add(report.tableOf(dataset))
+call doc.add(report.image(here("figure.png"), "scatter"))
+
+call doc.save(here("report.md"))     ' .md / .html / .txt
+call doc.save(here("report.docx"))   ' .docx / .pdf / .rtf / .xps / .oxps
+```
+
+Binary formats embed images from real files on disk, so draw the figure first (`plot.save`) and
+pass its path to `report.image`.
+
+---
+
+## Machine Vision & Physics Simulation
+
+**Machine vision** (`Data_science/MachineVision/`):
+
+- `Cloudy` — a managed 3-D point-cloud pipeline: SoA buffers, spatial neighbourhoods, voxel /
+  statistical / radius outlier filters, ISS + FPFH features, RANSAC / ICP / NDT / PCS4 registration,
+  pose-graph optimization, Poisson and TSDF reconstruction, segmentation, plus 6-DoF pose estimation,
+  hand-eye calibration, grasp planning, CAD deviation analysis and geometric tolerances.
+- `UNet` — symmetric encoder–decoder semantic segmentation on the sciBASIC# CNN layers, with
+  mini-batch Adam/SGD training, DSB2018 dataset loading, RLE masks and IoU/Dice metrics.
+- `GaussianSplatting3D` — 3-D Gaussian splatting rendering.
+
+**Physics** (`physics/`):
+
+- `Engine/PhysicsEngine.vbproj` — fixed-step 2-D / 3-D rigid-body worlds: broad/narrow phase
+  collision, SAT convex-polyhedron contacts, revolute / prismatic / spring / weld / ball / hinge
+  joints, angular motors, gravity / wind / magnetic force fields and SPH/boids hooks.
+- `Particles/Particles.vbproj` — Structure-of-Arrays 3-D SPH fluid solver (box, cylinder and
+  rotating impeller boundaries, uniform-grid neighbour search, pluggable CPU/CUDA backend),
+  3-D boids flocking, a pooled 2-D particle system with emitters and force-driven label layouts.
+- `WorldPlayer/` — the world-simulation player.
+
+---
+
 ## Module & Namespace Overview
 
 The framework exposes a large, consistent set of namespaces. The tables below group them by layer
-(each row corresponds to a library project in `nuget.slnx`). Names marked with **\*** ship from the
+(each row corresponds to a library project in `scibasic.net.slnx`). Names marked with **\*** ship from the
 *data-science runtime* (the `Data/`, `Data_science/`, `gr/`, `cuda/`, `llm/`, `nlp/` and `mime/`
 roots) rather than the general core.
 
@@ -493,6 +727,7 @@ roots) rather than the general core.
 | `Microsoft.VisualBasic.Language.Linq` | LINQ-style collection helpers (`Sequence`, `Iterates`, `which`, `sentinel`). |
 | `Microsoft.VisualBasic.CommandLine` | CLI application framework, `InteropService`, `POSIX` helpers. |
 | `Microsoft.VisualBasic.ApplicationServices` | `App` host, logging, `println`, debug port (8081). |
+| `Microsoft.VisualBasic.ApplicationServices.Report` | **Unified data reporting**: `Block` content model, `ReportRender`, `IDocumentWriter`, `ToMarkdown` / `ToHtml` / `ToPlainText`. |
 | `Microsoft.VisualBasic.Data` | **`NumericTable`** — the unified data model for machine learning + `NumericTableIO`. |
 | `Microsoft.VisualBasic.Math.SIMD` | **SIMD math acceleration**: `SimdEngine`/`SimdMath`/`SimdMatrix`/`SimdReduce` + the `Vec*` operator vocabulary. |
 | `Microsoft.VisualBasic.ComponentModel` | Component model: `Collection`, `DataSourceModel`, `Range`, settings. |
@@ -547,17 +782,25 @@ roots) rather than the general core.
 | `Microsoft.VisualBasic.MachineLearning.DeepQNetwork` * | DQN reinforcement learning. |
 | `Microsoft.VisualBasic.MachineLearning.xgboost` * / `XGBoostDataSet` | Gradient-boosted trees + dataset format. |
 | `Microsoft.VisualBasic.MachineLearning.ML_SHAP` * | SHAP feature attribution. |
+| `Microsoft.VisualBasic.DeepLearning.ANFIS` * | Adaptive Network-based Fuzzy Inference System (hybrid least-squares / backprop TSK training). |
+| `Microsoft.VisualBasic.DeepLearning.GCN` * | Graph convolutional networks (dense / CSR normalized adjacency, AdamW, early stopping). |
+| `Microsoft.VisualBasic.MachineLearning.GLMNet` * | Lasso / elastic-net regularized GLMs (gaussian, logistic, multinomial, Poisson, Cox). |
+| `Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX` * (`MLDataStorage`) | ONNX export / import, model inspection and dependency-free graph evaluation; `ONNX.DirectML` adds GPU sessions. |
 | `Microsoft.VisualBasic.MachineLearning.CellularAutomaton` * | Cellular automata (Game of Life). |
+| `Microsoft.VisualBasic.MachineVision.Cloudy` * | 3-D point clouds: filtering, features, ICP/NDT registration, Poisson/TSDF reconstruction, segmentation and industrial inspection. |
+| `Microsoft.VisualBasic.MachineVision.UNet` * | U-Net semantic segmentation with DSB2018 data, RLE masks and IoU/Dice metrics. |
 | `Microsoft.VisualBasic.Math.MachineVision` * / `GaussianSplatting3D` | Machine vision; 3D Gaussian splatting. |
 | `Data_science/Graph` * | Graph algorithms (PageRank etc.). |
 
-### LLM & GPU **
+### LLM & GPU accelerators **
 
 | Namespace | Description |
 | --- | --- |
 | `llm/llm.vbproj` * | **Decoder-only LLM engine**: `LLMModel`, `MoELayer`, `KVCache`, `CausalSelfAttention`, `RotaryEmbedding`, `RmsNorm`, `SwiGLUFeedForward`, `ConstrainedDecoder`, `AgentLoop`, `LMTrainer`, `AdamW`, `Sampler`. |
 | `Microsoft.VisualBasic.Computing.ILCuda.*` * (`ILCuda`) | **CUDA framework**: driver interop, NVRTC compilation, device memory/streams, BLAS & reduction kernels, `IL2Cuda` IL→CUDA translator. |
 | `Microsoft.VisualBasic.Computing.ILCuda.GPUTensor` * (`ILCudaTensor`) | **GPU tensor runtime**: `CudaTensor`, dense/CSR storage, GEMM/softmax/conv/pool kernels, transparent CPU fallback. |
+| `Microsoft.VisualBasic.Computing.DirectML` * (`DirectML`) | **DirectML compute**: DXGI / D3D12 / DML COM interop, operator descriptors and graph compilation/execution; hosts the ONNX GPU backend. |
+| `Microsoft.VisualBasic.Computing.JSCuda` * (`JsCuda`) | JavaScript → CUDA translation: decompiles a script function into a typed AST and emits a CUDA kernel through ILCuda. |
 
 ### Visualization & graphics — `Data_science/Visualization` & `gr/` **
 
@@ -586,11 +829,21 @@ roots) rather than the general core.
 | `Microsoft.VisualBasic.Data.NLP.TextRank` * | `TextRank` keyword extraction. |
 | `nlp/KnowledgeGraph` * | Knowledge graph construction. |
 
-### Tooling & services
+### Physics simulation — `physics/` **
+
+| Namespace | Description |
+| --- | --- |
+| `Microsoft.VisualBasic.Engine.Physics` * (`PhysicsEngine`) | 2-D / 3-D rigid bodies, broad & narrow phase collision, SAT convex contacts, joints, angular motors, gravity / wind / magnetic fields. |
+| `Microsoft.VisualBasic.Engine.Particles` * (`Particles`) | SoA 3-D SPH fluid solver, uniform-grid neighbour search, boids flocking, pooled 2-D particle system, force-driven label layout; pluggable compute backend. |
+| `physics/WorldPlayer` | World simulation player. |
+
+### Scripting & tooling
 
 | Project | Description |
 | --- | --- |
 | `vs_solutions/VBS/VBS.vbproj` | The **`vbs` script engine** (see above). |
+| `vs_solutions/NJS/NJS.vbproj` | The **`njs` JavaScript host** (LiteJs): scripts, REPL, TypeScript `.d.ts` generation (see above). |
+| `vs_solutions/libs/stdio`, `vs_solutions/libs/stdlib` | **Shared script standard library** for both `vbs` and `njs` (see above). |
 | `vs_solutions/dev/VisualStudio` | VB project tooling + the `VBProj.NuGet` client used by `#include` NuGet resolution. |
 | `vs_solutions/dev/vs_PDB` | PDB utilities. |
 | `vs_solutions/PkgVersionUpgrade` | Package version migration tool. |
@@ -734,6 +987,30 @@ schema-constrained function calling with a complete agent loop.
 
 See [GPU Acceleration](#gpu-acceleration--ilcuda--ilcudatensor) — either hand-written `.cu` kernels
 registered via `KernelSources`, or plain .NET methods translated to CUDA through `IL2Cuda`.
+
+### JavaScript scripts and the shared library (`njs/`, `libs/`)
+
+See [The NJS JavaScript Script Engine](#the-njs-javascript-script-engine) and
+[Shared Script Libraries](#shared-script-libraries). Every tutorial under
+`tutorials/VBS/scripts/<demo>/` has both a `.vb` and a `.js` version using the same
+`stdio` / `stdlib` API.
+
+### ONNX models and DirectML
+
+See [DirectML Compute & ONNX Interop](#directml-compute--onnx-interop) — export a trained CNN,
+inspect an external `.onnx` file, evaluate it on the CPU, or compile the same graph into a
+DirectML session on the GPU.
+
+### Data reports
+
+See [Unified Data Reporting](#unified-data-reporting) — build a document from typed `Block`s and
+save it as Markdown, HTML, docx, pdf, rtf or xps without rewriting the content.
+
+### Physics and particle simulation (`physics/`)
+
+`PhysicsEngine` provides fixed-step 2-D / 3-D rigid-body worlds (collisions, joints, force fields),
+while `Particles` adds SoA SPH fluids, boids flocking, an emitter-based 2-D particle system and
+force-driven label layouts. See [Machine Vision & Physics Simulation](#machine-vision--physics-simulation).
 
 ### Natural-language processing
 
@@ -924,18 +1201,28 @@ for scientific plotting.
 Yes. The core and math libraries target `net10.0` and run on .NET under
 Windows, Linux and macOS. The graphics/imaging projects additionally target
 `net10.0-windows`. The `cuda/` layer requires an NVIDIA GPU and is compiled
-for x64; everything else runs CPU-only.
+for x64; `DirectML` requires Windows with D3D12; everything else runs CPU-only.
+
+**Can I write scripts in JavaScript instead of VisualBasic?**
+Yes. The `njs` host runs JavaScript on the .NET CLR through LiteJs, with a Node-like
+environment, a REPL and TypeScript `.d.ts` generation. It shares the exact same
+`stdio` / `stdlib` API with `vbs`, so demos ship in both `.vb` and `.js` forms.
+
+**What report formats can I generate?**
+One `Block` document can be rendered to Markdown, HTML, plain text, docx, pdf, rtf and
+xps/oxps. Text renderers live in the core runtime; binary document renderers live in
+the `mime/` packages.
 
 **Do the deep-learning models need PyTorch/TensorFlow installed?**
-No. All neural networks (CNN/RNN/Transformer/GNN/LNN/SNN) and the LLM engine
-are pure managed implementations. If an NVIDIA GPU is present,
-`ILCudaTensor` can transparently move tensor math to the GPU; otherwise
+No. All neural networks (CNN/RNN/Transformer/GNN/LNN/SNN/ANFIS/GCN) and the LLM engine
+are pure managed implementations. `ILCudaTensor` can transparently move tensor math to an
+NVIDIA GPU, and ONNX graphs can run through the DirectML backend on Windows; otherwise
 everything runs on the SIMD-accelerated CPU path.
 
 **CLI or GUI?**
 CLI-first and script-first. sciBASIC# is designed for command-line data-science
-applications — and with the `vbs` script engine you can even skip the project
-entirely and just run a `.vb` file.
+applications — with `vbs` / `njs` you can skip the project entirely and just run
+a `.vb` or `.js` file.
 
 ---
 
@@ -943,6 +1230,8 @@ entirely and just run a `.vb` file.
 
 - Source & issues: <https://github.com/xieguigang/sciBASIC>
 - Module guides: [`docs/guides`](docs/guides), project documentation: [`docs`](docs/README.md)
+- Script libraries: [`vs_solutions/libs/readme.md`](vs_solutions/libs/readme.md)
+- ML data & ONNX: [`Data_science/MachineLearning/MLDataStorage/README.md`](Data_science/MachineLearning/MLDataStorage/README.md)
 - Tutorials: [`tutorials/`](tutorials) — script-engine demos live in [`tutorials/VBS/`](tutorials/VBS)
 - Author / contact: xieguigang — xie.guigang@live.com
 
