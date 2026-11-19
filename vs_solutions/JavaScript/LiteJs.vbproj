@@ -23,7 +23,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;javascript;interpreter;parser;ast;code-generator;repl;nodejs;clr-interop;stack-trace</PackageTags>
-    <PackageReleaseNotes>Turns the engine into a usable runtime: adds an interactive REPL, JS source level stack traces and error objects, console with ANSI/HTML rendering, filesystem, path, buffer and process modules, CLR interop, class and accessor semantics, promises, generators and async/await, plus function value reflection.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Improved handling of the js vm invoke clr function error; Fixed the vbs/js demo script; Added AST cuda kernel compiler for the javascript VM.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

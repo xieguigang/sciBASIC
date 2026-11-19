@@ -4,12 +4,25 @@
     <RootNamespace>Microsoft.VisualBasic.Computing.JSCuda</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.Computing.JSCuda</AssemblyName>
-    <AssemblyTitle>CUDA Interface for Javascript Interpreter</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.Computing.JSCuda</AssemblyTitle>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;nuget_release</Configurations>
     <OutputPath>../../.nuget/</OutputPath>
     <Version>10.8.9818.14504</Version>
     <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
+    <Title>JavaScript-to-CUDA Kernel Translator and GPU Host Runtime</Title>
+    <Description>Bridges the sciBASIC# JavaScript VM and ILCuda runtime: decompiles a script function into a typed intermediate AST, translates it into CUDA C through the IL-to-CUDA emitter, and exposes a script-callable host wrapper for argument marshalling and kernel launch.</Description>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;javascript;cuda;gpu-kernel;il-to-cuda;jit-compilation</PackageTags>
+    <PackageReleaseNotes>This cycle: Fixed the vbs/js demo script; Fixed the cuda compiler error; Fixed the javascript GPU cuda test.</PackageReleaseNotes>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -25,6 +38,14 @@
   <ItemGroup>
     <Compile Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

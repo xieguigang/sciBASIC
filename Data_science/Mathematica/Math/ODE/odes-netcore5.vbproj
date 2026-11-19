@@ -23,7 +23,7 @@
 		<Title>Ordinary Differential Equation Solver Core for Dynamic Models</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver</AssemblyTitle>
 		<PackageTags>scibasic;ode;differential-equations;runge-kutta;dormand-prince;bdf2;solver;simulation</PackageTags>
-    <PackageReleaseNotes>Rewrites the solver engine around a shared solver core and adds explicit, implicit and symplectic integrators including RK23, RK45, Dormand-Prince, BDF2 and Rosenbrock, with Jacobian and dense LU support, result sequences and a benchmark suite.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Symbol renames; Implemented the sundials CVODE solver registry; Added unify ODEs system solver.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IncludeSymbols>True</IncludeSymbols>

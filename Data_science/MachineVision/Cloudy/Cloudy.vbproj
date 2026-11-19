@@ -4,11 +4,24 @@
     <RootNamespace>Microsoft.VisualBasic.MachineVision.Cloudy</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.MachineVision.Cloudy</AssemblyName>
-    <AssemblyTitle>3D point cloud processing</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineVision.Cloudy</AssemblyTitle>
     <Platforms>AnyCPU;x64</Platforms>
     <Version>10.8.9818.14504</Version>
     <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
     <Configurations>Debug;Release;nuget_release</Configurations>
+    <Title>3D Point Cloud Registration, Reconstruction and Inspection Library</Title>
+    <Description>A managed point-cloud processing library for sciBASIC#: SoA buffers and spatial queries, outlier filtering and feature extraction, RANSAC / ICP / NDT / pose-graph registration, Poisson and TSDF surface reconstruction, semantic segmentation, and industrial applications such as 6-DoF pose estimation, hand-eye calibration, grasp planning, CAD deviation analysis and geometric tolerances.</Description>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;point-cloud;3d-vision;icp;registration;reconstruction;segmentation</PackageTags>
+    <PackageReleaseNotes>This cycle: Implemented the point cloud processing; Updated Cloudy.vbproj; Added point cloud library.</PackageReleaseNotes>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -22,6 +35,14 @@
     <ProjectReference Include="..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <!--

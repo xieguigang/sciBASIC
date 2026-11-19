@@ -23,7 +23,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;computer-vision</PackageTags>
-    <PackageReleaseNotes>Drops the GDI+ dependency and moves image loading onto the shared imaging helpers.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Fixed the png library reference; Gpu bootstrap of the GaussianSplatting3D test success; Write new GaussianSplatting test.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

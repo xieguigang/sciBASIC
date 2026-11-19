@@ -38,7 +38,7 @@
     <Title>Visual Basic Runtime Core Library For Scientific Computing</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>scibasic;runtime;collections;serialization;json;report-render;terminal;reflection</PackageTags>
-    <PackageReleaseNotes>Adds a unified report render pipeline (block model with markdown, HTML, plain-text and JSON renderers, plus docx export hooks) and rewrites the JSON formatter and serializer.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Fixed the condition test error; Improved the network byte order buffer module for create data without allocates memory; Removed the warning echo in debug mode.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 

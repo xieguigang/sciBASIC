@@ -23,7 +23,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;hamming;kmodes</PackageTags>
-    <PackageReleaseNotes>Rewrites the Apriori engine with bitmap transaction indexing, grouped candidate generation and ap-genrules based rule mining, and adds Hamming distance clustering with bit patterns, encoder, k-modes and rule extraction.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Fixed the model file persists i/o; Added bayes regression test successs; Added regression model based on the gauss native bayesian.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

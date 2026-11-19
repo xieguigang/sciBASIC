@@ -22,7 +22,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;signal-processing;fft;wavelet;peak-detection;filtering;demodulation;wave-analysis</PackageTags>
-    <PackageReleaseNotes>Adds a DSP suite for wave analysis: radix-2 FFT and spectrum bands, cell demodulation, scan-line synchronisation, fold and payload analysis, period estimation, channel correlation, local maxima detection and DC shift filtering.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -32,7 +32,7 @@
     <RepositoryType>git</RepositoryType>
 
     <PackageTags>scibasic;graphics;imaging;svg;postscript;d3js;isometric-3d</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Move convex hull source module into the base project; Enable optimization; Try to fix of the 3d legend render layout bug.</PackageReleaseNotes>
 
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 

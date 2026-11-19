@@ -24,7 +24,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;tensor;ndarray;simd;fp16;mixed-precision;deep-learning;matmul</PackageTags>
-    <PackageReleaseNotes>Adds an fp16 tensor stack with 8-lane half SIMD kernels, mixed precision policy and diagnostics, completes the half precision compute contract and fixes the fp64 overflow checks.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Fixed the xml comment docs error; Improved the metabolism network model; Improved the SIMD tensor kernel for the virtual cell simulator.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

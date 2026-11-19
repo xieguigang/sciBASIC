@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.DeepLearning.ANFIS</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
-    <AssemblyTitle>Adaptive Network-based Fuzzy Inference System</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.ANFIS</AssemblyTitle>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Adaptive Network-based Fuzzy Inference System</Title>
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.ANFIS</AssemblyName>
@@ -20,6 +20,14 @@
     <OptionInfer>On</OptionInfer>
     <Version>10.8.9818.14504</Version>
     <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>This cycle: Apply new rule engine to the fuzzy gene; Improved the parallel task runner; Enable optimization.</PackageReleaseNotes>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -35,6 +43,14 @@
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\DataMining\FuzzyLogic\FuzzyLogic.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <!-- 自检程序是独立工程，不能被编进库 -->
