@@ -5,7 +5,7 @@
 [![License GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Gitter](https://badges.gitter.im/xieguigang/sciBASIC.svg)](https://gitter.im/xieguigang/sciBASIC)
 
-> A VisualBasic(.NET) language kernel and runtime for scientific data computing, deep learning, LLM inference, GPU acceleration (CUDA + DirectML), machine vision, physics simulation, unified data reporting and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS. Write your analysis as a plain `.vb` or `.js` script and run it directly with the built-in **`vbs`** / **`njs`** script engines, which share one standard library.
+> A VisualBasic(.NET) language kernel and runtime for scientific data computing, deep learning, LLM inference, GPU acceleration (CUDA + DirectML), machine vision, physics simulation, unified data reporting and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS. Write your analysis as a plain `vb script(.vb)` or `javascript(.js)` script and run it directly with the built-in **`vbs`** / **`njs`** script engines, which share one standard library.
 
 ![](tutorials/logo.png)
 
