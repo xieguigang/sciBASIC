@@ -14,9 +14,6 @@
     <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="../Mathematica/Math/DataFittings/linear-netcore5.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
     <Project Path="../Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
       <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
       <Platform Solution="*|x64" Project="x64" />
