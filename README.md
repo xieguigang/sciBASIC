@@ -1233,7 +1233,7 @@ a `.vb` or `.js` file.
 - Script libraries: [`vs_solutions/libs/readme.md`](vs_solutions/libs/readme.md)
 - ML data & ONNX: [`Data_science/MachineLearning/MLDataStorage/README.md`](Data_science/MachineLearning/MLDataStorage/README.md)
 - Tutorials: [`tutorials/`](tutorials) — script-engine demos live in [`tutorials/VBS/`](tutorials/VBS)
-- Author / contact: xieguigang — xie.guigang@live.com
+- Author / contact: xieguigang — xieguigang@innovation.ac.cn
 
 > sciBASIC# is licensed under the **GNU GPLv3**. See the headers in each source
 > file for authorship and copyright details.
