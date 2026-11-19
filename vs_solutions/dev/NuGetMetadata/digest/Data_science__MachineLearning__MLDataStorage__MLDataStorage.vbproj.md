@@ -3,13 +3,19 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning.DataStorage
 - AssemblyName  : Microsoft.VisualBasic.MachineLearning.DataStorage
 - TargetFramework: net10.0
-- Source files  : 6
-- Existing Title: Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import
-- Existing Desc : Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.
-- Existing Tags : scibasic;machine-learning;dataset;mnist;data-storage
+- Source files  : 33
+- Existing Title: Machine Learning Dataset and Model Storage: DataPack, MNIST, DataFrame Import and ONNX
+- Existing Desc : Persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, packs large sample collections into streamable HDSPack archives, and reads and writes ONNX model files (export a trained CNN to .onnx, restore it, or run an ONNX graph with the built-in double precision evaluator).
+- Existing Tags : scibasic;machine-learning;dataset;mnist;data-storage;onnx;model-exchange
 
 ## Namespaces
 - DataPack  [files: 3]
+- Global.Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX  [files: 1]
+- Global.Microsoft.VisualBasic.MachineLearning.DataStorage.PT  [files: 1]
+- ONNX  [files: 9]
+- ONNX.DirectML  [files: 5]
+- ONNX.Proto  [files: 4]
+- PT  [files: 7]
 
 ## Public types
 - Module DataImports (DataImports.vb)
@@ -18,6 +24,52 @@
 - Class PackWriter (DataPack\PackWriter.vb)
 - Class MNIST (MNIST.vb)
 - Class NamespaceDoc (NamespaceDoc.vb) - Machine learning data storage: the DataPack container used to persist trained models and datasets.
+- Class OnnxDmlUnsupportedOperatorException (ONNX\DirectML\DmlOnnxCapabilities.vb) - 当 DirectML 后端无法执行某个算子时抛出。
+- Class DmlOnnxOptions (ONNX\DirectML\DmlOnnxOptions.vb) - DirectML 推理后端的选项。
+- Enum BackendKind (ONNX\DirectML\DmlOnnxSession.vb)
+- Class NamespaceDoc (ONNX\DirectML\NamespaceDoc.vb) - <para> 这一层是"ONNX 语义"与"DirectML 算子"之间的桥梁： </para>
+- Class NamespaceDoc (ONNX\NamespaceDoc.vb) - <description>不依赖外部推理引擎的最小前向求值器，用于没有对应层的模型（例如强化学习策略网）。</description> </item> </list>
+- Class OnnxExportOptions (ONNX\OnnxExport.vb) - ONNX 导出选项。
+- Module OnnxExport (ONNX\OnnxExport.vb) - 把 <see cref="ConvolutionalNN"/> 导出为 ONNX 计算图。 <para> 导出的是**前向推理图**：损失层里 <see cref="SoftMaxLayer"/> 会变成标准的 <c>Softmax</c> 节点，
+- Module OnnxExtensions (ONNX\OnnxExtensions.vb) - ONNX 读写的便捷入口，覆盖最常见的三类用法：网络存盘、网络加载、模型结构查看。 这一层只是对 <see cref="OnnxExport"/> / <see cref="OnnxImport"/> / <see cref="OnnxModel"/> 的薄封装， 目的是让调用方不必记住三种不同的入口函数。
+- Class OnnxGraphEvaluator (ONNX\OnnxGraphEvaluator.vb) - 一个轻量的 ONNX 计算图前向求值器：按节点顺序执行，不需要任何第三方推理引擎。 <para> 求值环境是一个"张量名称 → 张量"的字典，初始内容由模型的初始化器（常量权重）与调用方提供的输入组成；
+- Module NodeAttributes (ONNX\OnnxGraphEvaluator.vb) - 读取节点属性的辅助函数（提供默认值并统一转换到 VB 侧的标量类型）。
+- Class OnnxImportOptions (ONNX\OnnxImport.vb) - ONNX 导入选项。
+- Module OnnxImport (ONNX\OnnxImport.vb) - <para> 支持的节点：<c>Conv</c>、<c>ConvTranspose</c>、<c>MaxPool</c>、<c>Gemm</c>、<c>Softmax</c>、 <c>Relu</c>、<c>LeakyRelu</c>、<c>Elu</c>、<c>Sigmoid</c>、<c>Tanh</c>、<c>LRN</c>、
+- Module OnnxMlpExport (ONNX\OnnxMlpExport.vb) - 把多层感知机导出为标准的 ONNX 前向推理图。 每个全连接层写出一个 <c>Gemm</c> 节点（权重初始化器形状为 [输出维度, 输入维度]， <c>transB = 1</c>），其后跟随与隐藏层激活函数对应的标准算子。
+- Module OnnxMlpImport (ONNX\OnnxMlpImport.vb) - 从 ONNX 前向图还原多层感知机。支持 Gemm 全连接层以及 Relu / Sigmoid / Tanh / Softplus / Softmax / Identity 等标准激活算子。
+- Class OnnxModel (ONNX\OnnxModel.vb) - 一个 ONNX 模型文件的对象视图：负责文件读写、初始化器解析、形状查询与结构摘要。 <para> 本类型只关心"模型里有什么"，不负责推理（见 <see cref="OnnxGraphEvaluator"/>）也不负责与
+- Class OnnxUnsupportedOperatorException (ONNX\OnnxOperators.vb) - 当模型里出现本实现尚未覆盖的算子时抛出。 异常文本里带上算子名、节点名与输入/输出名称，方便定位是模型中哪一段计算不受支持。
+- Module OnnxOperators (ONNX\OnnxOperators.vb) - ONNX 标准算子的纯函数实现，全部以 <see cref="OnnxTensor"/>（double 数值视图）为操作数。 <para> 这里刻意**只**实现前向计算：模型推理不需要梯度，实现面越小，出错的概率越低。
+- Class OnnxTensor (ONNX\OnnxTensor.vb) - 运行时的稠密张量：形状 + 行主序（row-major）的 <see cref="Double"/> 数值。 <para> 框架内部（<c>DataBlock</c> / <c>Tensor</c>）的数值一律是双精度，因此 ONNX 侧的所有数据类型在读取时
+- Enum TensorDataType (ONNX\Proto\OnnxEnums.vb) - ONNX <c>TensorProto.DataType</c>。 枚举的**数值**是 ONNX 规范的一部分（与 <c>onnx.proto</c> 完全一致）， 成员名只是为了在 VB 中避免与保留字冲突而做了轻微调整（例如 ONNX 的 <c>STRING</c> 在此处命名为
+- Enum AttributeType (ONNX\Proto\OnnxEnums.vb) - ONNX <c>AttributeProto.AttributeType</c>：算子属性的取值类型。
+- Enum DataLocation (ONNX\Proto\OnnxEnums.vb) - ONNX <c>TensorProto.DataLocation</c>：张量数据的存放位置。
+- Module TensorDataTypeHelper (ONNX\Proto\OnnxEnums.vb) - <see cref="TensorDataType"/> 的辅助函数。
+- Class NodeProto (ONNX\Proto\OnnxGraphProto.vb)
+- Class GraphProto (ONNX\Proto\OnnxGraphProto.vb)
+- Class ModelProto (ONNX\Proto\OnnxGraphProto.vb)
+- Class TensorProto (ONNX\Proto\OnnxTensorProto.vb)
+- Class AttributeProto (ONNX\Proto\OnnxTensorProto.vb)
+- Class OperatorSetIdProto (ONNX\Proto\OnnxValueInfo.vb)
+- Class StringStringEntryProto (ONNX\Proto\OnnxValueInfo.vb)
+- Class TensorShapeDimension (ONNX\Proto\OnnxValueInfo.vb)
+- Class TensorShapeProto (ONNX\Proto\OnnxValueInfo.vb)
+- Class TensorTypeInfo (ONNX\Proto\OnnxValueInfo.vb)
+- Class TypeProto (ONNX\Proto\OnnxValueInfo.vb)
+- Class ValueInfoProto (ONNX\Proto\OnnxValueInfo.vb)
+- Class NamespaceDoc (PT\NamespaceDoc.vb) - <item> 张量数值在内存中统一为双精度，因此 int64 中超过 2^53 的整数会丢失精度 （这与框架 <see cref="Tensor"/> 只支持双精度有关，而非归档格式的问题）。
+- Enum PtElementType (PT\PtDataType.vb) - PyTorch 张量存储块（storage）的元素类型。 <para> 框架内部的张量一律以双精度 <see cref="Double"/> 存放，因此本枚举只用于**描述落盘格式**：
+- Module PtDataType (PT\PtDataType.vb) - <see cref="PtElementType"/> 的元数据与字节编解码。 PyTorch 的归档文件只在小端序平台上产生（<see cref="BitConverter.IsLittleEndian"/> 为 False 的平台 需要做一次字节翻转），本模块对两种平台都做了处理。
+- Class PtArchiveInfo (PT\PtFile.vb) - PyTorch 归档（<c>.pt</c>，新式 zip 序列化格式）的结构信息，用于诊断与测试断言。
+- Class PtFile (PT\PtFile.vb) - <list type="bullet"> <item><c>&lt;prefix&gt;/data.pkl</c>：pickle 流，描述对象结构（名称 → 张量）；</item> <item><c>&lt;prefix&gt;/data/&lt;key&gt;</c>：存储块的原始字节；</item>
+- Enum PtContainerFormat (PT\PtLegacyFile.vb) - 归档格式。
+- Class PtLegacyFile (PT\PtLegacyFile.vb) - PyTorch legacy 归档（torch &lt; 1.6 的 <c>torch.save</c> 默认格式）读取器。
+- Class PtPickleFactory (PT\PtPickleFactory.vb) - 压回栈上，因此这个元组会作为第一个参数进入本工厂。 </para> <para>
+- Class PtPickler (PT\PtPickler.vb) - ("storage", torch.float32, "0", "cpu", numel), storage_offset, size, stride, requires_grad, collections.OrderedDict() )
+- Class PtTensorEntry (PT\PtStateDict.vb) - 权重字典中的一项：名称、张量，以及落盘时使用的元素类型与是否需要梯度。
+- Class PtStateDict (PT\PtStateDict.vb) - PyTorch <c>state_dict</c> 的对象视图：名称 → <see cref="Tensor"/>，并保留每个张量的 元素类型与 <c>requires_grad</c> 标记，便于"读出 → 修改 → 原样写回"。 <para>
+- Class PtStorage (PT\PtStorage.vb) - <para> 存储块是 `.pt` 归档里真正存放数值的地方（zip 条目 <c>data/&lt;key&gt;</c>）。 pickle 流中的张量只保存"引用 + 偏移 + 形状 + 步长"，多个张量可以共享同一块存储
 
 ## Notable public members
 - Public ReadOnly Property output_labels As String()
@@ -38,29 +90,76 @@
 - Public Function ConvertImage(raw As NamedCollection(Of Byte)) As NamedValue(Of Image)
 - Protected Overridable Sub Dispose(disposing As Boolean)
 - Public Sub Dispose() Implements IDisposable.Dispose
+- Public ReadOnly Property Node As String
+- Public ReadOnly Property FeatureLevel As String
+- Public Sub New(node As NodeProto, featureLevel As String, reason As String)
+- Public Overrides Function ToString() As String
+- Friend Sub New(device As DmlDevice)
+- Public ReadOnly Property FeatureLevel As String
+- Public ReadOnly Property SupportsFloat16 As Boolean
+- Public ReadOnly Property SupportsInt8 As Boolean
+- Public ReadOnly Property SupportsInt32 As Boolean
+- Public Function IsSupported(opType As String) As Boolean
+- Public Shared Function FindUnsupported(model As OnnxModel) As String()
+- Public Function Report() As String
+- Public Overrides Function ToString() As String
+- Public Sub New(model As OnnxModel, graph As DmlGraph)
+- Public ReadOnly Property Inputs As IReadOnlyList(Of DmlGraphTensor)
+- Public ReadOnly Property Outputs As IReadOnlyList(Of DmlGraphTensor)
+- Public Function GetLogicalShape(name As String) As Integer()
+- Public Sub Build()
+- Public Property AdapterIndex As Integer = 0
+- Public Property DirectMLDirectory As String
+- Public Property EnableDebugLayer As Boolean = False
+- Public Property AllowHalfPrecision As Boolean = False
+- Public Property AllowCpuFallback As Boolean = False
+- Public Property ErrorMessage As String
+- Public Property Trace As Action(Of String)
+- Public ReadOnly Property Model As OnnxModel
+- Public ReadOnly Property Backend As BackendKind
+- Public ReadOnly Property Capabilities As DmlOnnxCapabilities
+- Public ReadOnly Property Engine As DmlEngine
+- Public ReadOnly Property Graph As DmlGraph
+- Public ReadOnly Property InputNames As String()
+- Public ReadOnly Property OutputNames As String()
+- Public Shared Function Create(model As OnnxModel, Optional options As DmlOnnxOptions = Nothing) As DmlOnnxSession
+- Public Shared Function TryCreate(model As OnnxModel, Optional options As DmlOnnxOptions = Nothing) As DmlOnnxSession
+- Public Function Run(inputs As IDictionary(Of String, OnnxTensor)) As Dictionary(Of String, OnnxTensor)
+- Public Function RunSingle(input As Double()) As Double()
+- Public Function Summary() As String
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public Overrides Function ToString() As String
+- Public Property Opset As Long = 13
+- Public Property IrVersion As Long = 7
+- Public Property WeightPrecision As TensorDataType = TensorDataType.Float
+- ... and 300 more
 
 ## Imports
+- IOPath = System.IO.Path
 - Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.Collection.Generic
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Computing.DirectML.Interop
+- Microsoft.VisualBasic.Computing.DirectML.Operators
+- Microsoft.VisualBasic.Computing.DirectML.Runtime
 - Microsoft.VisualBasic.Data.Framework
 - Microsoft.VisualBasic.Data.IO
+- Microsoft.VisualBasic.Data.IO.Protobuf
+- Microsoft.VisualBasic.Data.IO.Protobuf.Serialization
 - Microsoft.VisualBasic.DataMining.ComponentModel
 - Microsoft.VisualBasic.DataStorage.HDSPack
 - Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 - Microsoft.VisualBasic.Imaging
 - Microsoft.VisualBasic.Imaging.BitmapImage
 - Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.MachineLearning.CNN
+- Microsoft.VisualBasic.MachineLearning.CNN.data
+- Microsoft.VisualBasic.MachineLearning.CNN.layers
+- Microsoft.VisualBasic.MachineLearning.CNN.losslayers
+- Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 - Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
-- Microsoft.VisualBasic.Math
-- Microsoft.VisualBasic.Math.Distributions.Summary
-- Microsoft.VisualBasic.Scripting.Runtime
-- Microsoft.VisualBasic.Serialization.JSON
-- Microsoft.VisualBasic.Text.Xml.Models
-- std = System.Math
-- System.Drawing
-- System.IO
-- System.Runtime.CompilerServices
+- Microsoft.VisualBasic.MachineLearning.DataStorage.ONNX.Proto
+- Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 ## File tree
 - DataImports.vb
@@ -69,4 +168,31 @@
 - DataPack\PackWriter.vb
 - MNIST.vb
 - NamespaceDoc.vb
+- ONNX\DirectML\DmlOnnxCapabilities.vb
+- ONNX\DirectML\DmlOnnxGraphCompiler.vb
+- ONNX\DirectML\DmlOnnxOptions.vb
+- ONNX\DirectML\DmlOnnxSession.vb
+- ONNX\DirectML\NamespaceDoc.vb
+- ONNX\NamespaceDoc.vb
+- ONNX\OnnxExport.vb
+- ONNX\OnnxExtensions.vb
+- ONNX\OnnxGraphEvaluator.vb
+- ONNX\OnnxImport.vb
+- ONNX\OnnxMlpExport.vb
+- ONNX\OnnxMlpImport.vb
+- ONNX\OnnxModel.vb
+- ONNX\OnnxOperators.vb
+- ONNX\OnnxTensor.vb
+- ONNX\Proto\OnnxEnums.vb
+- ONNX\Proto\OnnxGraphProto.vb
+- ONNX\Proto\OnnxTensorProto.vb
+- ONNX\Proto\OnnxValueInfo.vb
+- PT\NamespaceDoc.vb
+- PT\PtDataType.vb
+- PT\PtFile.vb
+- PT\PtLegacyFile.vb
+- PT\PtPickleFactory.vb
+- PT\PtPickler.vb
+- PT\PtStateDict.vb
+- PT\PtStorage.vb
 

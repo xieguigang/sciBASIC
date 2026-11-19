@@ -14,12 +14,13 @@
 ## Public types
 - Module Conversion (Conversion.vb)
 - Class NamespaceDoc (NamespaceDoc.vb) - XGBoost datasets: helpers that convert tabular data into the XGBoost training format.
-- Module Tabular (Tabular.vb)
+- Module Tabular (Tabular.vb) - CSV 表格数据读取（训练 / 验证 / 测试）。 缺失值识别统一走 <see cref="IsMissingToken"/>，并且不再构造 <c>TrainData.feature_value_index</c>（每 (样本,特征) 一个两元素 <c>Single()</c> 对象，
 
 ## Notable public members
 - Public Function ToTrainingSet(matrix As DoubleTagged(Of Single())(), columns As String(), categorical_features As IEnumerable(Of String)) As TrainData
 - Public Function ToValidateSet(matrix As DoubleTagged(Of Single())()) As ValidationData
 - Public Function ToTestDataSet(matrix As Single()()) As TestData
+- Public Function IsMissingToken(value As String) As Boolean
 - Public Function ReadTestData(file As String) As TestData
 - Public Function ReadValidationData(file As String) As ValidationData
 - Public Function ReadTrainData(file As String, categorical_features As IEnumerable(Of String)) As TrainData
@@ -31,6 +32,7 @@
 - Microsoft.VisualBasic.Language.Java
 - Microsoft.VisualBasic.Language.Values
 - Microsoft.VisualBasic.MachineLearning.XGBoost.train
+- System.Globalization
 - System.IO
 - System.Runtime.CompilerServices
 

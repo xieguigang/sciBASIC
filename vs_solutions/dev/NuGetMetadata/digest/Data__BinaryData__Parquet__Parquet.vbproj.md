@@ -1,0 +1,169 @@
+# Data/BinaryData/Parquet/Parquet.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.DataStorage.Parquet
+- AssemblyName  : Microsoft.VisualBasic.DataStorage.Parquet
+- TargetFramework: net10.0
+- Source files  : 29
+- Existing Title: Apache Parquet columnar data file format (pure VB.NET implementation)
+- Existing Desc : A pure VB.NET implementation of the Apache Parquet columnar file format, without any native (parquet-mr / arrow) dependency. Supports thrift compact protocol metadata, PLAIN values with RLE bit-packed hybrid levels on write, PLAIN / dictionary / DELTA / BYTE_STREAM_SPLIT / RLE decoding on read, DataPageV1 writing and DataPageV1+V2 reading, UNCOMPRESSED / SNAPPY / GZIP page compression, row groups, column statistics and LIST / MAP / STRUCT nested schemas. Reads and writes Microsoft.VisualBasic.Data.Framework.DataFrame objects.
+- Existing Tags : scibasic;parquet;columnar;dataframe;apache
+
+## Namespaces
+- Columns  [files: 2]
+- Encodings  [files: 6]
+- Format  [files: 4]
+- Nested  [files: 2]
+- Schema  [files: 2]
+- Thrift  [files: 3]
+
+## Public types
+- Module ArrayUtil (ArrayUtil.vb) - 强类型数组的创建辅助函数（正确处理长度为 0 的情况）。
+- Class DataColumn (Columns\DataColumn.vb) - 一个<b>叶子列</b>（物理列）的数据：定义级别 / 重复级别 / 已定义数值。 <para> <c>DefinitionLevels.Length</c> 表示该列在当前数据块中的数值槽位数量（包含 null 槽位），
+- Class ColumnBuffer (Columns\DataColumn.vb) - 写入过程中用于累积某个叶子列数据的可变缓冲区。
+- Module ValueCast (Columns\DataColumn.vb) - 数值类型转换辅助函数。
+- Module ParquetCodec (Compression\ParquetCodec.vb) - Parquet 页面数据的压缩与解压分发层。 <para> SNAPPY 直接复用基础代码库中的 raw block 实现（<c>Microsoft.VisualBasic.Data.IO.Snappy.Snappy</c>），
+- Module DataFrameMapping (DataFrame.Mapping.vb) - </para> <para> 缺失值（null）规则：写入时 <c>Nothing</c> 字符串与 <c>NaN</c> 数值都写成 null 槽位；
+- Module BitPacking (Encodings\BitPacking.vb) - RLE / bit-packed hybrid 编码（<see cref="Format.Encoding.RLE"/>）， 以及已废弃的旧式 <see cref="Format.Encoding.BIT_PACKED"/> 解码。 <para>
+- Module ByteWriter (Encodings\ByteReader.vb) - 面向输出流的字节写入辅助函数（小端字节序）。
+- Module ByteStreamSplit (Encodings\ByteStreamSplit.vb) - BYTE_STREAM_SPLIT 编码的解码实现（FLOAT / DOUBLE / FIXED_LEN_BYTE_ARRAY）。
+- Module DeltaEncoding (Encodings\DeltaEncoding.vb) - DELTA_BINARY_PACKED / DELTA_LENGTH_BYTE_ARRAY / DELTA_BYTE_ARRAY 的解码实现。 <para> 本库写入时不使用这些编码，仅用于读取外部实现（parquet-mr / pyarrow 等）生成的文件。
+- Module Int96 (Encodings\Int96.vb) - INT96 时间戳（8 字节纳秒 + 4 字节儒略日）与 <see cref="DateTime"/> 之间的转换。
+- Module PlainEncoding (Encodings\PlainEncoding.vb) - PLAIN 编码（<see cref="Format.Encoding.PLAIN"/>）的读写实现。
+- Class Statistics (Format\ColumnChunk.vb) - 列统计信息（对应 parquet.thrift 的 <c>Statistics</c>）。
+- Class KeyValue (Format\ColumnChunk.vb) - 键值对元数据（对应 parquet.thrift 的 <c>KeyValue</c>）。
+- Class ColumnMetaData (Format\ColumnChunk.vb) - 列块的元数据（对应 parquet.thrift 的 <c>ColumnMetaData</c>）。
+- Class ColumnChunk (Format\ColumnChunk.vb) - 列块（对应 parquet.thrift 的 <c>ColumnChunk</c>）。
+- Class RowGroup (Format\ColumnChunk.vb) - 行组（对应 parquet.thrift 的 <c>RowGroup</c>）。
+- Class FileMetaData (Format\ColumnChunk.vb) - 文件的整体元数据，位于文件尾部的 footer 中（对应 parquet.thrift 的 <c>FileMetaData</c>）。
+- Class DataPageHeader (Format\PageHeader.vb) - 数据页头（对应 parquet.thrift 的 <c>DataPageHeader</c>，DataPageV1）。
+- Class DictionaryPageHeader (Format\PageHeader.vb) - 字典页头（对应 parquet.thrift 的 <c>DictionaryPageHeader</c>）。
+- Class DataPageHeaderV2 (Format\PageHeader.vb) - 数据页头（对应 parquet.thrift 的 <c>DataPageHeaderV2</c>）。
+- Class PageHeader (Format\PageHeader.vb) - 页面头（对应 parquet.thrift 的 <c>PageHeader</c>），紧跟在页面数据之前。
+- Enum ParquetType (Format\ParquetEnums.vb) - Parquet 的物理数据类型（对应 parquet.thrift 的 <c>Type</c>）。
+- Enum ConvertedType (Format\ParquetEnums.vb) - 旧的逻辑类型标记（对应 parquet.thrift 的 <c>ConvertedType</c>）。
+- Enum FieldRepetitionType (Format\ParquetEnums.vb)
+- Enum Encoding (Format\ParquetEnums.vb)
+- Enum CompressionCodec (Format\ParquetEnums.vb)
+- Enum PageType (Format\ParquetEnums.vb)
+- Class LogicalType (Format\SchemaElement.vb) - Parquet 的逻辑类型（<c>LogicalType</c> union 的扁平化表示）。
+- Class SchemaElement (Format\SchemaElement.vb) - Parquet 的 schema 元素（对应 parquet.thrift 的 <c>SchemaElement</c>）。 <para> 文件 footer 中的 schema 字段是一个<b>平坦</b>的列表，通过 <see cref="NumChildren"/> 还原为树。
+- Module NamespaceDoc (NamespaceDoc.vb) - </list> <para> 尚未支持：ZSTD / LZ4 / LZO / BROTLI 压缩、页级索引（page index）、Bloom filter、
+- Module JsonAssembler (Nested\JsonAssembler.vb) - 嵌套列读取端的 record assembly 实现：把叶子列的 <c>(repetition_level, definition_level, value)</c> 三元流按照 schema 树组装回每一行的 JSON 文本。 <para>
+- Module JsonShredder (Nested\JsonShredder.vb) - 嵌套列写入端的 Dremel shredding 实现：把每一行的 JSON 文本按照 schema 树 拆分成叶子列的 <c>(repetition_level, definition_level, value)</c> 三元流。
+- Class ParquetException (ParquetException.vb) - Parquet 文件格式错误（文件截断、magic 不匹配、元数据非法、编码不支持等）。
+- Module ParquetConstants (ParquetException.vb) - Parquet 文件格式相关的常量。
+- Class ParquetOptions (ParquetOptions.vb) - Parquet 读写选项。
+- Class ParquetTable (ParquetTable.vb) - 从 Parquet 文件读取出来的列式数据表（未转换为 DataFrame 之前的中间模型）。
+- Module pq (pq.vb) - Parquet 读写的对外门面，提供与 pyarrow 用法类似的两个基础 API： <code> Call pq.write_table(df, "data.parquet") ' 写入
+- Class ParquetSchemaNode (Schema\ParquetSchema.vb) - Parquet schema 树中的节点。叶子节点对应一个物理列，group 节点对应结构体 / LIST / MAP。
+- Class ParquetSchema (Schema\ParquetSchema.vb) - 由 footer 中的平坦 schema 列表还原出来的 schema 树。
+- Module TypeDescriptor (Schema\TypeDescriptor.vb) - 嵌套列的类型描述（JSON 文本）与 schema 节点之间的转换。 <para> 描述格式示例：<code>
+- Enum ThriftType (Thrift\ThriftTypes.vb) - Thrift compact protocol 的数据类型标记。 <para> 注意 <c>True</c> / <c>False</c> 只出现在<b>字段头</b>当中，用于编码布尔字段的值；
+- Enum ColumnKind (WritePlan.vb) - 顶层列在内存中的形态。
+- Class ColumnPlan (WritePlan.vb) - 一个顶层列的写入计划。
+- Class WritePlan (WritePlan.vb) - 完整的写入计划：schema 树 + 顶层列数据 + 行数。
+
+## Notable public members
+- Public Function NewArray(Of T)(count As Integer) As T()
+- Public Function EmptyValues(type As Format.ParquetType) As Array
+- Public Property Node As Schema.ParquetSchemaNode
+- Public Property RepetitionLevels As Integer()
+- Public Property DefinitionLevels As Integer()
+- Public Property Values As Array
+- Public Property NumSlots As Integer
+- Public ReadOnly Property MaxDefinitionLevel As Integer
+- Public ReadOnly Property MaxRepetitionLevel As Integer
+- Public ReadOnly Property Count As Integer
+- Public ReadOnly Property DefinedCount As Integer
+- Public Property Node As Schema.ParquetSchemaNode
+- Public ReadOnly Property RepetitionLevels As New List(Of Integer)
+- Public ReadOnly Property DefinitionLevels As New List(Of Integer)
+- Public ReadOnly Property Values As New List(Of Object)
+- Public Sub New(node As Schema.ParquetSchemaNode)
+- Public ReadOnly Property IsEmpty As Boolean
+- Public Sub Add(rep As Integer, def As Integer, value As Object)
+- Public Function ToDataColumn() As DataColumn
+- Public Function UnsignedBitWidth(node As Schema.ParquetSchemaNode) As Integer
+- Public Function ToTypedArray(node As Schema.ParquetSchemaNode, values As List(Of Object)) As Array
+- Public Function ToClrValue(type As Format.ParquetType, value As Object) As Object
+- Public Function Compress(codec As Format.CompressionCodec, data As Byte()) As Byte()
+- Public Function Decompress(codec As Format.CompressionCodec, data As Byte(), uncompressedSize As Integer) As Byte()
+- Public Const NestedTypeAttribute As String = Nested.JsonShredder.NestedTypeAttribute
+- Public Const BinaryColumnAttribute As String = "parquet.binary"
+- Public Function CreateWritePlan(df As DataFrameModel, options As ParquetOptions) As WritePlan
+- Public Function CountRows(df As DataFrameModel) As Integer
+- Public Function ToDataFrame(tableSchema As Schema.ParquetSchema,
+- Public Function BitWidth(maxValue As Integer) As Integer
+- Public Sub WriteRleBitPackedHybrid(stream As Stream, values As Integer(), bitWidth As Integer)
+- Public Function ReadRleBitPackedHybrid(reader As ByteReader, count As Integer, bitWidth As Integer) As Integer()
+- Public Function ReadBitPackedLegacy(reader As ByteReader, count As Integer, bitWidth As Integer) As Integer()
+- Public Function UnpackValue(buffer As Byte(), bitOffset As Integer, bitWidth As Integer) As Long
+- Public Sub New(data As Byte(), Optional position As Integer = 0)
+- Public ReadOnly Property Data As Byte()
+- Public Property Position As Integer
+- Public ReadOnly Property Length As Integer
+- Public ReadOnly Property Remaining As Integer
+- Public ReadOnly Property EndOfData As Boolean
+- Public Sub Ensure(count As Integer)
+- Public Sub Skip(count As Integer)
+- Public Function ReadByte() As Byte
+- Public Function ReadInt16() As Short
+- Public Function ReadInt32() As Integer
+- Public Function ReadInt64() As Long
+- Public Function ReadSingle() As Single
+- Public Function ReadDouble() As Double
+- Public Function ReadBytes(count As Integer) As Byte()
+- Public Function ReadVarint() As ULong
+- Public Function ReadZigZag() As Long
+- Public Sub WriteInt32LE(stream As Stream, value As Integer)
+- Public Sub WriteInt64LE(stream As Stream, value As Long)
+- Public Sub WriteSingleLE(stream As Stream, value As Single)
+- Public Sub WriteDoubleLE(stream As Stream, value As Double)
+- Public Sub WriteVarint(stream As Stream, value As ULong)
+- Public Sub WriteZigZag(stream As Stream, value As Long)
+- Public Function ReadSingles(reader As ByteReader, count As Integer) As Single()
+- Public Function ReadDoubles(reader As ByteReader, count As Integer) As Double()
+- Public Function ReadFixedLen(reader As ByteReader, count As Integer, typeLength As Integer) As Byte()()
+- ... and 282 more
+
+## Imports
+- DataFrameModel = Microsoft.VisualBasic.Data.Framework.DataFrame
+- FeatureVectorModel = Microsoft.VisualBasic.Data.Framework.FeatureVector
+- SnappyCodec = Microsoft.VisualBasic.Data.IO.Snappy.Snappy
+- System.IO
+- System.IO.Compression
+- System.Linq
+- System.Text
+- System.Text.Json.Nodes
+
+## File tree
+- ArrayUtil.vb
+- Columns\DataColumn.vb
+- Compression\ParquetCodec.vb
+- DataFrame.Mapping.vb
+- Encodings\BitPacking.vb
+- Encodings\ByteReader.vb
+- Encodings\ByteStreamSplit.vb
+- Encodings\DeltaEncoding.vb
+- Encodings\Int96.vb
+- Encodings\PlainEncoding.vb
+- Format\ColumnChunk.vb
+- Format\PageHeader.vb
+- Format\ParquetEnums.vb
+- Format\SchemaElement.vb
+- NamespaceDoc.vb
+- Nested\JsonAssembler.vb
+- Nested\JsonShredder.vb
+- ParquetException.vb
+- ParquetOptions.vb
+- ParquetReader.vb
+- ParquetTable.vb
+- ParquetWriter.vb
+- pq.vb
+- Schema\ParquetSchema.vb
+- Schema\TypeDescriptor.vb
+- Thrift\ThriftCompactReader.vb
+- Thrift\ThriftCompactWriter.vb
+- Thrift\ThriftTypes.vb
+- WritePlan.vb
+

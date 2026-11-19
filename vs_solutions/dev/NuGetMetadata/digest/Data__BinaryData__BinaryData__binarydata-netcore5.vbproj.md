@@ -3,17 +3,18 @@
 - RootNamespace : Microsoft.VisualBasic.Data.IO
 - AssemblyName  : Microsoft.VisualBasic.Data.BinaryData
 - TargetFramework: net10.0
-- Source files  : 57
+- Source files  : 67
 - Existing Title: Binary Data Stream Reader, Writer and Compression Codec Toolkit
-- Existing Desc : A low-level binary data toolkit for sciBASIC#: endianness-aware BinaryReader and BinaryWriter extensions, a Java-style ByteBuffer, BZip2, LZW, LZ4 and LZMA compression codecs, XDR encoding and a Python pickle codec for parsing custom binary file formats.
-- Existing Tags : scibasic;binary-data;endianness;bzip2;lzw;pickle;xdr
+- Existing Desc : A low-level binary data toolkit for sciBASIC#: endianness-aware BinaryReader and BinaryWriter extensions, a Java-style ByteBuffer, BZip2, LZW, LZ4, LZMA and Snappy compression codecs, XDR encoding and a Python pickle codec for parsing custom binary file formats.
+- Existing Tags : scibasic;binary-data;endianness;bzip2;lzw;snappy;pickle;xdr
 
 ## Namespaces
 - Bzip2  [files: 11]
 - Bzip2.Math  [files: 4]
 - LZ77Stream  [files: 6]
-- LZW  [files: 2]
-- Pickle  [files: 8]
+- LZW  [files: 1]
+- Pickle  [files: 10]
+- Snappy  [files: 9]
 - Xdr  [files: 3]
 
 ## Public types
@@ -43,18 +44,24 @@
 - Interface IByteWriter (Extensions\IByteWriter.vb)
 - Module MSWindows (Extensions\MSWindows.vb) - > https://docs.microsoft.com/en-us/windows/desktop/WinProg/windows-data-types The data types supported by Windows are used to define function return values, function and message parameters, and structure members. They define the size
 - Module NamespaceDoc (LZ77Stream\NamespaceDoc.vb) - ## 三、对比总结 | | LZ4 | LZMA（xz） | zstd（参照） | |---|---|---|---|
-- Class Encoder (LZW.vb)
-- Class Decoder (LZW.vb)
 - Class NamespaceDoc (NamespaceDoc.vb) - Low level binary data stream toolkit: endianness aware extensions for BinaryReader and BinaryWriter, byte buffers and buffer regions, and the byte order handling used to parse custom binary file formats.
 - Module NamespaceDoc (NamespaceDoc.vb) - The LZW (Lempel-Ziv-Welch) dictionary compression codec for binary data streams.
+- Class ReferenceComparer (PickleSerializer\ClrObjectCodec.vb) - 以引用相等（而非 <c>Equals</c>）比较对象的比较器，供 pickler 的 memo 表使用。 覆盖了 <c>Equals</c> 的类（例如值对象风格的类型）如果使用默认比较器， 两个不同实例会被误判为同一个 memo 条目，从而导致反序列化后的共享引用错乱。
+- Module ClrObjectCodec (PickleSerializer\ClrObjectCodec.vb) - 反序列化时按"程序集 + 类型全名"解析（失败后再扫描当前已加载的全部程序集， 因此即使程序集版本升级或改名，只要类型全名不变仍可还原）。对于本库旧版本写出的 文件（<c>module</c> 字段是命名空间而不是 <c>clr:</c> 前缀），也会在默认的 Python
 - Class ComplexNumber (PickleSerializer\ComplexNumber.vb) - 表示 Python 的复数类型 (complex)。 Python 原生支持复数运算，.NET 没有内置复数类型（System.Numerics.Complex 需要额外引用），因此提供此轻量级实现。
-- Class MinimalPicklePickler (PickleSerializer\MinimalPicklePickler.vb) - PythonTuple → tuple PythonSet → list (简化处理，Python 可再转换) PythonObject → 通过 GLOBAL+REDUCE+BUILD 还原
-- Class MinimalPickleUnpickler (PickleSerializer\MinimalPickleUnpickler.vb) - Python bool → VB.NET Boolean Python int → VB.NET Long (或 Integer，取决于大小) Python float → VB.NET Double
+- Interface IPickleObjectFactory (PickleSerializer\IPickleObjectFactory.vb) - <c>numpy.core.multiarray._reconstruct</c>、<c>numpy.dtype</c>）的构造与状态恢复过程。 <see cref="MinimalPickleUnpickler"/> 在 <c>REDUCE</c>/<c>NEWOBJ</c>（对象构造）与 <c>BUILD</c>（<c>__setstate__</c> 状态恢复）两个时机询问工厂：
+- Class MinimalPicklePickler (PickleSerializer\MinimalPicklePickler.vb) - Type → 程序集限定名字符串（反序列化端还原为 Type） Guid/Uri/DateTimeOffset/DateOnly/TimeOnly → 字符串 其他 CLR 对象 → GLOBAL(clr:程序集) + REDUCE + BUILD 字段快照，
+- Class MinimalPickleUnpickler (PickleSerializer\MinimalPickleUnpickler.vb) - Python bytes → VB.NET Byte() Python list → VB.NET List(Of Object) Python dict → VB.NET Dictionary(Of Object, Object)
 - Module NamespaceDoc (PickleSerializer\NamespaceDoc.vb) - A Python pickle serialization codec: pickler and unpickler implementations together with the Python object model for tuples, sets, complex numbers and global references.
 - Class PythonGlobalRef (PickleSerializer\PythonGlobalRef.vb) - 内部类型：表示 Python 全局引用（module.classname）。 由 GLOBAL 操作码产生，供 REDUCE / NEWOBJ 消费。 不对外公开，因为用户应通过 PythonObject 访问反序列化结果。
 - Class PythonObject (PickleSerializer\PythonObject.vb) - 表示从 Pickle 反序列化的未知 Python 对象。 当遇到无法映射到 .NET 类型的 Python 类实例时， 使用此包装器保存模块名、类名、构造参数和对象状态，
 - Class PythonSet (PickleSerializer\PythonSet.vb) - 表示 Python 的 set 类型。Python 的 set 是无序且元素唯一的集合， 类似于 .NET 的 HashSet，但提供与 Python 互操作所需的类型标识。 支持 frozenset 和 set 两种语义（此类型不区分可变/不可变）。
 - Class PythonTuple (PickleSerializer\PythonTuple.vb) - 表示 Python 的 tuple 类型。.NET 没有原生的不可变元组类型， 因此使用此包装类来保持 Python 语义上的不可变性和有序性。 元组在 Python 中常用于函数返回多值、字典键等场景。
+- Module NamespaceDoc (Snappy\NamespaceDoc.vb) - ``` 0x02..0x7F 是保留的“不可跳过”类型，遇到时应拒绝；0x80..0xFD 与 0xFE 可以安全跳过。单个分块的未压缩数据不得超过 65536 字节。
+- Module SnappyConstants (Snappy\SnappyConstants.vb) - Snappy 原始块格式与分块流格式（framing format）共用的常量。
+- Module SnappyRawDecoder (Snappy\SnappyRawDecoder.vb) - Snappy 原始块格式的解码器。解析 varint 长度头之后线性扫描 字面量与三种复制指令，并对所有边界条件做严格校验。
+- Module SnappyRawEncoder (Snappy\SnappyRawEncoder.vb) - Snappy 原始块格式的压缩器。输入被切成不超过 64 KiB 的分片， 每个分片使用一张 4 字节哈希表查找匹配，并输出标准的字面量/复制指令流。
+- Module Varint (Snappy\Varint.vb) - LEB128 无符号 varint 的读写辅助。Snappy 的原始块以 varint 表示未压缩长度。
 - Class BinaryDataReader (Stream\BinaryDataReader.vb) - Represents an extended <see cref="BinaryReader"/> supporting special file format data types.
 - Class BinaryDataWriter (Stream\BinaryDataWriter.vb) - Represents an extended <see cref="BinaryWriter"/> supporting special file format data types.
 - Enum BinaryDateTimeFormat (Stream\BinaryDateTimeFormat.vb) - Represents the set of formats of binary date and time encodings.
@@ -132,7 +139,7 @@
 - Public Function GetBytes(value As Single) As Byte()
 - Public Sub New(inputStream As Stream)
 - Public Function ReadBoolean() As Boolean
-- ... and 336 more
+- ... and 389 more
 
 ## Imports
 - Microsoft.VisualBasic.ComponentModel
@@ -152,11 +159,12 @@
 - System
 - System.Globalization
 - System.IO
+- System.Linq.Expressions
+- System.Numerics
 - System.Reflection
 - System.Runtime.CompilerServices
 - System.Runtime.InteropServices
 - System.Text
-- TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 ## File tree
 - BufferRegion.vb
@@ -190,9 +198,10 @@
 - LZ77Stream\Lzma1Decoder.vb
 - LZ77Stream\LzmaStream.vb
 - LZ77Stream\NamespaceDoc.vb
-- LZW.vb
 - NamespaceDoc.vb
+- PickleSerializer\ClrObjectCodec.vb
 - PickleSerializer\ComplexNumber.vb
+- PickleSerializer\IPickleObjectFactory.vb
 - PickleSerializer\MinimalPicklePickler.vb
 - PickleSerializer\MinimalPickleUnpickler.vb
 - PickleSerializer\NamespaceDoc.vb
@@ -201,6 +210,15 @@
 - PickleSerializer\PythonSet.vb
 - PickleSerializer\PythonTuple.vb
 - Properties\AssemblyInfo.vb
+- Snappy\Crc32C.vb
+- Snappy\NamespaceDoc.vb
+- Snappy\Snappy.vb
+- Snappy\SnappyConstants.vb
+- Snappy\SnappyInputStream.vb
+- Snappy\SnappyOutputStream.vb
+- Snappy\SnappyRawDecoder.vb
+- Snappy\SnappyRawEncoder.vb
+- Snappy\Varint.vb
 - Stream\BinaryDataReader.vb
 - Stream\BinaryDataWriter.vb
 - Stream\BinaryDateTimeFormat.vb

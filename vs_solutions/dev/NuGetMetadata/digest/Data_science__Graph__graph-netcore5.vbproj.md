@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Data.GraphTheory
 - AssemblyName  : Microsoft.VisualBasic.Data.GraphTheory
 - TargetFramework: net10.0
-- Source files  : 119
+- Source files  : 121
 - Existing Title: Graph Theory Algorithms, Network Models and Graph Search
 - Existing Desc : Algorithm library for sciBASIC# graphs: Dijkstra and A-star shortest paths, contraction hierarchies, Dinic max flow, Louvain, Leiden and label propagation communities, plus MST, Ullmann isomorphism and HNSW search.
 - Existing Tags : scibasic;graph-theory;graph-algorithm;shortest-path;community-detection
@@ -17,6 +17,7 @@
 - Analysis.LPA  [files: 4]
 - Analysis.MorganFingerprint  [files: 4]
 - Analysis.PageRank  [files: 4]
+- Analysis.Similarity  [files: 2]
 - Dijkstra.PQDijkstra  [files: 6]
 - DinicMaxFlow  [files: 4]
 - EMD  [files: 8]
@@ -24,7 +25,7 @@
 - HuffmanTree  [files: 4]
 - KdTree  [files: 6]
 - KdTree.ApproximateNearNeighbor  [files: 5]
-- KNearNeighbors  [files: 4]
+- KNearNeighbors  [files: 5]
 - KNearNeighbors.HNSW  [files: 13]
 - MinimumSpanningTree  [files: 5]
 - Network  [files: 9]
@@ -86,6 +87,9 @@
 - Class Finder (Analysis\PQDijkstra\Finder.vb)
 - Structure HeapNode (Analysis\PQDijkstra\HeapNode.vb)
 - Module NamespaceDoc (Analysis\PQDijkstra\NamespaceDoc.vb) - Priority queue based Dijkstra shortest path search.
+- Module SetSimilarity (Analysis\Similarity\SetSimilarity.vb)
+- Class JaccardScore (Analysis\Similarity\SetSimilarity.vb)
+- Class WeightedCosineScore (Analysis\Similarity\SetSimilarity.vb)
 - Class Ullmann (Analysis\Ullmann.vb) - Ullmann算法是子图同构 问题的经典回溯算法，由J.R. Ullmann于1976年提出。它在网络图分析、化学信息学（分子结构匹配）、模式识别等领域有广泛应用。
 - Class Edge (EMD\Edge.vb) - @author Telmo Menezes (telmo@telmomenezes.com)
 - Class Edge0 (EMD\Edge.vb)
@@ -147,10 +151,7 @@
 - Module NamespaceDoc (Model\Tree\KdTree\NamespaceDoc.vb) - The K-D tree spatial index.
 - Class PQTree (Model\Tree\PQTree.vb) - @author santi
 - Class TermTree (Model\Tree\TermTree.vb)
-- Class Tree (Model\Tree\Tree.vb)
-- Class Tree (Model\Tree\Tree.vb) - 使用字符串<see cref="String"/>作为键名的树节点 <typeparam name="T">the value type of the ``Data`` property</typeparam> 在这里如果直接继承<see cref="Tree(Of T, K)"/>类型的话，会导致child的类型错误
-- Class Trie (Model\Tree\Trie.vb) - 朴素字典树（Trie）
-- ... and 28 more
+- ... and 31 more
 
 ## Notable public members
 - Public Function members(tags As Dictionary(Of String, String)) As KeyMaps
@@ -213,7 +214,7 @@
 - Public Overrides Function ToString() As String
 - Public Property parallel As Boolean = True
 - Public Function DistanceFinder(startIndex As Integer) As Node()
-- ... and 460 more
+- ... and 490 more
 
 ## Imports
 - Connection = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
@@ -229,6 +230,7 @@
 - Microsoft.VisualBasic.ComponentModel.Ranges
 - Microsoft.VisualBasic.ComponentModel.Ranges.Model
 - Microsoft.VisualBasic.Data.GraphTheory.Analysis.Dijkstra
+- Microsoft.VisualBasic.Data.GraphTheory.Analysis.Similarity
 - Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 - Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
 - Microsoft.VisualBasic.Data.GraphTheory.Network
@@ -240,7 +242,6 @@
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Language.Default
 - Microsoft.VisualBasic.Language.Python
-- Microsoft.VisualBasic.Language.Vectorization
 
 ## File tree
 - Analysis\Community\FastUnfolding\FastUnfolding.vb
@@ -283,6 +284,8 @@
 - Analysis\PQDijkstra\HeapNode.vb
 - Analysis\PQDijkstra\NamespaceDoc.vb
 - Analysis\PQDijkstra\PQDijkstraProvider.vb
+- Analysis\Similarity\IdfIndex.vb
+- Analysis\Similarity\SetSimilarity.vb
 - Analysis\Ullmann.vb
 - EMD\Edge.vb
 - EMD\Feature.vb

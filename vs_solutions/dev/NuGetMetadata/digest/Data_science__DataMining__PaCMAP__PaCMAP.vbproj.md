@@ -29,7 +29,7 @@
 - Public Function BroadcastSubForDistance(a As Tensor, b As Tensor) As Tensor
 - Public Function NormalizedDistance(distances As Tensor) As Tensor
 - Public Function Compute(distances As Tensor) As Tensor
-- Public Function pacmap(source As NumericTable,
+- Public Function PacMapFit(source As NumericTable,
 - Public Property NDimensions As Integer
 - Public Property NumNeighbourPairs As Integer?
 - Public Property RatioMidNearPairs As Double

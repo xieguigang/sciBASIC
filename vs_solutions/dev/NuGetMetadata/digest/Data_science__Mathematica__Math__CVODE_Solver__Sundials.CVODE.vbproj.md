@@ -3,9 +3,11 @@
 - RootNamespace : Microsoft.VisualBasic.Math.Sundials.CVODE
 - AssemblyName  : Microsoft.VisualBasic.Math.Sundials.CVODE
 - TargetFramework: net10.0
-- Source files  : 17
-- Existing Title: Managed CVODE Variable-Step ODE Solver with Adams and BDF Methods
+- Source files  : 18
+- Existing Title: Managed SUNDIALS CVODE Variable-Step ODE Solver with Adams and BDF Methods
 - Existing Desc : A pure managed re-implementation of the CVODE ODE solver API for sciBASIC#, with no native P/Invoke: variable-step variable-order Adams and BDF integration, dense and banded LU linear solvers, event root finding and a fluent builder API.
+
+CVODE is a solver for stiff and nonstiff ordinary differential equation (ODE) systems (initial value problem) given in explicit form y' = f(t,y). The methods used in CVODE are variable-order, variable-step multistep methods. For nonstiff problems, CVODE includes the Adams-Moulton formulas, with the order varying between 1 and 12. For stiff problems, CVODE includes the Backward Differentiation Formulas (BDFs) in so-called fixed-leading coefficient form, with order varying between 1 and 5. For either choice of formula, the resulting nonlinear system is solved (approximately) at each integration step. For this, CVODE offers the choice of either functional iteration, suitable only for nonstiff systems, and various versions of Newton iteration. In the cases of a direct linear solver (dense or banded), the Newton iteration is a Modified Newton iteration, in that the Jacobian is fixed (and usually out of date). When using a Krylov method as the linear solver, the iteration is an Inexact Newton iteration, using the current Jacobian (through matrix-free products), in which the linear residual is nonzero but controlled. The implicit nonlinear systems within implicit integrators are solved approximately at each integration step using a modified Newton method, an Inexact Newton method, or fixed-point solver (functional iteration). For the Newton-based methods and the serial or threaded NVECTOR modules in SUNDIALS, CVODE provides both direct (dense, band, or sparse) and preconditioned Krylov iterative (GMRES, BiCGStab, TFQMR) linear solvers. When used with one of the distributed parallel NVECTOR modules, including PETSc and hypre vectors, or a user-provided vector data structure, only the Krylov solvers are available, although a user may supply their own linear solver for any data structures if desired. For the serial vector structure, there is a banded preconditioner module called CVBANDPRE for use with the Krylov solvers, while for the distributed memory parallel structure there is a preconditioner module called CVBBDPRE which provides a band-block-diagonal preconditioner.
 - Existing Tags : scibasic;ode-solver;cvode;adams;bdf;stiff-equations;root-finding
 
 ## Namespaces
@@ -18,15 +20,16 @@
 - Class CVODEOptions (CVODEOptions.vb) - CVODE求解器配置选项
 - Class CVODESolver (CVODESolver.vb) - CVODE常微分方程求解器（变阶变步长多步法）
 - Enum CVODEStatus (CVODEStatus.vb) - 求解器返回状态
-- Class DenseMatrix (DenseMatrix.vb) - 稠密矩阵类，提供矩阵存储和基本操作 采用列优先存储方式，便于与BLAS/LAPACK风格的操作兼容
+- Module CVODESolverExtensions (Extensions\CVODESolverExtensions.vb) - 把 CVODE 求解器的积分结果统一输出为 <see cref="ODESolution"/> 的扩展方法。 <see cref="ODESolution"/> 是 ODE 求解器框架的统一结果模型（原来 CVODE 专用的 ``ODESolution`` 已经删除），它同时提供 ``x`` / ``y`` / ``y0`` / ``params`` 的原始数据与 ``Count`` /
+- Class CvodeSolverProvider (Extensions\ODEsSolverProvider.vb) - 这个类型只负责「桥接」： 1. 把 <see cref="ODEs.Derivatives(Double, Double(), Double())"/> 适配成 <see cref="RHSFunction"/>（直接使用 <see cref="Vector.Array"/> 的内部缓冲，零拷贝）；
+- Module SolverExtensions (Extensions\SolverExtensions.vb) - ```vbnet Call SolverExtensions.Register() Dim result1 = model.Solve(1000, 0, 5, ODESolverMethod.CVODE_BDF)
+- Module VectorExtensions (Extensions\VectorExtensions.vb)
 - Class BandLinearSolver (LinearSolver\BandLinearSolver.vb) - 带状线性求解器 针对带状矩阵优化的LU分解
 - Class DenseLinearSolver (LinearSolver\DenseLinearSolver.vb) - 稠密线性求解器 使用带部分主元选择的LU分解
 - Enum LinearSolverResult (LinearSolver\LinearSolverResult.vb) - 线性求解器返回状态
 - Enum LinearSolverType (LinearSolver\LinearSolverType.vb) - 线性求解器类型枚举
 - Class NamespaceDoc (NamespaceDoc.vb) - The SUNDIALS CVODE ordinary differential equation solver integration: the native solver bindings together with the ODE integration API.
-- Class ODESolution (ODESolution.vb) - 常微分方程求解结果
 - Class RootFindingResult (RootFindingResult.vb) - 根查找结果
-- Module VectorExtensions (VectorExtensions.vb)
 
 ## Notable public members
 - Public Sub New(method As CVODEMethod, rhsFunc As RHSFunction, n As Integer, Optional options As CVODEOptions = Nothing)
@@ -42,6 +45,7 @@
 - Public Function WithMaxStep(maxStep As Double) As CVODEBuilder
 - Public Function WithInitialStep(h0 As Double) As CVODEBuilder
 - Public Function Build() As CVODESolver
+- Public Function Solve(t0 As Double, tEnd As Double, y0 As Vector, n As Integer,
 - Public Property RelativeTolerance As Double = 0.0001
 - Public Property AbsoluteTolerance As Double = 0.00000001
 - Public Property MaxOrder As Integer = 5
@@ -79,23 +83,26 @@
 - Public Shared Function StiffOptions() As CVODEOptions
 - Public Shared Function NonStiffOptions() As CVODEOptions
 - Public Shared Function HighPrecisionOptions() As CVODEOptions
-- Public Sub New(rows As Integer, cols As Integer)
-- Public Sub New(data As Double(,))
-- Public Sub New(other As DenseMatrix)
-- Public ReadOnly Property Rows As Integer
-- Public ReadOnly Property Columns As Integer
-- Public ReadOnly Property IsSquare As Boolean
-- Public ReadOnly Property Data As Double(,)
-- Public Shared Function Identity(n As Integer) As DenseMatrix
-- Public Shared Function Zeros(rows As Integer, cols As Integer) As DenseMatrix
-- Public Shared Function Ones(rows As Integer, cols As Integer) As DenseMatrix
-- ... and 50 more
+- Public Function Solve(solver As CVODESolver, t0 As Double, tEnd As Double, y0 As Vector,
+- Public Function Solve(method As CVODEMethod, rhs As RHSFunction, t0 As Double, tEnd As Double,
+- Public ReadOnly Property Method As CVODEMethod
+- Public ReadOnly Property Name As String Implements IODEsolverProvider.Name
+- Public ReadOnly Property Description As String Implements IODEsolverProvider.Description
+- Public Sub New(method As CVODEMethod, Optional name As String = Nothing, Optional description As String = Nothing)
+- Public Function Solve(model As ODEs, y0 As Double(), n As Integer, a As Double, b As Double,
+- Public Const AdamsName As String = "cvode.adams"
+- Public Const BdfName As String = "cvode.bdf"
+- ... and 28 more
 
 ## Imports
+- Microsoft.VisualBasic.Math.Calculus
+- Microsoft.VisualBasic.Math.Calculus.Dynamics
+- Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 - Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 - std = System.Math
+- System.Collections.Generic
 - System.Runtime.CompilerServices
-- System.Text
 
 ## File tree
 - CVODEAdvanced.vb
@@ -105,14 +112,15 @@
 - CVODESolver.vb
 - CVODEStatus.vb
 - CVODEUtils.vb
-- DenseMatrix.vb
+- Extensions\CVODESolverExtensions.vb
+- Extensions\ODEsSolverProvider.vb
+- Extensions\SolverExtensions.vb
+- Extensions\VectorExtensions.vb
 - Func.vb
 - LinearSolver\BandLinearSolver.vb
 - LinearSolver\DenseLinearSolver.vb
 - LinearSolver\LinearSolverResult.vb
 - LinearSolver\LinearSolverType.vb
 - NamespaceDoc.vb
-- ODESolution.vb
 - RootFindingResult.vb
-- VectorExtensions.vb
 

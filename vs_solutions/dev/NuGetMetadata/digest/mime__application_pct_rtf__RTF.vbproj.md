@@ -107,8 +107,8 @@
 ## Imports
 - Microsoft.VisualBasic.ApplicationServices.Report
 - Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Imaging.BitmapImage
 - Microsoft.VisualBasic.Language
-- Microsoft.VisualBasic.MIME.Office.WordDocument
 - Microsoft.VisualBasic.Serialization.JSON
 - System.Drawing
 - System.IO

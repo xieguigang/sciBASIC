@@ -3,22 +3,25 @@
 - RootNamespace : Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
 - AssemblyName  : Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
 - TargetFramework: net10.0
-- Source files  : 44
+- Source files  : 58
 - Existing Title: JavaScript Parser, Interpreter and VB.NET Code Generator
 - Existing Desc : A lightweight JavaScript engine for sciBASIC#: lexes and parses JS source into an AST, runs it on a tree-walking interpreter with classes, promises, generators, async functions and source level stack traces, provides console, filesystem, path, buffer and process modules plus CLR interop, ships an interactive REPL and transpiles programs into standalone VB.NET classes.
 - Existing Tags : scibasic;javascript;interpreter;parser;ast;code-generator;repl;nodejs;clr-interop;stack-trace
 
 ## Namespaces
-- Runtime  [files: 32]
+- Runtime  [files: 35]
+- TypeDefinitions  [files: 11]
 
 ## Public types
 - Enum ObjectPropertyKind (AST\Ast.vb)
+- Enum ImportKind (AST\Ast.vb)
 - Enum ClassMemberKind (AST\Ast.vb)
 - Structure SourcePosition (Language\SourcePosition.vb) - A 1 based source location stamped on AST nodes by the parser (the lexer already tracks the line/column of every token, see <see cref="Token.Location"/>). <para>
 - Enum TokenType (Language\TokenType.vb)
 - Class BufferInstance (Runtime\API\BufferModule.vb)
 - Class FsStats (Runtime\API\FsModule.vb)
 - Class JsFsError (Runtime\API\FsModule.vb) - Node-style fs error carrying a <c>code</c> (ENOENT, EACCES, ...), <c>syscall</c> and <c>path</c>. Printed as <c>"Error: &lt;code&gt;: &lt;desc&gt;, &lt;syscall&gt; '&lt;path&gt;'"</c> and exposes <c>e.code</c> / <c>e.syscall</c> / <c>e.path</c> to scripts.
+- Module ScriptMagic (Runtime\API\ScriptMagic.vb) - The directory is anchored at <see cref="JsRuntime.ScriptBaseDirectory"/> — which <c>Interpreter.Run</c> narrows to the folder of the script it is running — so a relative path passed to <c>here</c> resolves exactly like the VBS
 - Module ConsoleTableFormatter (Runtime\Console\ConsoleTableFormatter.vb) - <item>array of scalars → <c>(index)</c> plus <c>Values</c>;</item> <item>object of objects / arrays / scalars → <c>(index)</c> holds the outer key, the remaining columns come from the values (Node's <c>console.table</c>
 - Module CssStyleParser (Runtime\Console\CssStyleParser.vb) - <para> Supported declarations: <c>color</c> / <c>background(-color)</c> (named CSS colours, <c>#RGB</c>, <c>#RRGGBB</c>, <c>rgb()</c> / <c>rgba()</c>),
 - Module ConsoleRenderer (Runtime\Console\CssStyleParser.vb) - Renders a rich <see cref="ConsoleMessage"/> as ANSI escaped text: the log level provides the base style (<c>warn</c> → yellow, <c>error</c>/<c>assert</c> → red, <c>trace</c> → magenta, ...) and each fragment's <c>%c</c> CSS is
@@ -27,6 +30,7 @@
 - Class ConsoleMessage (Runtime\Console\ScriptIO.vb) - A single console output record: the log level (<c>log</c>, <c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>assert</c>, <c>trace</c>, ...) plus the styled fragments the line is made of.
 - Class LogTextIO (Runtime\Console\ScriptIO.vb) - In-memory sink used by the unit tests: <see cref="Lines"/> keeps the plain text of every message (no ANSI escapes, no HTML markup), while <see cref="Messages"/> keeps the rich records for style assertions.
 - Class ConsoleIO (Runtime\Console\ScriptIO.vb) - Sink that writes to the .NET console. Rich fragments are rendered through <c>CssStyleParser</c> as ANSI escape sequences (SGR), so a <c>%c</c> style such as <c>"color: red; font-weight: bold"</c> really colors the output.
+- Module AssemblyResolver (Runtime\Interop\AssemblyResolver.vb) - A namespace is exposed as a FLAT map of simple type name → <see cref="ClrType"/>: public types only, no nested types and no open generic definitions (a definition such as <c>List(Of )</c> cannot be constructed, so it is left out). Scanning a
 - Module ClrConvert (Runtime\Interop\ClrConvert.vb) - objects stay reachable with plain dot notation. </para> <para>
 - Module ClrInterop (Runtime\Interop\ClrInterop.vb) - simply <c>Interpreter.DefineGlobal</c>. Script side: <c>obj.Name</c>, <c>obj.Name = v</c>, <c>obj.Method(...)</c>, <c>obj[i]</c>, <c>for..of</c>, <c>new T(...)</c>, <c>x instanceof T</c>. All member resolution funnels through
 - Module ClrMembers (Runtime\Interop\ClrMemberCache.vb) - Reflection scan, member cache and overload resolution behind the CLR bridge. <para> One scan per type (and per static/instance view) builds the member dictionaries
@@ -37,8 +41,29 @@
 - Class JsModule (Runtime\JsType\JsModule.vb) - A <see cref="NativeObject"/> that can also hold real, non-callable property values (e.g. <c>fs.constants</c>, <c>path.sep</c>, <c>process.argv</c>). <para>
 - Enum PromiseState (Runtime\JsType\JsPromise.vb)
 - Class NativeObject (Runtime\JsType\NativeObject.vb)
+- Module ModuleLoader (Runtime\ModuleLoader.vb) - file) and then against the application base; without an explicit extension <c>.js</c> and <c>index.js</c> are tried as well. </para>
 - Module NamespaceDoc (Runtime\NamespaceDoc.vb) - The single source of JavaScript dynamic semantics used by BOTH the interpreter and the generated VB.NET code: weak typing, truthiness, loose/strict equality, member/index access, invocation and all builtin
 - Module JsRuntime (Runtime\Runtime.vb)
+- Class ScanResult (TypeDefinitions\AssemblyScanner.vb)
+- Module AssemblyScanner (TypeDefinitions\AssemblyScanner.vb) - Reflects one CLR assembly into the <see cref="TsType"/> model. <para> Member visibility is taken from the very same <see cref="Runtime.ClrMembers"/>
+- Module JsDocWriter (TypeDefinitions\JsDocWriter.vb) - Renders the XML documentation model (<see cref="doc.ProjectType"/> / <see cref="doc.ProjectMember"/>) as a JSDoc comment block, so the generated ``.d.ts`` carries the same IntelliSense text a .NET IDE would show.
+- Module NamespaceDoc (TypeDefinitions\NamespaceDoc.vb) - TypeScript ``.d.ts`` definition file generation for CLR assemblies reflected through the LiteJs interop bridge. <para>
+- Class EmitMeta (TypeDefinitions\TsEmitter.vb)
+- Module TsEmitter (TypeDefinitions\TsEmitter.vb) - Writes the single self-contained ``.d.ts`` file: header comment, one ``declare namespace`` block per CLR namespace (global-namespace types at file level, nested types merged through a same-named namespace block), then the
+- Enum TsTypeKind (TypeDefinitions\TsModel.vb)
+- Class TsParameter (TypeDefinitions\TsModel.vb)
+- Class TsProperty (TypeDefinitions\TsModel.vb)
+- Class TsField (TypeDefinitions\TsModel.vb)
+- Class TsMethod (TypeDefinitions\TsModel.vb)
+- Class TsConstructor (TypeDefinitions\TsModel.vb)
+- Class TsIndexer (TypeDefinitions\TsModel.vb)
+- Class TsType (TypeDefinitions\TsModel.vb)
+- Module TsNaming (TypeDefinitions\TsNaming.vb) - Identifier and name helpers shared by the scanner, the type mapper and the emitter.
+- Class TypeDefinitionOptions (TypeDefinitions\TsOptions.vb) - Options of the TypeScript ``.d.ts`` generation pipeline.
+- Class GenerationResult (TypeDefinitions\TypeDefinitionGenerator.vb)
+- Module TypeDefinitionGenerator (TypeDefinitions\TypeDefinitionGenerator.vb) - Facade of the TypeScript definition generator: reflects one CLR assembly and emits a single ``.d.ts`` whose member visibility and type mapping are taken from the same <see cref="Runtime.ClrMembers"/> / <see cref="Runtime.ClrConvert"/>
+- Module TypeMapper (TypeDefinitions\TypeMapper.vb) - </para> <para> The ``context`` argument carries the generic parameter names of the declaring
+- Class XmlDocIndex (TypeDefinitions\XmlDocIndex.vb) - Indexed view of one assembly XML documentation file, loaded through the <c>ApplicationServices.Development.XmlDoc</c> model (<see cref="doc.ProjectSpace.CreateDocProject"/>), so the very same parser the
 
 ## Notable public members
 - Public Property Position As SourcePosition
@@ -69,6 +94,8 @@
 - Public Sub New(chain As Expression)
 - Public Property Position As SourcePosition
 - Public Sub New(body As List(Of Statement))
+- Public Sub New(imported As String, local As String)
+- Public Sub New(kind As ImportKind, specifier As String, namespaceName As String,
 - Public Sub New(body As List(Of Statement))
 - Public Sub New(target As Object, init As Expression)
 - Public Sub New(kind As String, declarations As List(Of VarDeclarant))
@@ -99,12 +126,12 @@
 - Public Sub New(elements As List(Of BindingTarget), rest As BindingTarget)
 - Public Sub New(properties As List(Of KeyValuePair(Of String, BindingTarget)), rest As BindingTarget)
 - Public Sub New(target As BindingTarget, [default] As Expression)
-- Public Function Generate(program As Program, Optional className As String = "GeneratedScript") As String
-- Public Sub New(exitLabel As String, contLabel As String)
-- ... and 407 more
+- ... and 524 more
 
 ## Imports
 - Diagnostics = Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
+- doc = Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
+- docser = Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 - Microsoft.VisualBasic.ApplicationServices.Terminal
 - Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
 - Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
@@ -114,11 +141,14 @@
 - Microsoft.VisualBasic.Scripting.Runtime
 - Microsoft.VisualBasic.Scripting.TokenIcer
 - System.Collections
+- System.Collections.Generic
 - System.Diagnostics
 - System.Globalization
 - System.IO
 - System.Reflection
 - System.Runtime.CompilerServices
+- System.Runtime.InteropServices
+- System.Runtime.Loader
 - System.Text
 - System.Text.RegularExpressions
 - System.Threading.Tasks
@@ -140,12 +170,14 @@
 - Runtime\API\FsModule.vb
 - Runtime\API\PathModule.vb
 - Runtime\API\ProcessModule.vb
+- Runtime\API\ScriptMagic.vb
 - Runtime\BuiltinMethod.vb
 - Runtime\Console\ConsoleModule.vb
 - Runtime\Console\ConsoleTableFormatter.vb
 - Runtime\Console\CssStyleParser.vb
 - Runtime\Console\HtmlIO.vb
 - Runtime\Console\ScriptIO.vb
+- Runtime\Interop\AssemblyResolver.vb
 - Runtime\Interop\ClrAttributes.vb
 - Runtime\Interop\ClrConvert.vb
 - Runtime\Interop\ClrInterop.vb
@@ -165,7 +197,19 @@
 - Runtime\JsType\NativeObject.vb
 - Runtime\JsType\SpreadMarker.vb
 - Runtime\JsType\UndefinedMarker.vb
+- Runtime\ModuleLoader.vb
 - Runtime\NamespaceDoc.vb
 - Runtime\OptionalChainShortCircuit.vb
 - Runtime\Runtime.vb
+- TypeDefinitions\AssemblyScanner.vb
+- TypeDefinitions\JsDocWriter.vb
+- TypeDefinitions\NamespaceDoc.vb
+- TypeDefinitions\NameTable.vb
+- TypeDefinitions\TsEmitter.vb
+- TypeDefinitions\TsModel.vb
+- TypeDefinitions\TsNaming.vb
+- TypeDefinitions\TsOptions.vb
+- TypeDefinitions\TypeDefinitionGenerator.vb
+- TypeDefinitions\TypeMapper.vb
+- TypeDefinitions\XmlDocIndex.vb
 

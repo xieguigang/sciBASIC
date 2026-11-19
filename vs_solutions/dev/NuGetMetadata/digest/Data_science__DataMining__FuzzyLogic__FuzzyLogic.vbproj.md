@@ -1,0 +1,209 @@
+# Data_science/DataMining/FuzzyLogic/FuzzyLogic.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.DataMining.FuzzyLogic
+- AssemblyName  : Microsoft.VisualBasic.DataMining.FuzzyLogic
+- TargetFramework: net10.0
+- Source files  : 49
+- Existing Title: 
+- Existing Desc : 
+- Existing Tags : 
+
+## Namespaces
+- BooleanNetworks  [files: 12]
+- FuzzyCognitiveMaps  [files: 7]
+- Hybrid  [files: 2]
+- Mamdani  [files: 8]
+- Mamdani.Models  [files: 4]
+- TSK  [files: 12]
+
+## Public types
+- Module BooleanNetworksAudit (_smoketest\Program.BooleanNetworks.vb) - BN/PBN 自检：真值表、同步异步步进、吸引子、PBN 可复现、推断与 JSON 往返。 全部断言经 DebugAudit 记录，不在此模块定义 Main。
+- Module FuzzyCognitiveMapsAudit (_smoketest\Program.FuzzyCognitiveMaps.vb)
+- Module HybridAudit (_smoketest\Program.Hybrid.vb)
+- Module Program (_smoketest\Program.vb) - FuzzyLogic 的数值门禁：把"两种推理语义是否真的按约定实现"变成可执行断言。 重点不是跑出一个好看的拟合优度，而是守住四条契约： <list type="number">
+- Enum BooleanRuleKind (BooleanNetworks\IBooleanRule.vb)
+- Interface IBooleanRule (BooleanNetworks\IBooleanRule.vb) - 规则只负责「输入布尔向量 → 布尔输出」，不关心节点名称、父节点索引或连续值二值化。
+- Interface IStateBinarizer (BooleanNetworks\IBooleanRule.vb)
+- Interface IActivationFunction (FuzzyCognitiveMaps\IActivationFunction.vb)
+- Class FuzzyEngine (Mamdani\FuzzyEngine.vb) - Represents the inferential engine.
+- Class FuzzyRule (Mamdani\FuzzyRule.vb) - Represents a rule.
+- Class FuzzyRuleCollection (Mamdani\FuzzyRuleCollection.vb) - Represents a collection of rules.
+- Class LinguisticVariable (Mamdani\LinguisticVariable.vb) - Represents a linguistic variable.
+- Class LinguisticVariableCollection (Mamdani\LinguisticVariableCollection.vb) - Represents a collection of rules.
+- Class MembershipFunction (Mamdani\MembershipFunction.vb) - <para> 本类型现在是 <see cref="TSK.TrapezoidalMembership"/> 的**门面**：隶属度求值、 解析导数与参数向量只有一份实现，<see cref="X0"/>..<see cref="X3"/> 是对参数向量的投影。
+- Class MembershipFunctionCollection (Mamdani\MembershipFunctionCollection.vb) - Represents a collection of membership functions.
+- Module Extensions (Mamdani\Models\Extensions.vb)
+- Class FuzzyModel (Mamdani\Models\ModelAPI.vb)
+- Enum Tokens (Mamdani\Models\Models.vb)
+- Class LogicalToken (Mamdani\Models\Models.vb)
+- Class Value (Mamdani\Models\Models.vb)
+- Class Term (Mamdani\Models\Models.vb)
+- Class Fuzzify (Mamdani\Models\Models.vb)
+- Class Defuzzify (Mamdani\Models\Models.vb)
+- Class Rule (Mamdani\Models\Models.vb)
+- Class RuleBlock (Mamdani\Models\Models.vb)
+- Module NamespaceDoc (Mamdani\Models\NamespaceDoc.vb) - Mamdani Fuzzy logic model types.
+- Module NamespaceDoc (Mamdani\NamespaceDoc.vb) - Fuzzy logic: fuzzy sets, membership functions and fuzzy inference.
+- Class FuzzyRuleBase (TSK\FuzzyRuleBase.vb) - <para> 另一种划分方式（**散射划分**，scatter partitioning）下，每条规则对每个输入都有自己的 高斯中心/宽度，规则之间不再共享模糊集。这时 <see cref="IsScatter"/> 为 <c>True</c>，
+- Enum MembershipKind (TSK\IMembershipFunction.vb) - 隶属函数的类型编码。 前三种（高斯、广义钟形、Sigmoid）在参数域上处处可微，可作为自由训练的前提参数； 三角与梯形是分段线性函数，只在分段内部可微（节点处的导数按单侧极限给出，节点上取 0），
+- Interface IMembershipFunction (TSK\IMembershipFunction.vb) - Mamdani 前端的历史类型 <c>Logical.FuzzyLogic.MembershipFunction</c> 已经改为 <see cref="TrapezoidalMembership"/> 的门面，因此同样遵守这份契约。 </para>
+- Class GaussianMembership (TSK\MembershipFunctions.vb) - 高斯隶属函数 <c>mu(x) = exp(-(x-c)^2 / (2*sigma^2))</c>，参数 <c>(center, width)</c>。 TSK 推理的默认选择。对数导数为 <c>[(x-c)/sigma^2, (x-c)^2/sigma^3]</c>，在 <c>sigma &gt; 0</c> 时处处有界，
+- Class GeneralizedBellMembership (TSK\MembershipFunctions.vb) - 广义钟形隶属函数 <c>mu(x) = 1 / (1 + |(x-c)/a|^(2b))</c>，参数 <c>(a, b, c)</c>。 与高斯相比钟形有更长的尾部（近似幂律衰减），在输入分布有重尾时更稳健。 <c>a</c> 与 <c>b</c> 必须为正；<c>b</c> 过小会让 <c>t^(2b-1)</c> 在 <c>t</c> 接近 0 时发散，
+- Class SigmoidMembership (TSK\MembershipFunctions.vb) - Sigmoid 隶属函数 <c>mu(x) = 1 / (1 + exp(-a(x-c)))</c>，参数 <c>(a, c)</c>。 适合表达"大于某阈值"这类单调概念（例如"温度偏高"）。注意它不满足 "两侧都回到 0"，所以通常只应该用在定义域的端点，或者与另一侧的 Sigmoid 配对使用。
+- Class TriangularMembership (TSK\MembershipFunctions.vb) - 三角隶属函数，参数 <c>(a, b, c)</c>，在 <c>b</c> 处取 1、在 <c>a</c> 与 <c>c</c> 处取 0。 分段线性，只在分段内部可微；节点上的导数取 0。用于把专家给定的 "大约在 b 附近" 直接录入模型，不建议作为自由训练的初值（梯度在节点附近无界）。
+- Class TrapezoidalMembership (TSK\MembershipFunctions.vb) - <para> 求值与 Mamdani 前端的历史实现（<c>Logical.FuzzyLogic.LinguisticVariable.Fuzzify</c> 的 分段 if/else）逐点一致，包括两个退化肩点的单点取值：
+- Class NamespaceDoc (TSK\NamespaceDoc.vb) - </para> <para> ### 四、数值约定
+- Class TskForwardWorkspace (TSK\TskForwardWorkspace.vb) - 其中多个数组超过 85 KB 的大对象阈值直接进 LOH）。3 万样本 × 1.8 万基因的规模下 这会变成 TB 级的大对象分配，GC 成为主要瓶颈。 </para>
+- Class TskInferenceTrace (TSK\TskInferenceTrace.vb) - 一次批量前向传播的全部中间量（五层网络的激活值）。 全部按"行 = 样本"存放，便于按行块切分做最小二乘累加，也便于直接看某一条样本 的隶属度与规则触发强度（可解释性诊断）。
+- Class TskGradient (TSK\TskInferenceTrace.vb) - 一次批量反向传播得到的梯度：前提参数（扁平向量）、结论参数矩阵与误差统计。
+- Class TskInputVariable (TSK\TskInputVariable.vb) - TSK 推理的一个输入变量：名称、定义域、以及按定义域划分出来的若干隶属函数。 定义域应当来自**训练集**（见 <see cref="TskNetworkBuilder"/>），不能包含验证集的信息， 否则隶属函数的初始位置会泄漏标签/分布信息，交叉验证的评估结果会偏乐观。
+- Class TskLayers (TSK\TskLayers.vb) - "不物化整张设计矩阵"：逐块前向 → 逐块累加 <c>A'A</c> / <c>A'y</c> 或逐块累加梯度。 </para> <para>
+- Class TskNetwork (TSK\TskNetwork.vb) - 与**结论参数**（每条规则一组线性系数，存成 <c>[P, outputs]</c> 矩阵，P = R*(n+1)）。 </para> <para>
+- Class TskModelDto (TSK\TskNetwork.vb)
+- Class TskInputDto (TSK\TskNetwork.vb)
+- Class TskFunctionDto (TSK\TskNetwork.vb)
+- Module TskNetworkBuilder (TSK\TskNetworkBuilder.vb) - <para> 每个输入等距放 m 个隶属函数，规则数 <c>m^n</c>。网格划分的优点是规则可解释、 前向完全向量化；缺点是规则数随维数指数增长，
+- Enum RulePartitionKind (TSK\TskStructureOptions.vb) - <see cref="Grid"/> 是经典做法：每个输入等距放 m 个模糊集，穷举 <c>m^n</c> 条规则。 规则可解释、前向可向量化，但规则数随输入维数指数增长（K=18 时 2^18 = 26 万条，无法落地）。 </para>
+- Class TskStructureOptions (TSK\TskStructureOptions.vb) - TSK 网络的**结构**配置：输入/输出的命名、模糊划分方式与规模保护。 <para> 这里只放"决定网络拓扑"的参数。学习率、动量、优化器、早停、岭项等训练参数
+
+## Notable public members
+- Public Function Run() As Integer
+- Public Function Run() As Integer
+- Public Function Run() As Integer
+- Public Sub New(nodes As BooleanNode(), initialState As Boolean(), Optional seed As Integer = 12345)
+- Public ReadOnly Property Nodes As BooleanNode()
+- Public ReadOnly Property Count As Integer
+- Public Property State As Boolean()
+- Public Function StateOf(name As String) As Boolean
+- Public Function IndexOf(name As String) As Integer
+- Public Property Seed As Integer
+- Public ReadOnly Property SampleCount As Long
+- Friend Sub IncrementSampleCount()
+- Friend ReadOnly Property SharedRandom As Random
+- Protected MustOverride Function EvaluateNode(node As BooleanNode, inputs As Boolean()) As Boolean
+- Public Sub SetContinuousState(values As Double(), binarizer As IStateBinarizer)
+- Public Sub SetContinuousState(values As Double(), binarizers As IStateBinarizer())
+- Public Function StepSynchronous() As Boolean()
+- Public Function StepAsynchronous() As Boolean()
+- Public Function Run(steps As Integer, Optional asynchronous As Boolean = False) As StateTrajectory
+- Public Function RunToAttractor(Optional maxSteps As Integer = 10000,
+- Public Sub New(threshold As Double)
+- Public Property Threshold As Double
+- Public Function Binarize(value As Double) As Boolean Implements IStateBinarizer.Binarize
+- Public Function BinarizeRow(values As Double()) As Boolean() Implements IStateBinarizer.BinarizeRow
+- Public Sub New(minimum As Double, maximum As Double, threshold As Double)
+- Public ReadOnly Property Minimum As Double
+- Public ReadOnly Property Maximum As Double
+- Public ReadOnly Property Threshold As Double
+- Public Function Binarize(value As Double) As Boolean Implements IStateBinarizer.Binarize
+- Public Function BinarizeRow(values As Double()) As Boolean() Implements IStateBinarizer.BinarizeRow
+- Public Sub New(membership As TSK.IMembershipFunction, Optional threshold As Double = 0.5)
+- Public ReadOnly Property Membership As TSK.IMembershipFunction
+- Public Property Threshold As Double
+- Public Function Binarize(value As Double) As Boolean Implements IStateBinarizer.Binarize
+- Public Function BinarizeRow(values As Double()) As Boolean() Implements IStateBinarizer.BinarizeRow
+- Public Shared Function BinarizeRow(binarizer As IStateBinarizer, values As Double()) As Boolean()
+- Public Shared Function BinarizeRow(binarizers As IStateBinarizer(), values As Double()) As Boolean()
+- Public Sub New(nodes As BooleanNode(), initialState As Boolean())
+- Protected Overrides Function EvaluateNode(node As BooleanNode, inputs As Boolean()) As Boolean
+- Public Shared Function CreateNode(name As String, parents As Integer(), values As Boolean()) As BooleanNode
+- Public Property Name As String
+- Public Property Parents As Integer()
+- Public Property Rules As String()
+- Public Property Kinds As Integer()
+- Public Property Probabilities As Double()
+- Public Shared Function FromModel(node As BooleanNode) As BooleanNodeDto
+- Public Function ToModel() As BooleanNode
+- Public Const CurrentVersion As String = "1.0"
+- Public Property FormatVersion As String = CurrentVersion
+- Public Property Probabilistic As Boolean
+- Public Property Nodes As List(Of BooleanNodeDto)
+- Public Property InitialState As String
+- Public Property Seed As Integer
+- Public Shared Function FromModel(network As BooleanNetworkBase) As BooleanNetworkDto
+- Public Function ToJson(Optional indent As Boolean = False) As String
+- Public Shared Function FromJson(json As String) As BooleanNetworkBase
+- Public Function ToModel() As BooleanNetworkBase
+- Public Sub New(geneNames As String(), values As Boolean?(,))
+- Public Sub New(geneNames As String(), values As Boolean(,))
+- Public ReadOnly Property GeneNames As String()
+- ... and 446 more
+
+## Imports
+- BN = Microsoft.VisualBasic.DataMining.FuzzyLogic.BooleanNetworks
+- FCM = Microsoft.VisualBasic.DataMining.FuzzyLogic.FuzzyCognitiveMaps
+- FL = Microsoft.VisualBasic.DataMining.FuzzyLogic.Mamdani
+- HY = Microsoft.VisualBasic.DataMining.FuzzyLogic.Hybrid
+- MatrixOps = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.MatrixOps
+- Microsoft.VisualBasic.ApplicationServices.Debugging
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.DataMining.FuzzyLogic.Mamdani.Models
+- Microsoft.VisualBasic.DataMining.FuzzyLogic.TSK
+- Microsoft.VisualBasic.DataMining.KMeans
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Scripting.TokenIcer
+- Microsoft.VisualBasic.Serialization.JSON
+- Microsoft.VisualBasic.Text
+- std = System.Math
+- System
+- System.Collections
+- System.Collections.Generic
+- System.IO
+- System.Linq
+- System.Runtime.CompilerServices
+- System.Text
+
+## File tree
+- _smoketest\Program.BooleanNetworks.vb
+- _smoketest\Program.FuzzyCognitiveMaps.vb
+- _smoketest\Program.Hybrid.vb
+- _smoketest\Program.vb
+- BooleanNetworkBase.vb
+- BooleanNetworks\BinarizationStrategy.vb
+- BooleanNetworks\BooleanNetwork.vb
+- BooleanNetworks\BooleanNetworkDto.vb
+- BooleanNetworks\BooleanNetworkInference.vb
+- BooleanNetworks\BooleanNode.vb
+- BooleanNetworks\BooleanTruthTable.vb
+- BooleanNetworks\IBooleanRule.vb
+- BooleanNetworks\NamespaceDoc.vb
+- BooleanNetworks\PbnInference.vb
+- BooleanNetworks\ProbabilisticBooleanNetwork.vb
+- BooleanNetworks\StateSpace.vb
+- FuzzyCognitiveMaps\ActivationFunctions.vb
+- FuzzyCognitiveMaps\FcmConcept.vb
+- FuzzyCognitiveMaps\FcmDto.vb
+- FuzzyCognitiveMaps\FcmInference.vb
+- FuzzyCognitiveMaps\FuzzyCognitiveMap.vb
+- FuzzyCognitiveMaps\IActivationFunction.vb
+- FuzzyCognitiveMaps\NamespaceDoc.vb
+- Hybrid\FuzzyCausalBridge.vb
+- Hybrid\NamespaceDoc.vb
+- Mamdani\FuzzyEngine.vb
+- Mamdani\FuzzyRule.vb
+- Mamdani\FuzzyRuleCollection.vb
+- Mamdani\LinguisticVariable.vb
+- Mamdani\LinguisticVariableCollection.vb
+- Mamdani\MembershipFunction.vb
+- Mamdani\MembershipFunctionCollection.vb
+- Mamdani\Models\Extensions.vb
+- Mamdani\Models\ModelAPI.vb
+- Mamdani\Models\Models.vb
+- Mamdani\Models\NamespaceDoc.vb
+- Mamdani\NamespaceDoc.vb
+- TSK\FuzzyRuleBase.vb
+- TSK\IMembershipFunction.vb
+- TSK\MembershipFactory.vb
+- TSK\MembershipFunctions.vb
+- TSK\NamespaceDoc.vb
+- TSK\TskForwardWorkspace.vb
+- TSK\TskInferenceTrace.vb
+- TSK\TskInputVariable.vb
+- TSK\TskLayers.vb
+- TSK\TskNetwork.vb
+- TSK\TskNetworkBuilder.vb
+- TSK\TskStructureOptions.vb
+

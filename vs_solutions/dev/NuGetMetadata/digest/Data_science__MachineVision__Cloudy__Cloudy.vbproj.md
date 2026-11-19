@@ -1,0 +1,217 @@
+# Data_science/MachineVision/Cloudy/Cloudy.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MachineVision.Cloudy
+- AssemblyName  : Microsoft.VisualBasic.MachineVision.Cloudy
+- TargetFramework: net10.0
+- Source files  : 61
+- Existing Title: 
+- Existing Desc : 
+- Existing Tags : 
+
+## Namespaces
+- Applications  [files: 5]
+- Core  [files: 10]
+- Features  [files: 11]
+- Preprocessing  [files: 7]
+- Reconstruction  [files: 10]
+- Registration  [files: 9]
+- Segmentation  [files: 8]
+
+## Public types
+- Enum ToleranceType (Applications\FormTolerance.vb)
+- Class ToleranceResult (Applications\FormTolerance.vb) - 单项形位公差的计算结果。
+- Class GraspPose (Applications\GraspPlanning.vb) - 一个候选抓取位姿。
+- Class GraspResult (Applications\GraspPlanning.vb) - 抓取规划结果。
+- Class GraspOptions (Applications\GraspPlanning.vb)
+- Class HandEyeResult (Applications\HandEyeCalibration.vb) - 手眼标定结果（<c>AX = XB</c> 的解）。
+- Class Options (Applications\HandEyeCalibration.vb)
+- Class DeviationResult (Applications\ModelComparison.vb) - 偏差分析结果（CAD 比对的输出）。
+- Class PoseResult (Applications\PoseEstimation.vb) - 6-DoF 位姿估计结果。
+- Class PoseOptions (Applications\PoseEstimation.vb)
+- Structure Aabb3 (Core\Aabb3.vb) - <para> 使用轴对齐而不是有向包围盒(OBB)的理由：点云的局部包围盒绝大多数用于 “快速排除不可能相交的点/节点”，此时 AABB 的判定只需要 6 次比较，
+- Class CloudyOptions (Core\CloudyOptions.vb) - 固定的默认种子保证“同样的输入两次运行结果一致”，这是工业检测可追溯性的基本要求。 需要多次独立采样时用 <see cref="CreateRandom(Integer)"/> 派生不同种子。 </description></item>
+- Structure Eigen3 (Core\Linalg.vb) - 3x3 对称矩阵特征分解结果（特征值降序，特征向量与之一一对应且两两正交）。
+- Class Neighborhood (Core\NeighborhoodQuery.vb) - 光 GC 就会吃掉大部分运行时间。 </para> <para>
+- Class PointCloudBuffer (Core\PointCloudBuffer.vb) - <para> <b>坐标数组的所有权</b>：<see cref="Create(Double(), Double(), Double())"/> 与构造函数 直接持有传入的数组（零拷贝），调用方之后不应再修改它们；
+- Structure Quaternion (Core\Quaternion.vb) - <item> <description> <b>位姿图增量</b>：SE(3) 的旋转增量用四元数做局部参数化比直接对
+- Structure Vector3d (Core\Vector3d.vb) - 这是<b>逐点标量</b>运算的载体：单个点的坐标、法向、旋转轴、质心等。 批量运算不使用这个结构体数组（AoS 会破坏向量化），而是走 <see cref="PointCloudBuffer"/> 的 SoA 布局与
+- Structure PrincipalCurvature (Features\CurvatureEstimation.vb) - 单点的主曲率结果。
+- Class KeypointSet (Features\FeatureCloud.vb) - <para> 关键点检测的输出<b>不是</b>新的点云，而是“原云中的一组下标”。 这点很重要：后续配准需要把关键点与其在原云中的邻域对应起来
+- Class FeatureCloud (Features\FeatureCloud.vb) - 特征云：关键点 + 逐关键点描述子矩阵。 <para> 描述子以“行 = 关键点、列 = 维度”的锯齿数组存放
+- Structure Correspondence (Features\FeatureMatching.vb) - 一条特征对应关系。
+- Class NamespaceDoc (NamespaceDoc.vb) - <item><description>计量级检测（航空航天/精密模具）：RANSAC + 点到面 ICP → 泊松或 BPA 重建 → CAD 偏差分析 + 形位公差。</description></item> <item><description>机器人引导/无序抓取：ISS + FPFH → RANSAC 粗配准 → 局部 ICP 跟踪 →
+- Enum Axis (Preprocessing\CropFilters.vb) - 坐标轴枚举。
+- Structure TimedPose (Preprocessing\MotionUndistortion.vb) - 带时间戳的位姿采样：IMU 姿态或里程计位姿的统一表示。 时间单位约定为<b>任意一致的秒</b>（扫描仪时间戳、IMU 时间戳必须已对齐到同一时钟）。 位姿表示“传感器在该时刻于参考坐标系中的姿态”，即把传感器局部坐标变换到参考坐标系。
+- Class RorResult (Preprocessing\RadiusOutlierRemoval.vb) - 半径滤波结果。
+- Class SorResult (Preprocessing\StatisticalOutlierRemoval.vb) - 统计滤波结果。
+- Class VoxelGridResult (Preprocessing\VoxelGridFilter.vb) - 体素滤波结果。
+- Class MeshData (Reconstruction\MeshData.vb) - 网格算法的瓶颈在<b>拓扑遍历</b>（邻接、边、环）而不是 SIMD 算术， 因此结构体数组的可读性优势更重要；扁平索引数组则避免了 “每个三角形一个 <c>Integer()</c>”带来的数万个小对象。
+- Class PoissonOptions (Reconstruction\PoissonReconstruction.vb)
+- Class PoissonResult (Reconstruction\PoissonReconstruction.vb) - 重建结果。
+- Class FittingResult (Reconstruction\PrimitiveFitting.vb) - 基元最小二乘拟合结果（含残差与尺寸参数）。
+- Structure CameraIntrinsics (Reconstruction\TsdfFusion.vb) - 相机内参（针孔模型）。
+- Class DepthFrame (Reconstruction\TsdfFusion.vb) - 一帧深度数据 + 相机位姿。
+- Class TsdfOptions (Reconstruction\TsdfFusion.vb)
+- Class GicpOptions (Registration\GeneralizedIcp.vb)
+- Class IcpOptions (Registration\IcpRegistration.vb) - ICP 参数。
+- Class NdtOptions (Registration\NdtRegistration.vb)
+- Class Pcs4Options (Registration\Pcs4Registration.vb)
+- Class PoseNode (Registration\PoseGraphOptimizer.vb) - 位姿图的一个节点：某站点（或轨迹关键帧）的全局位姿。
+- Class PoseEdge (Registration\PoseGraphOptimizer.vb) - 位姿图的一条边：两个节点之间的相对位姿观测。 语义约定：<c>T_to = T_from ∘ Measurement</c>，即测量值是“从 from 的坐标系 到 to 的坐标系”的变换。多站配准时它来自两站的配准结果；
+- Class PoseGraph (Registration\PoseGraphOptimizer.vb) - 位姿图容器。
+- Class PoseGraphResult (Registration\PoseGraphOptimizer.vb) - 位姿图优化结果。
+- Class Options (Registration\PoseGraphOptimizer.vb)
+- Class RansacOptions (Registration\RansacRegistration.vb)
+- Enum CoarseMethod (Registration\RegistrationPipeline.vb)
+- Enum FineMethod (Registration\RegistrationPipeline.vb)
+- Class PipelineOptions (Registration\RegistrationPipeline.vb)
+- Class MultiStationResult (Registration\RegistrationPipeline.vb) - 多站配准结果。
+- Class RegistrationResult (Registration\RegistrationResult.vb) - </para> <list type="bullet"> <item><description><see cref="Fitness"/>：内点率（有效对应数 / 源点数），低于 0.3 基本可以判失败。</description></item>
+- Class CascadeOptions (Segmentation\CascadeSegmentation.vb)
+- Class CascadeResult (Segmentation\CascadeSegmentation.vb)
+- Class ClusterSet (Segmentation\EuclideanClustering.vb) - 聚类标签集合：逐点标签（<c>-1</c> 表示噪声/未分配）与簇统计。
+- Class PrimitiveDetection (Segmentation\ModelFitting.vb) - 一次基元检测的结果。
+- Class RansacOptions (Segmentation\ModelFitting.vb)
+- Enum PrimitiveType (Segmentation\RansacModels.vb)
+- Enum SemanticClass (Segmentation\SemanticClassification.vb)
+- Class SemanticResult (Segmentation\SemanticClassification.vb) - 语义分类结果。
+
+## Notable public members
+- Public Property Type As ToleranceType
+- Public Property Value As Double
+- Public Property LeastSquaresValue As Double
+- Public Property Limit As Double
+- Public Property PointCount As Integer
+- Public ReadOnly Property Passed As Boolean
+- Public Overrides Function ToString() As String
+- Public Shared Function Flatness(points As Vector3d(), Optional limit As Double = 0.0) As ToleranceResult
+- Public Shared Function Straightness(points As Vector3d(), Optional limit As Double = 0.0) As ToleranceResult
+- Public Shared Function Roundness(points As Vector3d(), Optional axis As Vector3d? = Nothing,
+- Public Shared Function Cylindricity(points As Vector3d(), Optional limit As Double = 0.0) As ToleranceResult
+- Public Shared Function Parallelism(datumNormal As Vector3d, points As Vector3d(),
+- Public Shared Function Perpendicularity(datumNormal As Vector3d, points As Vector3d(),
+- Public Shared Function Angularity(datumNormal As Vector3d, nominalAngleDegrees As Double,
+- Public Shared Function Position(actual As Vector3d, nominal As Vector3d,
+- Public Shared Function Coaxiality(pointsA As Vector3d(), pointsB As Vector3d(),
+- Public Property Position As Vector3d
+- Public Property Orientation As RigidTransform
+- Public Property Score As Double
+- Public Property Width As Double
+- Public Property Flatness As Double
+- Public Property Coverage As Double
+- Public Overrides Function ToString() As String
+- Public Property Poses As List(Of GraspPose)
+- Public ReadOnly Property Best As GraspPose
+- Public ReadOnly Property Count As Integer
+- Public ReadOnly Property Success As Boolean
+- Public Overrides Function ToString() As String
+- Public Property Resolution As Double = 0.0
+- Public Property GripperWidth As Double = 0.0
+- Public Property GripperDepth As Double = 0.0
+- Public Property OverhangTolerance As Double = 0.1
+- Public Property FlatnessTolerance As Double = 0.0
+- Public Property MaxCandidates As Integer = 5
+- Public Property MinSeparation As Double = 0.0
+- Public Property MinScore As Double = 0.3
+- Public Shared Function PlanTopDown(cloud As PointCloudBuffer, Optional options As GraspOptions = Nothing,
+- Public Shared Function AntipodalPairs(cloud As PointCloudBuffer, maxWidth As Double,
+- Public Property Transform As RigidTransform
+- Public Property RotationError As Double
+- Public Property TranslationError As Double
+- Public Property Iterations As Integer
+- Public Property Converged As Boolean
+- Public Property PairCount As Integer
+- Public Overrides Function ToString() As String
+- Public Property MaxIterations As Integer = 100
+- Public Property Epsilon As Double = 1.0E-10
+- Public Property FiniteDifferenceStep As Double = 1.0E-6
+- Public Property Initial As RigidTransform = Nothing
+- Public Shared Function Calibrate(robotPoses As RigidTransform(), sensorPoses As RigidTransform(),
+- Public Property Distances As Double()
+- Public Property SignedDistances As Double()
+- Public Property MaxDeviation As Double
+- Public Property MaxAbsoluteDeviation As Double
+- Public Property MeanDeviation As Double
+- Public Property StdDeviation As Double
+- Public Property Rms As Double
+- Public Property Tolerance As Double
+- Public Property OutOfTolerance As Integer
+- Public Property OutOfToleranceRatio As Double
+- ... and 630 more
+
+## Imports
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Imaging.Drawing3D
+- Microsoft.VisualBasic.MachineVision.Cloudy.Core
+- Microsoft.VisualBasic.MachineVision.Cloudy.Features
+- Microsoft.VisualBasic.MachineVision.Cloudy.Preprocessing
+- Microsoft.VisualBasic.MachineVision.Cloudy.Reconstruction
+- Microsoft.VisualBasic.MachineVision.Cloudy.Registration
+- Microsoft.VisualBasic.MachineVision.Cloudy.Segmentation
+- Microsoft.VisualBasic.Math.SIMD
+- std = System.Math
+- System.Threading
+
+## File tree
+- Applications\FormTolerance.vb
+- Applications\GraspPlanning.vb
+- Applications\HandEyeCalibration.vb
+- Applications\ModelComparison.vb
+- Applications\PoseEstimation.vb
+- Core\Aabb3.vb
+- Core\CloudyOptions.vb
+- Core\KdTree3D.vb
+- Core\Linalg.vb
+- Core\NeighborhoodQuery.vb
+- Core\PointCloudBuffer.vb
+- Core\Quaternion.vb
+- Core\RigidTransform.vb
+- Core\Vector3d.vb
+- Core\VoxelHash.vb
+- Features\CurvatureEstimation.vb
+- Features\FeatureCloud.vb
+- Features\FeatureMatching.vb
+- Features\FpfhDescriptor.vb
+- Features\GlobalDescriptors.vb
+- Features\Harris3DKeypoint.vb
+- Features\IssKeypoint.vb
+- Features\NormalEstimation.vb
+- Features\NormalOrientation.vb
+- Features\ShotDescriptor.vb
+- Features\Sift3DKeypoint.vb
+- NamespaceDoc.vb
+- Preprocessing\CropFilters.vb
+- Preprocessing\MlsSmoother.vb
+- Preprocessing\MotionUndistortion.vb
+- Preprocessing\RadiusOutlierRemoval.vb
+- Preprocessing\Sampling.vb
+- Preprocessing\StatisticalOutlierRemoval.vb
+- Preprocessing\VoxelGridFilter.vb
+- Reconstruction\BallPivoting.vb
+- Reconstruction\Delaunay2D.vb
+- Reconstruction\GreedyTriangulation.vb
+- Reconstruction\MarchingCubes.vb
+- Reconstruction\MeshData.vb
+- Reconstruction\MeshProcessing.vb
+- Reconstruction\NurbsSurface.vb
+- Reconstruction\PoissonReconstruction.vb
+- Reconstruction\PrimitiveFitting.vb
+- Reconstruction\TsdfFusion.vb
+- Registration\GeneralizedIcp.vb
+- Registration\IcpRegistration.vb
+- Registration\NdtRegistration.vb
+- Registration\Pcs4Registration.vb
+- Registration\PoseGraphOptimizer.vb
+- Registration\RansacRegistration.vb
+- Registration\RegistrationPipeline.vb
+- Registration\RegistrationResult.vb
+- Registration\TransformEstimation.vb
+- Segmentation\CascadeSegmentation.vb
+- Segmentation\DbscanClustering.vb
+- Segmentation\EuclideanClustering.vb
+- Segmentation\FastEuclideanClustering.vb
+- Segmentation\ModelFitting.vb
+- Segmentation\RansacModels.vb
+- Segmentation\RegionGrowing.vb
+- Segmentation\SemanticClassification.vb
+

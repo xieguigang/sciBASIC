@@ -3,20 +3,23 @@
 - RootNamespace : Microsoft.VisualBasic.Data.visualize
 - AssemblyName  : Microsoft.VisualBasic.Data.visualize
 - TargetFramework: net10.0
-- Source files  : 21
+- Source files  : 34
 - Existing Title: Network, Cluster and Embedding Visualization Layer
 - Existing Desc : A visualization layer for sciBASIC#: correlation and K-means cluster network graph construction, binary tree partition layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus CSV bar chart and scatter rendering helpers for tabular data.
 - Existing Tags : scibasic;visualization;network-graph;correlation-network;umap;kmeans;embedding
 
 ## Namespaces
-- KMeans  [files: 7]
+- KMeans  [files: 2]
+- ShapPlot  [files: 9]
 - TabularRender  [files: 4]
 
 ## Public types
-- Class EntityNode (BinaryTree\EntityNode.vb)
-- Module NodeTrees (BinaryTree\NodeTrees.vb)
-- Class Partition (BinaryTree\Partition.vb)
-- Module Tree (BinaryTree\Tree.vb)
+- Enum HeatMapScale (ComplexHeatMap.vb) - 热图数据的标准化方式（z-score）。
+- Enum LinkageMethod (ComplexHeatMap.vb) - 层次聚类所使用的连接策略。
+- Enum AnnotationKind (ComplexHeatMap.vb) - 颜色标签注释的数据类型。
+- Class HeatMapAnnotation (ComplexHeatMap.vb) - 热图行/列的颜色标签注释条。 <para> 同一个类型同时承载两种注释：<see cref="Values"/>（离散分类，例如品种 Variety）与
+- Class ComplexHeatMap (ComplexHeatMap.vb) - plt.MinValue = -2 plt.MaxValue = 2 plt.ColAnnotations.Add(HeatMapAnnotation.Discrete("Variety", varieties))
+- Module HeatMapDendrogram (ComplexHeatMap.vb) - 聚类树（dendrogram）的布局与绘制。 <para> 叶子在绘图方向等距排列（每行/每列占一格），内部节点的位置取其子节点位置的中点，
 - Module CorrelationNetwork (CorrelationNetwork.vb) - 使用这个模块用来生成相关度的网络，相关度网络是``Kmeans``，``Cmeans``或者其他的一些聚类网络可视化的基础
 - Class Embedding2D (Embedding\Embedding2D.vb)
 - Class Embedding3D (Embedding\Embedding3D.vb)
@@ -25,92 +28,120 @@
 - Module UMAPGraph (Embedding\UmapGraph.vb) - create network model based on umap result for data visualization
 - Module Extensions (Extensions.vb)
 - Module KmeansExtensions (Kmeans\Kmeans.vb)
-- Module KMeansNetwork (Kmeans\KMeansNetwork.vb)
+- Class MultivariateLoadingPlot (Multivariate\MultivariateLoadingPlot.vb) - 载荷图（Loading plot）与双标图（Biplot）。 <para> 默认绘制两个成分的载荷散点并标注变量名，离原点较远的变量（对模型贡献大）用强调色画出；
+- Enum MultivariateOutlierMetric (Multivariate\MultivariateOutlierPlot.vb) - 模型诊断图所使用的统计量。
+- Class MultivariateOutlierPlot (Multivariate\MultivariateOutlierPlot.vb) - 样本离群诊断图（Hotelling T2 / DModX）。 <para> 每个样本画成一根「棒棒糖」，超过 95% 控制限的样本用强调色标出并显示样本名。
+- Class MultivariatePermutationSeries (Multivariate\MultivariatePermutationPlot.vb) - 置换检验图专用的数据模型（与 <see cref="PermutationTestResult"/> 一一对应）。
+- Class MultivariatePermutationPlot (Multivariate\MultivariatePermutationPlot.vb) - 置换检验图（permutation test plot）。 <para> 横轴是每次置换之后 Y 与原始 Y 的相关系数，纵轴是该次置换模型的 R2Y / Q2；
+- Enum MultivariateEllipseMode (Multivariate\MultivariatePlotData.vb) - 分组椭圆的计算/绘制模式。
+- Class MultivariateScoreSet (Multivariate\MultivariatePlotData.vb) - 得分图的数据模型：样本名 + 分组 + 两个成分的得分。 <para> 这个类型与绘图引擎无关，既可以由 <see cref="MultivariateAnalysisResult"/> 自动适配得到，
+- Class MultivariateLoadingSet (Multivariate\MultivariatePlotData.vb) - 载荷图 / 双标图的数据模型。
+- Structure MultivariateSPlotPoint (Multivariate\MultivariatePlotData.vb) - OPLS-DA 的 S-plot 数据点：<c>p(1)</c>（协方差）对 <c>p(corr)</c>（相关系数）。
+- Structure MultivariateVipEntry (Multivariate\MultivariatePlotData.vb) - VIP 图 / 系数图的条目。
+- Structure MultivariateVarianceComponent (Multivariate\MultivariatePlotData.vb) - 碎石图 / 方差解释图的单个成分条目。
+- Class MultivariatePredictionSet (Multivariate\MultivariatePlotData.vb) - 预测值对实测值散点图的数据模型。
+- Class MultivariateOutlierSeries (Multivariate\MultivariatePlotData.vb) - Hotelling T2 / SPE(DModX) 离群诊断图的数据模型。
+- Module MultivariatePlotHelper (Multivariate\MultivariatePlotData.vb) - 与绘图无关的通用辅助函数（分组解析、颜色分配、数值格式化）。
+- Module MultivariateAnalysisAdapters (Multivariate\MultivariatePlotData.vb) - 把 <see cref="MultivariateAnalysisResult"/> 适配成各个图表使用的数据模型的扩展方法集合。
+- Class MultivariatePredictionPlot (Multivariate\MultivariatePredictionPlot.vb) - 预测值对实测值散点图（PLS/OPLS 的模型拟合诊断）。 <para> 图中的虚线是 <c>y = x</c> 理想线，点越贴近虚线说明预测越准确；
+- Class MultivariateScorePlot (Multivariate\MultivariateScorePlot.vb) - </para> <list type="bullet"> <item>PCA：默认 PC1 对 PC2；</item>
+- Class MultivariateSPlot (Multivariate\MultivariateSPlot.vb) - OPLS-DA 的 S-plot：<c>p(1)</c>（协方差）对 <c>p(corr)</c>（相关性）。 <para> 位于 S 形两端的变量即为对分组判别贡献最大、且可靠性最高的标志物：
+- Class MultivariateVipPlot (Multivariate\MultivariateVipPlot.vb) - VIP 图 / 回归系数图（横向条形图）。 <para> 变量指标从大到小排列，默认阈值 1（VIP &gt; 1 视为重要变量），
+- Class MultivariateEllipseDrawer (Multivariate\ScoreEllipseHelper.vb) - 基于协方差矩阵的特征分解 + 卡方/t 分布分位数，得到真正的统计置信椭圆（默认 95%）。 </item> <item>
+- Class ScreeVariancePlot (Multivariate\ScreeVariancePlot.vb) - 碎石图（Scree plot）/ 方差解释图：每个成分的贡献率柱状图 + 累计贡献率折线。 <para> 直接喂 PCA 的分析结果即可（<c>Contributions</c> 本身就是百分数），
 - Class NamespaceDoc (NamespaceDoc.vb) - The data visualization root: correlation network visualization, tabular rendering and the shared visualization utilities.
 - Module NamespaceDoc (NamespaceDoc.vb) - K-Means clustering visualization.
+- Class ShapBarPlot (ShapPlot\ShapBarPlot.vb) - SHAP 特征重要性柱状图（对应 python shap 的 <c>shap.plots.bar</c> / <c>shap.summary_plot(plot_type:="bar")</c>）。 每个特征的柱子长度为其在所有样本上 SHAP 值的绝对平均值，丢失方向信息，
+- Class ShapBeeswarmPlot (ShapPlot\ShapBeeswarmPlot.vb) - SHAP 摘要蜂群图（对应 python shap 的 <c>shap.plots.beeswarm</c> / <c>shap.summary_plot</c>）。 图中每一行代表一个特征、纵轴按平均 |SHAP| 值降序排列（重要性最高的特征在最上方）， 每个点代表一个样本，横轴为该样本在此特征上的 SHAP 值，颜色红蓝表示特征值的高低。
+- Class ShapDecisionPlot (ShapPlot\ShapDecisionPlot.vb) - SHAP 决策图（对应 python shap 的 <c>shap.decision_plot</c>）。 横轴为累积的 SHAP 值（从基准值到模型输出），纵轴为按重要性排列的特征； 每条折线解释一个样本的决策路径，便于比较多条样本或者识别异常路径。
+- Class ShapDependencePlot (ShapPlot\ShapDependencePlot.vb) - SHAP 依赖图（对应 python shap 的 <c>shap.plots.scatter</c> / <c>shap.dependence_plot</c>）。 横轴是指定特征的实际取值，纵轴是该特征的 SHAP 值；点的颜色是交互特征的取值， 在未指定交互特征时自动选择与 SHAP 值相关性最高的其他特征。
+- Class ShapForcePlot (ShapPlot\ShapForcePlot.vb) - SHAP 单样本力导向图（对应 python shap 的 <c>shap.plots.force</c>）。 把预测推高的特征显示为红色、推向更低的特征显示为蓝色， 各段从基准值出发向两侧伸展，段长与 SHAP 值的绝对值成正比。
+- Class ShapHeatmapPlot (ShapPlot\ShapHeatmapPlot.vb) - SHAP 热力图（对应 python shap 的 <c>shap.plots.heatmap</c> 的简化版）。 以样本为行、特征为列的矩阵形式呈现 SHAP 值，样本默认按模型输出升序排序， 便于观察特征贡献模式随样本的变化；本实现不含 readme 提到的输出曲线。
+- Class ShapContributionGroup (ShapPlot\ShapPlotUtils.vb) - 瀑布图 / 力导向图所使用的「top-N 贡献 + 其余特征合并」聚合结果。
+- Module ShapPlotUtils (ShapPlot\ShapPlotUtils.vb) - SHAP 图表共用的取数与配色工具。 所有图表都以「<see cref="ShapAnalysisResult"/> + <see cref="NumericTable"/>」作为输入： 前者提供逐样本的 SHAP 贡献，后者提供样本的原始特征取值（用于着色与坐标轴）。
+- Class ShapViolinPlot (ShapPlot\ShapViolinPlot.vb) - SHAP 小提琴图（对应 python shap 的 <c>summary_plot(plot_type:="violin")</c> 的简化版）。 每一行是一个特征的 SHAP 值分布，用高斯核密度估计得到平滑轮廓； 按照约定本实现不内嵌箱线图，只绘制轮廓与中位数标记。
+- Class ShapWaterfallPlot (ShapPlot\ShapWaterfallPlot.vb) - SHAP 单样本瀑布图（对应 python shap 的 <c>shap.plots.waterfall</c>）。 从基准值 <c>E[f(X)]</c> 出发，按特征贡献的绝对值从大到小逐级叠加， 红色条表示正向推力、蓝色条表示负向推力，最终到达模型的输出值 <c>f(X)</c>。
 - Module BarDataTableExtensions (Tabular\csv.vb)
 - Module Extensions (Tabular\Extensions.vb)
 - Module NamespaceDoc (Tabular\NamespaceDoc.vb) - Helper module for rendering of the data from a csv table file.
 - Class SerialData (Tabular\SerialData.vb)
-- Module ANNVisualize (Testing\ANNVisualize.vb)
-- Module Kmeans3DTest (Testing\Kmeans3DTest.vb)
 
 ## Notable public members
-- Public ReadOnly Property EntityID As String
-- Public ReadOnly Property Type As String
-- Public Sub New(name As String, type$)
-- Public Overrides ReadOnly Property MySelf As EntityNode
+- Public Property Name As String
+- Public Property Values As String()
+- Public Property NumericValues As Double()
+- Public Property Colors As Color()
+- Public Property ColorMap As Dictionary(Of String, Color)
+- Public Property Kind As AnnotationKind = AnnotationKind.Auto
+- Public Property ShowInLegend As Boolean = True
+- Public Property MissingColor As Color = Color.FromArgb(216, 216, 216)
+- Public Shared Function Discrete(name As String, values As String(), Optional colors As Color() = Nothing) As HeatMapAnnotation
+- Public Shared Function Discrete(name As String, values As String(), map As Dictionary(Of String, Color)) As HeatMapAnnotation
+- Public Shared Function Continuous(name As String, values As Double(), Optional colors As Color() = Nothing) As HeatMapAnnotation
+- Public Function ResolvedKind() As AnnotationKind
+- Public Function ColorAt(idx As Integer, palette As Color()) As Color
+- Public Function NumericRange() As (min As Double, max As Double)
+- Public Function ContinuousColors() As Color()
+- Public Function ResolvedColors(palette As Color()) As Dictionary(Of String, Color)
+- Public Function Categories() As String()
 - Public Overrides Function ToString() As String
-- Public Function PartionTable(parts As IEnumerable(Of Partition)) As Dictionary(Of String, EntityClusterModel())
-- Public Property Tag As String Implements INamedValue.Key
-- Public ReadOnly Property NumOfEntity As Integer
-- Public Property uids As String()
-- Public Property members As EntityClusterModel()
-- Public ReadOnly Property PropertyMeans As Double()
-- Public Overrides Function ToString() As String
-- Public Function Partitioning(cluster As IEnumerable(Of EntityClusterModel), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(O…
-- Public Overrides Function ToString() As String
-- Public Const ROOT$ = NameOf(ROOT)
-- Public Const EntityType$ = "Entity"
-- Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
-- Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMa…
-- Public Function BuildNetwork(matrix As DistanceMatrix, cutoff As Double) As NetworkGraph
-- Public Function BuildNetwork(corDf As df, cutoff As Double,
-- Public Function BuildNetwork(matrix As CorrelationMatrix, cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMatrix…
-- Public Sub New(umap As IDataEmbedding, labels$(), clusters As Dictionary(Of String, String), colorSet$, showConvexHull As Boolean, theme As Theme)
-- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-- Public Sub New(umap As IDataEmbedding, camera As Camera, labels$(), clusters As Dictionary(Of String, String), colorSet$, bubbleAlpha%, theme As Theme…
-- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-- Protected Sub New(umap As IDataEmbedding, labels$(), clusters As Dictionary(Of String, String), colorSet$, theme As Theme)
-- Protected Function getClusterLabel(i As Integer) As String
-- Protected Function GetClusterColors() As Dictionary(Of String, SolidBrush)
-- Protected Function Build2DSeries() As List(Of Series)
-- Public Function GetPoint2D(umap As IDataEmbedding) As PointF()
-- Public Function GetPoint3D(umap As IDataEmbedding) As Point3D()
-- Public Function DrawEmbedding2D(umap As IDataEmbedding,
-- Public Function DrawEmbedding3D(umap As IDataEmbedding, camera As Camera,
-- Public Sub New(som As SelfOrganizingMap, dims As Integer, theme As Theme)
-- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-- Public Function CreateGraph(umap As UMAPProject, Optional threshold As Double = 0) As NetworkGraph
-- Public Function CreateGraph(umap As Umap, uid As String(),
-- Public Iterator Function ClusterResultFastLoad(path$) As IEnumerable(Of EntityClusterModel)
-- Public Function CastTo(row As RowObject) As IntegerEntity
-- Public Function ToEntityObjects(dataset As IEnumerable(Of EntityClusterModel)) As IEnumerable(Of EntityObject)
-- Public Function BuildTransactions(data As IEnumerable(Of EntityObject)) As IEnumerable(Of Transaction)
-- Public Function Load(path As String, Optional map As String = "Name") As ClusterEntity()
-- Public Function ClusterGroups(clusters As IEnumerable(Of EntityClusterModel)) As Dictionary(Of String, EntityClusterModel())
-- Public Function Scatter2D(clusterData As IEnumerable(Of EntityClusterModel),
-- Public Function Scatter3D(data As IEnumerable(Of DataSet),
-- Public Function Scatter3D(clusterData As IEnumerable(Of EntityClusterModel),
-- Public Function LoadDataSet(path$,
-- Public Function LoadBarData(csv$, Optional theme$ = NameOf(Office2016)) As BarDataGroup
-- Public Function LoadBarData(csv$, colors$()) As BarDataGroup
-- Public Function LoadBarData(csv$, colors As Color()) As BarDataGroup
-- Public Function LoadBarData(csv As DataFrameResolver, colors As Color()) As BarDataGroup
-- Public Function ScatterSerials(csv As File, fieldX$, fieldY$, color$, Optional ptSize! = 5) As Plots.Series
-- Public Function RemovesYOutlier(s As Plots.Series, Optional q# = 1) As Plots.Series
-- Public Property serial As String
-- Public Property X As Single
-- Public Property Y As Single
-- Public Property value As Double
-- Public Property tag As String
-- Public Property errPlus As Double
-- Public Property errMinus As Double
-- ... and 5 more
+- Public Shared ReadOnly Property DivergingColors As Color()
+- Public Property PaletteColors As Color() = Nothing
+- Public Property ScaleMode As HeatMapScale = HeatMapScale.Row
+- Public Property RowLinkage As LinkageMethod = LinkageMethod.Ward
+- Public Property ColLinkage As LinkageMethod = LinkageMethod.Ward
+- Public Property RowMetric As Func(Of Double(), Double(), Double) = Nothing
+- Public Property ColMetric As Func(Of Double(), Double(), Double) = Nothing
+- Public Property RowTree As Cluster = Nothing
+- Public Property ColTree As Cluster = Nothing
+- Public Property AutoClusterRows As Boolean = True
+- Public Property AutoClusterColumns As Boolean = True
+- Public Property ShowRowDendrogram As Boolean = True
+- Public Property ShowColDendrogram As Boolean = True
+- Public Property DendrogramColor As Color = Color.FromArgb(64, 64, 64)
+- Public Property DendrogramLineWidth As Single = 0.8F
+- Public Property RowDendrogramWidth As Single = 90
+- Public Property ColDendrogramHeight As Single = 90
+- Public Property ColAnnotations As New List(Of HeatMapAnnotation)
+- Public Property RowAnnotations As New List(Of HeatMapAnnotation)
+- Public Property ColAnnotationHeight As Single = 12
+- Public Property RowAnnotationWidth As Single = 12
+- Public Property ShowAnnotationName As Boolean = True
+- Public Property RowLabelsOnRight As Boolean = True
+- Public Property ColLabelAngle As Single = 270
+- Public Property RowLabelFont As Font = Nothing
+- Public Property ColLabelFont As Font = Nothing
+- Public Property ShowCellBorder As Boolean = False
+- Public Property CellBorderColor As Color = Color.White
+- Public Property CellBorderWidth As Single = 0.5F
+- Public Property NaColor As Color = Color.FromArgb(235, 235, 235)
+- Public Property ShowAnnotationsLegend As Boolean = True
+- Public Property LegendTitleFont As Font = Nothing
+- Public Property RowLabelGap As Single = 6
+- Public Property ColLabelGap As Single = 6
+- Public Property LegendGap As Single = 22
+- Public Property ColorBarTitle As String = ""
+- Public Property ColorBarHeight As Single = 240
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
+- Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+- Public ReadOnly Property RowOrder As String()
+- Public ReadOnly Property ColOrder As String()
+- Public ReadOnly Property HeatmapBody As RectangleF
+- ... and 353 more
 
 ## Imports
 - Brushes = Microsoft.VisualBasic.Imaging.Brushes
 - Brushes = System.Drawing.Brushes
 - df = Microsoft.VisualBasic.Data.Framework.DataFrame
+- dist = Microsoft.VisualBasic.Math.Statistics.Distributions.Distribution
+- Font = Microsoft.VisualBasic.Imaging.Font
+- FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 - Microsoft.VisualBasic.ComponentModel.Algorithm.base
 - Microsoft.VisualBasic.ComponentModel.Collection
-- Microsoft.VisualBasic.ComponentModel.Collection.Generic
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-- Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
-- Microsoft.VisualBasic.Data.csv
-- Microsoft.VisualBasic.Data.csv.IO
+- Microsoft.VisualBasic.Data
 - Microsoft.VisualBasic.Data.Framework
 - Microsoft.VisualBasic.Data.Framework.IO
 - Microsoft.VisualBasic.Data.Framework.StorageProvider
@@ -119,17 +150,14 @@
 - Microsoft.VisualBasic.Data.Plots.Plot3D
 - Microsoft.VisualBasic.Data.Plots.Plot3D.Impl
 - Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
-- Microsoft.VisualBasic.Data.visualize
-- Microsoft.VisualBasic.Data.visualize.KMeans
-- Microsoft.VisualBasic.Data.visualize.Network
-- Microsoft.VisualBasic.Data.visualize.Network.FileStream
 - Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
+- Microsoft.VisualBasic.Data.visualize.Network.Graph
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts
+- Microsoft.VisualBasic.DataMining
+- Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 
 ## File tree
-- BinaryTree\EntityNode.vb
-- BinaryTree\NodeTrees.vb
-- BinaryTree\Partition.vb
-- BinaryTree\Tree.vb
+- ComplexHeatMap.vb
 - CorrelationNetwork.vb
 - Embedding\Embedding2D.vb
 - Embedding\Embedding3D.vb
@@ -139,12 +167,28 @@
 - Embedding\UmapGraph.vb
 - Extensions.vb
 - Kmeans\Kmeans.vb
-- Kmeans\KMeansNetwork.vb
+- Multivariate\MultivariateLoadingPlot.vb
+- Multivariate\MultivariateOutlierPlot.vb
+- Multivariate\MultivariatePermutationPlot.vb
+- Multivariate\MultivariatePlotData.vb
+- Multivariate\MultivariatePredictionPlot.vb
+- Multivariate\MultivariateScorePlot.vb
+- Multivariate\MultivariateSPlot.vb
+- Multivariate\MultivariateVipPlot.vb
+- Multivariate\ScoreEllipseHelper.vb
+- Multivariate\ScreeVariancePlot.vb
 - NamespaceDoc.vb
+- ShapPlot\ShapBarPlot.vb
+- ShapPlot\ShapBeeswarmPlot.vb
+- ShapPlot\ShapDecisionPlot.vb
+- ShapPlot\ShapDependencePlot.vb
+- ShapPlot\ShapForcePlot.vb
+- ShapPlot\ShapHeatmapPlot.vb
+- ShapPlot\ShapPlotUtils.vb
+- ShapPlot\ShapViolinPlot.vb
+- ShapPlot\ShapWaterfallPlot.vb
 - Tabular\csv.vb
 - Tabular\Extensions.vb
 - Tabular\NamespaceDoc.vb
 - Tabular\SerialData.vb
-- Testing\ANNVisualize.vb
-- Testing\Kmeans3DTest.vb
 

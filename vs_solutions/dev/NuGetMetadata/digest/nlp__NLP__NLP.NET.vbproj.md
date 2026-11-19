@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Data.NLP
 - AssemblyName  : Microsoft.VisualBasic.Data.NLP
 - TargetFramework: net10.0
-- Source files  : 51
+- Source files  : 52
 - Existing Title: Natural Language Processing Toolkit: Tokenizers, Stemmer, BM25 and LDA
 - Existing Desc : NLP toolkit for sciBASIC#: Chinese word segmentation via max-match, HMM and a HuggingFace-compatible BPE/WordPiece/Unigram pipeline, plus a Porter stemmer, TF-IDF, bigram extraction, BM25 ranked search and Gibbs-sampled LDA topic modeling.
 - Existing Tags : scibasic;nlp;tokenizer;chinese-tokenizer;bm25;lda;tf-idf
@@ -43,6 +43,7 @@
 - Class SentenceCharWalker (Text\Model\SentenceCharWalker.vb) - Parse a line of sentence to a set of the word tokens
 - Class TokenCounter (Text\Model\TokenCounter.vb) - 计数器 最初代码来自Ansj的tree-split包中的love.cq.util; @author fangy </summary>
 - Class StopWords (Text\StopWords.vb)
+- Module StringSimilarity (Text\StringSimilarity.vb) - Fuzzy string similarity helpers used for entity name clues in alias detection (case, accents, punctuation and spelling variants). The NLP toolkit previously had no edit-distance implementation at all.
 - Module Text (Text\Text.vb)
 - Class DocumentTFIDF (TF-IDF\DocumentTFIDF.vb) - - Can be biased towards longer documents. - May not perform well with very rare or very common terms. **Example:**
 - Class TFIDF (TF-IDF\TFIDF.vb)
@@ -129,7 +130,7 @@
 - Friend Const CACHE_LINE_INTS As Integer = 16
 - Friend Sub New(K As Integer, alpha As Double, beta As Double, V As Integer,
 - Friend Function GetSlot(w As Integer) As Integer
-- ... and 316 more
+- ... and 328 more
 
 ## Imports
 - dft = Microsoft.VisualBasic.Data.Framework.DataFrame
@@ -140,6 +141,7 @@
 - Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
 - Microsoft.VisualBasic.Data.Framework
+- Microsoft.VisualBasic.Data.NLP.ChineseTokenizer.HuggingFace
 - Microsoft.VisualBasic.Data.NLP.Model
 - Microsoft.VisualBasic.Data.Trinity.NLP
 - Microsoft.VisualBasic.Language
@@ -156,7 +158,6 @@
 - randf = Microsoft.VisualBasic.Math.RandomExtensions
 - std = System.Math
 - SysDirectory = System.IO.Directory
-- SysFile = System.IO.File
 
 ## File tree
 - BM25\BM25.vb
@@ -186,6 +187,7 @@
 - Text\Model\SentenceCharWalker.vb
 - Text\Model\TokenCounter.vb
 - Text\StopWords.vb
+- Text\StringSimilarity.vb
 - Text\Text.vb
 - TF-IDF\DocumentTFIDF.vb
 - TF-IDF\TFIDF.vb

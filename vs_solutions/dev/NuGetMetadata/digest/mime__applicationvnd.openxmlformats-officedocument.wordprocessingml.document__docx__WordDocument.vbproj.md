@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.MIME.Office.WordDocument
 - AssemblyName  : Microsoft.VisualBasic.MIME.Office.WordDocument
 - TargetFramework: net10.0
-- Source files  : 12
+- Source files  : 7
 - Existing Title: DOCX Word Document Generator and Text Extractor
 - Existing Desc : Generates Office Word documents in sciBASIC#: a fluent writer builds document titles, headings H1-H6, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx package, and extracts plain text back out.
 - Existing Tags : scibasic;docx;word;office-openxml;document-generation;text-extraction
@@ -14,8 +14,6 @@
 ## Public types
 - Class DocxPackager (DocxPackager.vb) - .docx 文件打包器。
 - Class DocxTextReader (DocxTextReader.vb) - .docx 文本提取器。
-- Interface IDocumentWriter (IDocumentWriter.vb) - 统一文档写入接口。 <see cref="WordDocument"/>（生成 docx）与 <c>Microsoft.VisualBasic.MIME.application.pdf.PdfDocument</c> （生成 pdf）均实现该接口，使同一份文档写入代码可通过传入不同实例生成不同格式。
-- Module ImageHelper (ImageHelper.vb) - 图像工具：读取图像尺寸、生成测试 PNG。
 - Class NamespaceDoc (NamespaceDoc.vb) - Word .docx document generation: builds paragraphs, styled text runs, lists, code blocks and a table of contents into an OOXML package, extracts plain text back out, and provides the Word style, table style and color definitions.
 - Module OmmlBuilder (OMML.vb) - OMML（Office Math Markup Language）序列化器。
 - Class ThesisFormatting (ThesisFormatting.vb) - 学位论文主题格式对象。默认内置《江南大学研究生学位论文要求及格式规范（2025年修订）》 的版式规则，通过 <see cref="ApplyTo"/> 一次性应用到 <see cref="WordDocument"/> 的样式体系，使 <see cref="WordDocument.WriteBlocks"/> 写入的文档内容自动获得论文格式。
@@ -25,19 +23,12 @@
 - Class SectionDef (WordDocument.vb) - 节属性定义。每个节可独立设置奇偶页页眉与页脚页码格式； sectPr 位于节末（段落级 sectPr 或文档末尾的 body 级 sectPr）。
 - Class ImageEntry (WordDocument.vb)
 - Class WordRender (WordRender.vb) - word 报告渲染器：将 markdown 内容块（<see cref="Block"/>）渲染为 microsoft office word 文档，是 <see cref="ReportRender"/> 在二进制文档格式上的实现。 通过 <see cref="Theme"/> 属性可以套用 <see cref="ThesisFormatting"/> 等版式主题。
-- Class TableStyle (WordStyle\TableStyle.vb) - Word 表格样式。
-- Class WordColors (WordStyle\WordColors.vb) - 常用颜色常量（使用 OOXML 的 6 位十六进制 RGB 格式）。
-- Class WordStyle (WordStyle\WordStyle.vb) - Word 文档文字样式。 控制字体名称、字号、粗体/斜体/下划线、前景色/背景色、对齐方式、行间距等。
 
 ## Notable public members
 - Public Sub Save(doc As WordDocument, filePath As String)
 - Public Function ExtractText(filePath As String) As String
 - Public Function ExtractParagraphs(filePath As String) As String()
 - Public Function ExtractMetadata(filePath As String) As Dictionary(Of String, String)
-- Public Function ReadPngDimensions(data As Byte()) As ImageDimensions
-- Public Function ReadJpegDimensions(data As Byte()) As ImageDimensions
-- Public Function ReadImageDimensions(filePath As String) As ImageDimensions
-- Public Sub CreateTestPng(filePath As String, width As Integer, height As Integer,
 - Public Function ToOmml(lambda As LambdaExpression, Optional fontSizePt As Double = 0) As String
 - Public Function ToOmml(exp As MathExpression, Optional fontSizePt As Double = 0) As String
 - Public Property LatinFont As String = "Times New Roman"
@@ -90,11 +81,15 @@
 - Public Property RelId As String
 - Public Property Extension As String
 - Public Property Data As Byte()
-- ... and 126 more
+- Public Property WidthEmu As Integer
+- Public Property HeightEmu As Integer
+- Public Sub New(Optional author As String = "",
+- Public Function HeadingStyle(level As Integer, style As WordStyle) As WordDocument
+- ... and 76 more
 
 ## Imports
-- ImageDimensions = System.Drawing.Size
 - Microsoft.VisualBasic.ApplicationServices.Report
+- Microsoft.VisualBasic.Imaging.BitmapImage
 - Microsoft.VisualBasic.MIME.application.xml.MathML
 - std = System.Math
 - System.Drawing
@@ -106,14 +101,9 @@
 ## File tree
 - DocxPackager.vb
 - DocxTextReader.vb
-- IDocumentWriter.vb
-- ImageHelper.vb
 - NamespaceDoc.vb
 - OMML.vb
 - ThesisFormatting.vb
 - WordDocument.vb
 - WordRender.vb
-- WordStyle\TableStyle.vb
-- WordStyle\WordColors.vb
-- WordStyle\WordStyle.vb
 

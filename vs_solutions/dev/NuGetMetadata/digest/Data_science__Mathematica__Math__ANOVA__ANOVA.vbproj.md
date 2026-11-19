@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA
 - AssemblyName  : Microsoft.VisualBasic.Math.Statistics.ANOVA
 - TargetFramework: net10.0
-- Source files  : 25
+- Source files  : 27
 - Existing Title: ANOVA, Kruskal-Wallis and Multivariate Omics Analysis Toolkit
 - Existing Desc : A statistical hypothesis testing toolkit for sciBASIC#: one-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with Bonferroni and Benjamini-Hochberg FDR correction, plus PCA, PLS-DA and OPLS-DA multivariate analysis over unified numeric tables.
 - Existing Tags : scibasic;anova;kruskal-wallis;pca;pls-da;opls-da;omics
@@ -24,12 +24,15 @@
 - Module DataSetHelper (MultivariateAnalysis\DataSet.vb) - helper module for create the input dataset for run analysis
 - Module Debugger (MultivariateAnalysis\Debugger.vb)
 - Class MultivariateAnalysisResult (MultivariateAnalysis\MultivariateAnalysisResult.vb)
+- Module MultivariateMetrics (MultivariateAnalysis\MultivariateMetrics.vb) - 多元统计分析结果（<see cref="MultivariateAnalysisResult"/>）的通用指标提取器。 <para> 将散落在各个分析流程内部的指标公式集中到这里，绘图代码与置换检验都复用同一套实现，
 - Module NumericTableAnalysis (MultivariateAnalysis\NumericTableAnalysis.vb) - 多变量分析（PCA / PLS-DA / OPLS-DA）的统一二维表入口。 所有的入口方法都直接接收 <see cref="NumericTable"/>，内部会构造 一个**全新的** <see cref="StatisticsObject"/> 之后再调用现有的分析算法，
 - Module NumericTableDataSet (MultivariateAnalysis\NumericTableDataSet.vb) - 将 Core 之中的统一二维表 <see cref="NumericTable"/> 适配为多变量分析所需要的 <see cref="StatisticsObject"/> 输入对象的帮助模块。 表之中的特征矩阵会作为自变量 X，而指定的标签列则作为响应/分组变量 y。
 - Module NumericTableResult (MultivariateAnalysis\NumericTableResult.vb) - 将多变量分析的结果对象 <see cref="MultivariateAnalysisResult"/> 之中的 降维投影结果（score）与载荷结果（loading）抽取为统一的二维表对象 <see cref="NumericTable"/>，从而可以方便的直接送入聚类、可视化等后续流程。
 - Class OPLS (MultivariateAnalysis\OPLS.vb)
 - Module PCA (MultivariateAnalysis\PCA.vb)
 - Module PCAData (MultivariateAnalysis\PCAData.vb) - get pca result: contribution, score, loading
+- Class PermutationTestResult (MultivariateAnalysis\PermutationTest.vb) - 置换检验（permutation test）的计算结果。 <para> 对应 OPLS-DA / PLS-DA 的标准验证图：横轴是「置换后的响应变量与原始响应变量的相关系数」，
+- Module PermutationTest (MultivariateAnalysis\PermutationTest.vb) - <para> 实现方式是：固定 X，对响应变量 Y 做随机重排（相当于打散样本与类别之间的对应关系）， 然后重新跑一次完整的 PLS/OPLS 建模，记录该次置换模型的 R2Y 与累计 Q2；
 - Class PLS (MultivariateAnalysis\PLS.vb)
 - Module PLSData (MultivariateAnalysis\PLSData.vb) - get pls-da result
 - Class Component (MultivariateAnalysis\PLSData.vb)
@@ -87,6 +90,7 @@
 - Public Shared Function ErrorOfSquareVs2(x As Double(), y As Double()) As Double
 - Public Shared Function Stdev(array As Double()) As Double
 - Public Shared Function SumOfSquare(array As Double()) As Double
+- Public Shared Function SumOfSquareCentered(array As Double()) As Double
 - Public Shared Function RootSumOfSquare(array1 As Double(), array2 As Double()) As Double
 - Public Shared Function RootSumOfSquare(array As Double()) As Double
 - Public Shared Function Var(array As Double()) As Double
@@ -101,8 +105,7 @@
 - Public Sub WriteOplsResult(x As MultivariateAnalysisResult, output As Stream)
 - Public Sub WritePcaResult(x As MultivariateAnalysisResult, sw As TextWriter)
 - Public Sub WritePcaResult(x As MultivariateAnalysisResult, output As Stream)
-- Public Property StatisticsObject As StatisticsObject
-- ... and 109 more
+- ... and 143 more
 
 ## Imports
 - any = Microsoft.VisualBasic.Scripting
@@ -146,12 +149,14 @@
 - MultivariateAnalysis\DataSet.vb
 - MultivariateAnalysis\Debugger.vb
 - MultivariateAnalysis\MultivariateAnalysisResult.vb
+- MultivariateAnalysis\MultivariateMetrics.vb
 - MultivariateAnalysis\NumericTableAnalysis.vb
 - MultivariateAnalysis\NumericTableDataSet.vb
 - MultivariateAnalysis\NumericTableResult.vb
 - MultivariateAnalysis\OPLS.vb
 - MultivariateAnalysis\PCA.vb
 - MultivariateAnalysis\PCAData.vb
+- MultivariateAnalysis\PermutationTest.vb
 - MultivariateAnalysis\PLS.vb
 - MultivariateAnalysis\PLSData.vb
 - MultivariateAnalysis\StatisticsMathematics.vb

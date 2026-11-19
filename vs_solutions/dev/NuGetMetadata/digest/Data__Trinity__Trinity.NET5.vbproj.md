@@ -3,16 +3,31 @@
 - RootNamespace : Microsoft.VisualBasic.Data.NLP
 - AssemblyName  : Microsoft.VisualBasic.Data.TrinityNLP
 - TargetFramework: net10.0
-- Source files  : 9
+- Source files  : 20
 - Existing Title: TextRank Keyword Extraction, Summarization and NLP Utilities
 - Existing Desc : An NLP text mining module for sciBASIC#: TextRank keyword and key phrase extraction, PageRank-based sentence scoring for automatic summarization, Brill part-of-speech tagging, and text-density HTML article body extraction with URL normalization helpers.
 - Existing Tags : scibasic;nlp;textrank;keyword-extraction;summarization;pos-tagging
 
 ## Namespaces
+- Html  [files: 11]
 - POSTagger  [files: 3]
 
 ## Public types
 - Structure Article (Html\Article.vb) - 文章正文数据模型
+- Class HtmlDocument (Html\DOM\HtmlDocument.vb) - ```vbnet Dim doc As HtmlDocument = HtmlDocument.Parse(html) For Each li As HtmlNode In doc.QuerySelectorAll("li.aca_algo")
+- Module HtmlDocumentBuilder (Html\DOM\HtmlDocumentBuilder.vb) - 基于标签栈的 HTML 文档树构建器 构建器是宽容的(lenient)，对于真实世界之中常见的畸形文档不会抛出异常： <list type="bullet">
+- Module HtmlEntity (Html\DOM\HtmlEntity.vb) - HTML 字符实体的编解码模块 支持常见的命名实体(例如 ``&amp;amp;`` ``&amp;nbsp;``)、十进制数值实体(``&amp;#183;``) 以及十六进制数值实体(``&amp;#x00B7;``)。
+- Class HtmlNode (Html\DOM\HtmlNode.vb) - HTML 文档树之中的一个节点 这个类型是只读的查询模型：可以通过 <see cref="Nodes"/> 向下遍历，通过 <see cref="Parent"/> 向上遍历，也可以通过 <see cref="QuerySelector"/> 使用
+- Enum HtmlNodeType (Html\DOM\HtmlNodeType.vb) - HTML 文档树之中的节点类型
+- Class AttributeCondition (Html\DOM\HtmlSelector.vb) - 属性匹配条件，对应选择器之中的 ``[attr]`` ``[attr=value]`` 这一类写法
+- Class SelectorStep (Html\DOM\HtmlSelector.vb) - 选择器之中的一个复合步骤，例如 ``li.aca_algo``
+- Class HtmlSelector (Html\DOM\HtmlSelector.vb) - 支持的选择器语法： <list type="bullet"> <item>标签名：<c>div</c>，<c>*</c> 匹配任意标签，自定义标签(例如 <c>acf-badge</c>)同样可以匹配</item>
+- Module HtmlTags (Html\DOM\HtmlTags.vb) - HTML 标签的分类表：空元素(void element)、隐式闭合规则、块级元素、原始文本元素 这些分类表用于让解析器能够正确的处理真实世界之中大量存在的畸形 HTML 文档： <list type="bullet">
+- Module HtmlText (Html\DOM\HtmlText.vb) - HTML 文本处理相关的辅助函数
+- Enum HtmlTokenType (Html\DOM\HtmlToken.vb) - HTML 词法扫描所产生的记号类型
+- Class HtmlToken (Html\DOM\HtmlToken.vb) - HTML 词法扫描器所产生的一个记号对象
+- Module HtmlTokenizer (Html\DOM\HtmlTokenizer.vb) - HTML 文档的词法扫描器：对原始文档做一次线性的单遍扫描，产生记号序列 这里使用手写状态机而不是正则表达式，主要是出于两个方面的考虑： <list type="number">
+- Class NamespaceDoc (Html\DOM\NamespaceDoc.vb) - <item><see cref="HtmlDocument"/>：解析入口与文档级别的查询 API</item> <item><see cref="HtmlNode"/>：节点模型，提供属性读取、树遍历与文本抽取</item> <item><see cref="HtmlSelector"/>：类 CSS 的选择器引擎</item>
 - Class Html2Article (Html\Html2Article.vb) - 解析Html页面的文章正文内容,基于文本密度的HTML正文提取类 https://github.com/stanzhai/Html2Article http://www.cnblogs.com/jasondan/p/3497757.html
 - Class UrlUtility (Html\UrlUtility.vb) - Url处理辅助类
 - Class NamespaceDoc (NamespaceDoc.vb) - Trinity text mining: TextRank keyword and key phrase extraction, PageRank based sentence scoring for automatic summarization, and HTML article body extraction.
@@ -29,27 +44,61 @@
 - Public Property publishDate As DateTime
 - Public Overrides Function ToString() As String
 - Public Shared Function ParseText(html As String,
-- Public Property AppendMode() As Boolean = False
-- Public Property Depth() As Integer = 6
-- Public Property LimitCount() As Integer = 180
-- Public Function GetArticle(html As String) As Article
-- Public Shared Function FixUrl(baseUrl As String, html As String) As String
-- Public Function KeyPhrases(originalText$, keywordsSet As IEnumerable(Of String), Optional minOccurNum% = 2) As IEnumerable(Of String)
-- Public Function KeyWords(text As GraphMatrix) As Dictionary(Of String, Double)
-- Public Function Abstract(text As WeightedPRGraph, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
-- Public Function AbstractFilter(textRank As Dictionary(Of String, Double), Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String,…
-- Public Function GetRule(index As Integer) As Action(Of List(Of PartOfSpeech), Integer)
-- Public Sub SetRule(index As Integer, rule As Action(Of List(Of PartOfSpeech), Integer))
-- Public Sub AppendRule(rule As Action(Of List(Of PartOfSpeech), Integer))
-- Public Sub SetRules(newRules As IEnumerable(Of Action(Of List(Of PartOfSpeech), Integer)))
-- Public Function GetRules() As IEnumerable(Of Action(Of List(Of PartOfSpeech), Integer))
-- Public Property Word As String
-- Public Property Tag As String
-- Public Overrides Function Equals(obj As Object) As Boolean
-- Public Overrides Function GetHashCode() As Integer
-- Public Function TextRankGraph(sentences As IEnumerable(Of String), Optional win_size% = 2, Optional stopwords As StopWords = Nothing) As GraphMatrix
-- Public Sub TextRankGraph(g As Graph, text As String(), Optional win_size% = 2, Optional directed As Boolean = True)
-- Public Function TextGraph(text$, Optional similarityCut# = 0.05) As WeightedPRGraph
+- Friend Sub New(root As HtmlNode, html As String)
+- Public Shared Function Parse(html As String) As HtmlDocument
+- Public Shared Function LoadFile(path As String, Optional encoding As Encoding = Nothing) As HtmlDocument
+- Public ReadOnly Property Root As HtmlNode
+- Public ReadOnly Property Html As String
+- Public ReadOnly Property DocumentElement As HtmlNode
+- Public ReadOnly Property Head As HtmlNode
+- Public ReadOnly Property Body As HtmlNode
+- Public Function Title() As String
+- Public Function GetElementById(id As String) As HtmlNode
+- Public Function GetElementsByTagName(tagName As String) As HtmlNode()
+- Public Function GetElementsByClassName(className As String) As HtmlNode()
+- Public Function QuerySelectorAll(selector As String) As HtmlNode()
+- Public Function QuerySelector(selector As String) As HtmlNode
+- Public Function CountElements() As Integer
+- Public Function GetArticle(Optional depth As Integer = 6,
+- Public Function FixUrls(baseUrl As String) As String
+- Public Overrides Function ToString() As String
+- Friend Function Build(tokens As List(Of HtmlToken)) As HtmlNode
+- Public Function Decode(text As String) As String
+- Public Function Encode(text As String) As String
+- Friend Sub New(type As HtmlNodeType, name As String)
+- Public ReadOnly Property NodeType As HtmlNodeType
+- Public ReadOnly Property Name As String
+- Public ReadOnly Property RawText As String
+- Public ReadOnly Property Parent As HtmlNode
+- Public ReadOnly Property Nodes As IReadOnlyList(Of HtmlNode)
+- Public ReadOnly Property Attributes As IReadOnlyDictionary(Of String, String)
+- Friend Sub SetParent(parent As HtmlNode)
+- Friend Sub Add(child As HtmlNode)
+- Friend Sub SetText(text As String)
+- Friend Sub SetAttrs(list As List(Of KeyValuePair(Of String, String)))
+- Public ReadOnly Property Id As String
+- Public ReadOnly Property Classes As String()
+- Public Function Attribute(name As String, Optional [default] As String = "") As String
+- Public Function RawAttribute(name As String, Optional [default] As String = "") As String
+- Public Function HasAttribute(name As String) As Boolean
+- Public Function HasClass(className As String) As Boolean
+- Public ReadOnly Property IsElement As Boolean
+- Public Function Elements() As IEnumerable(Of HtmlNode)
+- Public Function Elements(tagName As String) As IEnumerable(Of HtmlNode)
+- Public Function Element(tagName As String) As HtmlNode
+- Public Iterator Function Descendants() As IEnumerable(Of HtmlNode)
+- Public Iterator Function DescendantsAndSelf() As IEnumerable(Of HtmlNode)
+- Public Iterator Function Ancestors() As IEnumerable(Of HtmlNode)
+- Public Function PreviousSibling() As HtmlNode
+- Public Function NextSibling() As HtmlNode
+- Public ReadOnly Property InnerHtml As String
+- Public ReadOnly Property OuterHtml As String
+- Public ReadOnly Property InnerText As String
+- Public ReadOnly Property Text As String
+- Public Function GetText(Optional preserveBlocks As Boolean = False) As String
+- Public Function QuerySelectorAll(selector As String) As HtmlNode()
+- Public Function QuerySelector(selector As String) As HtmlNode
+- ... and 60 more
 
 ## Imports
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
@@ -60,6 +109,9 @@
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Linq
 - Microsoft.VisualBasic.Math
+- System.Collections.Generic
+- System.IO
+- System.Linq
 - System.Net
 - System.Runtime.CompilerServices
 - System.Text
@@ -67,6 +119,17 @@
 
 ## File tree
 - Html\Article.vb
+- Html\DOM\HtmlDocument.vb
+- Html\DOM\HtmlDocumentBuilder.vb
+- Html\DOM\HtmlEntity.vb
+- Html\DOM\HtmlNode.vb
+- Html\DOM\HtmlNodeType.vb
+- Html\DOM\HtmlSelector.vb
+- Html\DOM\HtmlTags.vb
+- Html\DOM\HtmlText.vb
+- Html\DOM\HtmlToken.vb
+- Html\DOM\HtmlTokenizer.vb
+- Html\DOM\NamespaceDoc.vb
 - Html\Html2Article.vb
 - Html\UrlUtility.vb
 - NamespaceDoc.vb

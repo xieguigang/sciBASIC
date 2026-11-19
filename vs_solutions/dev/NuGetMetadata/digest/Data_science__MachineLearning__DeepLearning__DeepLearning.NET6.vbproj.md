@@ -3,21 +3,21 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning
 - AssemblyName  : Microsoft.VisualBasic.DeepLearning
 - TargetFramework: net10.0
-- Source files  : 99
+- Source files  : 109
 - Existing Title: Deep Learning Framework: CNN, RNN, Transformer and ANN Models
 - Existing Desc : A deep learning toolkit for sciBASIC#: trainable convolutional networks with SGD, AdaGrad and Adam trainers, a CeNiN CNN reader for image inference, character-level RNNs, a hand-written Transformer encoder-decoder with explicit backward passes, and general feed-forward neural networks.
 - Existing Tags : scibasic;deep-learning;cnn;rnn;transformer;attention;neural-network
 
 ## Namespaces
-- CNN  [files: 12]
+- CNN  [files: 13]
 - CNN.data  [files: 5]
-- CNN.layers  [files: 16]
+- CNN.layers  [files: 18]
 - CNN.losslayers  [files: 5]
 - CNN.trainers  [files: 8]
 - Convolutional  [files: 12]
 - NeuralNetwork  [files: 5]
 - RNN  [files: 20]
-- Transformer  [files: 13]
+- Transformer  [files: 20]
 
 ## Public types
 - Module Program (_smoketest\Program.vb)
@@ -43,9 +43,11 @@
 - Class TrainResult (CNN\data\TrainResult.vb) - Created by danielp on 1/27/17.
 - Class Dimension (CNN\Dimension.vb) - The layer dimension data width and height
 - Class LayerBuilder (CNN\LayerBuilder.vb) - Builder that assembles the ordered layer list of a <see cref="ConvolutionalNN"/>. <para> Layers are appended either through the fluent <c>+</c> operator (see <see cref="CNNLayers"/>) or through the
-- Class Conv2DTransposeLayer (CNN\Layers\Conv2DTransposeLayer.vb) - Transposed (de)convolution layer: it upsamples a feature map back to a larger spatial size by scattering each input value over the receptive field of every filter. https://github.com/TrevorBlythe/MentisJS/blob/main/src/layers/DeconvLayer.js
+- Class ConcatLayer (CNN\Layers\ConcatLayer.vb) - 跳跃连接拼接层：把编码器特征图（必要时先中心裁剪）与本层输入沿**通道维**拼接起来。 布局与 <see cref="DataBlock"/> 一致，索引公式为 <c>(SX*y + x)*Depth + depth</c>， 因此拼接是"逐像素把两段通道并排写入"，不涉及任何跨行搬运。
+- Class Conv2DTransposeLayer (CNN\Layers\Conv2DTransposeLayer.vb) - Transposed (de)convolution layer: it upsamples a feature map back to a larger spatial size, with a learnable kernel (U-Net decoder). 参数布局与 <see cref="ConvolutionLayer"/> 完全同构（每个输出通道一个 <see cref="DataBlock"/>
 - Class ConvolutionLayer (CNN\Layers\ConvolutionLayer.vb) - This layer uses different filters to find attributes of the data that affects the result. As an example there could be a filter to find horizontal edges in an image.
 - Class DropoutLayer (CNN\Layers\DropoutLayer.vb) - This layer will remove some random activations in order to defeat over-fitting. @author Daniel Persson (mailto.woden@gmail.com)
+- Class EluLayer (CNN\Layers\EluLayer.vb) - Exponential linear unit activation layer. 本层没有可训练参数，只做逐元素的非线性映射与梯度回传。
 - Class FourierFeatureLayer (CNN\Layers\FourierFeatureLayer.vb) - Based on the paper "Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains" (2020) presented at NeurIPS (https://bmild.github.io/fourfeat/index.html)
 - Class FullyConnectedLayer (CNN\Layers\FullyConnectedLayer.vb) - Neurons in a fully connected layer have full connections to all activations in the previous layer, as seen in regular Neural Networks. Their activations can hence be computed with a matrix multiplication
 - Class GaussianLayer (CNN\Layers\GaussianLayer.vb) - Gaussian activation layer. Each element is transformed by the normal probability density function with a learnable mean and standard deviation, plus a bias: <c>y = N(x; mu, sigma) + b</c>.
@@ -65,6 +67,7 @@
 - Class TanhLayer (CNN\Layers\TanhLayer.vb) - Implements Tanh nonlinearity elementwise x to tanh(x) so the output is between -1 and 1. @author Daniel Persson (mailto.woden@gmail.com)
 - Enum LayerTypes (CNN\LayerTypes.vb) - Identifies the kind of a CNN layer; the <see cref="DescriptionAttribute"/> value is the tag persisted in the model file.
 - Module NamespaceDoc (CNN\NamespaceDoc.vb) - The convolutional neural network: the network model together with its data containers, layers, loss layers and trainers.
+- Module PrecisionRouter (CNN\PrecisionRouter.vb) - 卷积族算子在双精度(fp64)与单精度(fp32)之间的路由。 判据完全复用 <see cref="MixedPrecisionPolicy"/>：规模用 <see cref="MixedPrecisionPolicy.Decide"/> 判定，数值安全性用
 - Module ReadModelCNN (CNN\ReadModelCNN.vb) - Deserializes a <see cref="ConvolutionalNN"/> from the CNN binary model format produced by <see cref="SaveModelCNN"/>.
 - Module SaveModelCNN (CNN\SaveModelCNN.vb) - Serializes a <see cref="ConvolutionalNN"/> into the CNN binary model format that is read back by <see cref="ReadModelCNN"/>.
 - Class Trainer (CNN\Trainer.vb)
@@ -107,16 +110,28 @@
 - Class EncoderLayer (Transformer\EncoderLayer.vb) - One encoder layer: multi head self attention followed by a position wise feed forward network, each wrapped in a residual connection and layer normalization. The forward pass caches the AddNorm statistics (mean and inverse standard deviation) of both sub layers and their
 - Class Cache (Transformer\EncoderLayer.vb) - Forward intermediates of one encode pass, required by the backward pass.
 - Class EncoderStack (Transformer\EncoderStack.vb) - A stack of <see cref="EncoderLayer"/> instances, applied one after another. The encoder runs only once per translation, so the forward cache of every layer can be kept on the layer object and the backward pass simply walks the layers in reverse order.
-- Class FeedForwardNetwork (Transformer\FeedForwardNetwork.vb) - Position wise feed forward network: two fully connected layers with a ReLU activation in between. Because the tensor runtime has no automatic differentiation, the forward pass caches the pre-activation (the source of the ReLU mask) and the activation (needed for the W2 gradient); the backward pass accumulates the W1, W2, b1 and b2
+- Enum FeedForwardActivation (Transformer\FeedForwardNetwork.vb) - 前馈网络的中间层激活类型。
+- Class FeedForwardNetwork (Transformer\FeedForwardNetwork.vb) - Position wise feed forward network: two fully connected layers with an activation in between. Because the tensor runtime has no automatic differentiation, the forward pass caches the pre-activation (the source of the activation mask) and the activation (needed for the W2 gradient); the backward pass accumulates the W1, W2, b1 and b2
 - Class Cache (Transformer\FeedForwardNetwork.vb)
+- Class LayerNormAffine (Transformer\LayerNormAffine.vb) - 可训练的仿射 LayerNorm：<c>y = γ·(x−μ)/sqrt(σ²+eps) + β</c>。 前向缓存均值与 <c>1/sqrt(σ²+eps)</c>；反向按标准公式 <c>dx = invStd·(dx̂ − mean(dx̂) − x̂·mean(dx̂⊙x̂))</c> 回传，
+- Class Cache (Transformer\LayerNormAffine.vb)
 - Class MultiHeadAttention (Transformer\MultiHeadAttention.vb) - Scaled dot product multi head attention, implemented with the hand written operators of <see cref="TensorOps"/> and an explicit backward pass. The forward pass caches the projected Q/K/V tensors, the per head softmax probabilities and the concatenated heads; the
 - Class Cache (Transformer\MultiHeadAttention.vb) - Forward intermediates of the attention computation, required by the backward pass.
 - Module NamespaceDoc (Transformer\NamespaceDoc.vb) - The transformer architecture: attention layers, positional encodings and the transformer model.
 - Class Optimizer (Transformer\Optimizer.vb) - 实现 Adam 优化器（参数 + 同形梯度累加器）。
 - Class OutputLayer (Transformer\OutputLayer.vb) - Produce a flat array with the same dimension as the number of words in the dictionary
 - Class Cache (Transformer\OutputLayer.vb) - Forward intermediates of the output projection, required by the backward pass.
+- Class SequenceDecoderLayer (Transformer\SequenceDecoderLayer.vb) - 序列解码器单层：自注意力 + 交叉注意力 + 前馈网络，三个子层各自「残差 + 仿射 LayerNorm」。
+- Class Cache (Transformer\SequenceDecoderLayer.vb)
+- Class SequenceEncoderLayer (Transformer\SequenceEncoderLayer.vb) - 序列编码器单层：多头自注意力 + 位置前馈网络，两个子层各自「残差 + 仿射 LayerNorm」（post-LN）。
+- Class Cache (Transformer\SequenceEncoderLayer.vb)
+- Class SequenceTransformer (Transformer\SequenceTransformer.vb) - 自编码式序列 Transformer：编码器-解码器共享同一份输入，逐位置输出词表分布。 <para> 前向输入 <c>ids(batch, time)</c>；所有中间张量形状为 <c>[batch, time, hidden]</c>。
 - Module TensorOps (Transformer\TensorOps.vb) - Transformer 迁移辅助算子集合：补齐 <see cref="Tensor"/> 相对旧 AD 张量缺失的 N 维算子，并为每个算子提供显式反向传播实现。
+- Module TensorOpsEx (Transformer\TensorOpsEx.vb) - 面向序列模型的补充算子：GELU、仿射 LayerNorm、逐位置线性层、NLL 损失与多项式采样。
+- Class TokenEmbedding (Transformer\TokenEmbedding.vb) - 词嵌入 + 正弦位置编码。 前向：<c>y[b,t,:] = W[ids[b,t],:] + pe[t,:]</c>，训练时再叠加 dropout。 反向：穿过 dropout 后按 <c>(b,t)</c> 把梯度散射累加回 <c>W</c> 的对应行
 - Class TransformerModel (Transformer\TransformerModel.vb) - Transformer architecture as described in "Attention is all you need" https://github.com/jaksc00p/Transformer/tree/master
+- Class TransformerLoadReport (Transformer\TransformerStateDict.vb) - 一次权重加载的结果：缺失键与多余键。
+- Class TransformerStateDict (Transformer\TransformerStateDict.vb) - <see cref="SequenceTransformer"/> 与 PyTorch <c>state_dict</c> 的互转。 严格模式下缺失键与多余键都会抛异常（与 <c>load_state_dict(strict=True)</c> 一致）； 非严格模式只记录到 <see cref="TransformerLoadReport"/>。
 - Module TextProcessing (Transformer\Utils\TextProcessing.vb) - Text preprocessing helpers used by the translation demo: loading parallel sentence pairs, tokenizing sentences, computing sequence lengths and adding the start / stop markers.
 
 ## Notable public members
@@ -180,7 +195,7 @@
 - Public Function input_layer(size As Integer(), Optional depth As Integer = 1) As CNNLayerArguments
 - Public Function input_layer(dims As Dimension, Optional depth As Integer = 1) As CNNLayerArguments
 - Public Function conv_layer(sx As Integer,
-- ... and 529 more
+- ... and 685 more
 
 ## Imports
 - Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
@@ -234,9 +249,11 @@
 - CNN\DataLink.vb
 - CNN\Dimension.vb
 - CNN\LayerBuilder.vb
+- CNN\Layers\ConcatLayer.vb
 - CNN\Layers\Conv2DTransposeLayer.vb
 - CNN\Layers\ConvolutionLayer.vb
 - CNN\Layers\DropoutLayer.vb
+- CNN\Layers\EluLayer.vb
 - CNN\Layers\FourierFeatureLayer.vb
 - CNN\Layers\FullyConnectedLayer.vb
 - CNN\Layers\GaussianLayer.vb
@@ -257,6 +274,7 @@
 - CNN\Layers\TanhLayer.vb
 - CNN\LayerTypes.vb
 - CNN\NamespaceDoc.vb
+- CNN\PrecisionRouter.vb
 - CNN\ReadModelCNN.vb
 - CNN\SaveModelCNN.vb
 - CNN\Trainer.vb
@@ -302,11 +320,18 @@
 - Transformer\EncoderLayer.vb
 - Transformer\EncoderStack.vb
 - Transformer\FeedForwardNetwork.vb
+- Transformer\LayerNormAffine.vb
 - Transformer\MultiHeadAttention.vb
 - Transformer\NamespaceDoc.vb
 - Transformer\Optimizer.vb
 - Transformer\OutputLayer.vb
+- Transformer\SequenceDecoderLayer.vb
+- Transformer\SequenceEncoderLayer.vb
+- Transformer\SequenceTransformer.vb
 - Transformer\TensorOps.vb
+- Transformer\TensorOpsEx.vb
+- Transformer\TokenEmbedding.vb
 - Transformer\TransformerModel.vb
+- Transformer\TransformerStateDict.vb
 - Transformer\Utils\TextProcessing.vb
 

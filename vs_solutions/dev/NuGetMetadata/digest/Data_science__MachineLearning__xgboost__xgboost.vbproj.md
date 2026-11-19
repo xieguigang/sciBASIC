@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning.XGBoost
 - AssemblyName  : Microsoft.VisualBasic.MachineLearning.XGBoost
 - TargetFramework: net10.0
-- Source files  : 38
+- Source files  : 51
 - Existing Title: XGBoost Model Predictor and Gradient Boosting Tree Trainer
 - Existing Desc : Gradient boosting toolkit for sciBASIC#: reads and scores XGBoost model files through GBTree, GBLinear and Dart boosters, and trains ternary gradient boosting trees with categorical and missing value handling.
 - Existing Tags : scibasic;xgboost;gradient-boosting;decision-tree;predictor
@@ -13,7 +13,8 @@
 - gbm  [files: 5]
 - learner  [files: 3]
 - spark  [files: 2]
-- train  [files: 10]
+- train  [files: 12]
+- train.kernels  [files: 12]
 - tree  [files: 4]
 - util  [files: 8]
 - util.FVecArray  [files: 2]
@@ -40,23 +41,34 @@
 - Class ModelParam (Predictor.vb)
 - Module NamespaceDoc (spark\NamespaceDoc.vb) - Spark integration types of the XGBoost implementation.
 - Class SparkModelParam (spark\SparkModelParam.vb)
-- Class AttributeList (TGBoost\AttributeList.vb)
+- Class AttributeList (TGBoost\AttributeList.vb) - 训练期的特征列表。 自本次重构起，实际的训练数据由 <see cref="Columns"/>（<see cref="ColumnBlock"/>， 列主序 SoA：每特征「值数组 + 行号数组 + 区间边界」）承载。
 - Class ClassList (TGBoost\ClassList.vb)
 - Class TrainData (TGBoost\Data.vb)
 - Class ValidationData (TGBoost\Data.vb)
 - Class TestData (TGBoost\Data.vb)
 - Class GBM (TGBoost\GBM.vb) - + Handle missing value, XGBoost learn a direction For those With missing value, the direction Is left Or right. TGBoost take a different approach: it enumerate missing value go To
-- Class QLinearLoss (TGBoost\Loss.vb)
-- Class SquareLoss (TGBoost\Loss.vb)
-- Class LogisticLoss (TGBoost\Loss.vb)
+- Class BuildNode (TGBoost\kernels\BuildNode.vb) - 建树期的轻量节点。 与 <see cref="TreeNode"/> 的区别：不持有 <c>G_left/H_left/Grad_missing/Hess_missing</c> 这些 <c>Double(feature_dim)</c> 数组（旧实现每节点 6 条 + 1 个类别字典），
+- Class ColumnBlock (TGBoost\kernels\ColumnBlock.vb) - 取代旧的 <c>Single()()()</c> 表示（每个 (样本,特征) 单元一个两元素 <c>Single()</c> 对象， 约 32~40 字节且全部进入 Gen2）。本类把每个特征拆成三条平行数组： + <see cref="Values"/>：按特征值升序排列的特征值；
+- Class ExactSplitFinder (TGBoost\kernels\ExactSplitFinder.vb) - 精确（exact）分裂查找器。 在节点自身的有序切片上做前缀扫描，于每个「特征值发生变化」的位置评估分裂增益。 语义与旧的 SLIQ 实现等价（因此可用于新旧实现的结果对照），但：
+- Class FeatureBinning (TGBoost\kernels\FeatureBinning.vb) - 单个特征的分桶表（等频分桶）。 <see cref="Bins"/> 与列块中「按值升序排列的位置」一一对应， <see cref="Thresholds"/> 给出每个桶内的最大特征值，从而在直方图上
+- Class FlatTree (TGBoost\kernels\FlatTree.vb) - 扁平化（编译后）的树，用于批量预测。 旧实现的预测路径是「每棵树一次 PLINQ + 每样本一个 <c>PredictCallable</c> 对象 + <c>OrderBy</c> 排序」， 复杂度 <c>O(T · N log N)</c> 且产生 <c>T × N</c> 次堆分配。编译后每个节点只占用几条平行数组，
+- Class HistogramSplitFinder (TGBoost\kernels\HistogramSplitFinder.vb) - 直方图（hist）分裂查找器。 先把节点的有序切片累积到 <c>max_bin</c> 个桶的直方图上，再在直方图上做前缀扫描。 当特征取值基数很大（连续型、浮点测量值）时，exact 模式需要为每个不同取值评估一次分裂，
+- Class RowPartitioner (TGBoost\kernels\RowPartitioner.vb) - 行分区器：维护「行 -&gt; 节点」映射以及每个节点当前持有的行集合。 旧实现每一层都要对全量样本做三遍扫描： <c>update_corresponding_tree_node</c> / <c>update_Grad_Hess_numsample_for_tree_node</c> /
+- Module SimdOps (TGBoost\kernels\SimdOps.vb) - SIMD 桥接层：训练/推理热路径唯一允许直接调用 SIMD 库的地方。 每个方法内部都先判定「是否启用 + 长度阈值」，不满足时执行与改造前**逐值等价**的 标量循环。好处有两处：
+- Class SimdWorkspace (TGBoost\kernels\SimdWorkspace.vb) - 训练期复用的预分配缓冲区。 改造前每轮/每层都会新建若干 <c>Double()</c>（梯度、海森、叶分数、临时概率）， 在 128 线程下会成为 GC 压力的主要来源。本类按行数一次性分配并复用，
+- Class SplitCandidate (TGBoost\kernels\SplitCandidate.vb) - 一个分裂候选。 旧实现把「最佳特征 / 最佳增益 / 最佳阈值 / 缺失方向 / 类别左子集」塞进 一个 <c>List(Of Double)</c>，调用方靠 <c>ret.Count</c> 猜测返回值是数值阈值还是类别左子集，
+- Class ScanContext (TGBoost\kernels\SplitFinderBase.vb) - 一列、一层、一组存活节点的扫描上下文。 把「按节点分桶后的有序列位置」交给具体的分裂查找器实现， 从而让 exact / histogram 两种算法共用同一套分桶与缺失值统计逻辑。
+- Enum TreeMethod (TGBoost\kernels\TreeBuilder.vb) - 建树时使用的分裂查找算法。
+- Class BuildTree (TGBoost\kernels\TreeBuilder.vb) - 建树结果。
+- Class TreeBuilder (TGBoost\kernels\TreeBuilder.vb) - 逐层（level-wise）建树器。 与旧 <c>Tree.build</c> 的差别： + 节点统计量在「分区完成后立刻计算」，每层只扫一遍本层节点的行（旧实现是 3 遍全量 N）；
+- Class QLinearLoss (TGBoost\Loss.vb) - 二次-线性（pseudo-Huber）回归损失：<c>L(r) = r²</c>（<c>|r| ≤ 1</c>）， <c>L(r) = 2|r| − 1</c>（<c>|r| &gt; 1</c>）。 旧实现（继承自上游 tgboost）的梯度为 <c>1 / f((pred − label)²)</c>：
+- Class SquareLoss (TGBoost\Loss.vb) - 平方损失：<c>grad = pred − label</c>，<c>hess = 1</c>。
+- Class LogisticLoss (TGBoost\Loss.vb) - 逻辑损失（二分类）。 与旧实现的差别： + 求导使用**未裁剪**的概率：<c>grad = p − y</c>、<c>hess = p(1 − p)</c>。
 - Class ModelSerializer (TGBoost\ModelSerializer.vb)
 - Module NamespaceDoc (TGBoost\NamespaceDoc.vb) - The TGBoost training implementation.
-- Class RowSampler (TGBoost\Sampling.vb)
-- Class ColumnSampler (TGBoost\Sampling.vb)
-- Class Tree (TGBoost\Tree.vb)
-- Class ProcessEachNumericFeature (TGBoost\Tree.vb)
-- Class ProcessEachCategoricalFeature (TGBoost\Tree.vb)
-- Class PredictCallable (TGBoost\Tree.vb)
+- Class RowSampler (TGBoost\Sampling.vb) - 行（样本）子采样器。 旧实现只在构造时随机一次 0/1 掩码，之后每轮只是 <c>Shuffle</c> 同一组掩码—— 每轮被选中的样本数恒定、且是「同一多重集合的置换」，与 xgboost 的
+- Class ColumnSampler (TGBoost\Sampling.vb) - 列（特征）子采样器。 旧实现用 <c>CInt(n * sampling_rate)</c> 计算列数，在特征少或采样率低时可能得到 0， 于是「一棵树没有任何候选特征」——树无法分裂且没有任何提示。现在至少保留 1 列。
+- Class Tree (TGBoost\Tree.vb) - 单棵梯度提升树。 建树逻辑已迁移到 <see cref="TreeBuilder"/>（exact / hist 双路径 + 行分区）， 本类保留公共契约：<see cref="root"/>、<see cref="predict(Single()())"/>、
 - Class TreeNode (TGBoost\TreeNode.vb)
 - Module NamespaceDoc (tree\NamespaceDoc.vb) - Decision tree base learners of XGBoost.
 - Class RegTree (tree\RegTree.vb)
@@ -117,7 +129,7 @@
 - Public Overloads Overrides Function predTransform(preds As Double()) As Double()
 - Public Overloads Overrides Function predTransform(pred As Double) As Double
 - Friend Overridable Function exp(x As Double) As Double
-- Public Shared Function fromName(name As String) As ObjFunction
+- Public Shared Function fromName(name As String, Optional strict As Boolean = True) As ObjFunction
 - Public Shared Sub register(name As String, objFunction As ObjFunction)
 - Public Shared Sub useFastMathExp()
 - Public Overridable Function predTransform(preds As Double()) As Double()
@@ -128,6 +140,7 @@
 - Friend Overridable Sub initObjFunction(configuration As PredictorConfiguration)
 - Friend Overridable Sub initObjGbm()
 - Public Overridable Function predict(feat As FVec) As Double()
+- Public Overridable Function predict(rows As FVec(), Optional output_margin As Boolean = False) As Double()()
 - Public Overridable Function predict(feat As FVec, output_margin As Boolean) As Double()
 - Public Overridable Function predict(feat As FVec, output_margin As Boolean, ntree_limit As Integer) As Double()
 - Friend Overridable Function predictRaw(feat As FVec, ntree_limit As Integer) As Double()
@@ -136,35 +149,34 @@
 - Public Overridable Function predictSingle(feat As FVec, output_margin As Boolean, ntree_limit As Integer) As Double
 - Friend Overridable Function predictSingleRaw(feat As FVec, ntree_limit As Integer) As Double
 - Public Overridable Function predictLeaf(feat As FVec) As Integer()
-- Public Overridable Function predictLeaf(feat As FVec, ntree_limit As Integer) As Integer()
-- ... and 135 more
+- ... and 228 more
 
 ## Imports
 - Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 - Microsoft.VisualBasic.ComponentModel
-- Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.TagData
 - Microsoft.VisualBasic.Data.IO
 - Microsoft.VisualBasic.DataMining.Evaluation
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Language.Java
-- Microsoft.VisualBasic.Language.Java.Arrays
 - Microsoft.VisualBasic.Language.Values
-- Microsoft.VisualBasic.Linq
 - Microsoft.VisualBasic.MachineLearning.XGBoost.config
 - Microsoft.VisualBasic.MachineLearning.XGBoost.gbm
 - Microsoft.VisualBasic.MachineLearning.XGBoost.learner
 - Microsoft.VisualBasic.MachineLearning.XGBoost.spark
+- Microsoft.VisualBasic.MachineLearning.XGBoost.train.kernels
 - Microsoft.VisualBasic.MachineLearning.XGBoost.tree
 - Microsoft.VisualBasic.MachineLearning.XGBoost.util
+- Microsoft.VisualBasic.Math.SIMD
 - Microsoft.VisualBasic.My
-- Microsoft.VisualBasic.Parallel.Threads
 - Microsoft.VisualBasic.Serialization.JSON
-- randf = Microsoft.VisualBasic.Math.RandomExtensions
+- par = System.Threading.Tasks.Parallel
+- simdmath = Microsoft.VisualBasic.Math.SIMD.SimdMath
 - std = System.Math
+- sysmath = System.Math
+- System.Buffers
+- System.Globalization
 - System.IO
-- System.Runtime.CompilerServices
-- System.Runtime.Serialization
 
 ## File tree
 - config\NamespaceDoc.vb
@@ -185,10 +197,23 @@
 - TGBoost\ClassList.vb
 - TGBoost\Data.vb
 - TGBoost\GBM.vb
+- TGBoost\kernels\BuildNode.vb
+- TGBoost\kernels\ColumnBlock.vb
+- TGBoost\kernels\ExactSplitFinder.vb
+- TGBoost\kernels\FeatureBinning.vb
+- TGBoost\kernels\FlatTree.vb
+- TGBoost\kernels\HistogramSplitFinder.vb
+- TGBoost\kernels\RowPartitioner.vb
+- TGBoost\kernels\SimdOps.vb
+- TGBoost\kernels\SimdWorkspace.vb
+- TGBoost\kernels\SplitCandidate.vb
+- TGBoost\kernels\SplitFinderBase.vb
+- TGBoost\kernels\TreeBuilder.vb
 - TGBoost\Loss.vb
 - TGBoost\ModelSerializer.vb
 - TGBoost\NamespaceDoc.vb
 - TGBoost\Sampling.vb
+- TGBoost\SimdOptions.vb
 - TGBoost\Tree.vb
 - TGBoost\TreeNode.vb
 - tree\NamespaceDoc.vb

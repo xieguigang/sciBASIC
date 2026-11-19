@@ -9,53 +9,71 @@
 - Existing Tags : scibasic;bing;search-engine;web-scraping;translation;doi
 
 ## Namespaces
-- Bing  [files: 4]
-- Bing.Academic  [files: 5]
+- Bing  [files: 3]
+- Bing.Academic  [files: 7]
 - Bing.Translation  [files: 3]
 - DOI  [files: 2]
 
 ## Public types
+- Module AcademicSearch (Academic\Academic.vb)
+- Module AcademicParser (Academic\AcademicParser.vb) - 必应学术搜索结果页面的解析器：将页面 DOM 映射为结构化的 <see cref="AcademicResult"/> 这个模块是整个必应学术模块之中唯一与页面结构耦合的地方，所有的抽取逻辑都基于 <see cref="HtmlDocument"/> 的选择器来完成，并且每一个字段都带有兜底(fallback)策略：
+- Class AcademicResult (Academic\AcademicResult.vb) - 必应学术搜索结果之中的一个条目 必应学术的搜索结果页面之上存在两种形态的结果： <list type="number">
+- Class AcademicSearchPage (Academic\AcademicResult.vb) - 一页必应学术搜索结果
+- Class ArticleProfile (Academic\ArticleProfile.vb) - 文献的一些摘要信息
+- Structure Link (Academic\ArticleProfile.vb)
+- Structure cites (Academic\ArticleProfile.vb)
+- Module Extensions (Academic\Extensions.vb)
+- Class Summary (Academic\Extensions.vb)
+- Module NamespaceDoc (Academic\NamespaceDoc.vb) - Microsoft Bing academic search client: queries the academic search portal and models article profiles, citations and profile search results.
+- Module ProfileResult (Academic\ProfileResult.vb) - Example as: https://cn.bing.com/academic/profile?id=24ca0003c2b5935f1335003ca712b889&amp;encoded=0&amp;v=paper_preview&amp;mkt=zh-cn
 - Module NamespaceDoc (DOI\NamespaceDoc.vb) - The DOI (Digital Object Identifier) handle service response model used to decode and inspect the JSON payloads returned by the resolver.
 - Class Response (DOI\Response.vb)
 - Class DoiValue (DOI\Response.vb)
 - Class DataValue (DOI\Response.vb)
 - Class HS_ADMIN (DOI\Response.vb)
-- Module AcademicSearch (MicrosoftBing\Academic\Academic.vb)
-- Class ArticleProfile (MicrosoftBing\Academic\ArticleProfile.vb) - 文献的一些摘要信息
-- Structure Link (MicrosoftBing\Academic\ArticleProfile.vb)
-- Structure cites (MicrosoftBing\Academic\ArticleProfile.vb)
-- Module Extensions (MicrosoftBing\Academic\Extensions.vb)
-- Class Summary (MicrosoftBing\Academic\Extensions.vb)
-- Module NamespaceDoc (MicrosoftBing\Academic\NamespaceDoc.vb) - Microsoft Bing academic search client: queries the academic search portal and models article profiles, citations and profile search results.
-- Module ProfileResult (MicrosoftBing\Academic\ProfileResult.vb) - Example as: https://cn.bing.com/academic/profile?id=24ca0003c2b5935f1335003ca712b889&amp;encoded=0&amp;v=paper_preview&amp;mkt=zh-cn
-- Module BingImage (MicrosoftBing\BingImage.vb) - Provides an attached property determining the current Bing image and assigning it to an image or imagebrush.
-- Module NamespaceDoc (MicrosoftBing\NamespaceDoc.vb) - Microsoft Bing search client core: the web result models, the paging search engine provider and the Bing image search helpers.
-- Module SearchEngineProvider (MicrosoftBing\SearchEngine.vb)
-- Module NamespaceDoc (MicrosoftBing\Translation\NamespaceDoc.vb) - Microsoft Bing translation client used to look up word translations, together with the word translation result model.
-- Module Translation (MicrosoftBing\Translation\Translation.vb)
-- Class WordTranslation (MicrosoftBing\Translation\WordTranslation.vb) - 单词翻译的结果
-- Class WebResult (MicrosoftBing\WebResult.vb) - 一个结果条目
-- Class SearchResult (MicrosoftBing\WebResult.vb)
-- Class NamespaceDoc (NamespaceDoc.vb) - Microsoft Bing web services client for knowledge base enrichment: web search result scraping with paging, academic article profile queries, word translation lookups and DOI handle resolution.
+- Module NamespaceDoc (NamespaceDoc.vb) - Microsoft Bing search client core: the web result models, the paging search engine provider and the Bing image search helpers.
+- Module SearchEngineProvider (SearchEngine.vb)
+- Module NamespaceDoc (Translation\NamespaceDoc.vb) - Microsoft Bing translation client used to look up word translations, together with the word translation result model.
+- Module Translation (Translation\Translation.vb)
+- Class WordTranslation (Translation\WordTranslation.vb) - 单词翻译的结果
+- Class WebResult (WebResult.vb) - 一个结果条目
+- Class SearchResult (WebResult.vb)
 
 ## Notable public members
-- Public Property responseCode As Integer
-- Public Property handle As String
-- Public Property values As DoiValue()
-- Public Property message As String
-- Public Property index As Integer
-- Public Property type As String
-- Public Property data
-- Public Property ttl As Integer
-- Public Property timestamp As String
-- Public Property format As String
-- Public Property value As Object
-- Public Property handle As String
-- Public Property index As Integer
-- Public Property permissions As String
-- Public Function Search(term As String) As NamedValue(Of String)()
-- Public Iterator Function Query(term$, Optional pages% = 10) As IEnumerable(Of (refer$, list As NamedValue(Of String)()))
-- Public Function GetDetails(info As NamedValue(Of String), Optional refer$ = Nothing) As ArticleProfile
+- Public Function BuildUrl(term As String, Optional first As Integer = -1) As String
+- Public Function Search(term As String) As AcademicResult()
+- Public Function SearchPage(term As String, Optional first As Integer = -1) As AcademicSearchPage
+- Public Function DownloadPage(url As String, Optional term As String = Nothing) As AcademicSearchPage
+- Public Iterator Function Query(term As String, Optional pages% = 10) As IEnumerable(Of (refer$, list As AcademicResult()))
+- Public Function GetDetails(info As AcademicResult, Optional refer$ = Nothing) As ArticleProfile
+- Public Function AsNamedValues(results As IEnumerable(Of AcademicResult)) As NamedValue(Of String)()
+- Public Const BingBaseUrl As String = "https://cn.bing.com/"
+- Public Function ParsePage(html As String, Optional url As String = Nothing, Optional term As String = Nothing) As AcademicSearchPage
+- Public Function ParseFile(path As String, Optional term As String = Nothing) As AcademicSearchPage
+- Public Property rank As Integer
+- Public Property term As String
+- Public Property title As String
+- Public Property url As String
+- Public Property displayUrl As String
+- Public Property abstract As String
+- Public Property authors As String()
+- Public Property journal As String
+- Public Property year As Integer
+- Public Property cites As Integer
+- Public Property keywords As String()
+- Public Property pdfUrl As String
+- Public Property profileUrl As String
+- Public Property profileID As String
+- Public Property isAcademic As Boolean
+- Public Property refer As String
+- Public Sub New()
+- Public Overrides Function ToString() As String
+- Public Property term As String
+- Public Property url As String
+- Public Property total As Integer
+- Public Property results As AcademicResult()
+- Public Sub New()
+- Public Overrides Function ToString() As String
 - Public Property title As String
 - Public Property URL As String
 - Public Property authors As Link()
@@ -74,37 +92,21 @@
 - Public Overrides Function ToString() As String
 - Public Property Volume As Integer
 - Public Overrides Function ToString() As String
-- Public Sub Build_KB(term$, out$, Optional pages% = 10, Optional flat As Boolean = True, Optional sleepInterval% = 5000)
+- Public Sub Build_KB(term$, out$, Optional pages% = 10,
 - Public Function Summary(articles As IEnumerable(Of ArticleProfile)) As Summary()
+- Public Function Summary(results As IEnumerable(Of AcademicResult)) As Summary()
 - Public Property title As String
 - Public Property authors As String()
 - Public Property year As String
 - Public Property journal As String
 - Public Property doi As String
-- Public Property cites As Integer
-- Public Property pubmed As String
-- Public Overrides Function ToString() As String
-- Public Function GetProfileID(article As ArticleProfile) As String
-- Public Function GetProfile(url As String, Optional refer$ = Nothing) As ArticleProfile
-- Public Function GetUseBingImage(o As DependencyObject) As Boolean
-- Public Sub SetUseBingImage(o As DependencyObject, value As Boolean)
-- Public Const BingRefer$ = "https://cn.bing.com/?FORM=Z9FD1"
-- Public Function URLProvider(keyword As String) As String
-- Public Function Search(keyword As String) As SearchResult
-- Public Iterator Function GetAllResults(keyword As String) As IEnumerable(Of WebResult)
-- Public Function DownloadResult(url As String) As SearchResult
-- Public Function GetTranslation(word As Value(Of String)) As WordTranslation
-- Public Property Word As String
-- Public Property Translations As Word()
-- Public Property Pronunciation As String()
-- Public Overrides Function ToString() As String
-- Public Shared Function TryParse(html As String) As WebResult
-- ... and 6 more
+- ... and 37 more
 
 ## Imports
 - Microsoft.VisualBasic.CommandLine.Reflection
 - Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data.NLP.Html
 - Microsoft.VisualBasic.Data.Trinity.NLP
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Linq
@@ -114,34 +116,29 @@
 - Microsoft.VisualBasic.Text
 - Microsoft.VisualBasic.Text.Parser.HtmlParser
 - r = System.Text.RegularExpressions.Regex
-- System.Globalization
-- System.Net.Http
+- System.Collections.Generic
+- System.IO
+- System.Linq
 - System.Runtime.CompilerServices
+- System.Text
 - System.Text.RegularExpressions
 - System.Threading
-- System.Threading.Tasks
-- System.Windows
-- System.Windows.Controls
-- System.Windows.Media
-- System.Windows.Media.Imaging
-- System.Xml.Linq
 - System.Xml.Serialization
-- System.Xml.XPath
 
 ## File tree
+- Academic\Academic.vb
+- Academic\AcademicParser.vb
+- Academic\AcademicResult.vb
+- Academic\ArticleProfile.vb
+- Academic\Extensions.vb
+- Academic\NamespaceDoc.vb
+- Academic\ProfileResult.vb
 - DOI\NamespaceDoc.vb
 - DOI\Response.vb
-- MicrosoftBing\Academic\Academic.vb
-- MicrosoftBing\Academic\ArticleProfile.vb
-- MicrosoftBing\Academic\Extensions.vb
-- MicrosoftBing\Academic\NamespaceDoc.vb
-- MicrosoftBing\Academic\ProfileResult.vb
-- MicrosoftBing\BingImage.vb
-- MicrosoftBing\NamespaceDoc.vb
-- MicrosoftBing\SearchEngine.vb
-- MicrosoftBing\Translation\NamespaceDoc.vb
-- MicrosoftBing\Translation\Translation.vb
-- MicrosoftBing\Translation\WordTranslation.vb
-- MicrosoftBing\WebResult.vb
 - NamespaceDoc.vb
+- SearchEngine.vb
+- Translation\NamespaceDoc.vb
+- Translation\Translation.vb
+- Translation\WordTranslation.vb
+- WebResult.vb
 

@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Math
 - AssemblyName  : Microsoft.VisualBasic.Math.Core
 - TargetFramework: net10.0
-- Source files  : 274
+- Source files  : 265
 - Existing Title: Core Mathematics: Linear Algebra, MILP Solvers and Numerics
 - Existing Desc : The core mathematics library for sciBASIC#: dense and sparse matrices with SVD, LU, QR and Cholesky decompositions, simplex and interior-point linear programming with MILP branch-and-bound, BigDecimal and half precision arithmetic with SIMD kernels, distributions and quantiles, Latin hypercube sampling with discrepancy metrics, splines, down-sampling and an expression scripting engine.
 - Existing Tags : scibasic;linear-algebra;matrix;milp;linear-programming;sparse-matrix;simd;half-precision;latin-hypercube
@@ -30,22 +30,20 @@
 - LinearAlgebra.LinearProgramming  [files: 11]
 - LinearAlgebra.LinearProgramming.IPMCrossover  [files: 11]
 - LinearAlgebra.LinearProgramming.MILP  [files: 11]
-- LinearAlgebra.Matrix  [files: 20]
+- LinearAlgebra.Matrix  [files: 21]
 - LinearAlgebra.Matrix.MDSScale  [files: 5]
 - LinearAlgebra.Solvers  [files: 6]
-- Logical.FuzzyLogic  [files: 8]
-- Logical.FuzzyLogic.Models  [files: 4]
-- Numerics  [files: 5]
+- Numerics  [files: 6]
 - Quantile  [files: 11]
 - Scripting  [files: 13]
 - Scripting.BasicR  [files: 2]
 - Scripting.MathExpression  [files: 9]
-- Scripting.MathExpression.Impl  [files: 9]
+- Scripting.MathExpression.Impl  [files: 10]
 - Scripting.Rscript  [files: 2]
 
 ## Public types
 - Module HelperExtensions (Algebra\Extensions.vb)
-- Enum ApplyOnAxis (Algebra\Extensions.vb)
+- Enum AxisMargins (Algebra\Extensions.vb)
 - Class EllipseFitResult (Algebra\Helpers\EllipseFitResult.vb)
 - Class PCAEllipseResult (Algebra\Helpers\PCAEllipseResult.vb) - PCA统计椭圆计算结果 基于协方差矩阵和分布假设的数据椭圆/置信椭圆
 - Class PCAEllipseCalculator (Algebra\Helpers\PCAEllipseResult.vb) - PCA椭圆计算器
@@ -91,6 +89,7 @@
 - Enum OptimizationType (Algebra\LP\OptimizationType.vb)
 - Class SparseTableauRow (Algebra\LP\SparseTableauRow.vb) - A single row in the simplex tableau, stored in the sparse format. The column index in <see cref="Idx"/> is always kept in ascending order, so that:
 - Class CholeskyDecomposition (Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb) - For a symmetric, positive definite matrix A, the Cholesky decomposition is an lower triangular matrix L so that A = L*L'. If the matrix is not symmetric or positive definite, the constructor
+- Class DNMF (Algebra\Matrix.NET\Decomposition\DNMF.vb) - 按类别标签计算，并按迹归一化以避免尺度退化。 </para> <para>
 - Class EigenvalueDecomposition (Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb) - If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is diagonal and the eigenvector matrix V is orthogonal. I.e. A = V.Multiply(D.Multiply(V.Transpose())) and
 - Class LargeScaleEigenSolver (Algebra\Matrix.NET\Decomposition\LargeScaleEigenSolver.vb)
 - Class KEigenResult (Algebra\Matrix.NET\Decomposition\LargeScaleEigenSolver.vb)
@@ -146,14 +145,14 @@
 - Class PowerMethod (Algebra\Solvers\PowerMethod.vb) - Method for finding eigenvectors https://github.com/ValentinDutin/PowerIterationMethod
 - Module SOR (Algebra\Solvers\SOR.vb)
 - Module SVD (Algebra\SVD.vb) - Singular Value Decomposition 本模块现在是 <see cref="SingularValueDecomposition"/>（JAMA/LINPACK 系实现） 的薄封装。与旧版 Numerical Recipes 直译实现相比，输出约定为：
-- Class Vector (Algebra\Vector\Class\DoCall.vb)
-- Class Argument (Algebra\Vector\Class\DoCall.vb) - Numeric argument for <see cref="Vector.Call(Of TOut)([Delegate], Argument())"/> ###### 2019-03-07 因为这个类的名称会与<see cref="ArgumentAttribute"/>产生冲突，所以将这个对象移到内部了
-- Class HalfVector (Algebra\Vector\Class\HalfVector.vb) - 后者是 2018 年从 .NET Framework 时代移植的实现，存在若干缺陷： + 转换使用向零截断（truncate）而不是 round-to-nearest-even； + Double 转 Half 时先塌到 Single，产生二次舍入；
-- Class Vector (Algebra\Vector\Class\Math.vb)
-- Class SparseVector (Algebra\Vector\Class\SparseVector.vb)
-- Class Vector (Algebra\Vector\Class\Vector.vb) - A numeric vector this numeric vector is based on the <see cref="Vector(Of Double)"/>
 - Module Extensions (Algebra\Vector\Extensions.vb)
 - Module LinearTransforms (Algebra\Vector\LinearTransforms.vb)
+- Class Vector (Algebra\Vector\Models\DoCall.vb)
+- Class Argument (Algebra\Vector\Models\DoCall.vb) - Numeric argument for <see cref="Vector.Call(Of TOut)([Delegate], Argument())"/> ###### 2019-03-07 因为这个类的名称会与<see cref="ArgumentAttribute"/>产生冲突，所以将这个对象移到内部了
+- Class HalfVector (Algebra\Vector\Models\HalfVector.vb) - 后者是 2018 年从 .NET Framework 时代移植的实现，存在若干缺陷： + 转换使用向零截断（truncate）而不是 round-to-nearest-even； + Double 转 Half 时先塌到 Single，产生二次舍入；
+- Class Vector (Algebra\Vector\Models\Math.vb)
+- Class SparseVector (Algebra\Vector\Models\SparseVector.vb)
+- Class Vector (Algebra\Vector\Models\Vector.vb) - A numeric vector this numeric vector is based on the <see cref="Vector(Of Double)"/>
 - Module NumericsVector (Algebra\Vector\NumericsVector.vb) - Numerics vector converts for numeric types like: <see cref="Integer"/>, <see cref="Long"/>, <see cref="ULong"/>, <see cref="Byte"/>, <see cref="Single"/>
 - Class VectorEqualityComparer (Algebra\Vector\VectorEqualityComparer.vb) - Determine that the two vector are equals to each other.
 - Module VectorMath (Algebra\Vector\VectorMath.vb)
@@ -163,8 +162,7 @@
 - Module AxisDensity (Distributions\AxisDensity.vb)
 - Module BesselFunctions (Distributions\Bessel.vb) - 用于 Skellam 分布的概率密度函数计算（参见 ``dskellam``）。 实现策略： 1. 中等参数区域（``x &lt; 30 + ν``）使用幂级数定义
 - Module Beta (Distributions\Beta.vb) - Beta distribution
-- Enum BinMaps (Distributions\BinBox\BinMaps.vb)
-- ... and 207 more
+- ... and 191 more
 
 ## Notable public members
 - Public Delegate Function fx(x#) As Double
@@ -227,7 +225,7 @@
 - Public ReadOnly Property Columns As Int32 Implements ILpMatrix.Columns
 - Public ReadOnly Property NonZeros As Long Implements ILpMatrix.NonZeros
 - Public Function Mv(x As Double()) As Double() Implements ILpMatrix.Mv
-- ... and 1662 more
+- ... and 1649 more
 
 ## Imports
 - __std = System.Math
@@ -283,6 +281,7 @@
 - Algebra\LP\OptimizationType.vb
 - Algebra\LP\SparseTableauRow.vb
 - Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb
+- Algebra\Matrix.NET\Decomposition\DNMF.vb
 - Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb
 - Algebra\Matrix.NET\Decomposition\LargeScaleEigenSolver.vb
 - Algebra\Matrix.NET\Decomposition\LUDecomposition.vb
@@ -329,13 +328,13 @@
 - Algebra\Solvers\PowerMethod.vb
 - Algebra\Solvers\SOR.vb
 - Algebra\SVD.vb
-- Algebra\Vector\Class\DoCall.vb
-- Algebra\Vector\Class\HalfVector.vb
-- Algebra\Vector\Class\Math.vb
-- Algebra\Vector\Class\SparseVector.vb
-- Algebra\Vector\Class\Vector.vb
 - Algebra\Vector\Extensions.vb
 - Algebra\Vector\LinearTransforms.vb
+- Algebra\Vector\Models\DoCall.vb
+- Algebra\Vector\Models\HalfVector.vb
+- Algebra\Vector\Models\Math.vb
+- Algebra\Vector\Models\SparseVector.vb
+- Algebra\Vector\Models\Vector.vb
 - Algebra\Vector\NumericsVector.vb
 - Algebra\Vector\VectorEqualityComparer.vb
 - Algebra\Vector\VectorMath.vb
@@ -405,7 +404,6 @@
 - DownSampling\WeightedEvent.vb
 - Extensions.vb
 - FalseDiscoveryRate.vb
-- FuzzyLogic\FuzzyEngine.vb
-- FuzzyLogic\FuzzyRule.vb
-- ... and 124 more files
+- HashMaps\Crc32.vb
+- ... and 115 more files
 

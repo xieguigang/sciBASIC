@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Data.NLP.Word2Vec
 - AssemblyName  : Microsoft.VisualBasic.Data.NLP.Word2Vec
 - TargetFramework: net10.0
-- Source files  : 9
+- Source files  : 10
 - Existing Title: Word2Vec Embedding Trainer with Skip-Gram and CBOW
 - Existing Desc : Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window and sampling, plus vector models for similarity and analogy queries.
 - Existing Tags : scibasic;word2vec;word-embedding;skip-gram;machine-learning
@@ -14,6 +14,8 @@
 ## Public types
 - Module Extensions (Extensions.vb)
 - Class NamespaceDoc (NamespaceDoc.vb) - Word2Vec word embedding trainer: multi-threaded skip-gram and CBOW training over a Huffman tree, a fluent factory for vector size, window and sampling options, and vector models that support similarity and analogy queries.
+- Interface ISemanticSimilarity (SemanticSimilarity.vb) - Pluggable distributional (semantic) similarity used as an optional signal in entity equivalence scoring. Keeping this an interface lets upper layers degrade gracefully: when no
+- Module SemanticModelIO (SemanticSimilarity.vb) - Model persistence and two-term scoring helpers. The library previously had neither a loader nor a "score these two words" API.
 - Class Trainer (Trainer.vb)
 - Enum TrainMethod (TrainMethod.vb) - + 目标：CBow和Skip-Gram模型的主要目标都是通过上下文单词来预测目标单词，或者通过目标单词来预测上下文单词，从而学习单词的向量表示。 + 神经网络结构： 两种方法都使用了一个简单的三层神经网络， 包括输入层、隐藏层和输出层。 + 高效训练： CBow和Skip-Gram都采用了负采样或层次化softmax等技巧来提高训练效率。
 - Class VectorModel (VectorModel.vb) - the word embedding vector set
@@ -24,6 +26,22 @@
 
 ## Notable public members
 - Public Function BuildWord2VecFactory() As Word2VecFactory
+- Public ReadOnly Property IsAvailable As Boolean Implements ISemanticSimilarity.IsAvailable
+- Public Function Similarity(termA As String, termB As String) As Double Implements ISemanticSimilarity.Similarity
+- Public Function GetVector(term As String) As Single() Implements ISemanticSimilarity.GetVector
+- Public Overrides Function ToString() As String
+- Public Sub New(model As VectorModel,
+- Public ReadOnly Property WordCount As Integer
+- Public ReadOnly Property VectorSize As Integer
+- Public ReadOnly Property IsAvailable As Boolean Implements ISemanticSimilarity.IsAvailable
+- Public Shared Function NormalizeVector(vector As Single()) As Single()
+- Public Function GetVector(term As String) As Single() Implements ISemanticSimilarity.GetVector
+- Public Function Similarity(termA As String, termB As String) As Double Implements ISemanticSimilarity.Similarity
+- Public Overrides Function ToString() As String
+- Public Function CosineSimilarity(model As VectorModel, termA As String, termB As String) As Double
+- Public Function AsSemanticModel(model As VectorModel,
+- Public Function LoadModel(path As String) As VectorModel
+- Public Sub SaveModel(model As VectorModel, path As String)
 - Public Sub New(outerInstance As Word2Vec, corpus As LinkedList(Of String()))
 - Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String())))
 - Friend Sub computeAlpha()
@@ -78,11 +96,17 @@
 - Microsoft.VisualBasic.Serialization.JSON
 - randf = Microsoft.VisualBasic.Math.RandomExtensions
 - std = System.Math
+- System
+- System.Collections.Generic
+- System.Globalization
+- System.IO
 - System.Runtime.CompilerServices
+- System.Text
 
 ## File tree
 - Extensions.vb
 - NamespaceDoc.vb
+- SemanticSimilarity.vb
 - Trainer.vb
 - TrainMethod.vb
 - VectorModel.vb

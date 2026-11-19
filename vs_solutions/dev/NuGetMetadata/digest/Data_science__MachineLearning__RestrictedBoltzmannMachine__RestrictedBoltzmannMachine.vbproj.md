@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine
 - AssemblyName  : Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine
 - TargetFramework: net10.0
-- Source files  : 53
+- Source files  : 55
 - Existing Title: Restricted Boltzmann Machines with Contrastive Divergence Training
 - Existing Desc : Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.
 - Existing Tags : scibasic;rbm;contrastive-divergence;deep-learning;unsupervised
@@ -17,8 +17,8 @@
 - nlp  [files: 2]
 - nlp.encode  [files: 4]
 - nlp.ngram  [files: 2]
-- nn.rbm  [files: 2]
-- nn.rbm.deep  [files: 4]
+- nn.rbm  [files: 3]
+- nn.rbm.deep  [files: 5]
 - nn.rbm.factory  [files: 3]
 - nn.rbm.learn  [files: 7]
 - nn.rbm.save  [files: 3]
@@ -59,9 +59,11 @@
 - Class NGramGenerator (nlp\ngram\NGramGenerator.vb) - Created by kenny on 5/23/14.
 - Class WordDictionary (nlp\WordDictionary.vb) - Created by kenny on 5/23/14.
 - Class PrettyPrint (PrettyPrint.vb) - Created by kenny on 5/13/14.
+- Class BernoulliRBM (rbm_nn\BernoulliRBM.vb) - 伯努利-伯努利受限玻尔兹曼机：可见层与隐藏层的单元状态都是二值的<c>{0, 1}</c>。 这个类型是<see cref="RBM"/>的一个带有更友好的训练接口的子类， <see cref="Train"/>方法直接接受数据集、训练轮数、学习速率以及CD步数。
+- Class DeepBeliefNetwork (rbm_nn\deep\DeepBeliefNetwork.vb) - <item> 逐层贪心预训练（<see cref="TrainLayerWise"/>）：从最底层开始使用CD-k训练当前的RBM， 然后把这个RBM的隐层输出作为下一层的输入，重复直到最顶层被训练完毕。
 - Class DeepRBM (rbm_nn\deep\DeepRBM.vb) - h_2 (o o o) [X X] h_1 (o o o)
 - Class LayerParameters (rbm_nn\deep\LayerParameters.vb) - Created by kenny on 5/16/14.
-- Module NamespaceDoc (rbm_nn\deep\NamespaceDoc.vb) - Deep (stacked) restricted Boltzmann machine networks.
+- Module NamespaceDoc (rbm_nn\deep\NamespaceDoc.vb) - Deep (stacked) restricted Boltzmann machine networks: the <see cref="DeepRBM"/> container and the <see cref="DeepBeliefNetwork"/> implementation of the deep belief network models.
 - Class RBMLayer (rbm_nn\deep\RBMLayer.vb) - Created by kenny on 5/16/14. A layer can have multiple RBMs, this allows convolution-like networks when configuring a deep rbm
 - Module NamespaceDoc (rbm_nn\factory\NamespaceDoc.vb) - Factory helpers that build restricted Boltzmann machine networks.
 - Class RandomRBMFactory (rbm_nn\factory\RandomRBMFactory.vb) - Created by kenny on 5/12/14.
@@ -74,7 +76,7 @@
 - Module NamespaceDoc (rbm_nn\learn\NamespaceDoc.vb) - Training algorithms (contrastive divergence) for the restricted Boltzmann machine.
 - Class RecurrentContrastiveDivergence (rbm_nn\learn\RecurrentContrastiveDivergence.vb) - Created by kenny on 5/15/14.
 - Module NamespaceDoc (rbm_nn\NamespaceDoc.vb) - The restricted Boltzmann machine neural network.
-- Class RBM (rbm_nn\RBM.vb) - Created by kenny on 5/12/14. https://github.com/kennycason/rbm/tree/master
+- Class RBM (rbm_nn\RBM.vb) - 伯努利-伯努利受限玻尔兹曼机（Restricted Boltzmann Machine）。 能量函数定义为 <c>E(v,h) = -v·a - h·b - v·W·h</c>，其中 <c>a</c> 为可见层偏置， <c>b</c> 为隐藏层偏置，<c>W</c> 为两层之间的权重矩阵。当偏置全部为<c>0</c>的时候，
 - Class DeepRBMPersister (rbm_nn\save\DeepRBMPersister.vb) - Created by kenny on 5/22/14.
 - Module NamespaceDoc (rbm_nn\save\NamespaceDoc.vb) - Serialization of trained restricted Boltzmann machine networks.
 - Class RBMPersister (rbm_nn\save\RBMPersister.vb) - Created by kenny on 5/22/14.
@@ -121,6 +123,7 @@
 - Public Shared Function make(r As Integer, c As Integer) As DenseMatrix
 - Public Shared Function randomGaussian(r As Integer, c As Integer) As DenseMatrix
 - Public Shared Function random(r As Integer, c As Integer) As DenseMatrix
+- Public Shared Function fill(r As Integer, c As Integer, value As Double) As DenseMatrix
 - Public Shared Function make(m As Double()()) As DenseMatrix
 - Public Shared Function make(m As Vector) As DenseMatrix
 - Public Overrides Function ToString() As String
@@ -138,9 +141,8 @@
 - Public Function divide(s As Double) As DenseMatrix
 - Public Function pow(power As Double) As DenseMatrix
 - Public Function sum() As Double
-- Public Shared Function splitColumns(m As DenseMatrix, numPieces As Integer) As IList(Of Double()())
-- Public Shared Function concatColumns(ParamArray m As DenseMatrix()) As Double()()
-- ... and 96 more
+- Public Function addRowVector(v As Double()) As DenseMatrix
+- ... and 130 more
 
 ## Imports
 - Microsoft.VisualBasic
@@ -153,6 +155,7 @@
 - Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nlp.encode
 - Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.deep
 - Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.factory
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.learn
 - Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.utils
 - Microsoft.VisualBasic.Math.LinearAlgebra
 - Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
@@ -160,6 +163,7 @@
 - Microsoft.VisualBasic.Serialization.JSON
 - randf = Microsoft.VisualBasic.Math.RandomExtensions
 - System.Drawing.Drawing2D
+- System.Globalization
 - System.IO
 - System.Runtime.CompilerServices
 - System.Text
@@ -199,6 +203,8 @@
 - nlp\ngram\NGramGenerator.vb
 - nlp\WordDictionary.vb
 - PrettyPrint.vb
+- rbm_nn\BernoulliRBM.vb
+- rbm_nn\deep\DeepBeliefNetwork.vb
 - rbm_nn\deep\DeepRBM.vb
 - rbm_nn\deep\LayerParameters.vb
 - rbm_nn\deep\NamespaceDoc.vb

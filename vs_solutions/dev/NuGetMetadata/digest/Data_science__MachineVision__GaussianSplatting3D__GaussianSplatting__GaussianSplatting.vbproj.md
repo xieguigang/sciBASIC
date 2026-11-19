@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.MachineVision.GaussianSplatting3D
 - AssemblyName  : Microsoft.VisualBasic.MachineVision.GaussianSplatting3D
 - TargetFramework: net10.0
-- Source files  : 7
+- Source files  : 15
 - Existing Title: 3D Gaussian Splatting Scene Reconstruction and Rendering
 - Existing Desc : 3D Gaussian splatting for sciBASIC#: fits anisotropic Gaussian ellipsoids with positions, scales, rotations, opacities and colours to multi-view images, then rasterises them with a camera model and Adam optimisation.
 - Existing Tags : scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;computer-vision
@@ -15,15 +15,31 @@
 - Class CameraIntrinsics (Camera.vb) - 相机内参模型 - 针孔相机 Pinhole camera intrinsics: maps camera-space 3D points to pixel coordinates.
 - Class CameraExtrinsics (Camera.vb) - 相机外参模型 - 世界到相机的变换 Camera extrinsics: world-to-camera transformation (R, t). 采用 OpenCV 约定：相机看向 +Z，X 向右，Y 向下。
 - Class Camera (Camera.vb) - 完整的相机模型（内参 + 外参）
-- Class GaussianModel (GaussianModel.vb) - 每个高斯由以下参数定义： - 位置 (mean) μ ∈ R³ 3 个参数 - 缩放 (scale) s ∈ R³ 3 个参数（各向异性缩放）
-- Class GradientCalculator (GradientCalculator.vb) - - 实现简单，对任意可微参数都适用 - 不需要手动推导反向传播公式 - 易于验证正确性
-- Class DensityController (GradientCalculator.vb) - 自适应密度控制 Adaptive Density Control ========================
+- Class GaussianModel (GaussianModel.vb) - 3D 高斯模型 - 存储所有高斯椭球的参数 每个高斯由以下参数定义： - 位置 (mean) μ ∈ R³ 3 个参数
+- Enum SplatGradientMode (GradientCalculator.vb)
+- Class GradientCalculator (GradientCalculator.vb) - 梯度计算器。
+- Class DensityController (GradientCalculator.vb) - 自适应密度控制 3DGS 的关键创新之一：动态调整高斯数量 - **克隆 (Clone)**: 对梯度大且尺寸小的高斯进行复制
 - Class ImageLoader (ImageLoader.vb) - 图像加载器 - 从 PNG 文件加载图像并转换为 Tensor Image loader: convert PNG files to Tensor objects.
 - Class PointCloudIO (ImageLoader.vb) - 点云 I/O - 读写 PLY 文件 Point cloud I/O: read/write PLY files (ASCII format).
-- Class NamespaceDoc (NamespaceDoc.vb) - 3D Gaussian splatting: the Gaussian model, camera, gradient calculation, image loading, optimizer and the splat renderer.
-- Class AdamOptimizer (Optimizer.vb) - Adam 优化器 Adam Optimizer ==============
-- Class LRScheduler (Optimizer.vb) - 学习率调度器（余弦退火 + 阶梯衰减）
-- Class SplatRenderer (SplatRenderer.vb) - 2. 将 3D 协方差矩阵投影到 2D 屏幕空间 Σ' = J * W * Σ * W^T * J^T 其中 W = [R | t] 是世界到相机的变换，J 是投影的雅可比矩阵
+- Class NamespaceDoc (NamespaceDoc.vb) - 3D Gaussian splatting：高斯模型、相机、图像 I/O、优化器与可微光栅化。 管线分为四段（对应四组类型）： 1. <see cref="SplatProjection"/> —— 逐高斯屏幕投影（相机变换 / 协方差 / conic / 包围盒）
+- Class AdamOptimizer (Optimizer.vb) - Adam 优化器 参数更新规则： m_t = β₁·m_{t-1} + (1−β₁)·g_t
+- Class LRScheduler (Optimizer.vb) - 学习率调度器（余弦退火）
+- Enum PerfPhase (Perf\PerfTrace.vb) - 计时的阶段划分。
+- Module SplatProjection (Rendering\SplatProjection.vb) - 把 3D 高斯投影到屏幕空间，产出 <see cref="SplatScreenData"/>。
+- Module SplatProjectionGradient (Rendering\SplatProjectionGradient.vb) - 解析反传的投影链：屏幕空间中间梯度 → 高斯参数梯度。
+- Interface ISplatRasterBackend (Rendering\SplatRasterBackend.vb) - 可注入的光栅化后端。
+- Class CpuTileRasterBackend (Rendering\SplatRasterBackend.vb) - 默认后端：tile 分块 + 多线程 + 连续内存（零 Tensor 索引器开销）的 CPU 光栅化器。
+- Module SplatRasterizer (Rendering\SplatRasterizer.vb) - 构建光栅化请求（投影 + 剔除 + 排序 + 分箱）。
+- Enum SplatPrecision (Rendering\SplatTypes.vb) - 投影阶段的数值精度策略。 投影是 O(N) 的逐高斯稠密运算（每个高斯约 200 flops），比像素合成低 3 个数量级， 实测在 N=2e5 时仍只占单帧耗时的 3% 左右；因此这里只保留双精度内核
+- Enum ExpMode (Rendering\SplatTypes.vb)
+- Class SplatRenderOptions (Rendering\SplatTypes.vb) - 光栅化 / 训练的可调参数。
+- Class SplatScreenData (Rendering\SplatTypes.vb) - 逐高斯的屏幕空间数据（SoA）。 索引始终是 **模型中的高斯下标**（长度 N），可见性由 <see cref="Visible"/> 标记， 紧凑的可见列表见 <see cref="SplatRasterRequest.Order"/>。
+- Class SplatGradients (Rendering\SplatTypes.vb) - 解析梯度累加目标。所有数组长度为模型高斯数，行优先。
+- Class SplatRenderer (SplatRenderer.vb) - 3D 高斯溅射渲染器。
+- Class SplatTrainer (Training\SplatTrainer.vb) - 3D 高斯溅射训练器。
+- Class TrainingOptions (Training\TrainingOptions.vb)
+- Structure TrainingProgress (Training\TrainingOptions.vb)
+- Class TrainingResult (Training\TrainingOptions.vb)
 
 ## Notable public members
 - Public Property Fx As Double
@@ -36,6 +52,7 @@
 - Public Sub Project(x As Double, y As Double, z As Double, ByRef u As Double, ByRef v As Double)
 - Public Function Clone() As CameraIntrinsics
 - Public Property R As Double(,)
+- Public ReadOnly Property RFlat As Double()
 - Public Property T As Double()
 - Public Sub New(r As Double(,), t As Double())
 - Public Sub WorldToCamera(wx As Double, wy As Double, wz As Double,
@@ -47,55 +64,54 @@
 - Public Sub New(intrinsics As CameraIntrinsics, extrinsics As CameraExtrinsics, viewId As Integer)
 - Public Sub ProjectWorldPoint(wx As Double, wy As Double, wz As Double,
 - Public Shared Function LoadFromJson(path As String) As (Intrinsics As CameraIntrinsics, Cameras As List(Of Camera))
+- Public Const POSITION_COLS As Integer = 3
+- Public Const SCALE_COLS As Integer = 3
+- Public Const ROTATION_COLS As Integer = 4
+- Public Const COLOR_COLS As Integer = 3
+- Public Const OPACITY_COLS As Integer = 1
 - Public Property Count As Integer
-- Public Property Positions As Tensor
-- Public Property Scales As Tensor
-- Public Property Rotations As Tensor
-- Public Property Colors As Tensor
-- Public Property Opacities As Tensor
+- Public Property Version As Long
+- Public Sub MarkModified()
+- Public Sub New()
 - Public Sub New(count As Integer)
-- Public Sub ZeroGradients()
-- Public Shared Function FromPointCloud(pts As Tensor, cols As Tensor, initScale As Single) As GaussianModel
-- Public Shared Function FromRandom(count As Integer, bounds As Single(), initScale As Single, seed As Integer) As GaussianModel
-- Public Shared Function QuaternionToMatrix(w As Double, x As Double, y As Double, z As Double) As Double(,)
-- Public Function GetCovariance(i As Integer) As Double(,)
-- Public Function GetOpacity(i As Integer) As Double
-- Public Sub AddGaussians(newPositions As Tensor, newScales As Tensor, newRotations As Tensor,
-- Public Sub RemoveGaussians(indicesToRemove As HashSet(Of Integer))
-- Public Property Epsilon As Double = 0.01
-- Public Property BatchSize As Integer = 0
-- Public Sub New(Optional epsilon As Double = 0.01, Optional batchSize As Integer = 0)
-- Public Sub ComputeGradients(model As GaussianModel, cameras As List(Of Camera), targets As List(Of Tensor))
-- Public Property GradThreshold As Double = 0.0002
-- Public Property MinOpacity As Double = 0.005
-- Public Property MaxScale As Double = 0.5
-- Public Property DensifyInterval As Integer = 100
-- Public Sub New(Optional gradThreshold As Double = 0.0002)
-- Public Function Densify(model As GaussianModel, [step] As Integer) As (Cloned As Integer, Split As Integer, Pruned As Integer)
-- Public Shared Function Load(path As String) As Tensor
-- Public Shared Sub Save(image As Tensor, path As String)
-- Public Shared Function LoadAll(directory As String, numViews As Integer) As List(Of Tensor)
-- Public Shared Sub SavePLY(path As String, positions As Tensor, colors As Tensor)
-- Public Shared Sub SaveGaussianPLY(path As String, model As GaussianModel)
-- Public Shared Function LoadPLY(path As String) As (Positions As Tensor, Colors As Tensor)
-- Public Property LearningRate As Double = 0.01
-- Public Property Beta1 As Double = 0.9
-- Public Property Beta2 As Double = 0.999
-- Public Property Epsilon As Double = 0.00000001
-- Public Sub New(Optional lr As Double = 0.01)
-- Public Sub IncrementStep()
-- Public Sub StepModel(model As GaussianModel)
-- Public Sub New(initialLr As Double, finalLr As Double, totalSteps As Integer)
-- ... and 5 more
+- Public ReadOnly Property PositionsData As Double()
+- Public ReadOnly Property ScalesData As Double()
+- Public ReadOnly Property RotationsData As Double()
+- Public ReadOnly Property ColorsData As Double()
+- Public ReadOnly Property OpacitiesData As Double()
+- Public ReadOnly Property PositionsGradData As Double()
+- Public ReadOnly Property ScalesGradData As Double()
+- Public ReadOnly Property RotationsGradData As Double()
+- Public ReadOnly Property ColorsGradData As Double()
+- Public ReadOnly Property OpacitiesGradData As Double()
+- Public ReadOnly Property PositionsMData As Double()
+- Public ReadOnly Property PositionsVData As Double()
+- Public ReadOnly Property ScalesMData As Double()
+- Public ReadOnly Property ScalesVData As Double()
+- Public ReadOnly Property RotationsMData As Double()
+- Public ReadOnly Property RotationsVData As Double()
+- Public ReadOnly Property ColorsMData As Double()
+- Public ReadOnly Property ColorsVData As Double()
+- Public ReadOnly Property OpacitiesMData As Double()
+- Public ReadOnly Property OpacitiesVData As Double()
+- Public ReadOnly Property Positions As Tensor
+- Public ReadOnly Property Scales As Tensor
+- Public ReadOnly Property Rotations As Tensor
+- Public ReadOnly Property Colors As Tensor
+- Public ReadOnly Property Opacities As Tensor
+- Public ReadOnly Property PositionsGrad As Tensor
+- Public ReadOnly Property ScalesGrad As Tensor
+- Public ReadOnly Property RotationsGrad As Tensor
+- ... and 181 more
 
 ## Imports
-- Microsoft.VisualBasic.Imaging
-- Microsoft.VisualBasic.Imaging.BitmapImage
+- Microsoft.VisualBasic.Imaging.BitmapImage.Png
 - Microsoft.VisualBasic.MachineLearning.TensorFlow
+- Microsoft.VisualBasic.Math.SIMD
+- nv = System.Numerics
 - std = System.Math
-- System.Drawing
-- System.Drawing.Imaging
 - System.IO
+- System.Text
 - System.Text.Json
 
 ## File tree
@@ -105,5 +121,13 @@
 - ImageLoader.vb
 - NamespaceDoc.vb
 - Optimizer.vb
+- Perf\PerfTrace.vb
+- Rendering\SplatProjection.vb
+- Rendering\SplatProjectionGradient.vb
+- Rendering\SplatRasterBackend.vb
+- Rendering\SplatRasterizer.vb
+- Rendering\SplatTypes.vb
 - SplatRenderer.vb
+- Training\SplatTrainer.vb
+- Training\TrainingOptions.vb
 

@@ -3,14 +3,14 @@
 - RootNamespace : Microsoft.VisualBasic
 - AssemblyName  : Microsoft.VisualBasic.Runtime
 - TargetFramework: net10.0
-- Source files  : 1049
+- Source files  : 1084
 - Existing Title: Visual Basic Runtime Core Library For Scientific Computing
 - Existing Desc : Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, XML and JSON serialization with a pretty-print formatter, a report and document block model with HTML, plain-text, markdown and JSON renderers, command line parsing, parallel helpers, application services, terminal IO and logging.
 - Existing Tags : scibasic;runtime;collections;serialization;json;report-render;terminal;reflection
 
 ## Namespaces
 - ApplicationServices  [files: 15]
-- ApplicationServices.Debugging  [files: 8]
+- ApplicationServices.Debugging  [files: 12]
 - ApplicationServices.Debugging.Diagnostics  [files: 6]
 - ApplicationServices.Debugging.Logging  [files: 6]
 - ApplicationServices.Development  [files: 3]
@@ -20,7 +20,7 @@
 - ApplicationServices.DynamicInterop  [files: 10]
 - ApplicationServices.Globalization  [files: 4]
 - ApplicationServices.Plugin  [files: 5]
-- ApplicationServices.Report  [files: 7]
+- ApplicationServices.Report  [files: 11]
 - ApplicationServices.Terminal  [files: 19]
 - ApplicationServices.Terminal.LineEdit  [files: 7]
 - ApplicationServices.Terminal.ProgressBar  [files: 6]
@@ -39,9 +39,9 @@
 - CommandLine.ManView  [files: 5]
 - CommandLine.Parsers  [files: 5]
 - CommandLine.POSIX  [files: 3]
-- CommandLine.Reflection  [files: 20]
+- CommandLine.Reflection  [files: 21]
 - CommandLine.Reflection.EntryPoints  [files: 3]
-- ComponentModel  [files: 22]
+- ComponentModel  [files: 23]
 - ComponentModel.Algorithm  [files: 5]
 - ComponentModel.Algorithm.base  [files: 10]
 - ComponentModel.Algorithm.BinaryTree  [files: 14]
@@ -56,8 +56,12 @@
 - Class Clock (ApplicationServices\Clock.vb)
 - Module VBDebugger (ApplicationServices\Debugger.vb) - Debugger helper module for VisualBasic Enterprises System.
 - Class Assert (ApplicationServices\Debugger\Assert.vb)
+- Module DebugAudit (ApplicationServices\Debugger\DebugAudit.vb) - <para> 断言失败的时候默认只是记录一条 <see cref="DebugAuditEventKind.Assertion"/> 事件并且通过 <see cref="VBDebugger"/> 的日志通道打印一条警告级别的信息(受命令行参数 ``echo`` 以及 ``/mute`` 控制)，
+- Enum DebugAuditEventKind (ApplicationServices\Debugger\DebugAuditEvent.vb) - 调试审计事件(<see cref="DebugAuditEvent"/>)的类别枚举
+- Class DebugAuditEvent (ApplicationServices\Debugger\DebugAuditEvent.vb) - 一条结构化的调试审计事件：快照、断言、计时作用域以及标记点统一使用这个模型进行记录。 这个类型的所有属性都是可读写的公开属性，因此可以直接被 JSON 序列化工具以及表格打印工具所使用。
 - Module DebuggerArgs (ApplicationServices\Debugger\DebuggerArgs.vb) - 调试器设置参数模块
 - Enum DebuggerLevels (ApplicationServices\Debugger\DebuggerLevels.vb) - 默认的参数值是<see cref="DebuggerLevels.On"/>
+- Class DebugAssertionException (ApplicationServices\Debugger\Exception\DebugAssertionException.vb) - 调试断言失败异常：当 <see cref="DebugAudit.Require"/> 调用失败，或者 <see cref="DebugAudit.ThrowOnFailure"/> 开关被打开之后 <see cref="DebugAudit.Check"/> / <see cref="DebugAudit.Test"/> 检查失败的时候抛出这个异常类型。 这个异常类型只是用于将失败位置(表达式原文、源文件、行号、函数名)结构化地传递给上层调用者，
 - Class ExceptionData (ApplicationServices\Debugger\Exception\ExceptionData.vb)
 - Module ExceptionExtensions (ApplicationServices\Debugger\Exception\ExceptionExtensions.vb)
 - Class Method (ApplicationServices\Debugger\Exception\MethodFrame.vb)
@@ -137,8 +141,12 @@
 - Class ThreadQueue (ApplicationServices\Parallel\Threads\ThreadQueue.vb) - 任务线程队列
 - Class Block (ApplicationServices\Report\Block.vb) - 针对markdown格式有限的支持
 - Class HtmlRender (ApplicationServices\Report\HtmlRender.vb) - html render: converts the markdown content model <see cref="Block"/> into html text.
+- Interface IDocumentWriter (ApplicationServices\Report\IDocumentWriter.vb) - 统一文档写入接口。 "WordDocument"（生成 docx）与 <c>Microsoft.VisualBasic.MIME.application.pdf.PdfDocument</c> （生成 pdf）均实现该接口，使同一份文档写入代码可通过传入不同实例生成不同格式。
 - Class PlainTextRender (ApplicationServices\Report\PlainTextRender.vb) - plain text render: converts the markdown content model <see cref="Block"/> into human readable plain text, that is, no markdown or html markers are kept. (use <see cref="TextRender"/> if the markdown text is required)
 - Class TextRender (ApplicationServices\Report\TextRender.vb) - markdown/text render: converts the markdown content model <see cref="Block"/> into markdown text.
+- Class TableStyle (ApplicationServices\Report\WordStyle\TableStyle.vb) - Word 表格样式。
+- Class WordColors (ApplicationServices\Report\WordStyle\WordColors.vb) - 常用颜色常量（使用 OOXML 的 6 位十六进制 RGB 格式）。
+- Class WordStyle (ApplicationServices\Report\WordStyle\WordStyle.vb) - Word 文档文字样式。 控制字体名称、字号、粗体/斜体/下划线、前景色/背景色、对齐方式、行间距等。
 - Class HistoryStacks (ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb)
 - Structure History (ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb)
 - Class InteractiveDevice (ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb)
@@ -163,15 +171,7 @@
 - Class InlineParser (ApplicationServices\Terminal\MarkdownRender\InlineParser.vb) - The inline elements are matched by the priority as follows: 1. ``\`` backslash escape 2. `` ` `` inline code span, the content of the code span is never parsed again
 - Class MarkdownRender (ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb) - + the ``&gt;`` block quote + the ``-``/``+``/``*``/``1.`` list item + the ``---`` horizontal rule
 - Module TableRenderer (ApplicationServices\Terminal\MarkdownRender\TableRenderer.vb) - renders the pipe table block into a set of the plain text lines
-- Class MarkdownTheme (ApplicationServices\Terminal\MarkdownRender\Theme.vb)
-- Module NamespaceDoc (ApplicationServices\Terminal\NamespaceDoc.vb) - An interactive terminal toolkit: the shell and console abstractions, line editing with history and completion, markdown and ANSI rendering, console table builders, busy indicators and secure password input.
-- Module PipelineCLI (ApplicationServices\Terminal\PipelineCLI.vb) - a | b - 管道命令在读写方面更加适合于文本数据，由于省去了IO的时间，故而效率较高
-- Module PrintAsTable (ApplicationServices\Terminal\PrintAsTable.vb)
-- Interface IReadDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
-- Interface IWriteDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
-- Interface InteractiveDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
-- Interface IConsole (ApplicationServices\Terminal\STDIO__\IConsole.vb) - Represents the standard input, output, and error streams for console applications. (表示一个输入输出流控制台界面接口)
-- ... and 1164 more
+- ... and 1211 more
 
 ## Notable public members
 - Public ReadOnly Property RunTimeDirectory As String
@@ -234,7 +234,7 @@
 - Public ReadOnly Property StartTime As Double = App.UnixTimeStamp
 - Public Function ElapsedMilliseconds() As Long
 - Public Function ElapsedMilliseconds(startTime As Long) As TimeSpan
-- ... and 8015 more
+- ... and 8456 more
 
 ## Imports
 - _rng = Microsoft.VisualBasic.Math.RandomExtensions
@@ -258,10 +258,10 @@
 - FieldTuple = System.Collections.Generic.KeyValuePair(Of String, System.Reflection.PropertyInfo)
 - FS = Microsoft.VisualBasic.FileIO.FileSystem
 - HashValue = Microsoft.VisualBasic.Text.Xml.Models.Property
+- ImageDimensions = System.Drawing.Size
 - IOModule = System.IO.Path
 - IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 - MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
-- Microsoft.VisualBasic.ApplicationServices
 
 ## File tree
 - ApplicationServices\App.vb
@@ -269,8 +269,12 @@
 - ApplicationServices\Clock.vb
 - ApplicationServices\Debugger.vb
 - ApplicationServices\Debugger\Assert.vb
+- ApplicationServices\Debugger\DebugAudit.vb
+- ApplicationServices\Debugger\DebugAuditEvent.vb
+- ApplicationServices\Debugger\DebugAuditScope.vb
 - ApplicationServices\Debugger\DebuggerArgs.vb
 - ApplicationServices\Debugger\DebuggerLevels.vb
+- ApplicationServices\Debugger\Exception\DebugAssertionException.vb
 - ApplicationServices\Debugger\Exception\ExceptionData.vb
 - ApplicationServices\Debugger\Exception\ExceptionExtensions.vb
 - ApplicationServices\Debugger\Exception\MethodFrame.vb
@@ -348,10 +352,14 @@
 - ApplicationServices\Report\Block.vb
 - ApplicationServices\Report\Extensions.vb
 - ApplicationServices\Report\HtmlRender.vb
+- ApplicationServices\Report\IDocumentWriter.vb
 - ApplicationServices\Report\PlainTextRender.vb
 - ApplicationServices\Report\ReportRender.vb
 - ApplicationServices\Report\TextRender.vb
 - ApplicationServices\Report\TextReportRender.vb
+- ApplicationServices\Report\WordStyle\TableStyle.vb
+- ApplicationServices\Report\WordStyle\WordColors.vb
+- ApplicationServices\Report\WordStyle\WordStyle.vb
 - ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb
 - ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb
 - ApplicationServices\Terminal\InteractiveIODevice\LineEdit\Completion.vb
@@ -406,13 +414,5 @@
 - ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\NamespaceDoc.vb
 - ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\StringExtensions.vb
 - ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\TimeSpanExtensions.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Body.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Layout.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Margin.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Marquee.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\NamespaceDoc.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Body.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Description.vb
-- ... and 899 more files
+- ... and 934 more files
 

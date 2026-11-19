@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Data.IO.MessagePack
 - AssemblyName  : Microsoft.VisualBasic.Data.IO.MessagePack
 - TargetFramework: net10.0
-- Source files  : 27
+- Source files  : 26
 - Existing Title: MessagePack Binary Object Serialization Library
 - Existing Desc : A MessagePack serialization library for sciBASIC#: serializes and deserializes .NET objects to and from the MessagePack binary format via reflection-based schemas and MessagePackMember attributes, with nil implication, typed collections and compact array or named map layouts.
 - Existing Tags : scibasic;msgpack;messagepack;serialization;binary-format;deserialization
@@ -128,7 +128,6 @@
 - MsgPackSerializer.vb
 - NamespaceDoc.vb
 - ObjectExtensions.vb
-- Properties\AssemblyInfo.vb
 - Serialization\Default\FrameworkInternal.vb
 - Serialization\Default\NamespaceDoc.vb
 - Serialization\MessagePackMemberAttribute.vb

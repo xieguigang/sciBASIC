@@ -1,0 +1,175 @@
+# Data/BinaryData/Protobuf/Protobuf.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.IO.Protobuf
+- AssemblyName  : Microsoft.VisualBasic.Data.IO.Protobuf
+- TargetFramework: net10.0
+- Source files  : 34
+- Existing Title: 
+- Existing Desc : 
+- Existing Tags : 
+
+## Namespaces
+- CodeGen  [files: 9]
+- Schema  [files: 8]
+- Serialization  [files: 6]
+- Serialization.Reflection  [files: 2]
+- Wire  [files: 6]
+
+## Public types
+- Enum CodeLanguage (CodeGen\CodeLanguage.vb) - 代码生成的目标语言。
+- Class CodeWriter (CodeGen\CodeWriter.vb) - 带缩进栈的源码文本构建器。 统一使用 <see cref="Environment.NewLine"/> 作为换行符；空行不带缩进。
+- Class CSharpCodeGenerator (CodeGen\CSharpCodeGenerator.vb) - 从 .proto 描述符树生成 C# 实体类源码。 生成的类型带有 <c>[ProtoContract]</c> / <c>[ProtoMember(n)]</c> 标注， 可直接被 <c>ProtoSerializer</c> 序列化。嵌套消息被展平为
+- Interface IProtoCodeGenerator (CodeGen\IProtoCodeGenerator.vb) - 从 .proto 描述符树生成目标语言实体类源码的生成器契约。
+- Module NamespaceDoc (CodeGen\NamespaceDoc.vb) - 从 .proto 描述符树生成实体类源码的代码生成层。 支持 Visual Basic 与 C# 两种目标语言，生成的结果带有 <c>ProtoContract</c> / <c>ProtoMember(n)</c> 标注，可被 <c>ProtoSerializer</c> 直接序列化。
+- Module NamingHelper (CodeGen\NamingHelper.vb) - 标识符命名转换与关键字转义辅助。
+- Module ProtoCodeGenerator (CodeGen\ProtoCodeGenerator.vb) - 代码生成器门面：按目标语言创建生成器，或一步完成"解析 .proto → 生成源码"。
+- Class VBCodeGenerator (CodeGen\VBCodeGenerator.vb) - 从 .proto 描述符树生成 Visual Basic .NET 实体类源码。 生成的类型带有 <c>ProtoContract</c> / <c>ProtoMember(n)</c> 标注， 可直接被 <c>ProtoSerializer</c> 序列化。嵌套消息被展平为
+- Module NamespaceDoc (NamespaceDoc.vb) - 纯托管实现的 protobuf 工具链，共四层能力： <list type="bullet"> <item><description>线格式读写（<c>Wire</c> 命名空间）：varint、zigzag、定长小端字段、长度前缀、未知字段跳过。</description></item>
+- Module ObjectExtensions (ObjectExtensions.vb) - 便于链式调用的 protobuf 扩展方法。
+- Class EnumValueDescriptor (Schema\EnumDescriptor.vb) - .proto 枚举中的一个取值。
+- Class EnumDescriptor (Schema\EnumDescriptor.vb) - 描述 .proto 文件中的一个 enum（可嵌套在 message 内）。
+- Enum FieldLabel (Schema\FieldDescriptor.vb) - 字段的出现规则（对应 .proto 中的 optional / required / repeated）。
+- Enum FieldTypeKind (Schema\FieldDescriptor.vb) - 字段的标量类型。编号与 protobuf 的 <c>FieldDescriptorProto.Type</c> 保持一致， 另外追加了若干 .NET 扩展类型的编号（&gt;= 100）。
+- Class FieldDescriptor (Schema\FieldDescriptor.vb) - 描述 .proto 文件中的一个字段。
+- Class MessageDescriptor (Schema\MessageDescriptor.vb) - 描述 .proto 文件中的一个 message（可嵌套）。
+- Enum ProtoSyntax (Schema\ProtoFile.vb) - .proto 文件的语法版本。
+- Class ProtoFile (Schema\ProtoFile.vb) - 一个已解析的 .proto 文件：描述符树的根节点。
+- Class ProtoLexer (Schema\ProtoLexer.vb) - .proto 源文本的词法分析器。 支持 <c>//</c> 行注释、<c>/* */</c> 块注释、单引号/双引号字符串（含常用转义）、 十进制 / 十六进制 / 八进制 / 浮点数值，以及带点号的限定标识符。
+- Class ProtoParser (Schema\ProtoParser.vb) - <para> 支持 proto2 / proto3 的常用语法：<c>syntax</c>、<c>package</c>、<c>import</c>、 <c>option</c>、message（含嵌套）、enum、<c>repeated</c>/<c>optional</c>/<c>required</c>、
+- Enum ProtoTokenType (Schema\ProtoToken.vb) - .proto 词法单元的类型。
+- Class ProtoToken (Schema\ProtoToken.vb) - .proto 词法单元。
+- Class ProtoParseException (Schema\ProtoToken.vb) - .proto 解析失败时抛出的异常，携带源文件名与行列号。
+- Class MethodDescriptor (Schema\ServiceDescriptor.vb) - .proto <c>service</c> 中的一个 rpc 方法。
+- Class ServiceDescriptor (Schema\ServiceDescriptor.vb) - 描述 .proto 文件中的一个 service。本库不生成 RPC 存根，仅保留描述信息。
+- Enum UnknownFieldBehavior (Serialization\IProtoMessage.vb) - 未知字段的处理策略。
+- Interface IProtoMessage (Serialization\IProtoMessage.vb) - 由消息类型实现后，可以接收并保留反序列化过程中遇到的未知字段。 只有实现了本接口的实例才会收集未知字段；未实现时按 <see cref="SerializationContext.UnknownFieldBehavior"/> 的配置决定跳过或丢弃。
+- Class UnknownFieldSet (Serialization\IProtoMessage.vb) - 未知字段集合：按"字段号 + 线格式类型 + 原始值字节"保存，保证重放时字节完全一致。
+- Class Entry (Serialization\IProtoMessage.vb) - 单条未知字段记录。
+- Module NamespaceDoc (Serialization\NamespaceDoc.vb) - 基于特性的 .NET CLR 对象 protobuf 序列化层。 用 <see cref="ProtoContractAttribute"/> 与 <see cref="ProtoMemberAttribute"/> 标注普通类或结构体后， 即可通过 <c>ProtoSerializer</c> 在对象与 protobuf 二进制之间往返。
+- Class ProtoContractAttribute (Serialization\ProtoContractAttribute.vb)
+- Enum ProtoDataFormat (Serialization\ProtoDataFormat.vb) - 字段数值的编码方式，用于在 protobuf 原生的若干等价类型之间做选择， 或者指定 .NET 扩展类型（decimal / DateTime / Guid）的编码方案。
+- Class ProtoMemberAttribute (Serialization\ProtoMemberAttribute.vb)
+- Class SerializableField (Serialization\Reflection\SerializableField.vb) - 一个被 <see cref="ProtoMemberAttribute"/> 标注的成员的读写模型。 该类型在 <see cref="TypeInfo"/> 构建阶段一次性完成全部反射与类型判定， 之后的序列化/反序列化只进行 <c>GetValue</c> / <c>SetValue</c> 与纯数值转换。
+- Class TypeInfo (Serialization\Reflection\TypeInfo.vb) - 一个消息类型的反射模型：字段列表、字段号索引与实例创建策略。 反射只在本对象构造时发生一次；构造完成后由 <see cref="SerializationContext"/> 缓存复用。
+- Class SerializationContext (Serialization\SerializationContext.vb) - 序列化上下文：缓存 <see cref="ProtoTypeInfo"/> 并提供全局策略开关。 类型模型在首次访问时构建并缓存，之后的序列化调用不再做反射扫描。 多线程场景下缓存访问由 <c>SyncLock</c> 保护，命中缓存后不持有锁。
+- Module NamespaceDoc (Wire\NamespaceDoc.vb) - protobuf 线格式（wire format）的底层字节读写层。 该命名空间提供 <see cref="ProtoWriter"/> 与 <see cref="ProtoReader"/> 两个包装类， 它们建立在 <c>Microsoft.VisualBasic.Data.IO</c> 的
+- Class ProtoReader (Wire\ProtoReader.vb) - protobuf 线格式读取器，包装一个 <see cref="BinaryDataReader"/> 并补齐 varint / zigzag / 长度前缀等解码能力。 <para>
+- Module ProtoWireFormat (Wire\ProtoWireFormat.vb) - protobuf 线格式的纯函数辅助工具：tag 拼装、varint 尺寸预估、zigzag 变换。 该模块不涉及任何 IO，可安全地在序列化前的尺寸预估、动态消息构造等场景中复用。
+- Class ProtoWriter (Wire\ProtoWriter.vb) - <para> 构造时会强制把底层 <see cref="BinaryDataWriter.ByteOrder"/> 设置为 <c>ByteOrder.LittleEndian</c>：protobuf 的 fixed32 / fixed64 一律使用小端字节序，
+- Class WireFormatException (Wire\WireFormatException.vb) - 当输入字节序列不是合法的 protobuf 线格式时抛出的异常。 异常对象携带出错时的绝对字节偏移量（<see cref="Position"/>）以及（在可知的情况下） 正在解析的字段号（<see cref="FieldNumber"/>），便于定位损坏的数据。
+- Enum WireType (Wire\WireType.vb) - protobuf 的线格式类型（wire type），对应 tag 的最低 3 位。 参考 <see href="https://protobuf.dev/programming-guides/encoding/"/>。 其中的 <see cref="StartGroup"/> 与 <see cref="EndGroup"/> 属于 proto2 的已废弃分组语法，
+
+## Notable public members
+- Public Property IndentSize As Integer = 4
+- Public ReadOnly Property IndentLevel As Integer
+- Public Sub Indent()
+- Public Sub Dedent()
+- Public Sub WriteLine(Optional text As String = "")
+- Public Sub WriteLines(lines As IEnumerable(Of String))
+- Public Sub BlankLine()
+- Public Overrides Function ToString() As String
+- Public Overrides ReadOnly Property Language As CodeLanguage
+- Protected Overrides ReadOnly Property FileExtension As String
+- Protected Overrides ReadOnly Property DocPrefix As String
+- Protected Overrides Sub WriteFileHeader(writer As CodeWriter, sourceName As String)
+- Protected Overrides Sub WriteImports(writer As CodeWriter)
+- Protected Overrides Sub WriteNamespaceOpen(writer As CodeWriter, name As String)
+- Protected Overrides Sub WriteNamespaceClose(writer As CodeWriter, name As String)
+- Protected Overrides Sub WriteEnumDeclaration(writer As CodeWriter, item As EnumDescriptor, clrName As String)
+- Protected Overrides Sub WriteMessageDeclaration(writer As CodeWriter, message As MessageDescriptor, clrName As String)
+- Protected Overrides Sub WritePropertyDeclaration(writer As CodeWriter, field As FieldDescriptor)
+- Protected Overrides Function AttributeText(text As String) As String
+- Protected Overrides Function NamedArgument(name As String, value As String) As String
+- Protected Overrides Function BoolLiteral(value As Boolean) As String
+- Protected Overrides Function GetScalarType(kind As FieldTypeKind) As String
+- Protected Overrides Function GetListType(elementType As String) As String
+- Protected Overrides Function GetMapType(keyType As String, valueType As String) As String
+- Protected Overrides Function EscapeName(name As String) As String
+- Protected Overrides Function GetMemberType(field As FieldDescriptor) As String
+- Protected Overrides Function GetMemberInitializer(field As FieldDescriptor) As String
+- Friend Function ToPascalCase(name As String) As String
+- Friend Function ToCamelCase(name As String) As String
+- Friend Function Escape(name As String, language As CodeLanguage) As String
+- Friend Function ToNamespace(package As String) As String
+- Public Function Create(language As CodeLanguage) As IProtoCodeGenerator
+- Public Function Generate(file As ProtoFile, language As CodeLanguage) As String
+- Public Function GenerateFiles(file As ProtoFile, language As CodeLanguage) As Dictionary(Of String, String)
+- Public Function GenerateToDirectory(file As ProtoFile, outputDir As String,
+- Public Function GenerateFromProtoText(protoText As String,
+- Public MustOverride ReadOnly Property Language As CodeLanguage Implements IProtoCodeGenerator.Language
+- Protected MustOverride ReadOnly Property FileExtension As String
+- Protected MustOverride ReadOnly Property DocPrefix As String
+- Protected MustOverride Sub WriteFileHeader(writer As CodeWriter, sourceName As String)
+- Protected MustOverride Sub WriteImports(writer As CodeWriter)
+- Protected MustOverride Sub WriteNamespaceOpen(writer As CodeWriter, name As String)
+- Protected MustOverride Sub WriteNamespaceClose(writer As CodeWriter, name As String)
+- Protected MustOverride Sub WriteEnumDeclaration(writer As CodeWriter, item As EnumDescriptor, clrName As String)
+- Protected MustOverride Sub WriteMessageDeclaration(writer As CodeWriter, message As MessageDescriptor, clrName As String)
+- Protected MustOverride Sub WritePropertyDeclaration(writer As CodeWriter, field As FieldDescriptor)
+- Protected MustOverride Function AttributeText(text As String) As String
+- Protected MustOverride Function NamedArgument(name As String, value As String) As String
+- Protected MustOverride Function BoolLiteral(value As Boolean) As String
+- Protected MustOverride Function GetScalarType(kind As FieldTypeKind) As String
+- Protected MustOverride Function GetListType(elementType As String) As String
+- Protected MustOverride Function GetMapType(keyType As String, valueType As String) As String
+- Protected MustOverride Function EscapeName(name As String) As String
+- Protected MustOverride Function GetMemberType(field As FieldDescriptor) As String
+- Protected MustOverride Function GetMemberInitializer(field As FieldDescriptor) As String
+- Public Function Generate(file As ProtoFile) As String Implements IProtoCodeGenerator.Generate
+- Public Function GenerateFiles(file As ProtoFile) As Dictionary(Of String, String) Implements IProtoCodeGenerator.GenerateFiles
+- Public Function GenerateToDirectory(file As ProtoFile, outputDir As String) As IReadOnlyList(Of String) Implements IProtoCodeGenerator.GenerateToDirec…
+- Protected Sub WriteDocument(writer As CodeWriter, sourceName As String,
+- Protected Sub WriteMembers(writer As CodeWriter, message As MessageDescriptor)
+- ... and 269 more
+
+## Imports
+- Microsoft.VisualBasic.Data.IO.Protobuf.Schema
+- Microsoft.VisualBasic.Data.IO.Protobuf.Serialization
+- Microsoft.VisualBasic.Data.IO.Protobuf.Serialization.Reflection
+- Microsoft.VisualBasic.Data.IO.Protobuf.Wire
+- ProtoTypeInfo = Microsoft.VisualBasic.Data.IO.Protobuf.Serialization.Reflection.TypeInfo
+- ProtoWireType = Microsoft.VisualBasic.Data.IO.Protobuf.Wire.WireType
+- System.Buffers
+- System.Collections
+- System.Globalization
+- System.IO
+- System.Reflection
+- System.Runtime.CompilerServices
+- System.Text
+
+## File tree
+- CodeGen\CodeLanguage.vb
+- CodeGen\CodeWriter.vb
+- CodeGen\CSharpCodeGenerator.vb
+- CodeGen\IProtoCodeGenerator.vb
+- CodeGen\NamespaceDoc.vb
+- CodeGen\NamingHelper.vb
+- CodeGen\ProtoCodeGenerator.vb
+- CodeGen\ProtoCodeGeneratorBase.vb
+- CodeGen\VBCodeGenerator.vb
+- NamespaceDoc.vb
+- ObjectExtensions.vb
+- ProtoSerializer.vb
+- Schema\EnumDescriptor.vb
+- Schema\FieldDescriptor.vb
+- Schema\MessageDescriptor.vb
+- Schema\ProtoFile.vb
+- Schema\ProtoLexer.vb
+- Schema\ProtoParser.vb
+- Schema\ProtoToken.vb
+- Schema\ServiceDescriptor.vb
+- Serialization\IProtoMessage.vb
+- Serialization\NamespaceDoc.vb
+- Serialization\ProtoContractAttribute.vb
+- Serialization\ProtoDataFormat.vb
+- Serialization\ProtoMemberAttribute.vb
+- Serialization\Reflection\SerializableField.vb
+- Serialization\Reflection\TypeInfo.vb
+- Serialization\SerializationContext.vb
+- Wire\NamespaceDoc.vb
+- Wire\ProtoReader.vb
+- Wire\ProtoWireFormat.vb
+- Wire\ProtoWriter.vb
+- Wire\WireFormatException.vb
+- Wire\WireType.vb
+

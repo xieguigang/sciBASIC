@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.MIME.application.xml
 - AssemblyName  : Microsoft.VisualBasic.MIME.application.xml
 - TargetFramework: net10.0
-- Source files  : 23
+- Source files  : 29
 - Existing Title: XML Toolkit with XSD Models, MathML and XPath Queries
 - Existing Desc : XML helpers for sciBASIC#: an XSD schema element data model, MathML content markup parsed into expression objects, a lightweight XPath query engine, and a generic XmlElement tree with reflection based object graph loading, plus a code generator.
 - Existing Tags : scibasic;xml;xsd;mathml;xpath;code-generator
@@ -13,7 +13,7 @@
 - xsd  [files: 2]
 
 ## Public types
-- Class CodeGenerator (CodeGenerator.vb) - Generate the VB.NET class code based on the xsd definition
+- Class CodeGenerator (CodeGenerator.vb) - Generate the VB.NET class code based on the xsd definition The generated source contains <c>XmlSerializer</c> friendly classes: global complexTypes become classes, enumerating simpleTypes become enums, global
 - Enum actiontypes (MathML\actiontypes.vb)
 - Module ContentBuilder (MathML\contentBuilder.vb)
 - Class BinaryExpression (MathML\Expression\BinaryExpression.vb)
@@ -43,6 +43,8 @@
 - Class XPathQuery (XPath\XPathQuery.vb)
 - Enum elementTypes (xsd\elementTypes.vb)
 - Module Extensions (xsd\Extensions.vb)
+- Module SchemaExporter (xsd\SchemaExporter.vb) - Exports XSD documents from compiled VB.NET types by reflection. Each <see cref="XmlSchema"/> is written with its own <see cref="XmlWriter"/> and its own stream. Reusing one writer/stream for several schemas (as the
+- Module SchemaLoader (xsd\SchemaLoader.vb) - Loads and compiles an XSD document into a <see cref="XmlSchemaSet"/>. .NET 10 does not resolve xs:include/xs:import unless an explicit resolver is assigned to <see cref="XmlSchemaSet.XmlResolver"/>. The resolver here only
 - Class restriction (xsd\XML.vb)
 - Class simpleType (xsd\XML.vb)
 - Class restrictionValue (xsd\XML.vb)
@@ -54,8 +56,18 @@
 - Class element (xsd\XML.vb)
 - Class annotation (xsd\XML.vb)
 - Class schema (xsd\XML.vb)
+- Class XsdValidationError (xsd\XmlValidator.vb) - A single diagnostic produced while validating an XML document against an XSD.
+- Class XsdValidationResult (xsd\XmlValidator.vb) - The structured result of validating one XML document against one XSD.
+- Module XmlValidator (xsd\XmlValidator.vb) - Validates XML documents against an XSD schema set. Validation is streaming (forward-only <see cref="XmlReader"/>), so memory usage does not grow with the document size. DTD processing is prohibited and
+- Module XsdTools (xsd\XsdTools.vb) - XSD toolkit: generate VB.NET classes from a schema, export a schema from reflected VB.NET types, and validate XML documents against a schema. Typical round trip: <c>CreateXsdFromType</c> -> <c>CreateClassFromXsd</c>
+- Module XsdTypeMap (xsd\XsdTypeMap.vb) - Translates XSD built-in types and XSD names into VB.NET source text.
 
 ## Notable public members
+- Public Shared Function GenerateCode(xsdPath As String,
+- Public Shared Function GenerateCodeFromText(xsdText As String,
+- Public Shared Function GenerateCode(schemas As XmlSchemaSet,
+- Public Shared Function GenerateClassFile(xsdPath As String,
+- Public Shared Function GenerateClassFileFromText(xsdText As String,
 - Public Function SimplyOperator(text As String) As String
 - Friend Function ToString(lambda As BinaryExpression) As String
 - Public Function ParseXml(mathML As XmlElement) As LambdaExpression
@@ -111,12 +123,7 @@
 - Public Property selectNext As XPath
 - Public MustOverride Function Query(document As IXmlDocumentTree) As IXmlNode()
 - Public Shared Function Parse(expression As String) As XPath
-- Public Overrides Function ToString() As String
-- Public Overrides Function Query(document As IXmlDocumentTree) As IXmlNode()
-- Public Overrides Function ToString() As String
-- Public Overrides Function Query(document As IXmlDocumentTree) As IXmlNode()
-- Public Overrides Function ToString() As String
-- ... and 36 more
+- ... and 100 more
 
 ## Imports
 - Microsoft.VisualBasic.ComponentModel.Collection
@@ -126,12 +133,20 @@
 - Microsoft.VisualBasic.Linq
 - Microsoft.VisualBasic.Text
 - Microsoft.VisualBasic.Text.Xml
+- System
+- System.Collections
+- System.Collections.Generic
 - System.ComponentModel
 - System.Data
+- System.Diagnostics
 - System.IO
+- System.Linq
+- System.Net
 - System.Reflection
 - System.Runtime.CompilerServices
+- System.Text
 - System.Xml
+- System.Xml.Schema
 - System.Xml.Serialization
 
 ## File tree
@@ -157,5 +172,11 @@
 - xsd\elementTypes.vb
 - xsd\Extensions.vb
 - xsd\NamespaceDoc.vb
+- xsd\SchemaExporter.vb
+- xsd\SchemaLoader.vb
+- xsd\SchemaModelBuilder.vb
 - xsd\XML.vb
+- xsd\XmlValidator.vb
+- xsd\XsdTools.vb
+- xsd\XsdTypeMap.vb
 

@@ -77,7 +77,7 @@
 - Public Property HullEnlarge As Double = 1.125
 - Public Property LineColor As Color? = Nothing
 - Public Sub New(width As Integer, height As Integer,
-- Public Overloads Sub Plot()
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 - Public Overloads Shared Function Plot(tree As KdTree(Of Point2D),
 - Public Function NodeBrushAssert(node As Node) As Predicate(Of Object)
 - Public Function GetDisplayText(n As Node) As String
