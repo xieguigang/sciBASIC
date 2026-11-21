@@ -27,7 +27,7 @@
     <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Office.Excel</AssemblyTitle>
     <PackageTags>scibasic;xlsx;excel;openxml;spreadsheet</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Enable optimization; Upgrade of the nuget package version number; Export api for save dataframe as table.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

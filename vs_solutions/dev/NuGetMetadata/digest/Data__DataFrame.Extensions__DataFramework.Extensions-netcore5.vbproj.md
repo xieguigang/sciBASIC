@@ -101,6 +101,7 @@
 - Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.Collection.Generic
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 - Microsoft.VisualBasic.Data.Framework
 - Microsoft.VisualBasic.Data.Framework.IO
 - Microsoft.VisualBasic.Data.Framework.Serialize.ObjectSchema
@@ -120,7 +121,6 @@
 - Microsoft.VisualBasic.Text.Xml.Models
 - Schema = Microsoft.VisualBasic.Data.Framework.Serialize.ObjectSchema.Schema
 - System.IO
-- System.Reflection
 
 ## File tree
 - DataTableStream.vb

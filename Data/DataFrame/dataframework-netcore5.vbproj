@@ -31,7 +31,7 @@
     <Title>Tabular Data Frame and CSV/ARFF Storage Provider Framework</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Framework</AssemblyTitle>
     <PackageTags>scibasic;dataframe;csv;arff;storage-provider;tabular-data</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Load key-value profile; Fixed the xml comment error; Fixed the data annotation attributes.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

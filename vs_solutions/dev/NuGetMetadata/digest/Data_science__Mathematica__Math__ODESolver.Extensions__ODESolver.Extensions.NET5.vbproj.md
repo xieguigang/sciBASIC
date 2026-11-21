@@ -16,8 +16,9 @@
 
 ## Notable public members
 - Public Function DataFrame(out As ODEOutput) As csv
-- Public Function DataFrame(df As ODEsOut, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
-- Public Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODEsOut
+- Public Function DataFrame(df As ODESolution, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
+- Public Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODESolution
+- Public Function SPcc(df As ODESolution) As IEnumerable(Of DataSet)
 
 ## Imports
 - csv = Microsoft.VisualBasic.Data.Framework.IO.File

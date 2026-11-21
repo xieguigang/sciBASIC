@@ -24,7 +24,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;particles;sph;fluid-simulation;boids;flocking;gpu-ready;3d-simulation;force-layout</PackageTags>
-    <PackageReleaseNotes>Initial release: three dimensional SPH fluid engine with box, cylindrical and rotating impeller boundaries, a pluggable parallel compute backend, 3D boids flocking kernels and grid, plus the pooled 2D particle system and force layout helpers.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Enable optimization.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

@@ -24,7 +24,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;elastic-net;regularization;lasso;ridge;coordinate-descent;cross-validation;feature-selection</PackageTags>
-    <PackageReleaseNotes>Initial release: coordinate-descent elastic net fitting, alpha regularization paths with warm starts, cross validation over the l1Ratio and alpha grid, polynomial model view and NumericTable regression entry points.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Enable optimization; Adjust of the fitting; Try to inject the prior knowledge netwoek into the GRN.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

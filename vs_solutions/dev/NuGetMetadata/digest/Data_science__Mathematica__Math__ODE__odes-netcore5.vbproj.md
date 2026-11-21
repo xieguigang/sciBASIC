@@ -3,13 +3,13 @@
 - RootNamespace : Microsoft.VisualBasic.Math.Calculus
 - AssemblyName  : Microsoft.VisualBasic.Math.ODEsSolver
 - TargetFramework: net10.0
-- Source files  : 35
+- Source files  : 37
 - Existing Title: Ordinary Differential Equation Solver Core for Dynamic Models
 - Existing Desc : Integrates systems of ordinary differential equations for sciBASIC#: a shared solver core providing Euler, RK2, Gill, RK4, Runge-Kutta 23/45, Dormand-Prince, symplectic, implicit, BDF2 and Rosenbrock methods, with Jacobian and dense LU support, declarative variable/parameter models and tabular or gridded result output.
 - Existing Tags : scibasic;ode;differential-equations;runge-kutta;dormand-prince;bdf2;solver;simulation
 
 ## Namespaces
-- Dynamics  [files: 18]
+- Dynamics  [files: 19]
 - Dynamics.Data  [files: 4]
 
 ## Public types
@@ -21,13 +21,17 @@
 - Class RefDrivenModel (_smoketest\Cases.vb) - A model which reads the reference data of the current integration step.
 - Class EmptyModel (_smoketest\Cases.vb) - A model without any state variable.
 - Module Program (_smoketest\Program.vb) - The self test entry point of the ODE solver package. ```shell dotnet _smoketest/bin/Debug/net10.0/smoketest.dll
+- Module RegistryCases (_smoketest\RegistryCases.vb) - The test cases of the external solver registry and the unified output model. (外部求解器注册表与统一输出模型的自检)
+- Class EulerProvider (_smoketest\RegistryCases.vb) - 用显式 Euler 实现的测试求解器：它的结果需要与内建的 ``SolveEuler`` 完全一致
+- Class BrokenProvider (_smoketest\RegistryCases.vb) - 故意返回错误结果的求解器：用于验证框架侧的校验逻辑
+- Class ProbeProvider (_smoketest\RegistryCases.vb) - 返回固定值并且记录 ``ProviderOptions`` 的求解器
 - Module SolverCases (_smoketest\SolverCases.vb) - The test cases of the newly added ODEs integrators: the convergence order, the stiff problem, the Rosenbrock stability function, the symplectic energy conservation, the multistep startup and the unified dispatch.
 - Class DecayModel (_smoketest\SolverCases.vb) - ``y' = rate * y``, ``y(0) = 1``，解析解为 ``y = exp(rate * t)``
 - Class StiffModel (_smoketest\SolverCases.vb) - ``y' = rate·(y − cos t) − sin t``，``y(0) = 1``，解析解恒为 ``y = cos t``。 ``rate`` 取很大的负值的时候就成为一个刚性(快瞬态)问题。
 - Class HarmonicSymplectic (_smoketest\SolverCases.vb) - 简谐振子：``dq/dt = p``、``dp/dt = -omega²·q``，能量 ``E = 0.5·(p² + omega²·q²)``
 - Class PendulumSymplectic (_smoketest\SolverCases.vb) - 单摆（非线性哈密顿系统）：``q' = p``、``p' = -sin(q)``，能量 ``E = p²/2 − cos(q)``
 - Module NamespaceDoc (Dynamics\Data\NamespaceDoc.vb) - Data models of the dynamic system definitions.
-- Class ODEsOut (Dynamics\Data\ODEsOut.vb) - ODEs output, this object can populates the <see cref="ODEsOut.y"/> variables values through its enumerator interface.
+- Class ODESolution (Dynamics\Data\ODESolution.vb) - ODEs output, this object can populates the <see cref="ODESolution.y"/> variables values through its enumerator interface. (常微分方程求解结果，同时也是所有求解器 —— 内建求解器与外部插件求解器 —— 的统一输出模型)
 - Module StreamExtension (Dynamics\Data\StreamExtension.vb)
 - Class ValueVector (Dynamics\Data\ValueVector.vb) - A cursor over a reference data set: the <see cref="i32"/> base type provides the position pointer, and each variable can be accessed by its name. (带位置游标的参考数据向量)
 - Class EulerSolver (Dynamics\ExplicitSolvers.vb) - The forward Euler method, 1st order.(前向欧拉法，一阶精度) ``y_{n+1} = y_n + h · f(t_n, y_n)``，每一个积分步只需要 1 次函数求值，但是它的 数值稳定性区间很小，通常只用于教学演示或者对精度要求很低的快速原型。
@@ -43,6 +47,7 @@
 - Module NamespaceDoc (Dynamics\NamespaceDoc.vb) - Dynamic system models integrated by the ODE solvers.
 - Enum ODESolverMethod (Dynamics\ODESolverMethod.vb) - | <see cref="RK2"/> | 2 | 显式固定步长 | 一般用途 | | <see cref="Gill"/> | 4 | 显式固定步长 | 长时程积分(舍入误差累积较小) | | <see cref="RK4"/> | 4 | 显式固定步长 | **默认推荐** |
 - Class ODESolverOptions (Dynamics\ODESolverMethod.vb) - The optional settings of the <see cref="ODEs"/> integrators.(方程组求解器的可选设置)
+- Interface IODEsolverProvider (Dynamics\ODEsolverProvider.vb) - assembly (for example the managed ``Sundials.CVODE`` package) and registers itself into the <see cref="ODESolverRegistry"/>, so that it can be invoked from <see cref="ODEs.Solve(Integer, Double, Double, ODESolverMethod, Boolean, ODESolverOptions)"/>
 - Class RungeKutta23 (Dynamics\RungeKutta23.vb) - The adaptive step size Bogacki-Shampine 3(2) solver for the <see cref="ODEs"/> dynamics system.(自适应步长的 Bogacki-Shampine 3(2) 求解器) 3(2) 嵌入式方法对：使用 3 阶解向前推进，用 2 阶解估计局部截断误差。它具有 FSAL
 - Class RungeKutta4 (Dynamics\RungeKutta4.vb) - The classical 4th order Runge-Kutta solver for the <see cref="ODEs"/> dynamics system. (用于求解 ODE 方程组的经典四阶龙格库塔法求解器) 求解过程使用预分配的工作缓冲，每一个积分步都不会产生任何托管堆分配；结果序列
 - Class RungeKutta45 (Dynamics\RungeKutta45.vb) - The adaptive step size Dormand-Prince 5(4) solver for the <see cref="ODEs"/> dynamics system. (用于求解 ODE 方程组的自适应步长 Dormand-Prince 5(4) 求解器) 求解器使用 7 个阶段的 Dormand-Prince 5(4) 嵌入式方法对，通过「5 阶解与 4 阶解之差」
@@ -93,6 +98,20 @@
 - Public Sub CheckThrows(Of T As Exception)(name As String, action As Action)
 - Public Function LastValue(v As Double()) As Double
 - Public Function MaxDiff(a As Double(), b As Double()) As Double
+- Public ReadOnly Property Name As String Implements IODEsolverProvider.Name
+- Public ReadOnly Property Description As String Implements IODEsolverProvider.Description
+- Public Sub New(Optional name As String = "test.euler")
+- Public Function Solve(model As ODEs, y0 As Double(), n As Integer, a As Double, b As Double,
+- Public ReadOnly Property Name As String Implements IODEsolverProvider.Name
+- Public ReadOnly Property Description As String Implements IODEsolverProvider.Description
+- Public Sub New(kind As String)
+- Public Function Solve(model As ODEs, y0 As Double(), n As Integer, a As Double, b As Double,
+- Public ReadOnly Property Name As String Implements IODEsolverProvider.Name
+- Public ReadOnly Property Description As String Implements IODEsolverProvider.Description
+- Public Property LastProviderOptions As Object
+- Public Sub New(Optional name As String = "test.probe")
+- Public Function Solve(model As ODEs, y0 As Double(), n As Integer, a As Double, b As Double,
+- Public Sub RunAll()
 - Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
 - Protected Overrides Function y0() As var()
 - Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
@@ -112,21 +131,7 @@
 - Public Sub RunSymplecticCases()
 - Public Sub RunStartupCases()
 - Public Sub RunDispatchCases()
-- Public Property x As Double()
-- Public Property y As Dictionary(Of NamedCollection(Of Double))
-- Public Property y0 As Dictionary(Of String, Double)
-- Public Property params As Dictionary(Of String, Double)
-- Public ReadOnly Property dx As Double
-- Public ReadOnly Property Resolution As Double
-- Public Function GetY0() As Dictionary(Of String, Double)
-- Public ReadOnly Property HaveNaN As Boolean
-- Public Function Join() As ODEsOut
-- Public Function AsTable() As NumericTable
-- Public Overrides Function ToString() As String
-- Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedCollection(Of Double)) Implements Enumeration(Of NamedCollection(Of Double)).Gener…
-- Public Function Merge(source As IEnumerable(Of ODEsOut), Optional method As Func(Of IEnumerable(Of Double), Double) = Nothing) As ODEsOut
-- Public Property Y As Dictionary(Of NamedCollection(Of Double))
-- ... and 206 more
+- ... and 239 more
 
 ## Imports
 - Microsoft.VisualBasic.ComponentModel
@@ -143,25 +148,26 @@
 - Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 - Microsoft.VisualBasic.Math.LinearAlgebra
 - Microsoft.VisualBasic.Scripting
-- Microsoft.VisualBasic.Scripting.Runtime
 - Microsoft.VisualBasic.Serialization.JSON
 - Microsoft.VisualBasic.Text.Xml.Models
 - std = System.Math
 - System.Collections.Concurrent
 - System.Diagnostics
 - System.Drawing
+- System.Linq
 - System.Linq.Expressions
 - System.Reflection
 - System.Runtime.CompilerServices
-- System.Xml.Serialization
+- System.Text
 
 ## File tree
 - _smoketest\Benchmark.vb
 - _smoketest\Cases.vb
 - _smoketest\Program.vb
+- _smoketest\RegistryCases.vb
 - _smoketest\SolverCases.vb
 - Dynamics\Data\NamespaceDoc.vb
-- Dynamics\Data\ODEsOut.vb
+- Dynamics\Data\ODESolution.vb
 - Dynamics\Data\StreamExtension.vb
 - Dynamics\Data\ValueVector.vb
 - Dynamics\ExplicitSolvers.vb
@@ -173,6 +179,7 @@
 - Dynamics\NamespaceDoc.vb
 - Dynamics\ODEs.vb
 - Dynamics\ODESolverMethod.vb
+- Dynamics\ODEsolverProvider.vb
 - Dynamics\RefODEs.vb
 - Dynamics\RungeKutta23.vb
 - Dynamics\RungeKutta4.vb

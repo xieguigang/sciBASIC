@@ -25,7 +25,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;directml;d3d12;dxgi;gpu;interop;com;onnx;machine-learning</PackageTags>
-    <PackageReleaseNotes>First release: hand written vtable interop over dxgi.dll, d3d12.dll and DirectML.dll, with device enumeration, command recording, tensor buffers, DML operator descriptors, graph compilation/execution and an ONNX backend.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Improved the activation function parser; Added bugs fixed for the directml framework error; Improved handling of the shap mapping in directml.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Data.Plots
 - AssemblyName  : Microsoft.VisualBasic.Data.DataPlot
 - TargetFramework: net10.0
-- Source files  : 134
+- Source files  : 109
 - Existing Title: GDI+ Chart Engine with ggplot2-Style Themes and 3D Plots
 - Existing Desc : A standalone GDI+ charting engine for sciBASIC#: scatter, line, bar, box, violin, heatmap, contour, Sankey, chord, treemap and venn plots plus statistics charts such as ROC, QQ, forest, PCA and Manhattan, rendered with ggplot2-style theme units and automatic pixel layout.
 - Existing Tags : scibasic;chart;plotting;ggplot-theme;gdi-plus;heatmap;sankey
@@ -11,17 +11,11 @@
 ## Namespaces
 - Canvas  [files: 21]
 - GgplotTheme  [files: 7]
-- Legacy  [files: 3]
-- Legacy.BarPlot  [files: 11]
-- Legacy.BarPlot.Data  [files: 5]
-- Legacy.BarPlot.Histogram  [files: 4]
-- Legacy.Plots  [files: 8]
 - Plot3D  [files: 6]
-- Plot3D.Device  [files: 2]
+- Plot3D.Device  [files: 3]
 - Plot3D.Impl  [files: 1]
 - Plot3D.Legend  [files: 3]
-- Plot3D.Model  [files: 2]
-- Statistics.Heatmap  [files: 2]
+- Plot3D.Model  [files: 3]
 
 ## Public types
 - Class AlignmentPlot (Advanced\AlignmentPlot.vb)
@@ -31,8 +25,6 @@
 - Class BubblePlot (Advanced\BubblePlot.vb)
 - Class ChordLink (Advanced\ChordPlot.vb)
 - Class ChordPlot (Advanced\ChordPlot.vb)
-- Class DendrogramTheme (Advanced\DendrogramPlot.vb) - 层次聚类树图的样式参数
-- Class DendrogramPlot (Advanced\DendrogramPlot.vb) - 绘制层次聚类图(竖直方向)
 - Class FillPolygons (Advanced\FillPolygons.vb)
 - Class HeatmapPlot (Advanced\HeatmapPlot.vb)
 - Class ImageMapPlot (Advanced\ImageMapPlot.vb)
@@ -137,14 +129,16 @@
 - Class CanvasContext (Engine\GgplotTheme\Units.vb)
 - Class UnitConverter (Engine\GgplotTheme\Units.vb) - Converts Unit values to pixels based on a CanvasContext. Handles all ggplot unit types: cm, mm, pt, lines, char, null, npc, inch, px. For relative units (rel), resolve against parent value before calling ToPixels.
 - Enum MarkerShape (Engine\MarkerShape.vb)
-- Class PlotEngine (Engine\PlotEngine.vb) - 绘图引擎：所有图表类型的基类与公共能力。 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。
+- Module PlotDrivers (Engine\PlotDrivers.vb) - 绘图驱动注册器：一次性注册 DataPlot 所支持的全部图形输出驱动 （GDI 栅格、SVG 矢量、PostScript、PDF），可重复调用。
 - Enum LegendPos (Engine\PlotEngine.vb)
 - Class PlotTheme (Engine\PlotTheme.vb) - 图表主题：包含颜色、字体、线宽、边距等所有视觉样式参数。 可直接使用预定义主题，也可基于预定义主题派生自定义主题。
 - Class Series (Engine\Series.vb)
 - Module Extensions (Extensions.vb)
-- Module AlignmentPlot (Legacy\AlignmentPlot.vb) - Visualize and comparing two discrete signals. (以条形图的方式可视化绘制两个离散的信号的比对的图形)
-- Structure Signal (Legacy\AlignmentPlot.vb)
-- ... and 79 more
+- Class NamespaceDoc (NamespaceDoc.vb) - The data plot library: ggplot style themes, plot layers and the shared plotting API.
+- Module DataProvider (Plot3D\Data.vb) - Data provider
+- Class Polygon (Plot3D\Device\Element3D.vb) - 一个三维空间之中的面
+- Class ConvexHullPolygon (Plot3D\Device\Element3D.vb)
+- ... and 47 more
 
 ## Notable public members
 - Public Property Tracks As List(Of Series) = New List(Of Series)()
@@ -155,7 +149,7 @@
 - Public Property HighlightColor As Color = Color.FromArgb(40, 100, 180)
 - Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
 - Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
-- Public Sub Plot()
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 - Public Property Name As String = ""
 - Public Property Data As Double() = {}
 - Public Property Color As Color? = Nothing
@@ -165,16 +159,20 @@
 - Public Property ShowMean As Boolean = True
 - Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
 - Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
-- Public Sub Plot()
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 - Public Property Sizes As Double() = {}
 - Public Property MinBubbleSize As Single = 4.0F
 - Public Property MaxBubbleSize As Single = 30.0F
 - Public Property FillAlpha As Integer = 140
 - Public Property ShowSizeLegend As Boolean = True
 - Public Property SizeLegendCount As Integer = 3
+- Protected Property SeriesList As IList(Of BubbleSeries) = Nothing
 - Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
 - Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
-- Public Sub Plot(seriesList As IList(Of BubbleSeries))
+- Public Overloads Sub Plot(seriesList As IList(Of BubbleSeries))
+- Public Overloads Function Plot(seriesList As IList(Of BubbleSeries), size As Size,
+- Public Overloads Function Plot(seriesList As IList(Of BubbleSeries), size As String,
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 - Public Property Source As Integer
 - Public Property Target As Integer
 - Public Property Value As Double
@@ -190,28 +188,22 @@
 - Public Property GapAngle As Single = 1.5F
 - Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
 - Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
-- Public Sub Plot()
-- Public Property padding As String = g.DefaultPadding
-- Public Property background As String = "white"
-- Public Property gridStrokeX As String = Stroke.AxisGridStroke
-- Public Property axisTickCSS As String = CSSFont.PlotLabelNormal
-- Public Property axisStroke As String = Stroke.AxisStroke
-- Public Property tagCSS As String = CSSFont.PlotLabelNormal
-- Public Property XaxisTickFormat As String = "F1"
-- Public Property pointSize As Single = 10
-- Public ReadOnly Property classinfo As Dictionary(Of String, String)
-- Public Sub New(hist As Cluster, theme As DendrogramTheme,
-- Protected Function GetColor(id As String) As Color
-- Public Function Plot(Optional size$ = "2100,1600",
-- Protected Overridable Sub DendrogramTree(partition As Cluster,
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 - Public Property Groups As List(Of PolygonGroup) = New List(Of PolygonGroup)()
 - Public Property ShowOutline As Boolean = True
 - Public Property ShowPoints As Boolean = False
-- ... and 1534 more
+- Public Property PointSize As Single = 4.0F
+- Public Property ShowAxes As Boolean = True
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
+- Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+- Public Property Matrix As Double(,) = Nothing
+- Public Property RowLabels As String() = Nothing
+- Public Property ColLabels As String() = Nothing
+- Public Property MinValue As Double? = Nothing
+- ... and 1431 more
 
 ## Imports
-- AdjustableArrowCap = Microsoft.VisualBasic.Imaging.AdjustableArrowCap
-- AdjustableArrowCap = System.Drawing.Drawing2D.AdjustableArrowCap
 - Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 - Bitmap = System.Drawing.Bitmap
 - Brush = Microsoft.VisualBasic.Imaging.Brush
@@ -220,7 +212,6 @@
 - Brushes = System.Drawing.Brushes
 - DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
 - DashStyle = System.Drawing.Drawing2D.DashStyle
-- defaultStyle = Microsoft.VisualBasic.Language.Default.[Default](Of  Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.RectangleStyling)
 - Font = Microsoft.VisualBasic.Imaging.Font
 - Font = System.Drawing.Font
 - FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
@@ -231,10 +222,13 @@
 - Image = System.Drawing.Image
 - Matrix = Microsoft.VisualBasic.Imaging.Drawing3D.Math3D.Matrix
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
-- Microsoft.VisualBasic.ComponentModel.Algorithm.base
-- Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.Collection.Generic
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+- Microsoft.VisualBasic.ComponentModel.DataStructures
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.Data.Plots.Canvas
+- Microsoft.VisualBasic.Data.Plots.Plot3D.Device
 
 ## File tree
 - Advanced\AlignmentPlot.vb
@@ -242,7 +236,6 @@
 - Advanced\BoxPlot.vb
 - Advanced\BubblePlot.vb
 - Advanced\ChordPlot.vb
-- Advanced\DendrogramPlot.vb
 - Advanced\FillPolygons.vb
 - Advanced\HeatmapPlot.vb
 - Advanced\ImageMapPlot.vb
@@ -300,57 +293,33 @@
 - Engine\GgplotTheme\Theme.vb
 - Engine\GgplotTheme\Units.vb
 - Engine\MarkerShape.vb
+- Engine\PlotDrivers.vb
 - Engine\PlotEngine.vb
 - Engine\PlotTheme.vb
 - Engine\Series.vb
 - Extensions.vb
-- Legacy\AlignmentPlot.vb
-- Legacy\BarDataGroup.vb
-- Legacy\BarDataSample.vb
-- Legacy\BarPlot.vb
-- Legacy\BarPlot2.vb
-- Legacy\BarPlotDataExtensions.vb
-- Legacy\BiDirectionBarPlot.vb
-- Legacy\BiDirectionData.vb
-- Legacy\Bubble.vb
-- Legacy\Constructor.vb
-- Legacy\DataModel.vb
-- Legacy\DensityPlot.vb
-- Legacy\Extensions.vb
-- Legacy\Heatmap.vb
-- Legacy\Histogram.vb
-- Legacy\HistogramPlot.vb
-- Legacy\LevelBarplot.vb
-- Legacy\LinePlot.vb
-- Legacy\LinePlot2D.vb
-- Legacy\Mapper.vb
-- Legacy\Models.vb
-- Legacy\PlotAlignmentGroup.vb
-- Legacy\ProfileGroup.vb
-- Legacy\RectangleStyles.vb
-- Legacy\Scaling.vb
-- Legacy\Scatter.vb
-- Legacy\Scatter2D.vb
-- Legacy\SimpleBarPlot.vb
-- Legacy\StackedBarPlot.vb
-- Legacy\StackedPercentageBarPlot.vb
-- Legacy\StyledBarplot.vb
-- Legacy\Violin.vb
-- Legacy\ViolinPlot.vb
 - NamespaceDoc.vb
 - Plot3D\Data.vb
 - Plot3D\Device\Element3D.vb
+- Plot3D\Device\Plot3DCanvas.vb
 - Plot3D\Device\RenderEngine.vb
 - Plot3D\Legend\LegendObject.vb
 - Plot3D\Legend\LegendPlot.vb
 - Plot3D\Legend\LegendStyles.vb
 - Plot3D\Model\Axis.vb
+- Plot3D\Model\Frame3D.vb
 - Plot3D\Model\Grid.vb
 - Plot3D\PieChart3D.vb
 - Plot3D\Plot3DTheme.vb
 - Plot3D\Scatter3DPlot.vb
 - Plot3D\ScatterHeatmap.vb
 - Plot3D\Serial3D.vb
+- Plots\Bar.vb
+- Plots\BiDirectionData.vb
+- Plots\Bubble.vb
+- Plots\Histogram.vb
+- Plots\Scatter.vb
+- Plots\SerialDataConverter.vb
 - Statistics\BiHistogramPlot.vb
 - Statistics\BubbleHeatmapPlot.vb
 - Statistics\ClusterHeatmapPlot.vb

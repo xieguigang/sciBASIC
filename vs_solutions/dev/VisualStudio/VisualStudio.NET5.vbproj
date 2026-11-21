@@ -21,7 +21,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;visual-studio;solution-parser;slnx;code-analysis;il-decompiler;source-map</PackageTags>
-    <PackageReleaseNotes>Extends the VB project object collection model and hardens project build output resolution.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Upgrade of the nuget package version number.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

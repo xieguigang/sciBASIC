@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Imaging
 - AssemblyName  : Microsoft.VisualBasic.Imaging
 - TargetFramework: net10.0-windows;net10.0
-- Source files  : 308
+- Source files  : 309
 - Existing Title: 2D and 3D Graphics Engine with SVG and PostScript Drivers
 - Existing Desc : A driver-based scientific graphics engine for sciBASIC#: renders shapes, charts, heatmaps, text labels and isometric 3D scenes through one IGraphics API to bitmap, SVG or PostScript output, with d3.js-style scales, color palettes, Delaunay/Voronoi geometry and contour extraction.
 - Existing Tags : scibasic;graphics;imaging;svg;postscript;d3js;isometric-3d
@@ -30,7 +30,7 @@
 - Drawing2D.Text.ASCIIArt  [files: 4]
 - Drawing2D.Text.Nudge  [files: 10]
 - Drawing3D  [files: 10]
-- Drawing3D.Math3D  [files: 10]
+- Drawing3D.Math3D  [files: 11]
 - Drawing3D.Math3D.Delaunay3D  [files: 3]
 - Drawing3D.Math3D.MarchingCubes  [files: 6]
 - Drawing3D.Models  [files: 6]
@@ -169,7 +169,7 @@
 - Class PolarGraphics2D (Drawing2D\Polar\PolarGraphics2D.vb) - 以极坐标为主的作图系统模块
 - Class PrinterDimension (Drawing2D\PrinterDimension.vb) - the size definition of the printer, usually apply for the PDF output
 - Enum Orientations (Drawing2D\PrinterDimension.vb)
-- ... and 193 more
+- ... and 195 more
 
 ## Notable public members
 - Public Property node As CssValue
@@ -232,7 +232,7 @@
 - Public MustOverride ReadOnly Property type As scalers
 - Public MustOverride ReadOnly Property Zero As Double
 - Public MustOverride ReadOnly Property domainSize As Double
-- ... and 2148 more
+- ... and 2154 more
 
 ## Imports
 - Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
@@ -412,5 +412,5 @@
 - Drawing3D\Camera.vb
 - Drawing3D\DrawGraphics.vb
 - Drawing3D\IPointCloud.vb
-- ... and 158 more files
+- ... and 159 more files
 

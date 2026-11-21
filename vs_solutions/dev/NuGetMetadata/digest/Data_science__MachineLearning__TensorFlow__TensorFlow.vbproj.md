@@ -92,6 +92,10 @@
 - Public Function ToSingleChecked(value As Double) As Single
 - Public Function IsSafeForSingle(values As Double()) As Boolean
 - Public Const MatrixDotThreshold As Integer = 10000
+- Public Property Transposed As Double()()
+- Public Sub New(rows As Integer, cols As Integer, version As Long, jagged As Double()())
+- Public Shared ReadOnly Property JaggedCacheHits As Long
+- Public Shared ReadOnly Property JaggedCacheMisses As Long
 - Public Overrides ReadOnly Property Name As String = "SIMD"
 - Public Shared Sub Register()
 - Public Overrides Function Add(a As Tensor, b As Tensor) As Tensor
@@ -102,11 +106,7 @@
 - Public Overrides Function Minimum(a As Tensor, b As Tensor) As Tensor
 - Public Overrides Function Exp(t As Tensor) As Tensor
 - Public Overrides Function Log(t As Tensor) As Tensor
-- Public Overrides Function Sqrt(t As Tensor) As Tensor
-- Public Overrides Function Square(t As Tensor) As Tensor
-- Public Overrides Function Abs(t As Tensor) As Tensor
-- Public Overrides Function Negate(t As Tensor) As Tensor
-- ... and 561 more
+- ... and 570 more
 
 ## Imports
 - gpu = Microsoft.VisualBasic.Computing.ILCuda.GPUTensor

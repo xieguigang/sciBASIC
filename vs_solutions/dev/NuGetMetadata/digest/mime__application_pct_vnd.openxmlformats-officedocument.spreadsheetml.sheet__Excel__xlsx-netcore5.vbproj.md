@@ -175,6 +175,7 @@
 - Public Function FirstSheet(xlsx As XlsxFile) As csv
 - Public Function FirstSheet(path As String) As csv
 - Public Sub WriteSheetTable(workbook As Workbook, data As csv)
+- Public Sub WriteSheetTable(workbook As Workbook, data As DataFrame)
 - Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As Stream,
 - Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As String,
 - Public Property ContentTypes As ContentTypes
@@ -206,8 +207,7 @@
 - Public ReadOnly Property CellDefinitions As List(Of Cell)
 - Public Sub New()
 - Public Function LoadZip(zip As ZipStream) As File
-- Public Function CreateReader(xlsx As String) As File
-- ... and 727 more
+- ... and 728 more
 
 ## Imports
 - csv = Microsoft.VisualBasic.Data.Framework.IO.File

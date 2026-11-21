@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.DataMining
 - AssemblyName  : Microsoft.VisualBasic.DataMining.Framework
 - TargetFramework: net10.0
-- Source files  : 159
+- Source files  : 165
 - Existing Title: Data Mining Toolkit: Clustering, Association Rules and Evaluation
 - Existing Desc : A data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means, spectral and Hamming distance clustering with k-modes, a bitmap indexed Apriori engine for closed and maximal association rules, ID3 decision trees, self-organizing maps, plus a unified evaluation framework with ROC/AUC curves and clustering quality indices.
 - Existing Tags : scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;hamming;kmodes
@@ -16,7 +16,7 @@
 - Clustering  [files: 8]
 - ComponentModel  [files: 7]
 - ComponentModel.Discretion  [files: 3]
-- ComponentModel.Encoder  [files: 4]
+- ComponentModel.Encoder  [files: 3]
 - ComponentModel.Encoder.Variable  [files: 4]
 - ComponentModel.EntityModels  [files: 5]
 - ComponentModel.Normalizer  [files: 3]
@@ -24,15 +24,14 @@
 - DBSCAN  [files: 6]
 - DecisionTree  [files: 6]
 - DecisionTree.Data  [files: 4]
-- DFL_Driver  [files: 3]
 - Evaluation  [files: 21]
 - FuzzyCMeans  [files: 6]
 - Hamming  [files: 8]
 - HDBSCAN.Distance  [files: 8]
 - HDBSCAN.Hdbscanstar  [files: 7]
 - HDBSCAN.Runner  [files: 4]
-- Kernel.BayesianBeliefNetwork  [files: 3]
-- Kernel.Classifier  [files: 4]
+- Kernel.BayesianBeliefNetwork  [files: 12]
+- Kernel.Classifier  [files: 5]
 - KMeans  [files: 13]
 - KMeans.Bisecting  [files: 3]
 - Lloyds  [files: 4]
@@ -109,6 +108,7 @@
 - Module NamespaceDoc (Clustering\HDBSCAN\Hdbscanstar\NamespaceDoc.vb) - The HDBSCAN* hierarchical density based clustering algorithm.
 - Class OutlierScore (Clustering\HDBSCAN\Hdbscanstar\OutlierScore.vb) - Simple storage class that keeps the outlier score, core distance, and id (index) for a single point. OutlierScores are sorted in ascending order by outlier score, with core distances used to break outlier score ties, and ids used to break core distance ties.
 - Class UndirectedGraph (Clustering\HDBSCAN\Hdbscanstar\UndirectedGraph.vb) - An undirected graph, with weights assigned to each edge. Vertices in the graph are 0 indexed.
+- Enum DistanceCacheMode (Clustering\HDBSCAN\Runner\HdbscanParameters.vb) - 稠密距离矩阵的缓存策略。 HDBSCAN 的核心距离与 MST 只需要"按需"读取距离， 而完整缓存需要 <c>8·n²</c> 字节（n = 20000 时约 3.2 GB）。
 - Class HdbscanParameters (Clustering\HDBSCAN\Runner\HdbscanParameters.vb)
 - Class HdbscanResult (Clustering\HDBSCAN\Runner\HdbscanResult.vb)
 - Class HdbscanRunner (Clustering\HDBSCAN\Runner\HdbscanRunner.vb)
@@ -138,7 +138,6 @@
 - Class Discretizer (ComponentModel\Discretizer\Discretizer.vb) - 通过这个对象来执行对连续性数值的数据集的离散化操作 离散化是通过类似于等宽分bin来实现的
 - Module NamespaceDoc (ComponentModel\Discretizer\NamespaceDoc.vb) - Data discretization used when preparing machine learning features.
 - Class NormalRangeDiscretizer (ComponentModel\Discretizer\NormalRangeDiscretizer.vb) - 对原始数据进行区间离散化 这种离散化处理方法比较适用于人工神经网络, 如果你的数据在归一化之后任然无法收敛 可以使用区间离散化来进行归一化, 通过减少数据特征来消除无法收敛的问题
-- Class ColorClass (ComponentModel\Encoder\Class.vb) - Object entity classification class
 - Class ClassEncoder (ComponentModel\Encoder\ClassEncoder.vb)
 - Module Extensions (ComponentModel\Encoder\Extensions.vb)
 - Module NamespaceDoc (ComponentModel\Encoder\NamespaceDoc.vb) - Feature encoding models that convert categorical and numeric data into feature vectors.
@@ -149,7 +148,7 @@
 - Class ClusterEntity (ComponentModel\EntityModels\ClusterEntity.vb)
 - Class DataSetConvertor (ComponentModel\EntityModels\DataSetConvertor.vb)
 - Class EntityClusterModel (ComponentModel\EntityModels\EntityClusterModel.vb)
-- Class Metric (ComponentModel\EntityModels\Metric.vb)
+- Class Metric (ComponentModel\EntityModels\Metric.vb) - 按指定的属性名列表把 <see cref="EntityClusterModel"/> 投影为数值向量， 并在其之上计算距离。 旧实现每次调用 <see cref="DistanceTo"/> 都执行两次
 - Module NamespaceDoc (ComponentModel\EntityModels\NamespaceDoc.vb) - Entity model interfaces for the data mining components.
 - Interface IClusterPoint (ComponentModel\IClusterPoint.vb)
 - Class IntegerEntity (ComponentModel\IntegerEntity.vb)
@@ -158,7 +157,7 @@
 - Module NamespaceDoc (ComponentModel\Normalizer\NamespaceDoc.vb) - Data normalization used when preparing machine learning features.
 - Module Normalizations (ComponentModel\Normalizer\Normalizations.vb)
 - Class Standardizer (ComponentModel\Normalizer\Standardizer.vb) - 每维度特征的 z-score 标准化器。 训练阶段按特征维计算均值/标准差，推理阶段复用同一套参数， 解决各维度特征量纲差异大导致的梯度不稳定问题。
-- ... and 58 more
+- ... and 68 more
 
 ## Notable public members
 - Public Shared Function Create(items As IEnumerable(Of Item),
@@ -221,7 +220,7 @@
 - Public Property TransactionSize As Integer
 - Public Overrides Function ToString() As String
 - Public ReadOnly Property SupportXY As Double
-- ... and 725 more
+- ... and 861 more
 
 ## Imports
 - ASCII = Microsoft.VisualBasic.Text.ASCII
@@ -229,6 +228,7 @@
 - Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
 - ClusteringIndices = Microsoft.VisualBasic.DataMining.Evaluation.ClusteringIndices
 - LloydsNS = Microsoft.VisualBasic.DataMining.Lloyds
+- Microsoft.VisualBasic.ApplicationServices.Debugging
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 - Microsoft.VisualBasic.CommandLine.Reflection
@@ -248,7 +248,6 @@
 - Microsoft.VisualBasic.DataMining.ComponentModel
 - Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 - Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
-- Microsoft.VisualBasic.DataMining.DBSCAN
 
 ## File tree
 - AprioriRules\Algorithm\Engine\AprioriEngine.vb
@@ -338,7 +337,6 @@
 - ComponentModel\Discretizer\Discretizer.vb
 - ComponentModel\Discretizer\NamespaceDoc.vb
 - ComponentModel\Discretizer\NormalRangeDiscretizer.vb
-- ComponentModel\Encoder\Class.vb
 - ComponentModel\Encoder\ClassEncoder.vb
 - ComponentModel\Encoder\Extensions.vb
 - ComponentModel\Encoder\NamespaceDoc.vb
@@ -395,11 +393,12 @@
 - Evaluation\Roc\RocCurve.vb
 - Evaluation\Validate.vb
 - Evaluation\Validation.vb
-- Interface\DFL\I_FactorElement.vb
-- Interface\DFL\NamespaceDoc.vb
-- Interface\DFL\Node.vb
 - Kernel\Bayesian.vb
 - Kernel\BayesianBeliefNetwork\BeliefNetwork.vb
 - Kernel\BayesianBeliefNetwork\BNInfer.vb
-- ... and 9 more files
+- Kernel\BayesianBeliefNetwork\ExpectationMaximization.vb
+- Kernel\BayesianBeliefNetwork\Factor.vb
+- Kernel\BayesianBeliefNetwork\JunctionTree.vb
+- Kernel\BayesianBeliefNetwork\LoopyBeliefPropagation.vb
+- ... and 15 more files
 

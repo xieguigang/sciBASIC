@@ -23,7 +23,7 @@
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Enable optimization; Fixed the skia dassh style not working as expected; Try to make the skia wrapper generates the same output when compares with the gdi+ backend.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Version>10.8.9818.14504</Version>

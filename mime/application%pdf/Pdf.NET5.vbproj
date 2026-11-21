@@ -26,7 +26,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;pdf;pdf-reader;text-extraction;pdf-writer</PackageTags>
-    <PackageReleaseNotes>Adds a PDF report renderer that lays the shared report block model out onto PDF pages.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Fixed the namespace reference to the report document writer; Removed the un-necessary project component reference.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

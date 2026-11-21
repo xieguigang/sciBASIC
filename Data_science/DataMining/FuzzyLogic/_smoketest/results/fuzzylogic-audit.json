@@ -7,12 +7,12 @@
   "failureCount": 0,
   "records": [
     {
-      "time": "2026-11-19T14:51:28.221",
+      "time": "2026-11-19T16:18:05.750",
       "kind": "Mark",
       "level": "infom",
       "expression": null,
       "message": "BN/PBN 自检开始",
-      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.BooleanNetworks.vb",
+      "sourceFile": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.BooleanNetworks.vb",
       "line": 15,
       "member": "Run",
       "threadId": 2,
@@ -20,12 +20,12 @@
       "succeeded": true
     },
     {
-      "time": "2026-11-19T14:51:28.248",
+      "time": "2026-11-19T16:18:05.768",
       "kind": "Mark",
       "level": "infom",
       "expression": null,
       "message": "BN/PBN 自检结束 = 0",
-      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.BooleanNetworks.vb",
+      "sourceFile": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.BooleanNetworks.vb",
       "line": 26,
       "member": "Run",
       "threadId": 2,
@@ -33,12 +33,12 @@
       "succeeded": true
     },
     {
-      "time": "2026-11-19T14:51:28.248",
+      "time": "2026-11-19T16:18:05.769",
       "kind": "Mark",
       "level": "infom",
       "expression": null,
       "message": "FCM 自检开始",
-      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.FuzzyCognitiveMaps.vb",
+      "sourceFile": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.FuzzyCognitiveMaps.vb",
       "line": 13,
       "member": "Run",
       "threadId": 2,
@@ -46,12 +46,12 @@
       "succeeded": true
     },
     {
-      "time": "2026-11-19T14:51:28.259",
+      "time": "2026-11-19T16:18:05.777",
       "kind": "Mark",
       "level": "infom",
       "expression": null,
       "message": "FCM 自检结束 = 0",
-      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.FuzzyCognitiveMaps.vb",
+      "sourceFile": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.FuzzyCognitiveMaps.vb",
       "line": 22,
       "member": "Run",
       "threadId": 2,
@@ -59,12 +59,12 @@
       "succeeded": true
     },
     {
-      "time": "2026-11-19T14:51:28.259",
+      "time": "2026-11-19T16:18:05.777",
       "kind": "Mark",
       "level": "infom",
       "expression": null,
       "message": "联合建模自检开始",
-      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.Hybrid.vb",
+      "sourceFile": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.Hybrid.vb",
       "line": 14,
       "member": "Run",
       "threadId": 2,
@@ -72,12 +72,12 @@
       "succeeded": true
     },
     {
-      "time": "2026-11-19T14:51:28.263",
+      "time": "2026-11-19T16:18:05.780",
       "kind": "Mark",
       "level": "infom",
       "expression": null,
       "message": "联合建模自检结束 = 0",
-      "sourceFile": "G:\\pixelArtist\\src\\framework\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.Hybrid.vb",
+      "sourceFile": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Data_science\\DataMining\\FuzzyLogic\\_smoketest\\Program.Hybrid.vb",
       "line": 21,
       "member": "Run",
       "threadId": 2,

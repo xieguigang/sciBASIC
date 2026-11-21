@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.DataMining.HierarchicalClustering
 - AssemblyName  : Microsoft.VisualBasic.DataMining.HierarchicalClustering
 - TargetFramework: net10.0
-- Source files  : 21
+- Source files  : 22
 - Existing Title: Hierarchical Clustering Engine with BIRCH and Linkage Strategies
 - Existing Desc : An agglomerative hierarchical clustering library for sciBASIC#: the BIRCH CF-tree preclustering engine for large streaming datasets, single, complete, average and weighted linkage strategies, weighted distance maps and a reusable dendrogram tree builder.
 - Existing Tags : scibasic;hierarchical-clustering;birch;cf-tree;linkage;clustering
@@ -30,6 +30,7 @@
 - Class CompleteLinkageStrategy (ClusteringAlgorithm\LinkageStrategy.vb) - Implements the complete-linkage (farthest neighbor) clustering strategy. The distance between two clusters is defined as the maximum distance between any single element from the first cluster and any single element from the second cluster.
 - Class AverageLinkageStrategy (ClusteringAlgorithm\LinkageStrategy.vb) - Implements the average-linkage (unweighted pair-group method using arithmetic averages, UPGMA) clustering strategy. The distance between two clusters is defined as the arithmetic mean of all pairwise distances
 - Class PDistClusteringAlgorithm (ClusteringAlgorithm\PDistClusteringAlgorithm.vb)
+- Module WardClustering (ClusteringAlgorithm\WardClustering.vb) - Ward.D2 最小方差层次聚类（等价 R 的 <c>hclust(method = "ward.D2")</c>）。 <para> 每一轮挑选使 Ward 准则增量 <c>Δ = n_i·n_j/(n_i+n_j) · ||c_i − c_j||²</c> 最小的一对簇合并，
 - Class Distance (HierarchyBuilder\Distance.vb) - distance value union the corresponding weight value(default weight is ``1.0``).
 - Class DistanceMap (HierarchyBuilder\DistanceMap.vb) - Container for linkages with the minimal methods needed in the package Created by Alexandre Masselot on 7/18/14.
 - Class HierarchyBuilder (HierarchyBuilder\HierarchyBuilder.vb)
@@ -102,7 +103,7 @@
 - Protected Friend Overridable Function countEntriesInChildrenNodes() As Integer
 - Public Overrides Function ToString() As String
 - Public Const D0_DIST As Integer = 0
-- ... and 122 more
+- ... and 123 more
 
 ## Imports
 - Microsoft.VisualBasic.ApplicationServices
@@ -144,6 +145,7 @@
 - ClusteringAlgorithm\DoCluster.vb
 - ClusteringAlgorithm\LinkageStrategy.vb
 - ClusteringAlgorithm\PDistClusteringAlgorithm.vb
+- ClusteringAlgorithm\WardClustering.vb
 - HierarchyBuilder\Distance.vb
 - HierarchyBuilder\DistanceMap.vb
 - HierarchyBuilder\HierarchyBuilder.vb

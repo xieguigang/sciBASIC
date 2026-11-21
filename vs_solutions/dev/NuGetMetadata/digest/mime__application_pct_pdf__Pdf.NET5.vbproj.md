@@ -115,7 +115,7 @@
 ## Imports
 - Microsoft.VisualBasic.ApplicationServices.Report
 - Microsoft.VisualBasic.FileIO
-- Microsoft.VisualBasic.MIME.Office.WordDocument
+- Microsoft.VisualBasic.Imaging.BitmapImage
 - std = System.Math
 - System.Globalization
 - System.IO

@@ -21,7 +21,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;chart;plotting;ggplot-theme;gdi-plus;heatmap;sankey</PackageTags>
-    <PackageReleaseNotes>Improves the plot engine data models, the dendrogram and heatmap plots and the bar plot baseline handling, and fixes missing component references.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Added code style improvments; Added missing component project; Enable optimization.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -22,7 +22,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;json;json-rpc;bson;parser;serialization;formatter</PackageTags>
-    <PackageReleaseNotes>Adds a JSON-RPC 2.0 client with request/response framing and sessions, JSON report export helpers and deep clone support, and rewrites the pretty-print JSON formatter.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Enable optimization; Added clr imports.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

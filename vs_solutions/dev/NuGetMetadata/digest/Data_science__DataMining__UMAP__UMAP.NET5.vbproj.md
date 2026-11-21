@@ -129,8 +129,8 @@
 - Microsoft.VisualBasic.Serialization.JSON
 - std = System.Math
 - System.Collections.Concurrent
-- System.Data
 - System.IO
+- System.Numerics
 
 ## File tree
 - Components\ABParams.vb

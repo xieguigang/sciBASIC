@@ -3,18 +3,18 @@
 - RootNamespace : Microsoft.VisualBasic.Engine.Physics
 - AssemblyName  : Microsoft.VisualBasic.Engine.Physics
 - TargetFramework: net10.0
-- Source files  : 45
+- Source files  : 53
 - Existing Title: 2D and 3D Rigid Body Physics Engine with Joints, Fields and Fluids
 - Existing Desc : A fixed-step rigid body physics engine for sciBASIC#: two and three dimensional worlds with broad and narrow phase collision detection, SAT based convex polyhedron contacts and manifolds, revolute, prismatic, spring, weld, ball and hinge joints, angular motors, gravity / wind / magnetic force fields, plus SPH fluid and boids hooks for particle scenes.
 - Existing Tags : scibasic;physics-engine;rigid-body;collision-detection;convex-hull;sat;joints;3d-simulation;sph
 
 ## Namespaces
 - Collision  [files: 6]
-- Collision3D  [files: 8]
+- Collision3D  [files: 9]
 - ForceFields  [files: 5]
-- ForceFields3D  [files: 2]
+- ForceFields3D  [files: 3]
 - Joints  [files: 6]
-- Joints3D  [files: 4]
+- Joints3D  [files: 10]
 - Math3D  [files: 3]
 
 ## Public types
@@ -40,6 +40,7 @@
 - Module ContactSolver3D (Collision3D\ContactSolver3D.vb) - 3D 顺序冲量接触求解器：对每个接触点先解法向（含 Baumgarte 位置修正与恢复）， 再解两条正交切线的库仑摩擦。跨迭代累积冲量，保证多接触点情况下收敛。
 - Class ConvexMesh3D (Collision3D\ConvexMesh3D.vb) - 凸多面体网格：顶点表 + 面表（每个面是一圈顶点索引，外向法右手序）。 物理（碰撞与惯量）与渲染（三角形面）共用同一份几何，避免两处定义不一致。 局部坐标以质心为原点：刚体的 <see cref="RigidBody3D.Position"/> 是质心，
 - Module ConvexNarrowPhase3D (Collision3D\ConvexNarrowPhase3D.vb) - 凸多面体窄相位：盒-盒、盒-凸、凸-凸（SAT + 参考面/入射面裁剪）、 凸-平面（顶点投影）、球-凸（最近点）。 盒体通过 <see cref="BoxCollider3D.AsConvex"/> 复用同一套例程，
+- Module ConvexPrimitives3D (Collision3D\ConvexPrimitives3D.vb) - 补充的凸多面体工厂：圆台、半球、棱柱、棱锥、薄板。 <see cref="ConvexMesh3D"/> 原有的工厂覆盖了盒体、圆柱、圆锥、楔形与球面网格， 但缺少"圆台 / 半球"这两类常见的积木形状。这里补齐，全部返回严格凸的
 - Class ContactPoint3D (Collision3D\Manifold3D.vb) - 单个接触点。除位置与穿透深度外，还缓存求解所需的力臂、有效质量与累积冲量 （顺序冲量法需要跨迭代累积冲量以收敛）。
 - Class Manifold3D (Collision3D\Manifold3D.vb) - 接触流形：一对刚体之间的一批接触点，法向由 A 指向 B。
 - Module NarrowPhase3D (Collision3D\NarrowPhase3D.vb) - 3D 窄相位碰撞检测：按碰撞体种类分派，输出接触流形。 覆盖的组合：球-球、球-胶囊、胶囊-胶囊、球-盒、胶囊-盒、球-平面、胶囊-平面， 以及盒-盒、盒-凸、盒-平面、凸-凸、凸-平面、球-凸（后六项由
@@ -48,6 +49,7 @@
 - Module NamespaceDoc (ForceFields\NamespaceDoc.vb) - Force field implementations (gravity and similar) applied by the physics engine.
 - Class WindField (ForceFields\WindField.vb) - 风力场：在区域内沿 <see cref="Direction"/> 施加风力，叠加正弦湍流使效果更自然。 力大小与刚体质量成正比（类比气压对物体的作用）。
 - Class GravityField3D (ForceFields3D\GravityField3D.vb) - 3D 重力场：对区域内每个非静态刚体施加 <c>F = m · g</c>。
+- Class Spring3D (ForceFields3D\Spring3D.vb) - 每步算出挂点的世界坐标与速度，按 <c>F = −k·(L − L0)·d − c·(v·d)·d</c> 施加力， 再通过 <see cref="RigidBody3D.ApplyForceAtPoint"/> 同时产生作用在刚体质心上的力与扭矩。 </para>
 - Interface IStepHook (IStepHook.vb) - 子步钩子：需要在<strong>每个子步</strong>都重新施力的外部控制器实现该接口。 <see cref="PhysicsWorld3D.StepSub"/> 会在每个子步的末尾调用 <see cref="RigidBody3D.ClearForces"/>，因此在 <c>Step</c> 之前施加一次的力
 - Interface IConstraint (Joints\IConstraint.vb) - 约束（关节）统一接口。在物理世界的速度迭代阶段调用 <see cref="SolveVelocity"/>， 在位置阶段调用 <see cref="SolvePosition"/> 做穿透/漂移修正。
 - Module NamespaceDoc (Joints\NamespaceDoc.vb) - Physics joints: revolute, prismatic, spring and weld constraints between rigid bodies.
@@ -55,10 +57,17 @@
 - Class RevoluteJoint (Joints\RevoluteJoint.vb) - 铰链（旋转）关节：将两个刚体在各自的局部锚点处钉在一起，允许绕该点自由旋转。 在 2D 中这与球窝关节等价。
 - Class SpringJoint (Joints\SpringJoint.vb) - 弹簧关节：在两个刚体的锚点之间施加胡克弹力（与形变成正比）和阻尼力 （与相对速度成正比），模拟弹性连接（如绳索、弹簧、悬挂）。
 - Class WeldJoint (Joints\WeldJoint.vb) - 固定（焊接）关节：将两个刚体的相对位置与相对角度完全锁定， 相当于刚性连接（如焊接、铆接）。
+- Class ActuatorConstraint3D (Joints3D\ActuatorConstraint3D.vb) - speed it reports is a physical speed. The port used to write the joint speed outright from a sub step hook, which works but is not the same system: the observation carries a speed no
 - Class AngularMotor3D (Joints3D\AngularMotor3D.vb) - 角度马达：以 PD 控制把 B 相对 A 的朝向驱动到 <see cref="TargetRelative"/>。 这是"通过调节关节姿态驱动火柴人运动"的核心执行器。 控制律：<c>τ = Kp · axis · angle − Kd · (ωB − ωA)</c>，其中 <c>axis/angle</c>
 - Class BallJoint3D (Joints3D\BallJoint3D.vb) - 球窝关节：把两个刚体在各自的局部锚点处钉在一起，允许绕该点自由旋转（3 个转动自由度）。 这是火柴人骨骼的主力关节（肩、髋、踝等）。 速度层用三个世界坐标轴依次做高斯-赛德尔迭代（与 2D <see cref="Joints.RevoluteJoint"/>
 - Class HingeJoint3D (Joints3D\HingeJoint3D.vb) - 铰链关节：在球窝关节的基础上锁死两个转动自由度，只允许绕铰链轴相对旋转。 用于膝盖与肘部这类单轴关节。 两个单位轴要保持对齐需要 2 个角向约束（绕轴自身的扭转是自由的），
 - Interface IConstraint3D (Joints3D\IConstraint3D.vb) - 3D 约束（关节）统一接口，与 2D 的 <see cref="Joints.IConstraint"/> 完全同构。
+- Interface IJointDof3D (Joints3D\IJointDof3D.vb) - 单自由度关节（转轴关节 / 移动副）的统一抽象。 <see cref="JointServo3D"/> 只依赖这个接口，所以同一个伺服控制器既能驱动 机械臂的转动关节，也能驱动夹爪手指的移动副：
+- Enum ServoMode3D (Joints3D\JointServo3D.vb)
+- Class JointServo3D (Joints3D\JointServo3D.vb) - <para> 输出链路是"位置环 → 期望速度 → 速度环 → 力矩"，最后按 <see cref="MaxForce"/> 饱和。 因为力矩上限真实存在，所以：
+- Class PrismaticJoint3D (Joints3D\PrismaticJoint3D.vb) - 移动副（棱柱关节）：两个刚体之间只保留沿指定轴的一个平移自由度， 其余两个方向的平移与三个方向的旋转全部锁死，并可选轴向行程限位。 夹爪手指就是典型的移动副：手指只能沿 link6 的局部轴开合，
+- Class RevoluteJoint3D (Joints3D\RevoluteJoint3D.vb) - <para> <see cref="HingeJoint3D"/> 只锁死两个垂直于铰链轴的自由度，绕轴旋转是完全自由的， 所以机械臂的肘/肩关节会反折。这里照 <see cref="BallJoint3D"/> 的锥角限位写法，
+- Class SpringJoint3D (Joints3D\SpringJoint3D.vb) - λ = −m_eff·(Ċ + bias) </code> <para>
 - Module ForceMath (Math.vb)
 - Structure Matrix3x3 (Math3D\Matrix3x3.vb) - 3x3 实矩阵。3D 刚体用它表示惯性张量（局部系）与随姿态旋转后的世界系逆惯性张量 <c>R · I⁻¹ · Rᵀ</c>。 元素命名 <c>mij</c> 表示第 i 行第 j 列，与 <see cref="Quaternion.ToMatrix3x3"/> 的
 - Structure Quaternion (Math3D\Quaternion.vb) - 单位四元数 <c>q = w + xi + yj + zk</c>，用于表示 3D 刚体的姿态。 旋转约定：局部坐标系的基向量为 X=right、Y=up、Z=forward（右手系，X×Y=Z）。 <see cref="Rotate(Vector3)"/> 把<strong>局部</strong>向量变换到<strong>世界</strong>坐标；
@@ -134,7 +143,7 @@
 - Public Overrides Function Support(dir As Vector3) As Vector3
 - Public Function SignedDistance(p As Vector3) As Double
 - Public Overrides ReadOnly Property Kind As ShapeKind3D
-- ... and 252 more
+- ... and 409 more
 
 ## Imports
 - Microsoft.VisualBasic.Engine.Physics.Collision
@@ -170,6 +179,7 @@
 - Collision3D\ContactSolver3D.vb
 - Collision3D\ConvexMesh3D.vb
 - Collision3D\ConvexNarrowPhase3D.vb
+- Collision3D\ConvexPrimitives3D.vb
 - Collision3D\Manifold3D.vb
 - Collision3D\NarrowPhase3D.vb
 - ForceFields\ForceField.vb
@@ -179,6 +189,7 @@
 - ForceFields\WindField.vb
 - ForceFields3D\ForceField3D.vb
 - ForceFields3D\GravityField3D.vb
+- ForceFields3D\Spring3D.vb
 - IStepHook.vb
 - Joints\IConstraint.vb
 - Joints\NamespaceDoc.vb
@@ -186,10 +197,16 @@
 - Joints\RevoluteJoint.vb
 - Joints\SpringJoint.vb
 - Joints\WeldJoint.vb
+- Joints3D\ActuatorConstraint3D.vb
 - Joints3D\AngularMotor3D.vb
 - Joints3D\BallJoint3D.vb
 - Joints3D\HingeJoint3D.vb
 - Joints3D\IConstraint3D.vb
+- Joints3D\IJointDof3D.vb
+- Joints3D\JointServo3D.vb
+- Joints3D\PrismaticJoint3D.vb
+- Joints3D\RevoluteJoint3D.vb
+- Joints3D\SpringJoint3D.vb
 - Math.vb
 - Math3D\Matrix3x3.vb
 - Math3D\Quaternion.vb

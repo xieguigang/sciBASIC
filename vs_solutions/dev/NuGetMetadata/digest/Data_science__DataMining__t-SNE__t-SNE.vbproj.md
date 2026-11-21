@@ -38,7 +38,7 @@
 - Friend Function xtod(X As Double()(), Optional nthreads As Integer = 0) As Double()
 - Friend Function d2pSparse(perplexity As Double,
 - Friend Function d2p(D As Double(),
-- Public Function tsne(source As NumericTable,
+- Public Function TSneFit(source As NumericTable,
 - Friend Function randn2d(n As Integer, d As Integer) As Double()
 - Friend Shared Function randn2d(n As Integer, d As Integer, s As Double) As Double()
 - Friend Sub New(N As Integer, rowPtr As Integer(), colP As Integer(), valP As Double())

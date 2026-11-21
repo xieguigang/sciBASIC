@@ -3,12 +3,14 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning.Bootstrapping
 - AssemblyName  : Microsoft.VisualBasic.MachineLearning.Bootstrapping
 - TargetFramework: net10.0
-- Source files  : 43
-- Existing Title: Graph and Knowledge Graph Embedding Toolkit (node2vec, graph2vec, ComplEx)
-- Existing Desc : Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.
-- Existing Tags : scibasic;graph-embedding;node2vec;knowledge-graph;complex
+- Source files  : 75
+- Existing Title: Graph Embedding and Ensemble Learning Toolkit (node2vec, graph2vec, ComplEx, Voting/Bagging/Stacking)
+- Existing Desc : Provides graph representation learning (node2vec biased random walks with word2vec, whole-graph graph2vec vectors, ComplEx knowledge-graph embeddings) and an ensemble learning framework (Voting/Bagging/Stacking over heterogeneous sciBASIC# algorithms) with a JSON-manifest + CSV-table model bundle format for zero-retraining persistence.
+- Existing Tags : scibasic;graph-embedding;node2vec;knowledge-graph;complex;ensemble-learning;voting;bagging;stacking;model-persistence
 
 ## Namespaces
+- Ensemble  [files: 20]
+- Ensemble.Persistence  [files: 12]
 - GraphEmbedding  [files: 3]
 - GraphEmbedding.complex  [files: 5]
 - GraphEmbedding.complex_NNE  [files: 5]
@@ -19,6 +21,21 @@
 - node2vec  [files: 4]
 
 ## Public types
+- Interface IClassifier (Ensemble\Abstractions\Contracts.vb) - 统一的分类器输出契约。 <c>PredictProbability</c> 返回的向量长度必须等于 <c>Classes.Length</c>， 且顺序严格对齐 <c>Classes</c>；这是 Voting / Bagging / Stacking
+- Interface IRegressor (Ensemble\Abstractions\Contracts.vb)
+- Interface IFeatureSchema (Ensemble\Abstractions\Contracts.vb) - 可报告训练特征维度的模型契约。 <para> 集成框架在 <c>Train</c> 时记录特征维度，预测时逐样本校验，从而把
+- Interface IClassifierLearner (Ensemble\Abstractions\Contracts.vb) - 可训练的分类基学习器。 <c>Fit</c> 接收的 <c>yIndex</c> 已经是类别索引（取值范围 <c>[0, classes.Length)</c>），<c>classes</c> 是全局类别顺序；
+- Interface IRegressorLearner (Ensemble\Abstractions\Contracts.vb)
+- Enum VotingMode (Ensemble\Abstractions\Enums.vb)
+- Enum BaggingAggregation (Ensemble\Abstractions\Enums.vb)
+- Module EnsembleMetrics (Ensemble\Core\EnsembleMetrics.vb)
+- Module EnsembleParallel (Ensemble\Core\EnsembleParallel.vb) - 集成框架的并行调度工具：把「是否并行 + 串行回退」的成对循环收敛到一处。 <para> 基模型训练与批量预测在两个维度上都可以并行（模型维 / 样本维），
+- Module EnsembleValidation (Ensemble\Core\EnsembleValidation.vb) - <para> 六个集成器（Voting / Bagging / Stacking × 分类 / 回归）在 <c>Train</c> 与 <c>Predict</c> 入口上的校验逻辑完全一致，集中在这里可以保证：
+- Module ProbabilityMath (Ensemble\Core\ProbabilityMath.vb)
+- Class NamespaceDoc (Ensemble\NamespaceDoc.vb) - </item> <item> <description>
+- Interface IModelCodec (Ensemble\Storage\IModelCodec.vb) - 单个算法族的模型编解码器。 <para> 编解码器把「具体适配器/算法模型」与「清单 + CSV」之间做双向映射：
+- Interface IPersistableModel (Ensemble\Storage\IModelCodec.vb) - 可持久化的集成模型。 集成器的保存逻辑必须知道「基模型 + 权重 + 元学习器」的结构， 因此由集成器自身实现 <see cref="SaveModel"/>；加载侧则集中在
+- Module ModelFormat (Ensemble\Storage\ModelFormat.vb) - 模型包的文本格式约定：数字、时间戳与区域设置。 模型文件必须在任何机器上往返一致，因此： <list type="bullet">
 - Class Graph2Vec (Graph2Vec.vb)
 - Class Arguments (GraphEmbedding\Arguments.vb)
 - Class AdaGrad (GraphEmbedding\complex\AdaGrad.vb)
@@ -61,71 +78,76 @@
 - Module Solver (Node2Vec\Solver.vb) - Created by freemso on 17-3-14.
 
 ## Notable public members
-- Public Function Setup(terms As IEnumerable(Of String)) As Graph2Vec
-- Public Function GraphVector(g As Graph) As Double()
-- Public MustOverride Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTri…
-- Public MustOverride Sub learn()
-- Public Shared Function ComplEx(args As Arguments)
-- Public Shared Function learn(Of alg As {New, Algorithm})(args As Arguments)
-- Public Shared Function complex_NNE(args As Arguments)
-- Public Shared Function complex_NNE_AER(args As Arguments, rules As String)
-- Public Shared Function complex_R(args As Arguments, rules As String)
-- Public Property k As Integer = 50
-- Public Property lmbda As Double = 0.001
-- Public Property gamma As Double = 0.1
-- Public Property neg As Integer = 2
-- Public Property iterations As Integer = 1000
-- Public Property skip As Integer = 1
-- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), in_Real_MatrixE As …
-- Public Overridable Sub gradientDescent()
-- Public Sub New()
-- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
-- Public Overrides Sub learn()
-- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
-- Public Overridable Sub calculateMetrics()
-- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
-- Public Overridable Function sigmoid(x As Double) As Double
-- Public Overridable Sub calculateGradients()
-- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), in_Real_MatrixE As …
-- Public Overridable Sub gradientDescent()
-- Public Sub New()
-- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
-- Public Overrides Sub learn()
-- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
-- Public Overridable Sub calculateMetrics()
-- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
-- Public Overridable Function sigmoid(x As Double) As Double
-- Public Overridable Sub calculateGradients()
-- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), inLstRules As List(…
-- Public Overridable Sub gradientDescent()
-- Public Sub New(inRule As Rule, inReal_MatrixR As Matrix, inImag_MatrixR As Matrix, inReal_MatrixRGradient As Matrix, inImag_MatrixRGradient As Matrix,…
-- Public Overridable Sub calculateGradients()
-- Public Sub New()
-- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
-- Public Overrides Sub learn()
-- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
-- Public Overridable Sub calculateMetrics()
-- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
-- Public Overridable Function sigmoid(x As Double) As Double
-- Public Overridable Sub calculateGradients()
-- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), inLstRules As List(…
-- Public Overridable Sub gradientDescent()
-- Public Sub New()
-- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
-- Public Overrides Sub learn()
-- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
-- Public Overridable Sub calculateMetrics()
-- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
-- Public Overridable Function sigmoid(x As Double) As Double
-- Public Overridable Sub calculateGradients()
-- Public Sub New(inRule As Rule, inReal_MatrixR As Matrix, inImag_MatrixR As Matrix, inReal_MatrixRGradient As Matrix, inImag_MatrixRGradient As Matrix,…
-- Public Overridable Sub calculateGradients()
-- Public Sub New()
-- ... and 59 more
+- Public Sub New(classes As Double(), predictor As Func(Of Double(), Double()))
+- Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
+- Public Function PredictProbability(x As Double()) As Double() Implements IClassifier.PredictProbability
+- Public Sub New(predictor As Func(Of Double(), Double))
+- Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
+- Public Sub New(name As String, fit As Func(Of Double()(), Integer(), Double(), IClassifier))
+- Public ReadOnly Property Name As String Implements IClassifierLearner.Name
+- Public Function Fit(x As Double()(), yIndex As Integer(), classes As Double()) As IClassifier Implements IClassifierLearner.Fit
+- Public Sub New(name As String, fit As Func(Of Double()(), Double(), IRegressor))
+- Public ReadOnly Property Name As String Implements IRegressorLearner.Name
+- Public Function Fit(x As Double()(), y As Double()) As IRegressor Implements IRegressorLearner.Fit
+- Public Sub New(fitted As Bayesian, classes As Double())
+- Public ReadOnly Property FittedModel As Bayesian
+- Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
+- Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+- Public Function PredictProbability(x As Double()) As Double() Implements IClassifier.PredictProbability
+- Public Property Smoothing As Double = 1.0R
+- Public ReadOnly Property Name As String Implements IClassifierLearner.Name
+- Public Function Fit(x As Double()(), yIndex As Integer(), classes As Double()) As IClassifier Implements IClassifierLearner.Fit
+- Public Sub New(fitted As LogisticNS.LogisticFit, classes As Double())
+- Public ReadOnly Property FittedModel As LogisticNS.LogisticFit
+- Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
+- Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+- Public Function PredictProbability(x As Double()) As Double() Implements IClassifier.PredictProbability
+- Public Property Rate As Double = 0.1R
+- Public Property Iterations As Integer = 2000
+- Public Property Tolerance As Double = 0.0000001R
+- Public ReadOnly Property Name As String Implements IClassifierLearner.Name
+- Public Function Fit(x As Double()(), yIndex As Integer(), classes As Double()) As IClassifier Implements IClassifierLearner.Fit
+- Public Sub New(fitted As SvmModelType, classes As Double(), labelOffset As Integer,
+- Public ReadOnly Property FittedModel As SvmModelType
+- Public ReadOnly Property IndexOffset As Integer
+- Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+- Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
+- Public Function PredictProbability(x As Double()) As Double() Implements IClassifier.PredictProbability
+- Friend Shared Function ToNodes(x As Double(), offset As Integer) As Node()
+- Friend Shared Function CreateProblem(x As Double()(), labels As Double(),
+- Public Property C As Double = 1.0R
+- Public Property Gamma As Double = 0.0R
+- Public Property IndexOffset As Integer = 1
+- Public ReadOnly Property Name As String Implements IClassifierLearner.Name
+- Public Function Fit(x As Double()(), yIndex As Integer(), classes As Double()) As IClassifier Implements IClassifierLearner.Fit
+- Public Sub New(fitted As XGBoostModel, classes As Double())
+- Public ReadOnly Property FittedModel As XGBoostModel
+- Public ReadOnly Property Classes As Double() Implements IClassifier.Classes
+- Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+- Public Function PredictProbability(x As Double()) As Double() Implements IClassifier.PredictProbability
+- Public Property Rounds As Integer = 30
+- Public Property MaxDepth As Integer = 6
+- Public Property Seed As Integer = 42
+- Public ReadOnly Property Name As String Implements IClassifierLearner.Name
+- Public Function Fit(x As Double()(), yIndex As Integer(), classes As Double()) As IClassifier Implements IClassifierLearner.Fit
+- Public Sub New(fitted As RanFog, Optional featureWidth As Integer = 0)
+- Public ReadOnly Property FittedModel As RanFog
+- Public ReadOnly Property FeatureWidth As Integer Implements IFeatureSchema.FeatureWidth
+- Public Function Predict(x As Double()) As Double Implements IRegressor.Predict
+- Public Property TreeCount As Integer = 100
+- Public Property MaxBranch As Integer = 2000
+- Public Property Mtry As Integer = 0
+- Public Property UseGini As Boolean = False
+- ... and 448 more
 
 ## Imports
+- BayesRegNS = Microsoft.VisualBasic.MachineLearning.BayesianRegression
 - Edge = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
+- GaussianModel = Microsoft.VisualBasic.MachineLearning.BayesianRegression.GaussianBayes
+- LassoNS = Microsoft.VisualBasic.Data.Bootstrapping.LASSO
+- LogisticNS = Microsoft.VisualBasic.Data.Bootstrapping.Logistic
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ComponentModel
 - Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
 - Microsoft.VisualBasic.ComponentModel.TagData
@@ -133,24 +155,51 @@
 - Microsoft.VisualBasic.Data.GraphTheory
 - Microsoft.VisualBasic.Data.GraphTheory.SequenceGraphTransform
 - Microsoft.VisualBasic.Data.NLP.Word2Vec
+- Microsoft.VisualBasic.DataMining.Kernel.Classifier
 - Microsoft.VisualBasic.Emit
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.MachineLearning.Bootstrapping.Ensemble.Persistence
 - Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
 - Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
-- Microsoft.VisualBasic.Math
-- Microsoft.VisualBasic.Math.Calculus.Dynamics
-- Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
-- Microsoft.VisualBasic.Math.Distributions
-- Microsoft.VisualBasic.Math.LinearAlgebra
-- Microsoft.VisualBasic.Serialization.JSON
-- Microsoft.VisualBasic.Text
-- Node = Microsoft.VisualBasic.Data.GraphTheory.Vertex
-- randf = Microsoft.VisualBasic.Math.RandomExtensions
-- std = System.Math
-- System
+- Microsoft.VisualBasic.MachineLearning.RandomForests
+- Microsoft.VisualBasic.MachineLearning.SVM
+- Microsoft.VisualBasic.MachineLearning.XGBoost
+- Microsoft.VisualBasic.MachineLearning.XGBoost.train
 
 ## File tree
+- Ensemble\Abstractions\Contracts.vb
+- Ensemble\Abstractions\DelegateLearners.vb
+- Ensemble\Abstractions\Enums.vb
+- Ensemble\Adapters\ClassificationAdapters.vb
+- Ensemble\Adapters\RegressionAdapters.vb
+- Ensemble\Adapters\XGBoostAdapter.vb
+- Ensemble\Bagging\BaggingClassifier.vb
+- Ensemble\Bagging\BaggingRegressor.vb
+- Ensemble\Core\BootstrapSampler.vb
+- Ensemble\Core\CrossValidation.vb
+- Ensemble\Core\EnsembleMetrics.vb
+- Ensemble\Core\EnsembleParallel.vb
+- Ensemble\Core\EnsembleValidation.vb
+- Ensemble\Core\LabelEncoder.vb
+- Ensemble\Core\ProbabilityMath.vb
+- Ensemble\NamespaceDoc.vb
+- Ensemble\Stacking\StackingClassifier.vb
+- Ensemble\Stacking\StackingRegressor.vb
+- Ensemble\Storage\Codecs\GlmCodec.vb
+- Ensemble\Storage\Codecs\NaiveBayesCodec.vb
+- Ensemble\Storage\Codecs\RandomForestCodec.vb
+- Ensemble\Storage\Codecs\SvmCodec.vb
+- Ensemble\Storage\Codecs\XGBoostCodec.vb
+- Ensemble\Storage\CsvTable.vb
+- Ensemble\Storage\EnsembleModelCodec.vb
+- Ensemble\Storage\EnsembleModelStore.vb
+- Ensemble\Storage\IModelCodec.vb
+- Ensemble\Storage\ModelBundle.vb
+- Ensemble\Storage\ModelFormat.vb
+- Ensemble\Storage\ModelManifest.vb
+- Ensemble\Voting\VotingClassifier.vb
+- Ensemble\Voting\VotingRegressor.vb
 - Graph2Vec.vb
 - GraphEmbedding\Algorithm.vb
 - GraphEmbedding\Arguments.vb

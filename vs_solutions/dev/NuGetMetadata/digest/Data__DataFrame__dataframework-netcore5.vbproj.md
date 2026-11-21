@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Data.Framework
 - AssemblyName  : Microsoft.VisualBasic.Data.Framework
 - TargetFramework: net10.0
-- Source files  : 80
+- Source files  : 75
 - Existing Title: Tabular Data Frame and CSV/ARFF Storage Provider Framework
 - Existing Desc : A tabular data framework for sciBASIC#: R-style DataFrame and DataSet objects, streaming CSV and ARFF readers and writers, reflection-based storage providers that map .NET classes to table rows and columns, and LINQ-style streams for querying ultra-large datasets.
 - Existing Tags : scibasic;dataframe;csv;arff;storage-provider;tabular-data
@@ -17,7 +17,7 @@
 - IO.Linq  [files: 5]
 - StorageProvider  [files: 4]
 - StorageProvider.ComponentModels  [files: 11]
-- StorageProvider.Reflection  [files: 10]
+- StorageProvider.Reflection  [files: 5]
 
 ## Public types
 - Module Program (_smoketest\Program.vb) - NumericTable 的 csv/tsv 文本读写与 DataFrame 双向转换的自检程序。
@@ -92,13 +92,6 @@
 - Class HeaderSchema (StorageProvider\DataFrame\HeaderSchema.vb) - Create table column schema based on the dataframe title headers
 - Interface ISchema (StorageProvider\DataFrame\ISchema.vb)
 - Module NamespaceDoc (StorageProvider\DataFrame\NamespaceDoc.vb) - The storage provider abstraction for data frames: the schema interfaces, the header schema and the data frame resolver used to bind tables to object models.
-- Class CollectionAttribute (StorageProvider\Reflection\Attributes\Collection.vb)
-- Class ColumnAttribute (StorageProvider\Reflection\Attributes\Column.vb)
-- Class Ignored (StorageProvider\Reflection\Attributes\ColumnAttributes.vb)
-- Interface IAttributeComponent (StorageProvider\Reflection\Attributes\ColumnAttributes.vb)
-- Enum ProviderIds (StorageProvider\Reflection\Attributes\ColumnAttributes.vb)
-- Class DataAttribute (StorageProvider\Reflection\Attributes\DataAttribute.vb)
-- Class MetaAttribute (StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb)
 - Module NamespaceDoc (StorageProvider\Reflection\NamespaceDoc.vb) - Reflection based storage providers: the column and data attributes, metadata providers and the type schema provider that map .NET types to table schemas.
 - Enum DataFlowDirections (StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb)
 - Module MetaAttributeParser (StorageProvider\Reflection\StorageProviders\MetaAttributes.vb) - 解析出字典域标记信息
@@ -163,10 +156,10 @@
 - Public Sub WriteCsv(df As DataFrame, file As Stream, Optional blank As String = "")
 - Public Iterator Function FieldName(prefix As String, n As Integer, Optional sep As String = "_") As IEnumerable(Of String)
 - Public Function as_dataframe(Of T As {INamedValue, IVector})(ds As IEnumerable(Of T), Optional colnames As String() = Nothing) As DataFrame
+- Public Function as_dataframe(table As File) As DataFrame
 - Public Function as_dataframe(Of T As Class)(list As IEnumerable(Of T),
 - Public Function StreamToFrame(source As Object(), typeDef As Type,
-- Public Function Transpose(mat As DataFrame) As DataFrame
-- ... and 637 more
+- ... and 625 more
 
 ## Imports
 - any = Microsoft.VisualBasic.Scripting
@@ -266,11 +259,6 @@
 - StorageProvider\DataFrame\HeaderSchema.vb
 - StorageProvider\DataFrame\ISchema.vb
 - StorageProvider\DataFrame\NamespaceDoc.vb
-- StorageProvider\Reflection\Attributes\Collection.vb
-- StorageProvider\Reflection\Attributes\Column.vb
-- StorageProvider\Reflection\Attributes\ColumnAttributes.vb
-- StorageProvider\Reflection\Attributes\DataAttribute.vb
-- StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb
 - StorageProvider\Reflection\NamespaceDoc.vb
 - StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb
 - StorageProvider\Reflection\StorageProviders\MetaAttributes.vb

@@ -3,7 +3,7 @@
 - RootNamespace : Microsoft.VisualBasic.Math.Statistics
 - AssemblyName  : Microsoft.VisualBasic.Math.Statistics
 - TargetFramework: net10.0
-- Source files  : 86
+- Source files  : 87
 - Existing Title: Statistics Toolkit: Distributions, Hypothesis Tests and SHAP
 - Existing Desc : A statistics toolkit for sciBASIC#: probability distributions with method-of-moments and L-moment estimation, t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I hypothesis tests, plus FastICA, RANSAC and Shapley/TreeSHAP feature attribution.
 - Existing Tags : scibasic;statistics;hypothesis-testing;distributions;fastica;ransac;shapley-value
@@ -18,7 +18,7 @@
 - MomentFunctions  [files: 5]
 - RANSAC  [files: 5]
 - RScan  [files: 2]
-- ShapleyValue  [files: 15]
+- ShapleyValue  [files: 16]
 - ShapleyValue.TreeShap  [files: 7]
 
 ## Public types
@@ -104,6 +104,7 @@
 - Class PermutationLinkList (ShapleyValue\PermutationLinkList.vb)
 - Class Powerset (ShapleyValue\Powerset.vb)
 - Class RandomPermutations (ShapleyValue\RandomPermutations.vb)
+- Class ShapAnalysisResult (ShapleyValue\ShapAnalysisResult.vb) - 一个模型在一个数据集之上的整体 SHAP 分析结果。
 - Interface ShapleyApplication (ShapleyValue\ShapleyApplication.vb) - facade of Shapley application @author Franck Benault @version 0.0.2
 - Class ShapleyValue (ShapleyValue\ShapleyValue.vb)
 - Module NamespaceDoc (ShapleyValue\TreeShap\NamespaceDoc.vb) - The TreeSHAP algorithm for Shapley value based tree model interpretation.
@@ -177,7 +178,7 @@
 - Public Overrides Function GetCDF(value As Double) As Double
 - Public Overrides Function GetPDF(value As Double) As Double
 - Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
-- ... and 498 more
+- ... and 507 more
 
 ## Imports
 - cephes = Microsoft.VisualBasic.Math.Statistics.SpecialFunctions
@@ -283,6 +284,7 @@
 - ShapleyValue\PermutationLinkList.vb
 - ShapleyValue\Powerset.vb
 - ShapleyValue\RandomPermutations.vb
+- ShapleyValue\ShapAnalysisResult.vb
 - ShapleyValue\ShapleyApplication.vb
 - ShapleyValue\ShapleyValue.vb
 - ShapleyValue\TreeShap\NamespaceDoc.vb

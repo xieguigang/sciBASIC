@@ -1,0 +1,268 @@
+# Data_science/DirectML/DirectML.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Computing.DirectML
+- AssemblyName  : Microsoft.VisualBasic.Computing.DirectML
+- TargetFramework: net10.0
+- Source files  : 52
+- Existing Title: Pure-Interop DirectML Compute Framework
+- Existing Desc : A DirectML compute framework for sciBASIC#: zero-dependency hand written COM vtable interop for DXGI, D3D12 and DirectML, covering adapter/device enumeration, command recording, buffer and descriptor management, DML operator descriptors, graph compilation and execution, and a native ONNX graph backend.
+- Existing Tags : scibasic;directml;d3d12;dxgi;gpu;interop;com;onnx;machine-learning
+
+## Namespaces
+- Diagnostics  [files: 3]
+- Interop  [files: 16]
+- Operators  [files: 12]
+- Runtime  [files: 20]
+
+## Public types
+- Module DmlValidationMessageExtensions (Diagnostics\DmlValidationMessage.vb) - 一组校验消息的便捷聚合（便于测试程序一次性排版）。
+- Module ComApi (Interop\ComApi.vb) - COM 互操作的基础设施：vtable 槽位绑定、IUnknown 三槽位与对象包装基类。
+- Module ComIIDs (Interop\ComIIDs.vb)
+- Enum D3D_FEATURE_LEVEL (Interop\D3D12Api.vb)
+- Enum D3D12_COMMAND_LIST_TYPE (Interop\D3D12Api.vb)
+- Enum D3D12_COMMAND_QUEUE_FLAGS (Interop\D3D12Api.vb)
+- Enum D3D12_HEAP_TYPE (Interop\D3D12Api.vb)
+- Enum D3D12_HEAP_FLAGS (Interop\D3D12Api.vb)
+- Enum D3D12_CPU_PAGE_PROPERTY (Interop\D3D12Api.vb)
+- Enum D3D12_MEMORY_POOL (Interop\D3D12Api.vb)
+- Enum D3D12_RESOURCE_DIMENSION (Interop\D3D12Api.vb)
+- Enum D3D12_TEXTURE_LAYOUT (Interop\D3D12Api.vb)
+- Enum D3D12_RESOURCE_FLAGS (Interop\D3D12Api.vb)
+- Enum D3D12_RESOURCE_STATES (Interop\D3D12Api.vb)
+- Enum D3D12_DESCRIPTOR_HEAP_TYPE (Interop\D3D12Api.vb)
+- Enum D3D12_DESCRIPTOR_HEAP_FLAGS (Interop\D3D12Api.vb)
+- Enum D3D12_FENCE_FLAGS (Interop\D3D12Api.vb)
+- Enum D3D12_RESOURCE_BARRIER_TYPE (Interop\D3D12Api.vb)
+- Enum D3D12_RESOURCE_BARRIER_FLAGS (Interop\D3D12Api.vb)
+- Structure DXGI_SAMPLE_DESC (Interop\D3D12Api.vb)
+- Structure D3D12_CPU_DESCRIPTOR_HANDLE (Interop\D3D12Api.vb)
+- Structure D3D12_GPU_DESCRIPTOR_HANDLE (Interop\D3D12Api.vb)
+- Structure D3D12_HEAP_PROPERTIES (Interop\D3D12Api.vb)
+- Structure D3D12_RESOURCE_DESC (Interop\D3D12Api.vb)
+- Structure D3D12_DESCRIPTOR_HEAP_DESC (Interop\D3D12Api.vb)
+- Structure D3D12_RANGE (Interop\D3D12Api.vb)
+- Structure D3D12_RESOURCE_TRANSITION_BARRIER (Interop\D3D12Api.vb)
+- Structure D3D12_RESOURCE_ALIASING_BARRIER (Interop\D3D12Api.vb)
+- Structure D3D12_RESOURCE_UAV_BARRIER (Interop\D3D12Api.vb)
+- Structure D3D12_RESOURCE_BARRIER_UNION (Interop\D3D12Api.vb)
+- Structure D3D12_RESOURCE_BARRIER (Interop\D3D12Api.vb)
+- Structure D3D12_COMMAND_QUEUE_DESC (Interop\D3D12Api.vb)
+- Module D3D12Constants (Interop\D3D12Api.vb)
+- Enum D3D12_MESSAGE_CATEGORY (Interop\D3D12DebugApi.vb)
+- Enum D3D12_MESSAGE_SEVERITY (Interop\D3D12DebugApi.vb)
+- Structure D3D12_MESSAGE (Interop\D3D12DebugApi.vb)
+- Module DmlApi (Interop\DmlApi.vb)
+- Structure DML_TENSOR_DESC (Interop\DmlDescriptors.vb)
+- Structure DML_BUFFER_TENSOR_DESC (Interop\DmlDescriptors.vb)
+- Structure DML_OPERATOR_DESC (Interop\DmlDescriptors.vb)
+- Structure DML_BUFFER_BINDING (Interop\DmlDescriptors.vb)
+- Structure DML_BUFFER_ARRAY_BINDING (Interop\DmlDescriptors.vb)
+- Structure DML_BINDING_DESC (Interop\DmlDescriptors.vb)
+- Structure DML_BINDING_TABLE_DESC (Interop\DmlDescriptors.vb)
+- Structure DML_BINDING_PROPERTIES (Interop\DmlDescriptors.vb)
+- Structure DML_SCALE_BIAS (Interop\DmlDescriptors.vb)
+- Structure DML_SIZE_2D (Interop\DmlDescriptors.vb)
+- Structure DML_FEATURE_QUERY_FEATURE_LEVELS (Interop\DmlDescriptors.vb)
+- Structure DML_FEATURE_DATA_FEATURE_LEVELS (Interop\DmlDescriptors.vb)
+- Structure DML_FEATURE_QUERY_TENSOR_DATA_TYPE_SUPPORT (Interop\DmlDescriptors.vb)
+- Structure DML_FEATURE_DATA_TENSOR_DATA_TYPE_SUPPORT (Interop\DmlDescriptors.vb)
+- Enum DML_TENSOR_DATA_TYPE (Interop\DmlEnums.vb)
+- Enum DML_TENSOR_FLAGS (Interop\DmlEnums.vb)
+- Enum DML_TENSOR_TYPE (Interop\DmlEnums.vb)
+- Enum DML_BINDING_TYPE (Interop\DmlEnums.vb)
+- Enum DML_REDUCE_FUNCTION (Interop\DmlEnums.vb)
+- Enum DML_CONVOLUTION_MODE (Interop\DmlEnums.vb)
+- Enum DML_CONVOLUTION_DIRECTION (Interop\DmlEnums.vb)
+- Enum DML_PADDING_MODE (Interop\DmlEnums.vb)
+- Enum DML_MATRIX_TRANSFORM (Interop\DmlEnums.vb)
+- Enum DML_INTERPOLATION_MODE (Interop\DmlEnums.vb)
+- Enum DML_AXIS_DIRECTION (Interop\DmlEnums.vb)
+- Enum DML_DEPTH_SPACE_ORDER (Interop\DmlEnums.vb)
+- Enum DML_ROUNDING_MODE (Interop\DmlEnums.vb)
+- Enum DML_FEATURE (Interop\DmlEnums.vb)
+- Enum DML_FEATURE_LEVEL (Interop\DmlEnums.vb)
+- Enum DML_CREATE_DEVICE_FLAGS (Interop\DmlEnums.vb)
+- Enum DML_EXECUTION_FLAGS (Interop\DmlEnums.vb)
+- Enum DML_OPERATOR_TYPE (Interop\DmlEnums.vb) - DirectML 算子类型。 只列出本框架实际会用到的算子；序号与 DirectML.h 中的声明顺序完全一致 （该枚举在头文件里没有显式赋值，序号即声明顺序）。
+- Module DmlTensorDataTypeHelper (Interop\DmlEnums.vb)
+- Module DmlNativeHelper (Interop\DmlInterop.vb)
+- Enum DXGI_ADAPTER_FLAGS (Interop\DxgiApi.vb)
+- Enum DXGI_MEMORY_SEGMENT_GROUP (Interop\DxgiApi.vb)
+- Structure DXGI_ADAPTER_DESC1 (Interop\DxgiApi.vb)
+- Structure DXGI_QUERY_VIDEO_MEMORY_INFO (Interop\DxgiApi.vb)
+- Module DxgiApi (Interop\DxgiApi.vb)
+- Module HResult (Interop\HResult.vb) - HRESULT 的成功判定、文本描述与统一抛出。
+- Class DmlException (Interop\HResult.vb) - DirectML / D3D12 调用失败时抛出的异常。
+- Class NamespaceDoc (Interop\NamespaceDoc.vb) - Low level DirectML interop layer: dynamic library probing (<c>dxgi.dll</c>, <c>d3d12.dll</c>, <c>DirectML.dll</c>), export binding, hand written COM vtable slot delegates, HRESULT checking, plus the DirectML enums and native descriptor structures.
+- Structure DML_ELEMENT_WISE_UNARY_SCALE_BIAS_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_UNARY_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_BINARY_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_ROUND_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_POW_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_CLIP_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_THRESHOLD_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_IF_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ELEMENT_WISE_QUANTIZE_LINEAR_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_RELU_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_ALPHA_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_ALPHA_BETA_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_SCALED_ELU_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_SIMPLE_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_SOFTPLUS_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_SWISH_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_SHRINK_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_PARAMETERIZED_RELU_OPERATOR_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_ACTIVATION_AXES_DESC (Interop\Operators\DmlActivationDescs.vb)
+- Structure DML_CONVOLUTION_OPERATOR_DESC (Interop\Operators\DmlConvolutionDescs.vb)
+- Structure DML_AVERAGE_POOLING_OPERATOR_DESC (Interop\Operators\DmlConvolutionDescs.vb)
+- Structure DML_MAX_POOLING_OPERATOR_DESC (Interop\Operators\DmlConvolutionDescs.vb)
+- Structure DML_MAX_POOLING2_OPERATOR_DESC (Interop\Operators\DmlConvolutionDescs.vb)
+- Structure DML_LP_POOLING_OPERATOR_DESC (Interop\Operators\DmlConvolutionDescs.vb)
+- Structure DML_MAX_UNPOOLING_OPERATOR_DESC (Interop\Operators\DmlConvolutionDescs.vb)
+- Structure DML_GEMM_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_REDUCE_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_LOCAL_RESPONSE_NORMALIZATION_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_LP_NORMALIZATION_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_MEAN_VARIANCE_NORMALIZATION1_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_MEAN_VARIANCE_NORMALIZATION_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_BATCH_NORMALIZATION_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_MATRIX_MULTIPLY_INTEGER_OPERATOR_DESC (Interop\Operators\DmlMathDescs.vb)
+- Structure DML_SLICE_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- Structure DML_CAST_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- Structure DML_JOIN_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- Structure DML_SPLIT_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- Structure DML_PADDING_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- Structure DML_TILE_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- Structure DML_GATHER_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- Structure DML_GATHER_ELEMENTS_OPERATOR_DESC (Interop\Operators\DmlShapeDescs.vb)
+- ... and 29 more
+
+## Notable public members
+- Public Property Index As Integer
+- Public Property Description As String
+- Public Property Vendor As String
+- Public Property VendorId As UInteger
+- Public Property DeviceId As UInteger
+- Public Property DedicatedVideoMemory As ULong
+- Public Property SharedSystemMemory As ULong
+- Public Property IsSoftware As Boolean
+- Public Property SupportsD3D12 As Boolean
+- Public ReadOnly Property DedicatedVideoMemoryMB As Double
+- Friend Shared Function FromAdapter(adapter As DmlAdapter) As AdapterReport
+- Public Overrides Function ToString() As String
+- Public Property Adapter As AdapterReport
+- Public Property FeatureLevel As String
+- Public Property SupportsFloat32 As Boolean
+- Public Property SupportsFloat16 As Boolean
+- Public Property SupportsInt8 As Boolean
+- Public Property SupportsInt32 As Boolean
+- Public Property MemoryBudget As ULong
+- Public Property MemoryCurrentUsage As ULong
+- Public Function ToText() As String
+- Public Shared Function FromDevice(device As DmlDevice) As DeviceReport
+- Public Overrides Function ToString() As String
+- Public ReadOnly Property Severity As String
+- Public ReadOnly Property Category As String
+- Public ReadOnly Property Id As Integer
+- Public ReadOnly Property Description As String
+- Public ReadOnly Property Operation As String
+- Public Sub New(severity As String, category As String, id As Integer,
+- Public ReadOnly Property IsError As Boolean
+- Public Overrides Function ToString() As String
+- Public Function ToText(messages As IEnumerable(Of DmlValidationMessage)) As String
+- Public Sub New(problem As String, action As String)
+- Public ReadOnly Property Problem As String
+- Public ReadOnly Property Action As String
+- Public Overrides Function ToString() As String
+- Public Property IsAvailable As Boolean
+- Public Property DirectMLPath As String
+- Public Property D3D12Available As Boolean
+- Public Property DxgiAvailable As Boolean
+- Public Property Attempts As New List(Of NativeProbeAttempt)()
+- Public Property Adapters As New List(Of AdapterReport)()
+- Public Property ErrorMessage As String
+- Public Property Suggestions As New List(Of FixSuggestion)()
+- Public Shared Function Probe() As EnvironmentReport
+- Public Shared Function Suggest(report As EnvironmentReport) As List(Of FixSuggestion)
+- Public Function ToText() As String
+- Public Overrides Function ToString() As String
+- Public Const S_OK As Integer = 0
+- Public Const S_FALSE As Integer = 1
+- Public Const E_NOINTERFACE As Integer = -2147467262
+- Public Const E_POINTER As Integer = -2147467261
+- Public Const E_FAIL As Integer = -2147467259
+- Public Delegate Function QueryInterfaceFn(instance As IntPtr, ByRef riid As Guid, ByRef ppv As IntPtr) As Integer
+- Public Delegate Function AddRefFn(instance As IntPtr) As UInteger
+- Public Delegate Function ReleaseFn(instance As IntPtr) As UInteger
+- Public Function GetVtableSlot(instance As IntPtr, slot As Integer) As IntPtr
+- Public Function GetDelegate(Of TDelegate As Class)(instance As IntPtr, slot As Integer) As TDelegate
+- Public Function TryQueryInterface(instance As IntPtr, ByRef iid As Guid) As IntPtr
+- Protected Sub New(ptr As IntPtr)
+- ... and 447 more
+
+## Imports
+- Microsoft.VisualBasic.Computing.DirectML.Diagnostics
+- Microsoft.VisualBasic.Computing.DirectML.Interop
+- Microsoft.VisualBasic.Computing.DirectML.Operators
+- Microsoft.VisualBasic.Computing.DirectML.Runtime
+- System.IO
+- System.Linq
+- System.Reflection
+- System.Runtime.CompilerServices
+- System.Runtime.InteropServices
+- System.Text
+
+## File tree
+- Diagnostics\DeviceReport.vb
+- Diagnostics\DmlValidationMessage.vb
+- Diagnostics\EnvironmentReport.vb
+- Interop\ComApi.vb
+- Interop\ComIIDs.vb
+- Interop\D3D12Api.vb
+- Interop\D3D12DebugApi.vb
+- Interop\DmlApi.vb
+- Interop\DmlDescriptors.vb
+- Interop\DmlEnums.vb
+- Interop\DmlInterop.vb
+- Interop\DxgiApi.vb
+- Interop\HResult.vb
+- Interop\NamespaceDoc.vb
+- Interop\NativeModule.vb
+- Interop\Operators\DmlActivationDescs.vb
+- Interop\Operators\DmlConvolutionDescs.vb
+- Interop\Operators\DmlMathDescs.vb
+- Interop\Operators\DmlShapeDescs.vb
+- NamespaceDoc.vb
+- Operators\ActivationOperators.vb
+- Operators\ConvolutionOperators.vb
+- Operators\DataMovementOperators.vb
+- Operators\DmlOperatorDefinition.vb
+- Operators\DmlOperatorFactory.vb
+- Operators\DmlShapeInference.vb
+- Operators\ElementWiseOperators.vb
+- Operators\MatMulOperators.vb
+- Operators\NamespaceDoc.vb
+- Operators\OperatorCatalog.vb
+- Operators\ReduceOperators.vb
+- Operators\ShapeOperators.vb
+- Runtime\DmlAdapter.vb
+- Runtime\DmlBindingTable.vb
+- Runtime\DmlBuffer.vb
+- Runtime\DmlCommandAllocator.vb
+- Runtime\DmlCommandList.vb
+- Runtime\DmlCommandQueue.vb
+- Runtime\DmlCompiledOperator.vb
+- Runtime\DmlDebugLayer.vb
+- Runtime\DmlDescriptorHeap.vb
+- Runtime\DmlDevice.vb
+- Runtime\DmlEngine\DmlEngine.vb
+- Runtime\DmlEngine\EngineOptions.vb
+- Runtime\DmlExecutionContext.vb
+- Runtime\DmlFence.vb
+- Runtime\DmlGraph.vb
+- Runtime\DmlGraphTensor.vb
+- Runtime\DmlMemoryPool.vb
+- Runtime\DmlRuntime.vb
+- Runtime\DmlTensor.vb
+- Runtime\NamespaceDoc.vb
+

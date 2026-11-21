@@ -3,14 +3,15 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning
 - AssemblyName  : Microsoft.VisualBasic.MachineLearning
 - TargetFramework: net10.0
-- Source files  : 105
+- Source files  : 116
 - Existing Title: Classical Machine Learning: Random Forest, SVM, GA and Q-Learning
 - Existing Desc : A classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port with grid parameter selection, genetic algorithm and differential evolution engines, tabular Q-learning, activation functions and normalized sample training datasets.
 - Existing Tags : scibasic;machine-learning;random-forest;svm;genetic-algorithm;q-learning;activation-functions
 
 ## Namespaces
+- BayesianRegression  [files: 4]
 - ComponentModel  [files: 2]
-- ComponentModel.Activations  [files: 13]
+- ComponentModel.Activations  [files: 14]
 - ComponentModel.StoreProcedure  [files: 7]
 - Darwinism  [files: 2]
 - Darwinism.GAF  [files: 4]
@@ -18,6 +19,7 @@
 - Darwinism.GAF.Population  [files: 6]
 - Darwinism.GAF.Population.SubstitutionStrategy  [files: 4]
 - Darwinism.Models  [files: 4]
+- MultilayerPerceptron  [files: 6]
 - QLearning  [files: 5]
 - QLearning.DataModel  [files: 2]
 - RandomForests  [files: 5]
@@ -25,8 +27,14 @@
 - SVM.StorageProcedure  [files: 4]
 
 ## Public types
+- Enum BayesFeatureMode (BayesianRegression\BayesianRegression.vb) - 特征似然的两种计算路径。
+- Class BayesianRegression (BayesianRegression\BayesianRegression.vb) - <para> 朴素贝叶斯是分类器，本模型通过「目标分箱 + 后验期望」把它用于回归： 训练时把连续目标 y 离散成 K 个等宽区间，以区间编号作为类别标签拟合
+- Class GaussianBayes (BayesianRegression\GaussianBayes.vb) - 与 <see cref="Bayesian"/> 的离散频率表路径相对，本类对每个类别、每个维度 独立估计均值与方差，使用高斯密度计算 log P(x|Y)。两条路径共享 <see cref="NaiveBayesModel"/> 的类别先验、log 域累加和 log-sum-exp 归一化，
+- Module NamespaceDoc (BayesianRegression\NamespaceDoc.vb) - Naive bayes regression: turns the naive bayes classifier into a continuous predictor by binning the target and taking the posterior expectation of the bin representatives. Both the discrete feature path (frequency tables) and
+- Class TargetBinning (BayesianRegression\TargetBinning.vb) - 连续目标的等宽分箱器。 朴素贝叶斯本身是分类器，回归的做法是把连续目标 y 离散为 K 个等宽区间， 用区间编号作为类别标签拟合分类器，预测时再以各区间的后验概率对
 - Class ActiveFunction (ComponentModel\ActiveFunctions\ActiveFunctionXml.vb) - 激活函数的存储于XML文档之中的数据模型
 - Class BipolarSigmoid (ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb)
+- Class Elu (ComponentModel\ActiveFunctions\Functions\Elu.vb)
 - Class HyperbolicTangent (ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb)
 - Class ReLU (ComponentModel\ActiveFunctions\Functions\ReLU.vb) - The rectified linear unit (ReLU) activation function: the input value which is less than the threshold will be clipped as the threshold value. ReLU is the default activation function of the modern neural network
 - Class Sigmoid (ComponentModel\ActiveFunctions\Functions\Sigmoid.vb)
@@ -74,6 +82,14 @@
 - Class GeneralFitnessPool (Darwinism\Models\GeneralFitnessPool.vb) - Compute fitness and cache the result data in this pool. <typeparam name="Individual"></typeparam> works for genetic algorithm and <see cref="DifferentialEvolution"/>
 - Module NamespaceDoc (Darwinism\Models\NamespaceDoc.vb) - Model definitions of the Darwinism framework.
 - Module NamespaceDoc (Darwinism\NamespaceDoc.vb) - The Darwinism genetic algorithm framework root.
+- Module DataSetAdapter (MultilayerPerceptron\DataSetAdapter.vb) - 多层感知机与项目现有归一化数据集抽象之间的适配层。
+- Class DenseLayer (MultilayerPerceptron\DenseLayer.vb) - 多层感知机中的一个全连接层。权重矩阵的形状为 [输入维度, 输出维度]， 偏置向量的长度为输出维度；这种布局使前向计算可以直接调用 <c>NumericMatrix.DotProduct</c> 完成批量矩阵乘法。
+- Module LossFunctions (MultilayerPerceptron\LossFunctions.vb)
+- Class MultilayerPerceptron (MultilayerPerceptron\MultilayerPerceptron.vb) - 基于 <see cref="LinearAlgebra.Vector"/> 与 <see cref="NumericMatrix"/> 构建的多层感知机。 支持分类（Softmax + 交叉熵）与回归（恒等输出 + 均方误差）两类任务， 训练可采用带动量的 SGD 或 Adam 优化器。
+- Class NamespaceDoc (MultilayerPerceptron\NamespaceDoc.vb) - A classical multilayer perceptron implemented on top of <c>LinearAlgebra.Vector</c> and <c>NumericMatrix</c>, with classification and regression support.
+- Enum MlpTask (MultilayerPerceptron\TrainingOptions.vb)
+- Enum OptimizerKind (MultilayerPerceptron\TrainingOptions.vb)
+- Class TrainingOptions (MultilayerPerceptron\TrainingOptions.vb)
 - Class NamespaceDoc (NamespaceDoc.vb) - The machine learning framework root: the core learning abstractions and the shared data preprocessing models.
 - Class Action (QLearning\Action.vb) - One specific environment state have some possible actions, but there is just one best action on the current environment state based on the accumulate q-values
 - Class Map (QLearning\Maze-Q-Learning\Map.vb)
@@ -131,13 +147,53 @@
 - Module ProblemText (SVM\StorageProcedure\TextWriter\ProblemText.vb)
 - Module TransformText (SVM\StorageProcedure\TextWriter\TransformText.vb)
 - Module SVMExtensions (SVM\SVMExtensions.vb)
-- Class SVMModel (SVM\SVMModel.vb)
-- Class SVMMultipleSet (SVM\SVMModel.vb) - A collection of trained svm data model that can be apply for multiple dimension class classify analysis.
-- Structure SVMPrediction (SVM\SVMPrediction.vb) - The prediction result of a support vector machine model.
-- Module SVMUtilities (SVM\SVMUtilities.vb) - svm demo test
-- Module Training (SVM\Training.vb) - Class containing the routines to train SVM models.
+- ... and 5 more
 
 ## Notable public members
+- Public Const DefaultPredictionColumn As String = "bayes_prediction"
+- Public ReadOnly Property IsTrained As Boolean
+- Public ReadOnly Property Mode As BayesFeatureMode
+- Public ReadOnly Property Bins As Integer
+- Public ReadOnly Property Smoothing As Double
+- Public ReadOnly Property VarianceFloor As Double
+- Public ReadOnly Property Binning As TargetBinning
+- Public ReadOnly Property PosteriorModel As NaiveBayesModel
+- Public ReadOnly Property FeatureWidth As Integer
+- Public ReadOnly Property Classes As Integer()
+- Public ReadOnly Property Representatives As Double()
+- Public Shared Function Restore(mode As BayesFeatureMode,
+- Public Sub Train(table As NumericTable,
+- Public Sub Train(table As NumericTable,
+- Public Sub Train(x As Double()(),
+- Public Function PredictPosterior(x As Double()) As Double()
+- Public Function Predict(x As Double()) As Double
+- Public Function Predict(X As Double()()) As Double()
+- Public Function Predict(table As NumericTable) As Double()
+- Public Function Apply(table As NumericTable,
+- Public Overrides Function ToString() As String
+- Public Const DefaultVarianceFloor As Double = 0.000000001
+- Public Shared Function Restore(classes As Integer(),
+- Public ReadOnly Property VarianceFloor As Double
+- Public ReadOnly Property Means As Double()()
+- Public ReadOnly Property Variances As Double()()
+- Protected Overrides Function LogLikelihood(x As Double(), classIndex As Integer) As Double
+- Public Shared Function Load(table As NumericTable,
+- Public Shared Function Load(table As NumericTable,
+- Public Shared Function Load(x As Double()(),
+- Public Overrides Function ToString() As String
+- Public Const DefaultBins As Integer = 10
+- Public Shared Function Fit(y As Double(), Optional bins As Integer = DefaultBins) As TargetBinning
+- Public Shared Function Restore(minimum As Double, maximum As Double, interval As Double,
+- Public ReadOnly Property BinCount As Integer
+- Public ReadOnly Property Minimum As Double
+- Public ReadOnly Property Maximum As Double
+- Public ReadOnly Property Interval As Double
+- Public ReadOnly Property Representatives As Double()
+- Public Function BinIndex(value As Double) As Integer
+- Public Function RepresentativeAt(index As Integer) As Double
+- Public Function LowerEdge(index As Integer) As Double
+- Public Function Encode(y As Double()) As Integer()
+- Public Overrides Function ToString() As String
 - Public Property name As String
 - Public Property Arguments As NamedValue()
 - Public Function CreateFunction() As IActivationFunction
@@ -154,51 +210,7 @@
 - Public Sub New(alpha As Double)
 - Protected Overrides Function Derivative(x As Double) As Double
 - Public Overrides Function ToString() As String
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Overrides Function ToString() As String
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Public Shared Function ReLU(x As Double) As Double
-- Public Shared Function ReLU(x As Vector) As Vector
-- Public Shared Function ReLU(x As Double()) As Double()
-- Public Overrides Function CalculateDerivative(x As Double) As Double
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Overrides Function ToString() As String
-- Public Property Alpha() As Double = 2.0R
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Public Sub New()
-- Public Sub New(alpha As Double)
-- Public Shared Function doCall(x#, Optional alpha# = 1.0) As Double
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Overrides Function ToString() As String
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Shared Function Sigmoid(x As Vector) As Vector
-- Public Overrides Function ToString() As String
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Public Overrides Function ToString() As String
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Public Overrides Function ToString() As String
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Sub New()
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Public Overrides Function CalculateDerivative(x As Double) As Double
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Overrides Function ToString() As String
-- Public MustOverride ReadOnly Property Store As ActiveFunction
-- Public Property Truncate As Double = 10000
-- Public Overridable Function CalculateDerivative(x As Double) As Double
-- Protected MustOverride Function Derivative(x As Double) As Double
-- Public MustOverride Overrides Function ToString() As String
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Public Overrides Function ToString() As String
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Overrides ReadOnly Property Store As ActiveFunction
-- Public Overrides Function ToString() As String
-- Protected Overrides Function Derivative(x As Double) As Double
-- Public Property DataSamples As SampleList
-- ... and 463 more
+- ... and 567 more
 
 ## Imports
 - ASCII = Microsoft.VisualBasic.Text.ASCII
@@ -210,26 +222,31 @@
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 - Microsoft.VisualBasic.ComponentModel.TagData
+- Microsoft.VisualBasic.Data
 - Microsoft.VisualBasic.Data.csv
 - Microsoft.VisualBasic.DataMining.ComponentModel
 - Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
+- Microsoft.VisualBasic.DataMining.Kernel.Classifier
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Language.Default
 - Microsoft.VisualBasic.Language.Java
 - Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 - Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 - Microsoft.VisualBasic.MachineLearning.Darwinism
 - Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 - Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 - Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population
 - Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population.SubstitutionStrategy
-- Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-- Microsoft.VisualBasic.MachineLearning.QLearning
-- Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
 
 ## File tree
+- BayesianRegression\BayesianRegression.vb
+- BayesianRegression\GaussianBayes.vb
+- BayesianRegression\NamespaceDoc.vb
+- BayesianRegression\TargetBinning.vb
 - ComponentModel\ActiveFunctions\ActiveFunctionXml.vb
 - ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb
+- ComponentModel\ActiveFunctions\Functions\Elu.vb
 - ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb
 - ComponentModel\ActiveFunctions\Functions\ReLU.vb
 - ComponentModel\ActiveFunctions\Functions\Sigmoid.vb
@@ -276,6 +293,12 @@
 - Darwinism\NamespaceDoc.vb
 - Extensions.vb
 - IterationReporter.vb
+- MultilayerPerceptron\DataSetAdapter.vb
+- MultilayerPerceptron\DenseLayer.vb
+- MultilayerPerceptron\LossFunctions.vb
+- MultilayerPerceptron\MultilayerPerceptron.vb
+- MultilayerPerceptron\NamespaceDoc.vb
+- MultilayerPerceptron\TrainingOptions.vb
 - NamespaceDoc.vb
 - QLearning\Action.vb
 - QLearning\Maze-Q-Learning\Map.vb

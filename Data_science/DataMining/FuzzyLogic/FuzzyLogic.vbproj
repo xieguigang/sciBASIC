@@ -8,6 +8,20 @@
     <AssemblyVersion>1.0.9818.14504</AssemblyVersion>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;PlantMAT;nuget_release</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
+    <Title>Fuzzy Logic and Boolean Network Inference Toolkit</Title>
+    <Description>A managed fuzzy inference library for sciBASIC# covering Mamdani and Takagi-Sugeno rule engines, fuzzy cognitive maps, Boolean and probabilistic Boolean networks, hybrid models, and SIMD plus parallel execution paths for large rule sets.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.DataMining.FuzzyLogic</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;fuzzy-logic;boolean-network;fcm;mamdani;takagi-sugeno;simd</PackageTags>
+    <PackageReleaseNotes>This cycle: Removed unused components; Implemented the multiple model hybrid; Implemented the data set model.</PackageReleaseNotes>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -24,6 +38,14 @@
     <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\DataMining\DataMining.NET5.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <!-- 自检程序是独立工程，不能被编进库 -->

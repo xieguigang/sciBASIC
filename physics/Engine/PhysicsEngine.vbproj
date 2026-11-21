@@ -24,7 +24,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;physics-engine;rigid-body;collision-detection;convex-hull;sat;joints;3d-simulation;sph</PackageTags>
-    <PackageReleaseNotes>Adds a three dimensional physics world with SAT based convex polyhedron collision, contact manifolds and sequential impulse solvers, ball / hinge joints and angular motors, while keeping the two dimensional world, force fields and particle hooks.</PackageReleaseNotes>
+    <PackageReleaseNotes>This cycle: Export gene target name for make intervertion chaining; Added improveements of the physic math; Set = fuzzygene.LoadContext(context, valueColumn, minCoverage).</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

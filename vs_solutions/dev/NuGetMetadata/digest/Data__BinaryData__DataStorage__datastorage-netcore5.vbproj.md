@@ -3,13 +3,14 @@
 - RootNamespace : Microsoft.VisualBasic.Data.IO
 - AssemblyName  : Microsoft.VisualBasic.Data.Storage
 - TargetFramework: net10.0
-- Source files  : 15
+- Source files  : 23
 - Existing Title: Tabular Frame Serialization with SAS XPORT and ASN.1 Readers
 - Existing Desc : Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader/writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file.
 - Existing Tags : scibasic;data-storage;sas-xport;asn1;dataframe;binary-serialization
 
 ## Namespaces
 - ASN1  [files: 4]
+- Numpy  [files: 8]
 - Xpt  [files: 6]
 - Xpt.Types  [files: 2]
 
@@ -18,6 +19,19 @@
 - Module NamespaceDoc (ASN.1\NamespaceDoc.vb) - ASN.1 encoded byte stream reading: the BER/DER style object index and the stream reader extensions that decode tagged values.
 - Class StreamReader (ASN.1\StreamReader.vb) - https://github.com/lapo-luchini/asn1js
 - Class NamespaceDoc (NamespaceDoc.vb) - Binary storage of tabular data: a binary frame reader and writer that persists DataFrame objects with a typed column schema into a single seekable file.
+- Class NamespaceDoc (Numpy\NamespaceDoc.vb) - numpy 数据文件读写：<c>.npy</c> 单数组格式与 <c>.npz</c> 归档格式的解析与生成， 包括 dtype 类型系统、字节序与内存布局处理，以及对象数组（Python pickle 流）的重建。
+- Class NpyArray (Numpy\NpyArray.vb) - numpy 数组的内存表示：形状、数据类型、内存布局与数据区。 数值、布尔、字符串与原始字节类型的数据保存在 <see cref="RawData"/> 中（与文件中的数据区逐字节一致）， Python 对象数组（<c>dtype='O'</c>）的元素保存在 <see cref="Objects"/> 中。
+- Enum NpyEndian (Numpy\NpyDType.vb) - numpy 数据类型的字节序标记（对应 dtype 描述文本的首字符）。
+- Enum NpyTypeKind (Numpy\NpyDType.vb) - numpy dtype 的类型族（对应 dtype 描述文本中的类型字符）。
+- Class NpyField (Numpy\NpyDType.vb) - 结构化 dtype 的一个字段。
+- Class NpyDType (Numpy\NpyDType.vb) - numpy 数据类型模型：描述一个 .npy 文件中数据元素的类型、字节宽度与字节序。 支持 numpy 的 <c>dtype.str</c> 形式（例如 <c>&lt;f8</c>、<c>|O</c>、<c>&lt;U5</c>、<c>|S10</c>、 <c>&lt;c16</c>、<c>|V16</c>、<c>&lt;M8[ns]</c>）以及结构化记录的列表形式
+- Module NpyFile (Numpy\NpyFile.vb) - numpy 的 <c>.npy</c> 单数组文件读写门面。 读取：<see cref="Read(String)"/> 自动识别数值、布尔、字符串与对象数组； 写入：按元素类型选择 dtype 重载，默认写出小端序与 C 序（可选 Fortran 序）的 64 字节对齐头部。
+- Module NpyStream (Numpy\NpyHeader.vb) - npy 文件读写所用的低层字节流辅助函数。
+- Class NpyHeader (Numpy\NpyHeader.vb) - numpy 的 <c>.npy</c> 文件头部：魔数、格式版本与头部字典（<c>descr</c>、 <c>fortran_order</c>、<c>shape</c>）。 文件布局：<c>\x93NUMPY</c>（6 字节） + 版本（主/次各 1 字节） + 头部长度（v1 为 2 字节小端，
+- Class NpzFile (Numpy\NpzFile.vb) - 写入时按 <c>名称.npy</c> 生成条目，deflate 压缩。 用法示例： <code>
+- Class NpyArrayPlaceholder (Numpy\NumpyPickleFactory.vb) - numpy ndarray 在 pickle 流中的占位对象。 numpy 通过 <c>numpy.core.multiarray._reconstruct(ndarray, (0,), b'b')</c> 构造一个空数组， 再以 <c>__setstate__((version, shape, dtype, is_fortran, data))</c> 填充真实的形状与数据。
+- Class NumpyPickleFactory (Numpy\NumpyPickleFactory.vb) - <see cref="Pickle.IPickleObjectFactory"/> 的 numpy 实现：把 pickle 流中的 <c>numpy.ndarray</c> / <c>numpy.dtype</c> / <c>numpy.core.multiarray.scalar</c> 还原为 <see cref="NpyArray"/>、<see cref="NpyDType"/> 与 .NET 标量。
+- Module PyLiteral (Numpy\PyLiteral.vb) - 支持的语法子集： <list type="bullet"> <item>字典 <c>{...}</c>，映射为 <c>Dictionary(Of Object, Object)</c>；</item>
 - Module FrameReader (Tabular\FrameReader.vb)
 - Module FrameWriter (Tabular\FrameWriter.vb)
 - Class Schema (Tabular\Schema.vb)
@@ -55,57 +69,57 @@
 - Public Function parseStringUTF(start%, end%) As String
 - Public Function parseStringBMP(start%, end%) As String
 - Public Function parseTime(start%, end%, shortYear As Boolean) As String
-- Public Function ReadFrame(file As String) As DataFrame
-- Public Function ReadFrame(file As Stream) As DataFrame
-- Public Function ReadFeatures(file As String) As DataFrame
-- Public Function ReadSasXPT(file As String) As DataFrame
-- Public Function ReadSasXPT(buffer As Stream, Optional filename As String = Nothing) As DataFrame
-- Public ReadOnly Property magic As IReadOnlyCollection(Of Byte) = Encoding.ASCII.GetBytes("scibasic.net/dataframe")
-- Public Function WriteFrame(df As DataFrame, file As Stream) As Boolean
-- Public Property rownames As String()
-- Public Property cols As Dictionary(Of String, VectorSchema)
-- Public Property dims As Integer()
-- Public Property name As String
-- Public Property description As String
-- Public Property ordinals As String()
-- Public Property type As TypeCode
-- Public Property isScalar As Boolean
-- Public Property offset As Long
-- Public Property attrs As Dictionary(Of String, String)
+- Public Property Name As String
+- Public Property DType As NpyDType
+- Public Property Shape As Integer()
+- Public Property FortranOrder As Boolean
+- Public Property RawData As Byte()
+- Public Property Objects As Object()
+- Public ReadOnly Property Rank As Integer
+- Public ReadOnly Property Length As Long
+- Public ReadOnly Property ItemSize As Integer
+- Public ReadOnly Property IsObjectArray As Boolean
+- Public ReadOnly Property IsMatrixLike As Boolean
+- Public Function GetValue(index As Long) As Object
+- Public Function Item(ParamArray indices As Integer()) As Object
+- Public Function AsDouble() As Double()
+- Public Function AsSingle() As Single()
+- Public Function AsInt64() As Long()
+- Public Function AsInt32() As Integer()
+- Public Function AsBoolean() As Boolean()
+- Public Function AsString() As String()
+- Public Function AsObjectArray() As Object()
+- Public Function As2D() As Double(,)
+- Public Function AsMatrix() As NumericMatrix
+- Public Function CStrides() As Integer()
+- Friend Shared Function ReorderToC(raw As Byte(), n As Integer, itemSize As Integer, shape As Integer()) As Byte()
+- Friend Shared Function ReorderToFortran(corder As Byte(), n As Integer, itemSize As Integer, shape As Integer()) As Byte()
 - Public Overrides Function ToString() As String
-- Public Function GetTypeInfo() As Type
-- Public Function CreateEmpty() As Array
-- Public Shared Function toBytes(ParamArray arr As Integer()) As Byte()
-- Public Shared Function readString(buffer As Byte(), off As Integer, len As Integer) As String
-- Public Shared Function readByte(buffer As Byte(), off As Integer) As Byte
-- Public Shared Function readInt(buffer As Byte(), off As Integer) As Integer
-- Public Shared Function readDouble(buffer As Byte(), off As Integer) As Double
-- Public Shared Function readBytes(data As Byte(), off As Integer, len As Integer) As Byte()
-- Public Shared Function readShort(buffer As Byte(), off As Integer) As Short
-- Public Shared Function readNumber(buffer As Byte(), off As Integer, len As Integer) As IComparable
-- Public Shared Function concat(arr1 As Byte(), arr2 As Byte()) As Byte()
-- Public Shared Function swap(value As Short) As Short
-- Public Shared Function swap(value As Integer) As Integer
-- Public Shared Function swap(value As Long) As Long
-- Public Shared Function swap(value As Single) As Single
-- Public Shared Function swap(value As Double) As Double
-- Public Shared Sub swap(array As Short())
-- Public Shared Sub swap(array As Integer())
-- Public Shared Sub swap(array As Long())
-- Public Shared Sub swap(array As Single())
-- Public Shared Sub swap(array As Double())
-- Public Shared Function intToBytes(num As Integer) As Byte()
-- Public Shared Function longToBytes(num As Long) As Byte()
-- Public Shared Function toDouble(bytes As Byte()) As Double
-- Public Shared Function toLong(bytes As Byte()) As Long
-- Public Shared Function toLongLittle(bytes As Byte()) As Long
-- Public Shared Sub memset(buffer As Byte(), val As Byte, len As Integer)
-- Public Shared Function memcmp(tgt As Byte(), tgt_off As Integer, src As Byte(), src_off As Integer, len As Integer) As Boolean
-- Public Shared Sub memcpy(tgt As Byte(), tgt_off As Integer, src As Byte(), src_off As Integer, len As Integer)
-- Public Shared Sub memreverse(intp As Byte(), len As Integer)
-- Public Shared Function xpt2ieeeSimple(xport As Byte()) As Double
-- Public Sub New(fileName As String)
-- ... and 40 more
+- Public Property Name As String
+- Public Property DType As NpyDType
+- Public Property Offset As Integer
+- Public Overrides Function ToString() As String
+- Public Property Descriptor As String
+- Public Property Endian As NpyEndian
+- Public Property Kind As NpyTypeKind
+- Public Property ItemSize As Integer
+- Public Property Fields As NpyField()
+- Public Property Unit As String
+- Public ReadOnly Property IsStructured As Boolean
+- Public ReadOnly Property IsNumeric As Boolean
+- Public ReadOnly Property IsStringType As Boolean
+- Public ReadOnly Property NeedsByteSwap As Boolean
+- Public ReadOnly Property CharCapacity As Integer
+- Public Function GetClrType() As Type
+- Public Shared Function Parse(descr As String) As NpyDType
+- Friend Shared Function FromLiteral(literal As Object) As NpyDType
+- Public Overrides Function ToString() As String
+- Public Function Read(path As String) As NpyArray
+- Public Function Read(stream As Stream) As NpyArray
+- Public Function ReadHeader(path As String) As NpyHeader
+- Public Function ReadHeader(stream As Stream) As NpyHeader
+- Public Sub Save(path As String, array As NpyArray)
+- ... and 138 more
 
 ## Imports
 - any = Microsoft.VisualBasic.Scripting
@@ -115,12 +129,15 @@
 - Microsoft.VisualBasic.DataStorage
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 - Microsoft.VisualBasic.Scripting.Runtime
 - Microsoft.VisualBasic.Serialization.JSON
 - Microsoft.VisualBasic.Text
 - std = System.Math
+- System.Buffers.Binary
 - System.Globalization
 - System.IO
+- System.IO.Compression
 - System.Runtime.CompilerServices
 - System.Runtime.InteropServices
 - System.Text
@@ -132,6 +149,14 @@
 - ASN.1\NamespaceDoc.vb
 - ASN.1\StreamReader.vb
 - NamespaceDoc.vb
+- Numpy\NamespaceDoc.vb
+- Numpy\NpyArray.vb
+- Numpy\NpyDType.vb
+- Numpy\NpyFile.vb
+- Numpy\NpyHeader.vb
+- Numpy\NpzFile.vb
+- Numpy\NumpyPickleFactory.vb
+- Numpy\PyLiteral.vb
 - Tabular\FrameReader.vb
 - Tabular\FrameWriter.vb
 - Tabular\Schema.vb
