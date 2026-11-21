@@ -428,7 +428,7 @@ Public Class PresentationPageGraphic : Inherits IGraphics
     ' ------------------------------------------------------------------------
 
     Public Overrides Sub DrawImage(image As Image, point As Drawing.Point)
-        Call DrawImage(image, New Drawing.PointF(point))
+        Call DrawImage(image, New Drawing.PointF(point.X, point.Y))
     End Sub
 
     Public Overrides Sub DrawImage(image As Image, point As Drawing.PointF)
@@ -494,7 +494,7 @@ Public Class PresentationPageGraphic : Inherits IGraphics
             Return
         End If
 
-        Call DrawImage(image, New Drawing.RectangleF(New Drawing.PointF(point), New Drawing.SizeF(image.Width, image.Height)))
+        Call DrawImage(image, New Drawing.RectangleF(point.X, point.Y, image.Width, image.Height))
     End Sub
 
     Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
@@ -511,7 +511,7 @@ Public Class PresentationPageGraphic : Inherits IGraphics
         End If
 
         Dim clipped As Drawing.Rectangle = Drawing.Rectangle.Intersect(rect, New Drawing.Rectangle(rect.Location, New Drawing.Size(image.Width, image.Height)))
-        Call DrawImage(image, New Drawing.RectangleF(clipped))
+        Call DrawImage(image, New Drawing.RectangleF(clipped.X, clipped.Y, clipped.Width, clipped.Height))
     End Sub
 
     ' ------------------------------------------------------------------------
@@ -549,7 +549,7 @@ Public Class PresentationPageGraphic : Inherits IGraphics
     End Function
 
     Public Overrides Sub DrawBezier(pen As Pen, pt1 As Drawing.Point, pt2 As Drawing.Point, pt3 As Drawing.Point, pt4 As Drawing.Point)
-        Call DrawBezier(pen, New Drawing.PointF(pt1), New Drawing.PointF(pt2), New Drawing.PointF(pt3), New Drawing.PointF(pt4))
+        Call DrawBezier(pen, New Drawing.PointF(pt1.X, pt1.Y), New Drawing.PointF(pt2.X, pt2.Y), New Drawing.PointF(pt3.X, pt3.Y), New Drawing.PointF(pt4.X, pt4.Y))
     End Sub
 
     Public Overrides Sub DrawBezier(pen As Pen, pt1 As Drawing.PointF, pt2 As Drawing.PointF, pt3 As Drawing.PointF, pt4 As Drawing.PointF)
@@ -662,7 +662,11 @@ Public Class PresentationPageGraphic : Inherits IGraphics
     End Function
 
     Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Drawing.PointF)
-        Call DrawClosedCurve(pen, points, 0.5F)
+        If points Is Nothing OrElse points.Length < 2 Then
+            Return
+        End If
+
+        Call AddShape(PptShapeGeometry.Freeform, Bounds(points), Nothing, pen, SampleClosedCurve(points), True)
     End Sub
 
     Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Drawing.Point)
