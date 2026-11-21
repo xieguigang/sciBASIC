@@ -2,6 +2,7 @@ Imports System.IO
 Imports System.Linq
 Imports System.Xml.Linq
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>
 ''' DrawingML 生成时使用的单位换算、颜色与样式转换工具。
@@ -25,7 +26,7 @@ Public Module PptxDrawing
             Return 0
         End If
 
-        Return CLng(Math.Round(pixels / dpi * EmusPerInch))
+        Return CLng(std.Round(pixels / dpi * EmusPerInch))
     End Function
 
     ''' <summary>整数像素转 EMU。</summary>
@@ -59,7 +60,7 @@ Public Module PptxDrawing
             points = font.Size * 0.75F
         End If
 
-        Return CInt(Math.Max(100, Math.Round(points * 100)))
+        Return CInt(std.Max(100, std.Round(points * 100)))
     End Function
 
     ''' <summary>Pen 宽度转 EMU。</summary>
@@ -68,7 +69,7 @@ Public Module PptxDrawing
             Return 12700
         End If
 
-        Return Math.Max(ToEmu(pen.Width, dpi), 1L)
+        Return std.Max(ToEmu(pen.Width, dpi), 1L)
     End Function
 
     ''' <summary>虚线样式映射为 DrawingML prstDash。</summary>
@@ -88,7 +89,7 @@ Public Module PptxDrawing
 
     ''' <summary>旋转角度转 DrawingML 的 1/60000 度。</summary>
     Public Function RotationValue(degrees As Single) As Integer
-        Return CInt(Math.Round(degrees * 6000))
+        Return CInt(std.Round(degrees * 6000))
     End Function
 
     ''' <summary>将图像编码为 PNG 字节。</summary>
@@ -242,8 +243,8 @@ Public Class PptShapeElement : Inherits PptElement
                               New XAttribute("x", PptxDrawing.ToEmu(Position.X, dpi)),
                               New XAttribute("y", PptxDrawing.ToEmu(Position.Y, dpi))))
         xfrm.Add(New XElement(PptxDrawing.NS_A + "ext",
-                              New XAttribute("cx", PptxDrawing.ToEmu(Math.Max(Extent.Width, 0), dpi)),
-                              New XAttribute("cy", PptxDrawing.ToEmu(Math.Max(Extent.Height, 0), dpi))))
+                              New XAttribute("cx", PptxDrawing.ToEmu(std.Max(Extent.Width, 0), dpi)),
+                              New XAttribute("cy", PptxDrawing.ToEmu(std.Max(Extent.Height, 0), dpi))))
         Return xfrm
     End Function
 
@@ -269,8 +270,8 @@ Public Class PptShapeElement : Inherits PptElement
                                      New XElement(PptxDrawing.NS_A + "ahLst"),
                                      New XElement(PptxDrawing.NS_A + "cxnLst"))
 
-        Dim widthEmu As Long = PptxDrawing.ToEmu(Math.Max(Extent.Width, 0), dpi)
-        Dim heightEmu As Long = PptxDrawing.ToEmu(Math.Max(Extent.Height, 0), dpi)
+        Dim widthEmu As Long = PptxDrawing.ToEmu(std.Max(Extent.Width, 0), dpi)
+        Dim heightEmu As Long = PptxDrawing.ToEmu(std.Max(Extent.Height, 0), dpi)
 
         custGeom.Add(New XElement(PptxDrawing.NS_A + "rect",
                                   New XAttribute("l", 0), New XAttribute("t", 0),
@@ -374,8 +375,8 @@ Public Class PptTextElement : Inherits PptElement
                               New XAttribute("x", PptxDrawing.ToEmu(Position.X, context.Dpi)),
                               New XAttribute("y", PptxDrawing.ToEmu(Position.Y, context.Dpi))))
         xfrm.Add(New XElement(PptxDrawing.NS_A + "ext",
-                              New XAttribute("cx", PptxDrawing.ToEmu(Math.Max(Extent.Width, 0), context.Dpi)),
-                              New XAttribute("cy", PptxDrawing.ToEmu(Math.Max(Extent.Height, 0), context.Dpi))))
+                              New XAttribute("cx", PptxDrawing.ToEmu(std.Max(Extent.Width, 0), context.Dpi)),
+                              New XAttribute("cy", PptxDrawing.ToEmu(std.Max(Extent.Height, 0), context.Dpi))))
 
         sp.Add(New XElement(PptxDrawing.NS_P + "spPr",
                             xfrm,
@@ -465,8 +466,8 @@ Public Class PptImageElement : Inherits PptElement
                               New XAttribute("x", PptxDrawing.ToEmu(Position.X, context.Dpi)),
                               New XAttribute("y", PptxDrawing.ToEmu(Position.Y, context.Dpi))))
         xfrm.Add(New XElement(PptxDrawing.NS_A + "ext",
-                              New XAttribute("cx", PptxDrawing.ToEmu(Math.Max(Extent.Width, 0), context.Dpi)),
-                              New XAttribute("cy", PptxDrawing.ToEmu(Math.Max(Extent.Height, 0), context.Dpi))))
+                              New XAttribute("cx", PptxDrawing.ToEmu(std.Max(Extent.Width, 0), context.Dpi)),
+                              New XAttribute("cy", PptxDrawing.ToEmu(std.Max(Extent.Height, 0), context.Dpi))))
 
         pic.Add(New XElement(PptxDrawing.NS_P + "spPr",
                              xfrm,
@@ -539,8 +540,8 @@ Public Class PptTableElement : Inherits PptElement
                               New XAttribute("x", PptxDrawing.ToEmu(Position.X, context.Dpi)),
                               New XAttribute("y", PptxDrawing.ToEmu(Position.Y, context.Dpi))))
         xfrm.Add(New XElement(PptxDrawing.NS_A + "ext",
-                              New XAttribute("cx", PptxDrawing.ToEmu(Math.Max(Extent.Width, 0), context.Dpi)),
-                              New XAttribute("cy", PptxDrawing.ToEmu(Math.Max(Extent.Height, 0), context.Dpi))))
+                              New XAttribute("cx", PptxDrawing.ToEmu(std.Max(Extent.Width, 0), context.Dpi)),
+                              New XAttribute("cy", PptxDrawing.ToEmu(std.Max(Extent.Height, 0), context.Dpi))))
         frame.Add(xfrm)
 
         Dim table As New XElement(PptxDrawing.NS_A + "tbl")
@@ -549,13 +550,13 @@ Public Class PptTableElement : Inherits PptElement
         table.Add(tblPr)
 
         Dim grid As New XElement(PptxDrawing.NS_A + "tblGrid")
-        Dim columnWidth As Long = PptxDrawing.ToEmu(Math.Max(Extent.Width, 0) / columns, context.Dpi)
+        Dim columnWidth As Long = PptxDrawing.ToEmu(std.Max(Extent.Width, 0) / columns, context.Dpi)
         For i As Integer = 1 To columns
             grid.Add(New XElement(PptxDrawing.NS_A + "gridCol", New XAttribute("w", columnWidth)))
         Next
         table.Add(grid)
 
-        Dim rowHeight As Long = PptxDrawing.ToEmu(Math.Max(Extent.Height, 0) / rows, context.Dpi)
+        Dim rowHeight As Long = PptxDrawing.ToEmu(std.Max(Extent.Height, 0) / rows, context.Dpi)
 
         For r As Integer = 0 To rows - 1
             Dim isHeader As Boolean = style.ShowHeader AndAlso r = 0
