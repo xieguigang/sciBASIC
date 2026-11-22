@@ -1,9 +1,11 @@
 ﻿Imports System.Globalization
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON.Formatter
 
@@ -242,6 +244,16 @@ Namespace ApplicationServices.Debugging
 
             If failure IsNot Nothing Then
                 Throw failure
+            End If
+        End Sub
+
+        Public Sub Check(condition As Boolean, msg As String, expr As String, frame As StackFrame)
+            If Not condition Then
+                Dim sourceFile As String = frame.File
+                Dim line As String = frame.Line
+                Dim callee As String = frame.Method.ToString
+
+                Call RecordFailure(FailureOf(expr, msg, sourceFile, Line, callee), throwNow:=False)
             End If
         End Sub
 
