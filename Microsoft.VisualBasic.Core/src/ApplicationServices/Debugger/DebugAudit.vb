@@ -4,6 +4,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON.Formatter
 
 Namespace ApplicationServices.Debugging
@@ -124,6 +125,12 @@ Namespace ApplicationServices.Debugging
                 Return New Dictionary(Of String, Object)(captures)
             End SyncLock
         End Function
+
+        Public Sub Capture(name As String, val As Object)
+            SyncLock sync
+                captures(name) = val
+            End SyncLock
+        End Sub
 
         ''' <summary>
         ''' 以增量的方式记录一个变量的值到全局的变量快照之中(与 <see cref="Snapshot"/> 的整体替换行为相反)
