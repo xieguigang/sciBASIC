@@ -552,13 +552,13 @@ Namespace ApplicationServices.Debugging
             End If
 
             Try
-                Dim folder As String = System.IO.Path.GetDirectoryName(path)
+                Dim folder As String = path.ParentPath
 
                 If Not String.IsNullOrEmpty(folder) AndAlso Not System.IO.Directory.Exists(folder) Then
                     Call System.IO.Directory.CreateDirectory(folder)
                 End If
 
-                Call System.IO.File.WriteAllText(path, ToJson(indent:=True), Encoding.UTF8)
+                Call ToJson(indent:=True).SaveTo(path, Encoding.UTF8)
             Catch ex As Exception
                 ' 调试报告写盘失败不应该影响到业务代码的执行
                 Call VBDebugger.log($"DebugAudit.SaveReport({path}) -> {ex.Message}",
