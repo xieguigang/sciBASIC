@@ -128,6 +128,13 @@ Namespace ApplicationServices.Debugging
             End SyncLock
         End Function
 
+        ' 20261122 请注意，<Conditional("DEBUG")>标记的函数在release模式下，由于编译的时候没有#DEBUG条件的常数定义
+        ' 所以对应的方法调用是会自动被编译器移除的
+        ' 这个时候，在代码中针对<Conditional("DEBUG")>标记的测试方法进行调用是永远不会发生的
+        ' <Conditional("DEBUG")>这个特性对于普通的vb.net程序的测试非常有用
+        ' 但是无法用于创建公开的测试函数api给脚本解释器之类的特殊用途的程序
+        ' 所以在这里还会定义一些与<Conditional("DEBUG")>标记的函数所同名的函数，用于公开对应的api给脚本解释器，用于构建出脚本测试用的工具
+
         Public Sub Capture(name As String, val As Object)
             SyncLock sync
                 captures(name) = val
