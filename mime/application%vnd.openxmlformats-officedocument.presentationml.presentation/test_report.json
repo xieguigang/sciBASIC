@@ -1,0 +1,91 @@
+﻿{
+  "captures": {
+    "page1.size": "{Width=1000, Height=563}",
+    "page2.size": "{Width=800, Height=600}",
+    "image.loaded": "True",
+    "output.path": "G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test_output.pptx",
+    "output.bytes": "12335",
+    "zip.parts": "16"
+  },
+  "failureCount": 0,
+  "records": [
+    {
+      "time": "2026-11-21T22:29:25.043",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "page1.size = {Width=1000, Height=563}",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test\\Program.vb",
+      "line": 40,
+      "member": "Main",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-21T22:29:25.159",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "page2.size = {Width=800, Height=600}",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test\\Program.vb",
+      "line": 41,
+      "member": "Main",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-21T22:29:25.173",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "image.loaded = True",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test\\Program.vb",
+      "line": 80,
+      "member": "Main",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-21T22:29:25.198",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "output.path = G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test_output.pptx",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test\\Program.vb",
+      "line": 89,
+      "member": "Main",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-21T22:29:25.198",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "output.bytes = 12335",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test\\Program.vb",
+      "line": 90,
+      "member": "Main",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    },
+    {
+      "time": "2026-11-21T22:29:25.199",
+      "kind": "Mark",
+      "level": "infom",
+      "expression": null,
+      "message": "zip.parts = 16",
+      "sourceFile": "G:\\pixelArtist\\src\\framework\\mime\\application%vnd.openxmlformats-officedocument.presentationml.presentation\\test\\Program.vb",
+      "line": 122,
+      "member": "Main",
+      "threadId": 2,
+      "elapsedMs": 0,
+      "succeeded": true
+    }
+  ]
+}

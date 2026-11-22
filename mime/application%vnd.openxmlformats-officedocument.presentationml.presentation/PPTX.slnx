@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/framework/">
+    <Project Path="../../Data_science/Mathematica/Math/Math/Math.NET5.vbproj" />
+    <Project Path="../../gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj" />
+    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj" />
+    <Project Path="../text%html/html_netcore5.vbproj" />
+  </Folder>
+  <Project Path="PPTX/PPTX.vbproj" />
+  <Project Path="test/test.vbproj" />
+</Solution>
